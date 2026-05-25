@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGS: Tower of Terror | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0A0F1D; /* BGSページは最初から夜（ダーク）モードで雰囲気を出します */
+            --text-main: #E2E8F0; 
+            --accent-gold: #A88E5E; 
+            --border-light: rgba(255, 255, 255, 0.15);
+            --img-filter: brightness(0.85) contrast(1.1) sepia(20%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 2.2;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; }
+
+        /* フェードインアニメーション */
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* 戻るボタン */
+        .back-btn {
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--accent-gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        /* タイトル周り */
+        .header-section { text-align: center; margin-bottom: 60px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
+
+        /* 記事本文 */
+        .article-block { margin-bottom: 50px; text-align: justify; }
+        h2 {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic;
+            color: var(--accent-gold); margin-bottom: 20px; display: flex; align-items: center;
+        }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; color: rgba(226, 232, 240, 0.85); margin-bottom: 20px; }
+
+        /* アイキャッチ画像（手持ちの写真を表示） */
+        .hero-img-container { margin: 40px 0; border-radius: 5px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease; }
+        .hero-img-container:hover .hero-img { transform: scale(1.05); }
+
+        /* まとめ・考察エリア */
+        .summary-box {
+            padding: 30px; border: 1px solid var(--accent-gold); background: rgba(168, 142, 94, 0.05);
+            border-radius: 5px; margin-top: 60px;
+        }
+        .summary-box p { color: var(--text-main); margin-bottom: 0; font-size: 0.85rem; }
+
+        /* 下部のリンク */
+        .footer-link { text-align: center; margin-top: 60px; }
+        .footer-link a {
+            color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+
+    <div class="container">
+        <!-- 戻るボタン (index.htmlへ戻る) -->
+        <a href="index.html" class="back-btn">← Back to Portfolio</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Tower of Terror</h1>
+            <div class="subtitle-jp">傲慢な富豪と、呪われた偶像の謎</div>
+        </header>
+
+        <!-- メインのイメージ写真（ひとまずBlue Bayouの写真をダミーで入れています） -->
+        <div class="hero-img-container reveal">
+            <!-- ※タワテラの写真があれば、ここのファイル名を書き換えます -->
+            <img src="IMG_0021_Original.jpeg" alt="Tower of Terror" class="hero-img">
+        </div>
+
+        <section class="article-block reveal">
+            <h2>Prologue</h2>
+            <p>舞台は1912年のアメリカ・ニューヨーク。かつて街のシンボルであった豪華絢爛な「ホテル・ハイタワー」は、今や誰も近づかない廃墟となり、人々から「恐怖のホテル（タワー・オブ・テラー）」と呼ばれています。その裏には、一人の強欲な大富豪の不可解な失踪事件が隠されていました。</p>
+        </section>
+
+        <section class="article-block reveal">
+            <h2>Shiriki Utundu</h2>
+            <p>ホテルのオーナーである「ハリソン・ハイタワー三世」は、莫大な富と権力を持つ探検家でした。しかし彼は、世界中から文化的遺産を半ば「強奪」に近い形で集め、己の権力を誇示していました。</p>
+            <p>1899年、彼はアフリカのコンゴ川流域で、ムトゥンドゥ族から不気味な偶像を奪い取ります。その名は「シリキ・ウトゥンドゥ」（スワヒリ語で“災いを信じよ”の意）。偶像には「決して馬鹿にしてはいけない」といった8つの掟がありましたが、傲慢なハイタワー三世は「呪いなど馬鹿馬鹿しい！」と一蹴してしまいます。</p>
+        </section>
+
+        <section class="article-block reveal">
+            <h2>December 31, 1899</h2>
+            <p>1899年の大晦日。ホテルでは盛大なニューイヤーパーティーが開かれていました。深夜0時を目前に、ハイタワー三世は偶像を最上階（14階）の自室に飾るため、エレベーターに乗り込みます。その際、彼はあろうことか、吸っていた葉巻の火をシリキ・ウトゥンドゥの頭に押し付けて火を消したと言われています。</p>
+            <p>深夜0時ちょうど。ホテルに緑色の稲妻が落ち、停電。ハイタワー三世の絶叫とともに、エレベーターは制御不能となり1階へと急降下しました。しかし、ひしゃげた扉をこじ開けても、そこに彼の姿はありません。残されていたのは、彼の被っていたトルコ風の帽子と、不敵な笑みを浮かべるシリキ・ウトゥンドゥだけだったのです。</p>
+        </section>
+
+        <section class="article-block reveal">
+            <h2>The Tour</h2>
+            <p>事件から13年が経った1912年。建物の歴史的価値を守るため「ニューヨーク市保存協会」が立ち上がり、ホテルの修復と見学ツアーが開催されることになりました。</p>
+            <p>ゲストである私たちは、この見学ツアーの参加者としてホテルを訪れます。しかし、呪いはまだ終わっていなかったのです…。</p>
+        </section>
+
+        <div class="summary-box reveal">
+            <h3 style="font-family:'Montserrat',sans-serif; color:var(--accent-gold); font-size:0.8rem; letter-spacing:0.1em; margin-bottom:10px;">Photographer's View</h3>
+            <p>ただ怖いだけでなく、人間の「傲慢さ」に対する教訓が込められたこのアトラクション。Qライン（待ち列）に飾られた数々の強奪品や、ステンドグラスに描かれたハイタワー三世の表情を見ながら進むと、恐怖と同時にこのホテルの美しさに惹き込まれます。</p>
+        </div>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
