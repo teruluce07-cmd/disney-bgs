@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F4F1EB; /* プロフィールは優しくシンプルなベージュに固定 */
+            --text-main: #33302E; 
+            --accent-gold: #A88E5E; 
+            --border-light: rgba(51, 48, 46, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 2.2;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .container { max-width: 540px; margin: 0 auto; padding: 80px 25px 100px; }
+
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* 戻るボタン */
+        .back-btn {
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem; letter-spacing: 0.2em;
+            color: var(--accent-gold); text-decoration: none; text-transform: uppercase;
+            margin-bottom: 40px; border-bottom: 1px solid transparent; transition: border-color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        /* ヒーロー */
+        .hero { text-align: center; margin-bottom: 60px; }
+        .profile-img {
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06); margin-bottom: 25px;
+            border: 1px solid rgba(168, 142, 94, 0.3); padding: 5px; background: #fff;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 400;
+            letter-spacing: 0.08em; margin-bottom: 5px;
+        }
+        .subtitle {
+            font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em;
+            color: var(--accent-gold); text-transform: uppercase; margin-bottom: 20px;
+        }
+
+        /* セクション見出し */
+        .section-title {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic;
+            text-align: center; margin: 60px 0 35px; color: var(--accent-gold);
+        }
+
+        /* 情報エリア */
+        .info-block {
+            border-top: 1px solid var(--border-light); padding: 25px 0; display: flex; justify-content: space-between; align-items: flex-start;
+        }
+        .info-label {
+            font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em;
+            color: var(--accent-gold); text-transform: uppercase; width: 40%;
+        }
+        .info-value { font-size: 0.85rem; font-weight: 300; width: 60%; text-align: right; line-height: 1.8; }
+
+        /* リンクボタン */
+        .links-area { display: flex; flex-direction: column; gap: 15px; margin-top: 45px; }
+        .btn {
+            display: block; text-decoration: none; color: var(--text-main); padding: 20px; border: 1px solid var(--border-light); text-align: center;
+            font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
+            position: relative; overflow: hidden; transition: all 0.5s ease; background-color: transparent;
+        }
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--text-main); transform: scaleY(0); transform-origin: bottom;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: -1;
+        }
+        .btn:hover { color: var(--bg-color); border-color: var(--text-main); }
+        .btn:hover::before { transform: scaleY(1); }
+
+        footer { text-align: center; margin-top: 100px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+
+    <div class="container">
+        <!-- 戻るボタン (トップページ index.html へ戻る) -->
+        <a href="index.html" class="back-btn">← Back to BGS Portal</a>
+
+        <header class="hero reveal">
+            <img src="IMG_2226.jpeg" alt="teru_luce_" class="profile-img">
+            <h1>teru_luce_</h1>
+            <div class="subtitle">About the Curator</div>
+        </header>
+
+        <!-- プロフィール情報 -->
+        <h2 class="section-title reveal">Curator Identity</h2>
+        <div class="reveal">
+            <div class="info-block">
+                <div class="info-label">Born in</div>
+                <div class="info-value">2007 (18yo)</div>
+            </div>
+            <div class="info-block">
+                <div class="info-label">Base & Pace</div>
+                <div class="info-value">関東在住<br>約3ヶ月に1度のペースでイン</div>
+            </div>
+            <div class="info-block">
+                <div class="info-label">Character</div>
+                <div class="info-value">ドナルドダック</div>
+            </div>
+            <div class="info-block">
+                <div class="info-label">Favorite Area</div>
+                <div class="info-value">TDL: トゥモローランド<br>TDS: ポートディスカバリー</div>
+            </div>
+        </div>
+
+        <!-- 機材 -->
+        <h2 class="section-title reveal">Gears</h2>
+        <div class="reveal">
+            <div class="info-block">
+                <div class="info-label">Main Camera</div>
+                <div class="info-value">Sony DSC-HX90V</div>
+            </div>
+            <div class="info-block">
+                <div class="info-label">Sub & Edit</div>
+                <div class="info-value">Apple iPhone 15</div>
+            </div>
+        </div>
+
+        <!-- リンク集 -->
+        <h2 class="section-title reveal">Connections</h2>
+        <div class="links-area reveal">
+            <a href="https://www.instagram.com/teru_luce_?igsh=MWV4bjlocXR0MXJmdw%3D%3D&utm_source=qr" class="btn" target="_blank">Instagram / Main</a>
+            <a href="https://www.instagram.com/teru_diario_?igsh=M25raDdsYmJlcWww&utm_source=qr" class="btn" target="_blank">Instagram / Diario</a>
+            <a href="https://x.com/teru_luce?s=21" class="btn" target="_blank">X (Twitter)</a>
+        </div>
+
+        <footer class="reveal">
+            &copy; TERU_LUCE_ | Since 2007
+        </footer>
+    </div>
+
+    <script>
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
