@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BGS: Tower of Terror | teru_luce_</title>
+    <title>BGS Report: Tower of Terror | teru_luce_</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
+        /* --- 昼夜のカラー設定（変数） --- */
         :root {
-            --bg-color: #060814; 
-            --text-main: #E2E8F0; 
+            --bg-color: #F4F1EB; 
+            --text-main: #33302E; 
             --accent-gold: #A88E5E; 
-            --ghost-green: #00FF7F; /* シリキ・ウトゥンドゥの不気味な緑色の光 */
-            --border-light: rgba(255, 255, 255, 0.12);
-            --img-filter: brightness(0.8) contrast(1.15) sepia(25%);
+            --border-light: rgba(51, 48, 46, 0.15);
+            --img-filter: brightness(0.95) sepia(10%);
+            --ghost-green: #00A86B; 
+        }
+        body.dark-mode {
+            --bg-color: #0A0F1D; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00E5FF; 
+            --border-light: rgba(255, 255, 255, 0.15);
+            --img-filter: brightness(0.8) contrast(1.15) sepia(20%);
+            --ghost-green: #00FF7F; 
         }
 
         /* スムーズスクロール有効化 */
@@ -25,31 +34,22 @@
         body {
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
-            /* 不気味な霧と呪いの光を表現した背景グラデーション */
-            background: radial-gradient(circle at 50% 10%, rgba(138, 43, 226, 0.15), transparent 55%),
-                        radial-gradient(circle at 80% 80%, rgba(0, 255, 127, 0.04), transparent 50%),
-                        #050813;
             color: var(--text-main);
             line-height: 2.2;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            animation: ghostlyPulse 12s infinite alternate ease-in-out;
-        }
-
-        /* 呪いの光がゆっくりと明滅するアニメーション */
-        @keyframes ghostlyPulse {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(15deg); background-color: #080c1d; }
+            transition: background-color 0.8s ease, color 0.8s ease;
         }
 
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9999; opacity: 0.05;
+            pointer-events: none; z-index: 9999; opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; }
 
+        /* スクロールフェードイン */
         .reveal {
             opacity: 0; transform: translateY(30px);
             transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -64,7 +64,18 @@
             color: var(--accent-gold); text-decoration: none; text-transform: uppercase;
             margin-bottom: 40px; border-bottom: 1px solid transparent; transition: border-color 0.3s;
         }
-        .back-btn:hover { border-color: var(--accent-gold); color: var(--ghost-green); }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        /* マジックスイッチ */
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
 
         /* ヘッダー */
         .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
@@ -76,33 +87,19 @@
         .toc-box {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-light);
-            padding: 30px;
-            border-radius: 4px;
-            margin-bottom: 60px;
+            padding: 30px; border-radius: 4px; margin-bottom: 60px;
         }
         .toc-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--accent-gold);
-            text-align: center;
-            margin-bottom: 20px;
-            letter-spacing: 0.1em;
+            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic;
+            color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em;
         }
         .toc-list { list-style: none; padding: 0; }
         .toc-list li {
-            border-bottom: 1px dashed rgba(255,255,255,0.05);
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
+            border-bottom: 1px dashed var(--border-light);
+            padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem;
         }
-        .toc-list a {
-            color: rgba(226, 232, 240, 0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .toc-list a:hover { color: var(--ghost-green); }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
 
         /* 本文セクション */
         .article-block { margin-bottom: 70px; text-align: justify; }
@@ -111,29 +108,24 @@
             color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center;
         }
         h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
-        p { font-size: 0.9rem; font-weight: 300; color: rgba(226, 232, 240, 0.85); margin-bottom: 20px; }
+        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
 
         /* 画像コンテナ */
-        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease; }
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
         .hero-img-container:hover .hero-img { transform: scale(1.05); }
 
         /* 豆知識（因縁）のカード */
         .connection-card {
-            background: rgba(0, 255, 127, 0.02);
-            border: 1px solid rgba(0, 255, 127, 0.15);
-            padding: 25px;
-            border-radius: 4px;
-            margin: 30px 0;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid var(--accent-gold);
+            padding: 25px; border-radius: 4px; margin: 30px 0;
         }
         .connection-card h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.75rem;
-            color: var(--ghost-green);
-            letter-spacing: 0.15em;
-            margin-bottom: 15px;
-            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold);
+            letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase;
         }
+        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
 
         /* 下部リンク */
         .footer-link { text-align: center; margin-top: 80px; }
@@ -142,12 +134,13 @@
             font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px;
             transition: color 0.3s, border-color 0.3s;
         }
-        .footer-link a:hover { color: var(--ghost-green); border-color: var(--ghost-green); }
+        .footer-link a:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
     </style>
 </head>
 <body>
 
     <div class="noise-overlay"></div>
+    <div class="theme-switch" id="theme-switch">🌙</div>
 
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portfolio</a>
@@ -155,66 +148,78 @@
         <header class="header-section reveal">
             <div class="bgs-tag">Background Story</div>
             <h1>Tower of Terror</h1>
-            <div class="subtitle-jp">傲慢な富豪と、呪われた偶像の謎</div>
+            <div class="subtitle-jp">都市開発の影と、沈黙を破る雷鳴</div>
         </header>
 
-        <!-- 目次 (TOC) -->
+        <!-- 目次 -->
         <nav class="toc-box reveal">
             <div class="toc-title">Index</div>
             <ul class="toc-list">
-                <li><span>I. 惨劇の夜（プロローグ）</span><a href="#prologue">Read →</a></li>
-                <li><span>II. 呪いの偶像「シリキ・ウトゥンドゥ」</span><a href="#shiriki">Read →</a></li>
-                <li><span>III. ディズニーシー全体に広がる伏線（S.E.A.）</span><a href="#sea-connection">Read →</a></li>
-                <li><span>IV. S.S.コロンビア号との「ドロドロの因縁」</span><a href="#rivalry">Read →</a></li>
-                <li><span>V. アメリカ版との「決定的なストーリーの違い」</span><a href="#us-difference">Read →</a></li>
+                <li><span>I. 1899年の失踪劇（プロローグ）</span><a href="#prologue">Read →</a></li>
+                <li><span>II. 呪いの偶像「シリキ・ウトゥンドゥ」と8つの掟</span><a href="#taboos">Read →</a></li>
+                <li><span>III. 秘密結社「S.E.A.」との狂おしい接続</span><a href="#sea">Read →</a></li>
+                <li><span>IV. S.S.コロンビア号に眠る「親子二代の確執」</span><a href="#conflict">Read →</a></li>
+                <li><span>V. 独自の神話学（アメリカ版との差異）</span><a href="#genesis">Read →</a></li>
             </ul>
         </nav>
 
-        <!-- メインビジュアル（ブルーバイユーの美しい暗闇写真をダミーとして使用） -->
+        <!-- メインビジュアル（Blue Bayouの写真を贅沢に使用） -->
         <div class="hero-img-container reveal">
             <img src="IMG_0021_Original.jpeg" alt="Tower of Terror Atmosphere" class="hero-img">
         </div>
 
-        <!-- 各セクション -->
+        <!-- 各章 -->
         <section class="article-block reveal" id="prologue">
-            <h2>I. Prologue</h2>
-            <p>舞台は1912年のアメリカ・ニューヨーク。かつて街のシンボルであった豪華絢爛な「ホテル・ハイタワー」は、今や誰も近づかない廃墟となり、人々から「恐怖のホテル（タワー・オブ・テラー）」と呼ばれています。その裏には、一人の強欲な大富豪の不可解な失踪事件が隠されていました。</p>
+            <h2>I. 1899年の失踪劇</h2>
+            <p>1912年のアメリカ・ニューヨーク。人々が「恐怖のホテル（タワー・オブ・テラー）」と呼び、頑なに忌避する壮麗な廃墟「ホテル・ハイタワー」。現在、この建物はニューヨーク市保存協会による見学ツアーが催され、一般に公開されていますが、その静寂の裏には、1899年12月31日の凄惨な失踪事件が眠っています。</p>
+            <p>ホテルの創設者であり、希代の探検家でもあったハリソン・ハイタワー三世は、富と名声、そして尽きることのない収集欲の象徴でした。しかし、1899年の年越し直前、世界に公開したばかりの「呪いの偶像」と共に、彼はエレベーターの落雷事故に巻き込まれて消息を絶ちます。ホテルはこの事件を境に社会的信用を完全に失い、閉鎖・放置され、歴史の残骸としてその姿を今に留めています。</p>
         </section>
 
-        <section class="article-block reveal" id="shiriki">
-            <h2>II. Shiriki Utundu</h2>
-            <p>ホテルのオーナーである「ハリソン・ハイタワー三世」は、世界中から文化的遺産を半ば「強奪」に近い形で集め、己の権力を誇示していました。</p>
-            <p>1899年、彼はアフリカで不気味な偶像を奪い取ります。その名は「シリキ・ウトゥンドゥ」（災いを信じよ、の意）。偶像には「決して馬鹿にしてはいけない」といった8つの掟がありましたが、傲慢なハイタワー三世は「呪いなど馬鹿馬鹿しい！」と一蹴。大晦日の夜、偶像の頭に吸い殻を押し付け、自室のエレベーターに乗り込みます。</p>
-            <p>深夜0時。緑の光とともにエレベーターは急降下。扉をこじ開けた時、そこに彼の姿はなく、不敵な笑みを浮かべるシリキ・ウトゥンドゥだけが残されていました。</p>
-        </section>
-
-        <section class="article-block reveal" id="sea-connection">
-            <h2>III. S.E.A. Connection</h2>
-            <p>ここからが、ディズニーシー全体に繋がる超ディープな謎です。</p>
-            <p>ハイタワー三世は、実はソアリンに登場する女性「カメリア・ファルコ」や、メディテレーニアンハーバーのフォートレス（要塞）に名前が刻まれている**「S.E.A.（探検家・冒険家学会）」の主要メンバー**でした。彼の略奪行為は、この学会の資金力と特権を使って行われていたのです。</p>
+        <section class="article-block reveal" id="taboos">
+            <h2>II. 呪いの偶像と8つの掟</h2>
+            <p>この悲劇を紐解く最大のカギが、アフリカのムトゥンドゥ族が崇拝していた呪いの偶像「シリキ・ウトゥンドゥ」です。これは単なる呪物ではなく、崇拝者に守護を与える一方で、敬意を欠く者には無慈悲な災厄を招く精霊そのものでした。シリキ・ウトゥンドゥを扱うには、以下の「8つの掟」を守る必要があったとされています。</p>
             
             <div class="connection-card">
-                <h4>💡 隠された豆知識</h4>
-                <p>香港ディズニーランドにあるアトラクション「ミスティック・マナー（TDSにない別バージョンのタワテラ風施設）」のキューラインには、S.E.A.メンバーが集まった絵画が飾られています。そこには、**まだ強奪される前の「シリキ・ウトゥンドゥ」を腕に抱き、悪巧みのような顔をして座っているハイタワー三世**の姿がはっきりと描かれているのです。世界中のディズニーパークが「1つの歴史」で繋がっている証拠です。</p>
+                <h4>8つの掟（Taboos of Shiriki Utundu）</h4>
+                <p>1. 崇拝すること。<br>
+                   2. 燃やさないこと。<br>
+                   3. 閉ざされた場所にしまわないこと。<br>
+                   4. おろそかにしないこと。<br>
+                   5. 馬鹿にしないこと。<br>
+                   6. 他人に渡さないこと。<br>
+                   7. 放置しないこと。<br>
+                   8. 恐れること。</p>
+            </div>
+            
+            <p>傲慢の極みにあったハイタワー三世は、木箱に閉じ込め、公の場で嘲笑し、挙句には吸い殻を偶像に押し付けるなど、これらの掟をことごとく踏みにじりました。あの悲劇的な落下事故は、単なる偶然の落雷ではなく、自然の理（ルール）を犯した者への容赦なき報いだったのです。</p>
+        </section>
+
+        <section class="article-block reveal" id="sea">
+            <h2>III. 秘密結社「S.E.A.」の影</h2>
+            <p>ホテル・ハイタワーの物語は、単体のオカルト事件に留まりません。ハイタワー三世は、ディズニーシー全体の海洋探検史を繋ぐ、世界規模の探検家＆冒険家協会「S.E.A. (Society of Explorers and Adventurers)」の最初期メンバーとして描かれています。彼のあくなき強奪行為は、この組織の絶大な特権を利用して行われていました。</p>
+            
+            <div class="connection-card">
+                <h4>💡 学会メンバーたちとの相関</h4>
+                <p>香港ディズニーランドにある同系統アトラクション「ミスティック・マナー」の絵画には、S.E.A.の総会でシリキ・ウトゥンドゥを軽々しく抱えたハイタワー三世が、のちの破滅を予感させる不遜な笑みを浮かべて座る姿が描かれています。彼を起点として、ソアリンやフォートレス（要塞）、そして世界中のディズニーパークが、一つの巨大な「大航海・探検時代」の歴史の糸で紡がれているのです。</p>
             </div>
         </section>
 
-        <section class="article-block reveal" id="rivalry">
-            <h2>IV. Rivalry & S.S. Columbia</h2>
-            <p>ホテル・ハイタワーのすぐ隣に浮かぶ、美しく巨大な豪華客船**「S.S.コロンビア号」**。実はこの船とタワテラは、恐ろしい因縁で結ばれています。</p>
-            <p>コロンビア号の持ち主は、大富豪**「コーネリアス・エンディコット三世」**。彼はハイタワー三世と親の代からの宿敵（ライバル）であり、互いを引きずり下ろすため、冷酷な不正を繰り返していました。ハイタワーが失踪した時、エンディコットは「あの邪魔者が消えた！」と大喜びし、ホテルを買い取って取り壊し、自分の名前を冠した「エンディコット・グランドホテル」を建てようと画策します。</p>
+        <section class="article-block reveal" id="conflict">
+            <h2>IV. S.S.コロンビア号との確執</h2>
+            <p>ホテルのすぐ隣、アメリカンウォーターフロントの港に誇らしげに停泊する巨大客船「S.S.コロンビア号」。この船を所有するU.S.スチームシップカンパニーのオーナーである「コーネリアス・エンディコット三世」は、ハイタワー三世の親の代からの終生のライバルでした。</p>
+            <p>海運で近代都市の「光」と「商業的進歩」を象徴するエンディコットと、私的な収集欲と古代への「闇」を体現したホテル・ハイタワー。二つの巨大な富豪文化は、同じ都市の中で常に激しいせめぎ合いを見せていました。ハイタワー三世の失踪後、コーネリアスはホテルを解体し「エンディコット・グランドホテル」を建てようと画策します。</p>
             
             <div class="connection-card">
-                <h4>💡 娘の裏切りと、ツアーの誕生</h4>
-                <p>しかし、エンディコットの娘である**「ベアトリス」**は、父とは正反対に、失踪したハイタワー三世の探検家としての生き方に密かに憧れていました。彼女は父の解体計画に激怒し、ホテルの歴史を守るために「ニューヨーク市保存協会」を自ら設立して保護。そして父の計画を阻止するために、皮肉にも**「ホテル・ハイタワーの恐怖の体験ツアー（タワー・オブ・テラー）」を一般公開し、資金集めを始めた**のです。私たちが今並んでいるあのQライン（待ち列）は、ライバルの娘が作ったものだったのです。</p>
+                <h4>💡 ベアトリスの反逆と、保存協会の誕生</h4>
+                <p>しかし、エンディコットの娘「ベアトリス」は、父の利益優先の都市開発に激しく反発。密かにハイタワーの冒険心に強く惹かれていた彼女は、ホテルの解体計画を阻止するために「ニューヨーク市保存協会」を設立し、歴史保護を理由にホテルを観光ツアーとして一般公開しました。私たちが今体験しているあの見学ツアーは、エンディコット親子による「都市開発と歴史記憶の綱引き」のまさに中心地なのです。</p>
             </div>
         </section>
 
-        <section class="article-block reveal" id="us-difference">
-            <h2>V. US vs Japan Story</h2>
-            <p>世界中のディズニーに「タワー・オブ・テラー」は存在しますが、東京ディズニーシーの物語は、**世界で唯一無二の「完全オリジナルストーリー」**です。</p>
-            <p>アメリカ（フロリダなど）やパリにある元祖タワテラは、アメリカの伝説的なSF怪奇テレビ番組**『トワイライト・ゾーン（未知の世界）』**がテーマになっています。設定は「1939年のハロウィーン。嵐の夜、ハリウッド・タワー・ホテルに落雷があり、乗っていたスターやベルボーイなど5人が異次元（トワイライトゾーン）へ消え去ってしまった」というオカルトホラーです。</p>
-            <p>日本に導入される際、「トワイライト・ゾーン」という1960年代の米TV番組が当時の日本の若者に馴染みが薄かったこと、そしてディズニーシー全体の「冒険とイマジネーションの海」というテーマポートの歴史にシームレスに組み込ませるため、イマジニアたちは**「ハイタワー三世」「シリキ・ウトゥンドゥ」「S.E.A.」「S.S.コロンビア号との因縁」**という壮大なオリジナル神話を1から作り上げたのです。</p>
+        <section class="article-block reveal" id="genesis">
+            <h2>V. 独自の神話学（アメリカ版との差異）</h2>
+            <p>世界中のディズニーに存在する「タワー・オブ・テラー」ですが、日本の東京ディズニーシーのものは、世界でも類を見ない完全オリジナルな世界観を誇ります。</p>
+            <p>海外版（フロリダやパリなど）は、アメリカの伝説的なSF番組『トワイライト・ゾーン』をライセンスに持ち、1939年のハリウッドの超常現象ホテルを描いています。しかし、日本への導入にあたり、この古典TV番組が日本の若者層に馴染みが薄いこと、そしてディズニーシー全体の「冒険とイマジネーションの海」という統一コンセプトを崩さないために、イマジニアたちはライセンスを外し、この地に馴染む独自の歴史神話を構築しました。</p>
+            <p>「都市伝説」「ギルド時代の秘密結社」「一族の利権争い」を組み込んだ東京版は、単なるホラーを超えた、極めて完成度の高い「歴史ドキュメンタリー」としての廃墟美を完成させたのです。</p>
         </section>
 
         <div class="footer-link reveal">
@@ -223,6 +228,12 @@
     </div>
 
     <script>
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            themeSwitch.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
