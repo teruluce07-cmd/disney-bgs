@@ -6,11 +6,23 @@
     <title>teru_luce_ | Photography</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
+        /* --- 昼と夜のカラー設定（変数） --- */
         :root {
+            /* 昼モード（デフォルト） */
             --bg-color: #F4F1EB; 
             --text-main: #33302E; 
             --accent-gold: #A88E5E; 
-            --border-light: rgba(51, 48, 46, 0.1);
+            --border-light: rgba(51, 48, 46, 0.15);
+            --img-filter: brightness(0.95) sepia(10%);
+        }
+
+        /* 夜モード（ダークネイビー×ネオンブルー） */
+        body.dark-mode {
+            --bg-color: #0A0F1D; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00E5FF; 
+            --border-light: rgba(255, 255, 255, 0.15);
+            --img-filter: brightness(0.85) contrast(1.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,10 +33,10 @@
             color: var(--text-main);
             line-height: 2;
             overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; /* 色の切り替えを滑らかに */
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 紙の質感ノイズ */
         .noise-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -40,95 +52,99 @@
             padding: 80px 25px 100px;
         }
 
+        /* スクロールフェードイン */
         .reveal {
             opacity: 0;
             transform: translateY(35px);
-            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- ヒーローセクション --- */
-        .hero {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-
-        .profile-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 30px;
-        }
-
-        .profile-img {
-            width: 110px; height: 110px;
+        /* --- マジックスイッチ（昼夜切り替えボタン） --- */
+        .theme-switch {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            object-fit: cover;
-            filter: sepia(10%) contrast(1.1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            background-color: var(--accent-gold);
+            color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .theme-switch:hover {
+            transform: scale(1.1);
         }
 
+        /* --- ヒーローセクション --- */
+        .hero { text-align: center; margin-bottom: 70px; }
+        .profile-img {
+            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            transition: filter 0.8s ease;
+            filter: var(--img-filter);
+        }
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.6rem;
-            font-weight: 400;
-            letter-spacing: 0.08em;
-            margin-bottom: 5px;
+            font-size: 2.6rem; font-weight: 400; letter-spacing: 0.08em;
+            margin-bottom: 5px; margin-top: 20px;
+            transition: color 0.8s ease;
         }
-
         .subtitle {
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.3em;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            margin-bottom: 30px;
+            font-size: 0.7rem; letter-spacing: 0.3em;
+            color: var(--accent-gold); text-transform: uppercase;
+            transition: color 0.8s ease;
         }
 
         /* --- セクション見出し --- */
         .section-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 300;
-            font-style: italic;
-            text-align: center;
-            margin: 80px 0 40px;
+            font-size: 1.8rem; font-weight: 300; font-style: italic;
+            text-align: center; margin: 80px 0 40px;
             color: var(--accent-gold);
+            transition: color 0.8s ease;
         }
 
-        /* --- ストーリー（NEW!） --- */
-        .story-block {
-            position: relative;
-            padding: 30px 20px;
+        /* --- タイピング・エフェクト用エリア --- */
+        .philosophy-block {
+            padding: 20px 10px;
             text-align: center;
+            min-height: 150px;
         }
-        
-        .story-block::before, .story-block::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 30px;
-            background-color: var(--accent-gold);
+        .typing-text {
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            display: inline-block;
+            border-right: 2px solid var(--accent-gold); /* カーソル */
+            padding-right: 5px;
+            animation: blinkCursor 0.8s infinite;
         }
-        .story-block::before { top: -20px; }
-        .story-block::after { bottom: -20px; }
-
-        .story-text {
-            font-size: 0.85rem;
-            font-weight: 300;
-            line-height: 2.2;
-            color: #555;
+        @keyframes blinkCursor {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: var(--accent-gold); }
+        }
+        .my-thought {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            opacity: 0.7;
+            line-height: 2;
             text-align: justify;
-            text-justify: inter-ideograph;
         }
 
-        .story-text p { margin-bottom: 15px; }
-
-        /* --- ギャラリー --- */
+        /* --- ギャラリー（パララックス対応） --- */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -136,141 +152,96 @@
             align-items: start;
             margin-bottom: 20px;
         }
-        .gallery-item:nth-child(2) { margin-top: 35px; }
+        .gallery-item {
+            position: relative;
+            /* パララックス効果のためのトランジション */
+            transition: transform 0.1s linear; 
+        }
+        /* 真ん中の画像だけ配置を下げる */
+        .gallery-item:nth-child(2) { margin-top: 40px; }
         
         .gallery-img {
-            width: 100%;
-            aspect-ratio: 2 / 3;
-            object-fit: cover;
+            width: 100%; aspect-ratio: 2 / 3; object-fit: cover;
             border-radius: 100px 100px 0 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
-            transition: transform 0.6s ease, filter 0.6s ease;
-            filter: brightness(0.95);
+            filter: var(--img-filter);
+            transition: transform 0.6s ease, filter 0.8s ease;
         }
-        .gallery-item:hover .gallery-img {
-            transform: scale(1.03);
-            filter: brightness(1.05);
-        }
+        .gallery-item:hover .gallery-img { transform: scale(1.03); }
 
         /* --- 情報エリア --- */
         .info-block {
             border-top: 1px solid var(--border-light);
-            padding: 25px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            padding: 25px 0; display: flex; justify-content: space-between; align-items: flex-start;
+            transition: border-color 0.8s ease;
         }
         .info-label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            width: 40%;
+            font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em;
+            color: var(--accent-gold); text-transform: uppercase; width: 40%;
+            transition: color 0.8s ease;
         }
-        .info-value {
-            font-size: 0.85rem;
-            font-weight: 300;
-            width: 60%;
-            text-align: right;
-            line-height: 1.8;
-        }
+        .info-value { font-size: 0.85rem; font-weight: 300; width: 60%; text-align: right; line-height: 1.8; }
 
         /* --- リンクボタン --- */
-        .links-area {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 50px;
-        }
+        .links-area { display: flex; flex-direction: column; gap: 15px; margin-top: 50px; }
         .btn {
-            display: block;
-            text-decoration: none;
-            color: var(--text-main);
-            padding: 20px;
-            border: 1px solid var(--border-light);
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
-            background-color: transparent;
+            display: block; text-decoration: none; color: var(--text-main);
+            padding: 20px; border: 1px solid var(--border-light); text-align: center;
+            font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
+            position: relative; overflow: hidden; transition: all 0.5s ease;
         }
         .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--text-main);
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: -1;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--text-main); transform: scaleY(0); transform-origin: bottom;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: -1;
         }
-        .btn:hover {
-            color: var(--bg-color);
-            border-color: var(--text-main);
-        }
-        .btn:hover::before {
-            transform: scaleY(1);
-        }
+        .btn:hover { color: var(--bg-color); border-color: var(--text-main); }
+        .btn:hover::before { transform: scaleY(1); }
 
-        footer {
-            text-align: center;
-            margin-top: 100px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
-            color: #999;
-        }
+        footer { text-align: center; margin-top: 100px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.5; }
     </style>
 </head>
 <body>
 
     <div class="noise-overlay"></div>
 
+    <!-- マジックスイッチ（夜/昼切り替え） -->
+    <div class="theme-switch" id="theme-switch">🌙</div>
+
     <div class="container">
         <!-- ヒーローセクション -->
         <header class="hero reveal">
-            <div class="profile-wrapper">
-                <img src="IMG_2226.jpeg" alt="teru_luce_" class="profile-img">
-            </div>
+            <img src="IMG_2226.jpeg" alt="teru_luce_" class="profile-img">
             <h1>teru_luce_</h1>
             <div class="subtitle">Photography & Daily life</div>
-            
-            <!-- 近況 -->
-            <div style="margin-top: 30px;">
-                <p style="font-size: 0.75rem; font-style: italic; color: var(--accent-gold);">Now on...</p>
-                <p style="font-size: 0.85rem; font-weight: 300;">近日パークへお出かけ予定 📸</p>
-            </div>
         </header>
 
-        <!-- The Origin (ストーリー) -->
-        <h2 class="section-title reveal">The Origin</h2>
-        <div class="story-block reveal">
-            <div class="story-text">
-                <p>幼い頃から、両親に連れられて訪れていた場所。<br>両親自身は決して熱狂的なファンというわけではありませんでしたが、気がつけば私自身が、そこにある圧倒的な世界観と細部に宿るホスピタリティにすっかり魅了されていました。</p>
-                <p>光と魔法に包まれるランドも、冒険とロマンスの海も、どちらも私にとって選び難い、かけがえのない場所です。<br>今でもその時々の空気を切り取るために、カメラと共に足を運んでいます。</p>
+        <!-- Philosophy（タイピング名言） -->
+        <h2 class="section-title reveal">Philosophy</h2>
+        <div class="philosophy-block reveal" id="typing-section">
+            <span class="typing-text" id="typed-text"></span>
+            <!-- 下のテキストは、名言が打ち終わった後にフワッと表示されます -->
+            <div class="my-thought" id="my-thought" style="opacity: 0; transition: opacity 1.5s ease;">
+                思い出があるアトラクションやエリアが消えちゃっても、<br>心の中には生きているし、また新しい思い出ができるから。<br><br>
+                両親に連れられて出会ったこの場所の、<br>圧倒的な世界観とホスピタリティに惹かれ、<br>今もカメラと共に、完成しない夢の続きを切り取っています。
             </div>
         </div>
 
-        <!-- ギャラリー -->
+        <!-- ギャラリー（パララックス） -->
         <h2 class="section-title reveal">Exhibition</h2>
         <div class="gallery-grid reveal">
-            <div class="gallery-item">
+            <!-- data-speedを変えることで、スクロール時に動くスピードを変えます（パララックス） -->
+            <div class="gallery-item parallax" data-speed="0.05">
                 <img src="IMG_0021_Original.jpeg" alt="Blue Bayou" class="gallery-img">
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item parallax" data-speed="-0.1">
                 <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="gallery-img">
             </div>
-            <div class="gallery-item">
+            <div class="gallery-item parallax" data-speed="0.05">
                 <img src="DSC00234_Original.jpeg" alt="Arabian Coast" class="gallery-img">
             </div>
         </div>
 
-        <!-- プロフィール情報 -->
+        <!-- アイデンティティ -->
         <h2 class="section-title reveal">Identity</h2>
         <div class="reveal">
             <div class="info-block">
@@ -322,9 +293,21 @@
     </div>
 
     <script>
+        /* 1. マジックスイッチ（昼夜切り替え） */
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            // モードに合わせてアイコンを変える
+            if (document.body.classList.contains('dark-mode')) {
+                themeSwitch.textContent = '☀️';
+            } else {
+                themeSwitch.textContent = '🌙';
+            }
+        });
+
+        /* 2. スクロールで優雅に表示（フェードイン） */
         const reveals = document.querySelectorAll('.reveal');
         const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -40px 0px" };
-        
         const revealOnScroll = new IntersectionObserver(function(entries, observer) {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
@@ -332,12 +315,51 @@
                 observer.unobserve(entry.target);
             });
         }, revealOptions);
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
 
-        reveals.forEach(reveal => {
-            revealOnScroll.observe(reveal);
+        /* 3. ギャラリーのパララックス（奥行き）効果 */
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const parallaxElements = document.querySelectorAll('.parallax');
+            parallaxElements.forEach(el => {
+                const speed = el.getAttribute('data-speed');
+                // スクロール量に合わせて要素を少しだけ上下にずらす
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
         });
 
-        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+        /* 4. タイピング・エフェクト */
+        const textToType = "「ディズニーランドは永遠に完成しない。世界に想像力がある限り、成長し続けるだろう。」";
+        const typedTextElement = document.getElementById('typed-text');
+        const myThoughtElement = document.getElementById('my-thought');
+        let typeIndex = 0;
+        let isTypingStarted = false;
+
+        function typeWriter() {
+            if (typeIndex < textToType.length) {
+                typedTextElement.textContent += textToType.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(typeWriter, 100); // 1文字打つスピード（ミリ秒）
+            } else {
+                // 打ち終わったら、自分の言葉をフワッと表示する
+                setTimeout(() => {
+                    myThoughtElement.style.opacity = "1";
+                    typedTextElement.style.borderRight = "none"; // カーソルを消す
+                }, 500);
+            }
+        }
+
+        // Philosophyエリアが見えたらタイピング開始
+        const typingSection = document.getElementById('typing-section');
+        const typingObserver = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting && !isTypingStarted) {
+                isTypingStarted = true;
+                setTimeout(typeWriter, 500); // エリアが見えてから0.5秒後に打ち始める
+            }
+        }, { threshold: 0.5 });
+        typingObserver.observe(typingSection);
+
     </script>
 </body>
 </html>
