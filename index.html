@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>teru_luce_ | Photography</title>
-    <!-- 芸術的なフォント群の読み込み -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #F4F1EB; /* 暖かみのあるアート紙のようなアイボリー */
-            --text-main: #33302E; /* 真っ黒ではない、墨のような色 */
-            --accent-gold: #A88E5E; /* アンティークな真鍮のようなゴールド */
+            --bg-color: #F4F1EB; 
+            --text-main: #33302E; 
+            --accent-gold: #A88E5E; 
             --border-light: rgba(51, 48, 46, 0.1);
         }
 
@@ -25,7 +24,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 芸術的な「紙の質感」を出す微細なノイズ */
+        /* 紙の質感ノイズ */
         .noise-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -41,7 +40,6 @@
             padding: 80px 25px 100px;
         }
 
-        /* スクロール時のエレガントなフェードイン */
         .reveal {
             opacity: 0;
             transform: translateY(35px);
@@ -68,7 +66,7 @@
             width: 110px; height: 110px;
             border-radius: 50%;
             object-fit: cover;
-            filter: sepia(10%) contrast(1.1); /* 少しだけシネマティックな色調に */
+            filter: sepia(10%) contrast(1.1);
             box-shadow: 0 15px 35px rgba(0,0,0,0.06);
         }
 
@@ -89,15 +87,6 @@
             margin-bottom: 30px;
         }
 
-        .bio {
-            font-size: 0.9rem;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            max-width: 90%;
-            margin: 0 auto;
-            color: #555;
-        }
-
         /* --- セクション見出し --- */
         .section-title {
             font-family: 'Cormorant Garamond', serif;
@@ -109,7 +98,37 @@
             color: var(--accent-gold);
         }
 
-        /* --- ギャラリー（美術館風アーチ配置） --- */
+        /* --- ストーリー（NEW!） --- */
+        .story-block {
+            position: relative;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .story-block::before, .story-block::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 30px;
+            background-color: var(--accent-gold);
+        }
+        .story-block::before { top: -20px; }
+        .story-block::after { bottom: -20px; }
+
+        .story-text {
+            font-size: 0.85rem;
+            font-weight: 300;
+            line-height: 2.2;
+            color: #555;
+            text-align: justify;
+            text-justify: inter-ideograph;
+        }
+
+        .story-text p { margin-bottom: 15px; }
+
+        /* --- ギャラリー --- */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -117,28 +136,23 @@
             align-items: start;
             margin-bottom: 20px;
         }
-
-        /* 真ん中の写真だけ下にずらす芸術的な配置 */
-        .gallery-item:nth-child(2) {
-            margin-top: 35px;
-        }
-
+        .gallery-item:nth-child(2) { margin-top: 35px; }
+        
         .gallery-img {
             width: 100%;
             aspect-ratio: 2 / 3;
             object-fit: cover;
-            border-radius: 100px 100px 0 0; /* アーチ型（窓のような形） */
+            border-radius: 100px 100px 0 0;
             box-shadow: 0 10px 25px rgba(0,0,0,0.04);
             transition: transform 0.6s ease, filter 0.6s ease;
             filter: brightness(0.95);
         }
-
         .gallery-item:hover .gallery-img {
             transform: scale(1.03);
             filter: brightness(1.05);
         }
 
-        /* --- テキスト情報エリア（About & Gear） --- */
+        /* --- 情報エリア --- */
         .info-block {
             border-top: 1px solid var(--border-light);
             padding: 25px 0;
@@ -146,7 +160,6 @@
             justify-content: space-between;
             align-items: flex-start;
         }
-
         .info-label {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.7rem;
@@ -155,12 +168,12 @@
             text-transform: uppercase;
             width: 40%;
         }
-
         .info-value {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 300;
             width: 60%;
             text-align: right;
+            line-height: 1.8;
         }
 
         /* --- リンクボタン --- */
@@ -170,7 +183,6 @@
             gap: 15px;
             margin-top: 50px;
         }
-
         .btn {
             display: block;
             text-decoration: none;
@@ -187,8 +199,6 @@
             transition: all 0.5s ease;
             background-color: transparent;
         }
-
-        /* ボタンのホバーエフェクト（背景がスッと入る） */
         .btn::before {
             content: '';
             position: absolute;
@@ -199,7 +209,6 @@
             transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             z-index: -1;
         }
-
         .btn:hover {
             color: var(--bg-color);
             border-color: var(--text-main);
@@ -220,7 +229,6 @@
 </head>
 <body>
 
-    <!-- アート紙の質感ノイズ -->
     <div class="noise-overlay"></div>
 
     <div class="container">
@@ -231,19 +239,24 @@
             </div>
             <h1>teru_luce_</h1>
             <div class="subtitle">Photography & Daily life</div>
-            <p class="bio">
-                自分なりにディズニーの世界を切り取っています。<br>
-                光と魔法、そして未来が交差する瞬間を。
-            </p>
+            
+            <!-- 近況 -->
+            <div style="margin-top: 30px;">
+                <p style="font-size: 0.75rem; font-style: italic; color: var(--accent-gold);">Now on...</p>
+                <p style="font-size: 0.85rem; font-weight: 300;">近日パークへお出かけ予定 📸</p>
+            </div>
         </header>
 
-        <!-- 近況 -->
-        <div class="reveal" style="text-align: center; margin-bottom: 60px;">
-            <p style="font-size: 0.8rem; font-style: italic; color: var(--accent-gold);">Now on...</p>
-            <p style="font-size: 0.9rem; font-weight: 300;">近日パークへお出かけ予定 📸<br>新しい切り取りをお楽しみに。</p>
+        <!-- The Origin (ストーリー) -->
+        <h2 class="section-title reveal">The Origin</h2>
+        <div class="story-block reveal">
+            <div class="story-text">
+                <p>幼い頃から、両親に連れられて訪れていた場所。<br>両親自身は決して熱狂的なファンというわけではありませんでしたが、気がつけば私自身が、そこにある圧倒的な世界観と細部に宿るホスピタリティにすっかり魅了されていました。</p>
+                <p>光と魔法に包まれるランドも、冒険とロマンスの海も、どちらも私にとって選び難い、かけがえのない場所です。<br>今でもその時々の空気を切り取るために、カメラと共に足を運んでいます。</p>
+            </div>
         </div>
 
-        <!-- ギャラリー（アーチ型） -->
+        <!-- ギャラリー -->
         <h2 class="section-title reveal">Exhibition</h2>
         <div class="gallery-grid reveal">
             <div class="gallery-item">
@@ -263,6 +276,10 @@
             <div class="info-block">
                 <div class="info-label">Born in</div>
                 <div class="info-value">2007 (18yo)</div>
+            </div>
+            <div class="info-block">
+                <div class="info-label">Base & Pace</div>
+                <div class="info-value">関東在住<br>約3ヶ月に1度のペースでイン</div>
             </div>
             <div class="info-block">
                 <div class="info-label">Character</div>
@@ -305,7 +322,6 @@
     </div>
 
     <script>
-        // 優雅なスクロールアニメーション
         const reveals = document.querySelectorAll('.reveal');
         const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -40px 0px" };
         
@@ -321,7 +337,6 @@
             revealOnScroll.observe(reveal);
         });
 
-        // 最初の表示
         setTimeout(() => { reveals[0].classList.add('active'); }, 100);
     </script>
 </body>
