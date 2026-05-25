@@ -6,25 +6,31 @@
     <title>TDS BGS: Tower of Terror | teru_luce_</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- 昼夜カラー設定（変数の初期値をダーク（不気味）モードに設定） --- */
+        /* --- 昼夜（古紙・焦げ紙）カラー設定 --- */
         :root {
-            /* デフォルト：不気味な深夜のホテル（ネオン＆シリキの怪光） */
-            --bg-color: #0A0F1D; 
-            --text-main: #E2E8F0; 
-            --accent-gold: #00E5FF; 
-            --border-light: rgba(255, 255, 255, 0.15);
-            --img-filter: brightness(0.85) contrast(1.15);
-            --glow-color: rgba(0, 255, 127, 0.4);
+            /* デフォルト：紅茶染めした「くしゃくしゃの古紙」モード */
+            --bg-color: #E2D7C5; 
+            --text-main: #2D231E; /* 焦げ茶のインク */
+            --accent-gold: #8C6239; /* アンティーク・真鍮ゴールド */
+            --border-light: rgba(45, 35, 30, 0.2);
+            --img-filter: brightness(0.9) contrast(1.1) sepia(30%);
+            --glow-color: rgba(140, 98, 57, 0.2);
+            
+            /* くしゃくしゃの紙のテクスチャ（ブラウザが自動で3Dのシワを生成します） */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fbf8f3' surfaceScale='3.5'%3E%3CfeDistantLight azimuth='60' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
         }
 
-        /* スイッチを押した時：シンプルなベージュ（昼のホテル） */
-        body.light-mode {
-            --bg-color: #F4F1EB; 
-            --text-main: #33302E; 
-            --accent-gold: #A88E5E; 
-            --border-light: rgba(51, 48, 46, 0.15);
-            --img-filter: brightness(0.95) sepia(10%);
-            --glow-color: rgba(168, 142, 94, 0.2);
+        body.curse-mode {
+            /* スイッチON：シリキに呪われ、黒く焦げた「魔導書」モード */
+            --bg-color: #070911; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00FF7F; /* シリキの不気味なエメラルドグリーン */
+            --border-light: rgba(0, 255, 127, 0.2);
+            --img-filter: brightness(0.7) contrast(1.25) hue-rotate(90deg);
+            --glow-color: rgba(0, 255, 127, 0.4);
+
+            /* 焦げて引き裂かれたような、より粗いテクスチャに変貌 */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23141b2e' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
         }
 
         /* スムーズスクロール有効化 */
@@ -37,6 +43,12 @@
         body {
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
+            background-image: 
+                /* 周囲を暗くぼかすグラデーションを重ねることで、歴史資料館の照明感を演出 */
+                radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%),
+                var(--paper-texture);
+            background-size: cover;
+            background-attachment: fixed;
             color: var(--text-main);
             line-height: 2.2;
             overflow-x: hidden;
@@ -46,13 +58,25 @@
 
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9999; opacity: 0.04;
+            pointer-events: none; z-index: 9999; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; }
+        /* 羊皮紙の上に重ねた薄い半透明の書類（文字を格段に読みやすくします） */
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 60px 25px 120px; 
+            background: rgba(244, 237, 226, 0.45);
+            border-radius: 8px;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
+            transition: background 0.8s ease;
+        }
+        body.curse-mode .container {
+            background: rgba(10, 15, 29, 0.45);
+            box-shadow: inset 0 0 40px rgba(0,255,127,0.03);
+        }
 
-        /* スクロールフェードイン */
         .reveal {
             opacity: 0; transform: translateY(30px);
             transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -70,7 +94,7 @@
         }
         .theme-switch:hover { transform: scale(1.1); }
 
-        /* ヘッダー＆紋章ロゴ（自動くり抜き加工） */
+        /* ヘッダー＆紋章ロゴ */
         .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
         
         .logo-wrapper {
@@ -98,6 +122,8 @@
 
         .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
         h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        
+        /* お気に入りのサブタイトルに差し戻し */
         .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
 
         /* ナビゲーション */
@@ -111,9 +137,9 @@
         }
         .nav-menu a:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
 
-        /* 目次 (TOC) */
+        /* 目次 */
         .toc-box {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(0, 0, 0, 0.02);
             border: 1px solid var(--border-light);
             padding: 30px; border-radius: 4px; margin-bottom: 60px;
         }
@@ -139,13 +165,13 @@
         p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
 
         /* 画像コンテナ */
-        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
         .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
         .hero-img-container:hover .hero-img { transform: scale(1.03); }
 
         /* 豆知識カード */
         .connection-card {
-            background: rgba(212, 175, 55, 0.05);
+            background: rgba(140, 98, 57, 0.05);
             border: 1px solid var(--accent-gold);
             padding: 25px; border-radius: 4px; margin: 30px 0;
         }
@@ -168,8 +194,8 @@
 <body>
 
     <div class="noise-overlay"></div>
-    <!-- 初期状態は夜なので、スイッチは昼（太陽 ☀️）になります -->
-    <div class="theme-switch" id="theme-switch">☀️</div>
+    <!-- 初期状態は古紙（茶色）なので、スイッチは呪い（月 🌙）になります -->
+    <div class="theme-switch" id="theme-switch">🌙</div>
 
     <div class="container">
         <!-- ヘッダー -->
@@ -179,7 +205,8 @@
             </div>
             <div class="bgs-tag">Background Story</div>
             <h1>Hotel Hightower</h1>
-            <div class="subtitle-jp">都市開発の影と、沈黙を破る雷鳴</div>
+            <!-- お気に入りのサブタイトルに差し戻しました -->
+            <div class="subtitle-jp">傲慢なる略奪の果てと、影の忠臣</div>
         </header>
 
         <!-- メニュー -->
@@ -239,7 +266,7 @@
             
             <div class="connection-card">
                 <h4>💡 学会メンバーたちとの相関</h4>
-                <p>香港ディズニーランドにある同系統アトラクション「ミスティック・マナー」の絵画には、S.E.A.の総会でシリキ・ウトゥンドゥを軽々しく抱えたハイタワー三世が、のちの破滅を予感させる不遜な笑みを浮かべて座る姿が描かれています。彼を起点として、ソアリンやフォートレス（要塞）、そして世界中のディズニーパークが、一つの巨大な「大航海・探検時代」の歴史の糸で紡がれているのです。</p>
+                <p>香港ディズニーランドにある同系統アトラクション「ミスティック・マナー」の絵画には、S.E.A.の総会でシリキ・ウトゥンドゥを軽々しく抱えたハイタワー三世が、のちの破滅を予感させる不遜な笑みを浮かけて座る姿が描かれています。彼を起点として、ソアリンやフォートレス（要塞）、そして世界中のディズニーパークが、一つの巨大な「大航海・探検時代」の歴史の糸で紡がれているのです。</p>
             </div>
         </section>
 
@@ -269,11 +296,11 @@
     </div>
 
     <script>
-        /* スイッチ処理（押すとライト（昼）モードに変わる） */
+        /* スイッチ処理（押すと呪い（Curse）モードに変わる） */
         const themeSwitch = document.getElementById('theme-switch');
         themeSwitch.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            themeSwitch.textContent = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
         });
 
         const reveals = document.querySelectorAll('.reveal');
