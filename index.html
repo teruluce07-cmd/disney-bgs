@@ -3,23 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>teru_luce_ | Photography</title>
+    <title>BGS: Tower of Terror | teru_luce_</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- 昼夜カラー設定 --- */
         :root {
-            --bg-color: #F4F1EB; 
-            --text-main: #33302E; 
-            --accent-gold: #A88E5E; 
-            --border-light: rgba(51, 48, 46, 0.15);
-            --img-filter: brightness(0.95) sepia(10%);
-        }
-        body.dark-mode {
-            --bg-color: #0A0F1D; 
+            --bg-color: #0A0F1D; /* BGSページは最初から夜（ダーク）モードで雰囲気を出します */
             --text-main: #E2E8F0; 
-            --accent-gold: #00E5FF; 
+            --accent-gold: #A88E5E; 
             --border-light: rgba(255, 255, 255, 0.15);
-            --img-filter: brightness(0.85) contrast(1.1);
+            --img-filter: brightness(0.85) contrast(1.1) sepia(20%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,219 +20,130 @@
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 2;
+            line-height: 2.2;
             overflow-x: hidden;
-            transition: background-color 0.8s ease, color 0.8s ease;
             -webkit-font-smoothing: antialiased;
         }
 
         .noise-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.04;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; opacity: 0.05;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        .container { max-width: 540px; margin: 0 auto; padding: 80px 25px 100px; }
+        .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; }
 
+        /* フェードインアニメーション */
         .reveal {
-            opacity: 0; transform: translateY(35px);
+            opacity: 0; transform: translateY(30px);
             transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- マジックスイッチ --- */
-        .theme-switch {
-            position: fixed; bottom: 30px; right: 30px;
-            width: 50px; height: 50px; border-radius: 50%;
-            background-color: var(--accent-gold); color: var(--bg-color);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 1000;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
-        }
-        .theme-switch:hover { transform: scale(1.1); }
-
-        /* --- ヒーロー --- */
-        .hero { text-align: center; margin-bottom: 70px; }
-        .profile-img {
-            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.06); transition: filter 0.8s ease; filter: var(--img-filter);
-        }
-        h1 {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 400;
-            letter-spacing: 0.08em; margin-bottom: 5px; margin-top: 20px; transition: color 0.8s ease;
-        }
-        .subtitle {
-            font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em;
-            color: var(--accent-gold); text-transform: uppercase; transition: color 0.8s ease;
-        }
-
-        /* --- セクション見出し --- */
-        .section-title {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; font-style: italic;
-            text-align: center; margin: 80px 0 40px; color: var(--accent-gold); transition: color 0.8s ease;
-        }
-
-        /* --- タイピングエリア (名言・英語) --- */
-        .philosophy-block {
-            padding: 20px 10px; text-align: center; min-height: 200px;
-        }
-        
-        .typing-text {
-            font-family: 'Cormorant Garamond', serif; /* 英語の美しいフォント */
-            font-size: 1.4rem; /* 英語は少し大きめに */
-            font-style: italic;
-            font-weight: 600;
-            line-height: 1.5;
-            color: var(--accent-gold); /* 文字をゴールドに */
+        /* 戻るボタン */
+        .back-btn {
             display: inline-block;
-            border-right: 2px solid var(--text-main);
-            padding-right: 5px;
-            margin-bottom: 30px;
-            animation: blinkCursor 0.8s infinite;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--accent-gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
         }
-        @keyframes blinkCursor {
-            0%, 100% { border-color: transparent; }
-            50% { border-color: var(--text-main); }
-        }
+        .back-btn:hover { border-color: var(--accent-gold); }
 
-        /* --- 和訳と想い（フェードイン） --- */
-        .quote-jp {
-            font-size: 0.75rem; /* 和訳は控えめに小さく */
-            letter-spacing: 0.1em;
-            margin-bottom: 30px;
-            opacity: 0.6;
-        }
+        /* タイトル周り */
+        .header-section { text-align: center; margin-bottom: 60px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
 
-        .my-thought {
-            font-size: 0.8rem;
-            color: var(--text-main);
-            opacity: 0.8;
-            line-height: 2.2;
-            text-align: justify;
-            padding: 0 10px;
+        /* 記事本文 */
+        .article-block { margin-bottom: 50px; text-align: justify; }
+        h2 {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic;
+            color: var(--accent-gold); margin-bottom: 20px; display: flex; align-items: center;
         }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; color: rgba(226, 232, 240, 0.85); margin-bottom: 20px; }
 
-        /* --- ギャラリー（パララックス） --- */
-        .gallery-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: start; margin-bottom: 20px;
-        }
-        .gallery-item { position: relative; transition: transform 0.1s linear; }
-        .gallery-item:nth-child(2) { margin-top: 40px; }
-        .gallery-img {
-            width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 100px 100px 0 0;
-            filter: var(--img-filter); transition: transform 0.6s ease, filter 0.8s ease;
-        }
-        .gallery-item:hover .gallery-img { transform: scale(1.03); }
+        /* アイキャッチ画像（手持ちの写真を表示） */
+        .hero-img-container { margin: 40px 0; border-radius: 5px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease; }
+        .hero-img-container:hover .hero-img { transform: scale(1.05); }
 
-        /* --- 情報エリア --- */
-        .info-block {
-            border-top: 1px solid var(--border-light); padding: 25px 0; display: flex; justify-content: space-between; align-items: flex-start;
-            transition: border-color 0.8s ease;
+        /* まとめ・考察エリア */
+        .summary-box {
+            padding: 30px; border: 1px solid var(--accent-gold); background: rgba(168, 142, 94, 0.05);
+            border-radius: 5px; margin-top: 60px;
         }
-        .info-label {
-            font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em;
-            color: var(--accent-gold); text-transform: uppercase; width: 40%; transition: color 0.8s ease;
-        }
-        .info-value { font-size: 0.85rem; font-weight: 300; width: 60%; text-align: right; line-height: 1.8; }
+        .summary-box p { color: var(--text-main); margin-bottom: 0; font-size: 0.85rem; }
 
-        /* --- リンクボタン --- */
-        .links-area { display: flex; flex-direction: column; gap: 15px; margin-top: 50px; }
-        .btn {
-            display: block; text-decoration: none; color: var(--text-main); padding: 20px; border: 1px solid var(--border-light); text-align: center;
-            font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
-            position: relative; overflow: hidden; transition: all 0.5s ease;
+        /* 下部のリンク */
+        .footer-link { text-align: center; margin-top: 60px; }
+        .footer-link a {
+            color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px;
         }
-        .btn::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--text-main); transform: scaleY(0); transform-origin: bottom;
-            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: -1;
-        }
-        .btn:hover { color: var(--bg-color); border-color: var(--text-main); }
-        .btn:hover::before { transform: scaleY(1); }
-
-        footer { text-align: center; margin-top: 100px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.5; }
     </style>
 </head>
 <body>
 
     <div class="noise-overlay"></div>
-    <div class="theme-switch" id="theme-switch">🌙</div>
 
     <div class="container">
-        <header class="hero reveal">
-            <img src="IMG_2226.jpeg" alt="teru_luce_" class="profile-img">
-            <h1>teru_luce_</h1>
-            <div class="subtitle">Photography & Daily life</div>
+        <!-- 戻るボタン (index.htmlへ戻る) -->
+        <a href="index.html" class="back-btn">← Back to Portfolio</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Tower of Terror</h1>
+            <div class="subtitle-jp">傲慢な富豪と、呪われた偶像の謎</div>
         </header>
 
-        <!-- Philosophy（タイピング名言） -->
-        <h2 class="section-title reveal">Philosophy</h2>
-        <div class="philosophy-block reveal" id="typing-section">
-            <!-- 英語名言がタイピングされる場所 -->
-            <span class="typing-text" id="typed-text"></span>
-            
-            <!-- 打ち終わった後に表示される和訳と想い -->
-            <div id="fade-content" style="opacity: 0; transition: opacity 1.5s ease;">
-                <p class="quote-jp">
-                    「ディズニーランドは永遠に完成しない。<br>世界に想像力がある限り、成長し続けるだろう。」
-                </p>
-                <div class="my-thought">
-                    思い出があるアトラクションやエリアが消えちゃっても、<br>心の中には生きているし、また新しい思い出ができるから。<br><br>
-                    両親に連れられて出会ったこの場所の、<br>圧倒的な世界観とホスピタリティに惹かれ、<br>今もカメラと共に、完成しない夢の続きを切り取っています。
-                </div>
-            </div>
+        <!-- メインのイメージ写真（ひとまずBlue Bayouの写真をダミーで入れています） -->
+        <div class="hero-img-container reveal">
+            <!-- ※タワテラの写真があれば、ここのファイル名を書き換えます -->
+            <img src="IMG_0021_Original.jpeg" alt="Tower of Terror" class="hero-img">
         </div>
 
-        <h2 class="section-title reveal">Exhibition</h2>
-        <div class="gallery-grid reveal">
-            <div class="gallery-item parallax" data-speed="0.05">
-                <img src="IMG_0021_Original.jpeg" alt="Blue Bayou" class="gallery-img">
-            </div>
-            <div class="gallery-item parallax" data-speed="-0.1">
-                <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="gallery-img">
-            </div>
-            <div class="gallery-item parallax" data-speed="0.05">
-                <img src="DSC00234_Original.jpeg" alt="Arabian Coast" class="gallery-img">
-            </div>
+        <section class="article-block reveal">
+            <h2>Prologue</h2>
+            <p>舞台は1912年のアメリカ・ニューヨーク。かつて街のシンボルであった豪華絢爛な「ホテル・ハイタワー」は、今や誰も近づかない廃墟となり、人々から「恐怖のホテル（タワー・オブ・テラー）」と呼ばれています。その裏には、一人の強欲な大富豪の不可解な失踪事件が隠されていました。</p>
+        </section>
+
+        <section class="article-block reveal">
+            <h2>Shiriki Utundu</h2>
+            <p>ホテルのオーナーである「ハリソン・ハイタワー三世」は、莫大な富と権力を持つ探検家でした。しかし彼は、世界中から文化的遺産を半ば「強奪」に近い形で集め、己の権力を誇示していました。</p>
+            <p>1899年、彼はアフリカのコンゴ川流域で、ムトゥンドゥ族から不気味な偶像を奪い取ります。その名は「シリキ・ウトゥンドゥ」（スワヒリ語で“災いを信じよ”の意）。偶像には「決して馬鹿にしてはいけない」といった8つの掟がありましたが、傲慢なハイタワー三世は「呪いなど馬鹿馬鹿しい！」と一蹴してしまいます。</p>
+        </section>
+
+        <section class="article-block reveal">
+            <h2>December 31, 1899</h2>
+            <p>1899年の大晦日。ホテルでは盛大なニューイヤーパーティーが開かれていました。深夜0時を目前に、ハイタワー三世は偶像を最上階（14階）の自室に飾るため、エレベーターに乗り込みます。その際、彼はあろうことか、吸っていた葉巻の火をシリキ・ウトゥンドゥの頭に押し付けて火を消したと言われています。</p>
+            <p>深夜0時ちょうど。ホテルに緑色の稲妻が落ち、停電。ハイタワー三世の絶叫とともに、エレベーターは制御不能となり1階へと急降下しました。しかし、ひしゃげた扉をこじ開けても、そこに彼の姿はありません。残されていたのは、彼の被っていたトルコ風の帽子と、不敵な笑みを浮かべるシリキ・ウトゥンドゥだけだったのです。</p>
+        </section>
+
+        <section class="article-block reveal">
+            <h2>The Tour</h2>
+            <p>事件から13年が経った1912年。建物の歴史的価値を守るため「ニューヨーク市保存協会」が立ち上がり、ホテルの修復と見学ツアーが開催されることになりました。</p>
+            <p>ゲストである私たちは、この見学ツアーの参加者としてホテルを訪れます。しかし、呪いはまだ終わっていなかったのです…。</p>
+        </section>
+
+        <div class="summary-box reveal">
+            <h3 style="font-family:'Montserrat',sans-serif; color:var(--accent-gold); font-size:0.8rem; letter-spacing:0.1em; margin-bottom:10px;">Photographer's View</h3>
+            <p>ただ怖いだけでなく、人間の「傲慢さ」に対する教訓が込められたこのアトラクション。Qライン（待ち列）に飾られた数々の強奪品や、ステンドグラスに描かれたハイタワー三世の表情を見ながら進むと、恐怖と同時にこのホテルの美しさに惹き込まれます。</p>
         </div>
 
-        <h2 class="section-title reveal">Identity</h2>
-        <div class="reveal">
-            <div class="info-block"><div class="info-label">Born in</div><div class="info-value">2007 (18yo)</div></div>
-            <div class="info-block"><div class="info-label">Base & Pace</div><div class="info-value">関東在住<br>約3ヶ月に1度のペースでイン</div></div>
-            <div class="info-block"><div class="info-label">Character</div><div class="info-value">ドナルドダック</div></div>
-            <div class="info-block"><div class="info-label">Movies</div><div class="info-value">アラジン<br>メリー・ポピンズ リターンズ</div></div>
-            <div class="info-block"><div class="info-label">Park Areas</div><div class="info-value">トゥモローランド<br>ポートディスカバリー</div></div>
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
         </div>
-
-        <h2 class="section-title reveal">Equipments</h2>
-        <div class="reveal">
-            <div class="info-block"><div class="info-label">Main Camera</div><div class="info-value">Sony DSC-HX90V</div></div>
-            <div class="info-block"><div class="info-label">Sub & Edit</div><div class="info-value">Apple iPhone 15</div></div>
-        </div>
-
-        <h2 class="section-title reveal">Connections</h2>
-        <div class="links-area reveal">
-            <a href="https://www.instagram.com/teru_luce_?igsh=MWV4bjlocXR0MXJmdw%3D%3D&utm_source=qr" class="btn" target="_blank">Instagram / Main</a>
-            <a href="https://www.instagram.com/teru_diario_?igsh=M25raDdsYmJlcWww&utm_source=qr" class="btn" target="_blank">Instagram / Diario</a>
-            <a href="https://x.com/teru_luce?s=21" class="btn" target="_blank">X (Twitter)</a>
-        </div>
-
-        <footer class="reveal">&copy; TERU_LUCE_</footer>
     </div>
 
     <script>
-        /* マジックスイッチ */
-        const themeSwitch = document.getElementById('theme-switch');
-        themeSwitch.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            themeSwitch.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        });
-
-        /* フェードイン */
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -248,49 +151,9 @@
                 entry.target.classList.add('active');
                 observer.unobserve(entry.target);
             });
-        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
         reveals.forEach(reveal => revealOnScroll.observe(reveal));
         setTimeout(() => { reveals[0].classList.add('active'); }, 100);
-
-        /* パララックス */
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            document.querySelectorAll('.parallax').forEach(el => {
-                el.style.transform = `translateY(${scrolled * el.getAttribute('data-speed')}px)`;
-            });
-        });
-
-        /* タイピング・エフェクト（英語） */
-        // 英語の美しい名言
-        const textToType = '"Disneyland will never be completed. It will continue to grow as long as there is imagination left in the world."';
-        const typedTextElement = document.getElementById('typed-text');
-        const fadeContentElement = document.getElementById('fade-content');
-        let typeIndex = 0;
-        let isTypingStarted = false;
-
-        function typeWriter() {
-            if (typeIndex < textToType.length) {
-                typedTextElement.textContent += textToType.charAt(typeIndex);
-                typeIndex++;
-                setTimeout(typeWriter, 50); // 英語は文字数が多いので少し早めのスピード(50ミリ秒)
-            } else {
-                // 打ち終わったらカーソルを消して、和訳と想いをフェードイン
-                setTimeout(() => {
-                    fadeContentElement.style.opacity = "1";
-                    typedTextElement.style.borderRight = "none";
-                }, 400);
-            }
-        }
-
-        const typingSection = document.getElementById('typing-section');
-        const typingObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !isTypingStarted) {
-                isTypingStarted = true;
-                setTimeout(typeWriter, 500);
-            }
-        }, { threshold: 0.5 });
-        typingObserver.observe(typingSection);
-
     </script>
 </body>
 </html>
