@@ -66,7 +66,7 @@
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
 
-        /* 導入文（新しいテキストへ変更） */
+        /* 導入文（アトラクション待ち時間メッセージ） */
         .intro-text {
             text-align: center; margin-bottom: 60px; font-size: 0.85rem; color: var(--text-main); opacity: 0.8; letter-spacing: 0.05em; line-height: 2.2;
         }
@@ -80,13 +80,16 @@
         .theme-switch:hover { transform: scale(1.1); }
 
         /* --- 記事カード --- */
+        .article-list { display: flex; flex-direction: column; gap: 40px; }
         .article-card {
             text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease;
         }
         .article-card:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        
         .img-wrapper { width: 100%; aspect-ratio: 16 / 10; border-radius: 4px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease, filter 0.8s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
+        
         .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
         .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s; }
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; }
@@ -107,14 +110,16 @@
             <a href="profile.html" class="profile-btn">Profile</a>
         </header>
 
-        <!-- メッセージ変更箇所 -->
+        <!-- メッセージ -->
         <p class="intro-text reveal">
             このサイトではディズニーのBGSについて紹介してます。<br>
             アトラクションの待ち時間とかに見てください。
         </p>
 
-        <!-- 記事カード -->
-        <div class="reveal">
+        <!-- 記事カード一覧 -->
+        <div class="article-list reveal">
+            
+            <!-- 1本目：タワー・オブ・テラー (公開中) -->
             <a href="bgs-tot.html" class="article-card">
                 <div class="img-wrapper">
                     <img src="tot-exterior.jpg" alt="Hotel Hightower">
@@ -124,6 +129,18 @@
                 <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。そしてディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
+
+            <!-- 2本目：シンドバッド・ストーリーブック・ヴォヤッジ (公開中) -->
+            <a href="bgs-sindbad.html" class="article-card">
+                <div class="img-wrapper">
+                    <img src="DSC00234_Original.jpeg" alt="Sindbad's Voyage">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Sindbad's Voyage</h2>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
         </div>
 
         <footer>&copy; TERU_LUCE_</footer>
