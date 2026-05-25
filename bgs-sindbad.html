@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGS Deep Report: Sindbad's Voyage | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- 昼夜（砂漠の古紙・アラビアンナイト）カラー設定 --- */
+        :root {
+            /* デフォルト：アラビアの乾いた砂色の古紙モード */
+            --bg-color: #EAD8B8; 
+            --text-main: #3D2314; 
+            --accent-gold: #C05C33; /* 夕陽のようなテラコッタ・レッド */
+            --border-light: rgba(61, 35, 20, 0.18);
+            --img-filter: brightness(0.95) sepia(15%);
+            --glow-color: rgba(192, 92, 51, 0.2);
+            
+            /* アラビアの土壁をイメージした、きめの荒い超くしゃくしゃ紙 */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f9ede0' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+        }
+
+        body.curse-mode {
+            /* スイッチON：アラビアンナイト（魅惑のインディゴ・ブルー）モード */
+            --bg-color: #060919; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #FFB703; /* ランプの暖かい光ゴールド */
+            --border-light: rgba(255, 183, 3, 0.2);
+            --img-filter: brightness(0.85) contrast(1.1) saturate(1.2);
+            --glow-color: rgba(255, 183, 3, 0.4);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23101530' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .container { 
+            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
+            background: rgba(245, 237, 222, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        }
+        body.curse-mode .container { background: rgba(10, 15, 30, 0.45); box-shadow: inset 0 0 40px rgba(255,183,3,0.02); }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .back-btn {
+            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
+            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
+            border-bottom: 1px solid transparent; transition: color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
+
+        /* 目次 */
+        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
+
+        /* 本文セクション */
+        .article-block { margin-bottom: 70px; text-align: justify; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
+        .hero-img-container:hover .hero-img { transform: scale(1.03); }
+
+        .connection-card { background: rgba(192, 92, 51, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        body.curse-mode .connection-card { background: rgba(255, 183, 3, 0.03); }
+        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
+        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+
+        .footer-link { text-align: center; margin-top: 80px; }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="theme-switch" id="theme-switch">🌙</div>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Portal</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Storybook Voyage</h1>
+            <div class="subtitle-jp">優しき冒険者の船出と、心のコンパス</div>
+        </header>
+
+        <!-- 目次 -->
+        <nav class="toc-box reveal">
+            <div class="toc-title">Index</div>
+            <ul class="toc-list">
+                <li><span>I. 砂漠の宮殿に響く歌声（プロローグ）</span><a href="#prologue">Read →</a></li>
+                <li><span>II. かつて存在した暗黒期「セブンヴォヤッジ」</span><a href="#dark-past">Read →</a></li>
+                <li><span>III. 天才アラン・メンケンがかけた音楽の魔法</span><a href="#music">Read →</a></li>
+                <li><span>IV. 奇跡の相棒「チャンドゥ」の誕生</span><a href="#chandu">Read →</a></li>
+                <li><span>V. アラビアンコーストのもう一つの真実</span><a href="#sultan">Read →</a></li>
+            </ul>
+        </nav>
+
+        <!-- アラビアンコーストの美しいお写真 -->
+        <div class="hero-img-container reveal">
+            <img src="DSC00234_Original.jpeg" alt="Arabian Coast Evening" class="hero-img">
+        </div>
+
+        <!-- I. プロローグ -->
+        <section class="article-block reveal" id="prologue">
+            <h2>I. Prologue</h2>
+            <p>東京ディズニーシーの奥深くに広がる、エキゾチックな「アラビアンコースト」。その広場でひときわ大きな存在感を放つ黄金のドームが、ボートライド「シンドバッド・ストーリーブック・ヴォヤッジ」の入り口です。</p>
+            <p>ゲストはシンドバッドと、子トラのチャンドゥと共に、黄金の財宝よりも価値のある「本当の宝（友情や勇気）」を求めて、心のコンパスに従い未知なる海へと船出します。しかし、この優しさに満ち溢れた今のストーリーの裏には、ディズニーのクリエイター（イマジニア）たちによる、壮絶な挑戦とリニューアルの歴史が眠っています。</p>
+        </section>
+
+        <!-- II. 暗黒期 -->
+        <section class="article-block reveal" id="dark-past">
+            <h2>II. The Dark Past</h2>
+            <p>実は、2001年の開園当初、このアトラクションは今とは全く異なる**「シンドバッド・セブンヴォヤッジ（七つの航海）」**という、暗く恐ろしいアトラクションでした。設定は、アラビアンナイトに登場するオリジナルのシンドバッドをモチーフにしており、彼が「巨人の宝を奪う」といった、人間の『強欲さ』を軸にした不気味な冒険譚だったのです。</p>
+            
+            <div class="connection-card">
+                <h4>幻の「旧バージョン」の不気味なポイント</h4>
+                <p>・巨人は獰猛で凶暴。人間を食べようとし、目を不気味に光らせて激怒していた。<br>
+                   ・シンドバッドを嵐で誘惑する人魚（サイレン）たちは、妖しく薄気味悪い歌を歌いながらニヤリと笑う、完全な「敵キャラ」だった。<br>
+                   ・シンドバッドの相棒である可愛い子トラの「チャンドゥ」は、当時まだ存在すらしていなかった。</p>
+            </div>
+            
+            <p>このあまりにダークで不気味な世界観は、小さなお子様たちを泣かせ、ボートがいつもガラガラに空いてしまうというディズニーシー屈指の「不人気アトラクション」という暗黒期を作ってしまいました。そこで2006年、イマジニアたちは「強欲を捨てる旅」への、前代未聞の全面リニューアルを決意します。</p>
+        </section>
+
+        <!-- III. 音楽 -->
+        <section class="article-block reveal" id="music">
+            <h2>III. Alan Menken's Magic</h2>
+            <p>アトラクションを蘇らせるために、ディズニーが頼ったのが、映画『アラジン』や『美女と野獣』などの音楽を手掛けた世紀の天才作曲家、**アラン・メンケン**でした。イマジニアたちは彼に直接交渉し、このアトラクションのためだけにオリジナル楽曲を書き下ろすよう依頼します。</p>
+            <p>こうして生まれたのが、一度聴いたら忘れられない大名曲**「コンパス・オブ・ユア・ハート」**です。劇中で力強く歌い上げる坂元健児氏（劇団四季の初代ライオンキング・シンバ役など）の圧倒的な歌声と合わさり、この歌こそがアトラクションの主役となりました。「心のコンパス（信じる心）を信じて進めば、本当の宝物が見つかる」という強烈なメッセージが、ボートを進めるたびに私たちの心に語りかけてきます。</p>
+        </section>
+
+        <!-- IV. チャンドゥ -->
+        <section class="article-block reveal" id="chandu">
+            <h2>IV. Chandu</h2>
+            <p>暗黒期を抜け出すためのもう一つの隠し玉。それが、リニューアル時に新しく追加された子トラの相棒**「チャンドゥ」**の存在でした。獰猛な大人のトラではなく、あえて「お調子者で愛くるしい赤ちゃんトラ」にすることで、アトラクション全体のトーンを一気にマイルドにすることに成功しました。</p>
+            <p>チャンドゥはシンドバッドの行く先々で、おもちゃ箱に隠れたり、財宝の山に埋もれてバナナを咥えたりと、愛嬌たっぷりに動き回ります。この可愛い演出によって、以前は子供たちが怖がっていた巨人のシーンや猿の島も「シンドバッドが彼らと友達になり、楽器やバナナを分け合う温かいシーン」へと劇的に生まれ変わりました。</p>
+        </section>
+
+        <!-- V. アラビアンコーストの真実 -->
+        <section class="article-block reveal" id="sultan">
+            <h2>V. The Sultan's Wish</h2>
+            <p>このアトラクションが位置する「アラビアンコースト」というエリア自体にも、深く優しいバックグラウンドストーリーが設定されています。</p>
+            <p>映画『アラジン』のラストで、ランプの魔人ジーニーは自由になり、アラジンとジャスミン姫は結ばれました。ジャスミンの父であるサルタン国王は、この若者たちの偉大な愛と奇跡を祝うために、ジーニーにお願いをして**「誰もが平和に、異国の者とも友情を結べる、魔法の楽園（アラビアンコースト）」**を作り出したのです。つまり、シンドバッドの「他者と手を取り合って進む旅」は、まさにこのエリアが作られた理念そのものなのです。</p>
+        </section>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        /* スイッチ処理（押すと夜空モードへ変わる） */
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
