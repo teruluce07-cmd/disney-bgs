@@ -95,7 +95,7 @@
         .walt-quote cite { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-style: normal; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 10px; opacity: 0.7; }
         .walt-quote-jp { font-size: 0.7rem; opacity: 0.5; letter-spacing: 0.05em; }
 
-        /* --- 【大整理】コンパクトな古紙タグ型目次 (TOC) --- */
+        /* --- 目次 (TOC) --- */
         .toc-box {
             background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 25px; border-radius: 8px; margin-bottom: 60px; text-align: left;
         }
@@ -151,13 +151,10 @@
             font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
         }
 
-        /* --- コラムカード --- */
-        .chronicle-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
-        }
-        .chronicle-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--accent-gold); text-align: center; margin-bottom: 25px; letter-spacing: 0.1em; font-style: italic; }
-        .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
-        .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; }
+        .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
+        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
+        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
+        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
 
         /* --- グリッド表示 --- */
         .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -175,53 +172,47 @@
         .article-list.grid-mode .tl-img-align { object-position: center 40% !important; }
         .article-list.grid-mode .indy-img-align { object-position: center 20% !important; }
 
-        /* --- 【新設】Apple風リキッドすりガラスの注意書きモーダル --- */
+        /* --- コラムカード --- */
+        .chronicle-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
+        }
+        .chronicle-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--accent-gold); text-align: center; margin-bottom: 25px; letter-spacing: 0.1em; font-style: italic; }
+        .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
+        .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; }
+
+        /* --- 【新設】すりガラスの注意書きモーダル --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 10000;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center; z-index: 10000;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
         }
-        .modal-overlay.active {
-            opacity: 1; visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-box {
-            background: #FAF7F0; /* 暖かみのある柔らかい白 */
-            border: 1px solid var(--accent-gold);
-            padding: 35px 25px 25px; border-radius: 12px;
-            width: 90%; max-width: 400px;
-            text-align: justify;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-            position: relative;
-            color: #33302E; font-size: 0.8rem; line-height: 1.8;
-            transform: scale(0.9);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            background: #FAF7F0; border: 1px solid var(--accent-gold); padding: 35px 25px 25px; border-radius: 12px;
+            width: 90%; max-width: 400px; text-align: justify; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            position: relative; color: #33302E; font-size: 0.8rem; line-height: 1.8;
+            transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
+        .modal-overlay.active .modal-box { transform: scale(1); }
         .modal-close {
-            position: absolute; top: 15px; right: 15px;
-            cursor: pointer; font-family: 'Montserrat', sans-serif;
-            font-size: 0.65rem; color: var(--accent-gold);
-            border: none; background: transparent; font-weight: bold;
+            position: absolute; top: 15px; right: 15px; cursor: pointer; font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem; color: var(--accent-gold); border: none; background: transparent; font-weight: bold;
             letter-spacing: 0.1em; text-transform: uppercase;
         }
-        body.curse-mode .modal-box {
-            background: #0B1021; color: #E2E8F0; border-color: var(--accent-gold);
-        }
+        body.curse-mode .modal-box { background: #0B1021; color: #E2E8F0; border-color: var(--accent-gold); }
+        
         /* コピーライト横の極小リンク */
-        .site-notice-trigger {
-            cursor: pointer; text-decoration: underline; transition: color 0.3s;
+        .site-notice-trigger { cursor: pointer; text-decoration: underline; transition: color 0.3s; }
+        .site-notice-trigger:hover { color: var(--accent-gold); }
+
+        /* 昼夜スイッチ */
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
         }
-        .site-notice-trigger:hover {
-            color: var(--accent-gold);
-        }
+        .theme-switch:hover { transform: scale(1.1); }
 
         /* 💻 パソコン ＆ iPadレスポンシブ */
         @media (min-width: 768px) {
@@ -236,6 +227,9 @@
 
     <div class="paper-bg"></div>
     <div class="noise-overlay"></div>
+    
+    <!-- 復活させた昼夜スイッチ -->
+    <div class="theme-switch" id="theme-switch">🌙</div>
 
     <div class="container">
         <!-- ヘッダー -->
@@ -307,123 +301,88 @@
         <!-- 記事カード一覧 -->
         <div class="article-list grid-mode" id="article-list">
             
-            <!-- 1本目：スプラッシュ・マウンテン -->
             <a href="bgs-sm.html" class="article-card" id="sm-card">
-                <div class="img-wrapper">
-                    <img src="sm-day.jpeg" alt="Splash Mountain" class="sm-img-align">
-                </div>
+                <div class="img-wrapper"><img src="sm-day.jpeg" alt="Splash Mountain" class="sm-img-align"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Splash Mountain</h2>
                 <p>泥地に根づく知恵と、大洪水の忘れ物。アライグマの失敗が引き起こした大洪水から、ブレア・ラビットが命をかけて仕掛けた「最後のはっぱり」まで、小動物たちの歴史を追う。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 2本目：ビッグサンダー・マウンテン -->
             <a href="bgs-btm.html" class="article-card" id="btm-card">
-                <div class="img-wrapper">
-                    <img src="btm-exterior.jpeg" alt="Big Thunder Mountain" class="btm-img-align">
-                </div>
+                <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="Big Thunder Mountain" class="btm-img-align"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Big Thunder Mountain</h2>
                 <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と、大自然に宿る「精霊の怒り」が招いたタブルウィード崩壊の歴史を辿る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 3本目：美女と野獣 -->
             <a href="bgs-bb.html" class="article-card" id="bb-card">
-                <div class="img-wrapper">
-                    <img src="bb-castle.jpeg" alt="Enchanted Castle" class="bb-img-align">
-                </div>
+                <div class="img-wrapper"><img src="bb-castle.jpeg" alt="Enchanted Castle" class="bb-img-align"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Beauty and the Beast</h2>
                 <p>魔法の薔薇が紡ぐ、光と影 of フレンチ・ゴシック。フランスの片田舎から「呪われた城」へ誘う空間トリックと、日本独自の所作を宿した愛のものがたり。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 4本目：トゥモローランド -->
             <a href="bgs-tl.html" class="article-card" id="tl-card">
-                <div class="img-wrapper">
-                    <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain" class="tl-img-align">
-                </div>
+                <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain" class="tl-img-align"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Tomorrowland</h2>
                 <p>未来都市が背負った「時間」という名の宿命。スペースマウンテンの初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 5本目：タワー・オブ・テラー -->
             <a href="bgs-tot.html" class="article-card" id="tot-card">
-                <div class="img-wrapper">
-                    <img src="tot-exterior.jpg" alt="Hotel Hightower">
-                </div>
+                <div class="img-wrapper"><img src="tot-exterior.jpg" alt="Hotel Hightower"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Tower of Terror</h2>
                 <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。そしてディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 6本目：シンドバッド・ストーリーブック・ヴォヤッジ -->
             <a href="bgs-sindbad.html" class="article-card" id="sindbad-card">
-                <div class="img-wrapper">
-                    <img src="DSC00234_Original.jpeg" alt="Sindbad's Voyage">
-                </div>
+                <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="Sindbad's Voyage"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈作品の傑作へと生まれ変わるまで。</p>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 7本目：ファンタジースプリングス -->
             <a href="bgs-fs.html" class="article-card" id="fs-card">
-                <div class="img-wrapper">
-                    <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="fs-img-align">
-                </div>
+                <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="fs-img-align"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Fantasy Springs</h2>
                 <p>湧き出る精霊の記憶と、公爵夫人の招待状。ディズニーシー最奥地にひっそりと佇む泉が意味する、パークの壮大な「水の循環」の答えとは。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 8本目：ソアリン -->
             <a href="bgs-soarin.html" class="article-card" id="soarin-card">
-                <div class="img-wrapper">
-                    <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum" class="soarin-img-align">
-                </div>
+                <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum" class="soarin-img-align"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Soarin'</h2>
                 <p>19世紀の博物館に秘められた、空を飛ぶ夢の歴史。カメリアとハイタワー三世の確執、精度とロマンを兼ね備えた驚くべき因縁に迫る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 9本目：S.E.A. -->
             <a href="bgs-sea.html" class="article-card" id="sea-card">
-                <div class="img-wrapper sea-thumbnail-bg">
-                    <div class="sea-mini-crest">
-                        <span class="sea-mini-letters">S.E.A.</span>
-                    </div>
-                </div>
+                <div class="img-wrapper sea-thumbnail-bg"><div class="sea-mini-crest"><span class="sea-mini-letters">S.E.A.</span></div></div>
                 <div class="card-tag">The Secret Society</div>
                 <h2>S.E.A. Archives</h2>
                 <p>1538年に創設された、探検家・冒険家学会。世界中のパーク、アトラクション、ホテルを結ぶ、ディズニー最高峰の巨大な大河神話を完全解剖する。</p>
                 <div class="read-btn">Explore the Archives →</div>
             </a>
 
-            <!-- 10本目：レイジングスピリッツ -->
             <a href="bgs-raging.html" class="article-card" id="raging-card">
-                <div class="img-wrapper">
-                    <img src="raging-altar.jpeg" alt="Raging Spirits Altar">
-                </div>
+                <div class="img-wrapper"><img src="raging-altar.jpeg" alt="Raging Spirits Altar"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Raging Spirits</h2>
                 <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な超自然現象の謎と、失われた足場の真実を追う。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 11本目：インディ・ジョーンズ -->
             <a href="bgs-indy.html" class="article-card" id="indy-card">
-                <div class="img-wrapper">
-                    <img src="indy-temple.jpeg" alt="Indiana Jones Temple" class="indy-img-align">
-                </div>
+                <div class="img-wrapper"><img src="indy-temple.jpeg" alt="Indiana Jones Temple" class="indy-img-align"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Indiana Jones</h2>
                 <p>若さの泉を守る守護神と、冒険家が遺した足跡。パコが企てた秘密の魔宮ツアーと、水上飛行機に隠されたC-3POのイースターエッグの真相に迫る。</p>
@@ -438,24 +397,18 @@
             <p style="font-size: 0.85rem; font-weight: bold; text-align: center; color: var(--accent-gold); margin-bottom: 25px;">
                 妥協なき「本物」が創り上げた、舞浜の奇跡
             </p>
-            
             <p>私たちが当たり前のように足を踏み入れている東京ディズニーリゾート（TDR）。しかしこの地には、米国のディズニー本社も震え上がらせた、オリエンタルランド（OLC）の「妥協なき本物への情熱」と、血の滲むような開発史が眠っています。ここでは、現実世界のほんの少しのドラマを紐解いてみましょう。</p>
-
             <h4>I. 奇跡の船出と「アメリカ外初」の衝撃</h4>
             <p>1983年4月15日、東京ディズニーランド（TDL）は「アメリカ国外で初のディズニーテーマパーク」として産声を上げました。当時、米国のディズニー本社は日本での成功に懐疑的であり、自社の資金投資を拒んだため、OLCが100%資金を調達してライセンス契約のみで建設されました。しかし蓋を開けてみれば、初年度から1000万人を超える驚異的なゲストが押し寄せ、本社の予想をはるかに上回る大成功を収め、世界中のディズニー幹部たちを大いに驚かせたのです。</p>
-
             <h4>II. 幻の「映画スタジオ計画」から「海」への大逆転</h4>
             <p>TDLの大成功を受け、1988年に「第2パーク構想」が正式に発表されます。当初、米国ディズニー社が強く提案し、開発が決定していたのは、映画スタジオをテーマにした『ディズニー・ハリウッド・スタジオ・テーマパーク at 東京ディズニーランド』でした。しかし1991年、OLCの加賀見俊夫社長（当時）らは「日本には米国のような映画文化が馴染んでおらず、リピーター獲得に大きな懸念がある」と判断し、なんとディズニー社に対してスタジオ計画の**「白紙撤回」**を突きつけました。<br>
-            長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあたりに「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
-
+            長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあまり「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
             <h4>III. 3350億円の「風化する本物」</h4>
             <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
-            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではない、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った辺りです。</p>
-
+            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った所以です。</p>
             <h4>IV. 魔法の泉と、世界一の評価</h4>
-            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級 of **約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、指示通りにそして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
+            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級 of **約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、そして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
         </section>
-        </div>
 
         <!-- コピーライトとひっそり佇む注意書きリンク -->
         <footer>
@@ -477,6 +430,13 @@
     </div>
 
     <script>
+        /* --- 昼夜テーマスイッチ --- */
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
+        });
+
         /* --- レイアウト切り替え（List ⇄ Grid） --- */
         const viewListBtn = document.getElementById('view-list');
         const viewGridBtn = document.getElementById('view-grid');
@@ -492,15 +452,4 @@
             articleList.classList.add('grid-mode');
             viewGridBtn.classList.add('active-toggle');
             viewListBtn.classList.remove('active-toggle');
-        });
-
-        /* --- 【新設】さりげないポップアップの開閉制御 --- */
-        const noticeTrigger = document.getElementById('notice-trigger');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalClose = document.getElementById('modal-close');
-
-        noticeTrigger.addEventListener('click', () => {
-            modalOverlay.classList.add('active');
-        });
-
-        modalClose.a
+        }
