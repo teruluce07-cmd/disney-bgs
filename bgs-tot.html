@@ -20,6 +20,14 @@
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Noto Serif JP', serif; background-color: var(--bg-color); background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture); background-size: cover; background-attachment: fixed; color: var(--text-main); line-height: 2.2; overflow-x: hidden; transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased; }
+        
+        /* 背景を固定して軽くする仕様 */
+        .paper-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
+            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
+        }
+
         .noise-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
         .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease; position: relative; z-index: 10; }
         body.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
@@ -33,7 +41,7 @@
         .logo-wrapper { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 20px; border: 2px solid var(--accent-gold); box-shadow: 0 0 20px var(--glow-color); display: flex; justify-content: center; align-items: center; background: #111; transition: border-color 0.8s ease, box-shadow 0.8s ease; }
         .logo-img { height: 110%; width: auto; object-fit: cover; transition: filter 0.8s ease; filter: var(--img-filter); }
         .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
         .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
         .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
         .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
@@ -56,10 +64,22 @@
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
         .footer-link { text-align: center; margin-top: 80px; }
         .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+        
+        /* 相互リンク用の繊細なフォント装飾 */
+        .cross-link-text {
+            font-size: 0.8rem; font-style: italic; margin-top: 15px; color: var(--accent-gold); text-align: right;
+        }
+        .cross-link-text a {
+            color: inherit; text-decoration: underline; transition: color 0.3s;
+        }
+        .cross-link-text a:hover {
+            color: var(--text-main);
+        }
     </style>
 </head>
 <body>
     <div class="noise-overlay"></div>
+    <div class="paper-bg"></div>
     <div class="theme-switch" id="theme-switch">🌙</div>
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portal</a>
@@ -67,7 +87,7 @@
             <div class="logo-wrapper"><img src="tot-logo.png" alt="Hotel Hightower Crest" class="logo-img"></div>
             <div class="bgs-tag">Background Story</div>
             <h1>Hotel Hightower</h1>
-            <div class="subtitle-jp">傲慢なる略奪の果てと、影の忠臣</div>
+            <div class="subtitle-jp">傲慢なる略奪の果てと、影 of 忠臣</div>
         </header>
         <nav class="toc-box reveal">
             <div class="toc-title">Index</div>
@@ -112,7 +132,6 @@
         </section>
         <section class="article-block reveal" id="sea">
             <h2>III. 秘密結社「S.E.A.」と影の忠臣</h2>
-            <!-- 【修正箇所】S.E.A.の歴史を正確に修正 -->
             <p>ホテル・ハイタワーの物語は、単体のオカルト事件に留まりません。ハイタワー三世は、ディズニーシー全体の海洋探検史を繋ぐ、世界規模の探検家＆冒険家協会「S.E.A. (Society of Explorers and Adventurers)」のメンバーでした。1538年の大航海時代にコロンブスやダ・ヴィンチらによって創設されたこの歴史ある学会において、ハイタワー三世は19世紀の「再興期」を支えた主要メンバーの一人として名を連ねています。彼のあくなき強奪行為は、この組織の絶大な特権を利用して行われていました。</p>
             <p>ソアリンの「カメリア・ファルコ」や、香港の「ヘンリー・ミスティック卿」とも深い繋がりがあり、ミスティック卿の邸宅には、彼とハイタワー三世がシリキ・ウトゥンドゥを抱えて微笑む不気味な絵画が今も飾られています。</p>
             <div class="connection-card">
@@ -127,6 +146,10 @@
             <div class="connection-card">
                 <h4>📦 ロストリバーデルタ「レイジングスピリッツ」の物証</h4>
                 <p>ハイタワーの魔の手は、はるか南米の発掘現場にも及んでいました。レイジングスピリッツの遺跡発掘現場には、今も積み残された木箱が散乱しています。その側面には、はっきりと**「HOTEL HIGHTOWER」**の文字が刻まれています。これは、1912年のアメリカンウォーターフロントと、南米の古代遺跡の時間が、「ハイタワーの略奪と物資の輸送」という線でリアルに繋がっている決定的な証拠なのです。</p>
+                <!-- 【追加】レイジングスピリッツへの誘導リンク -->
+                <p class="cross-link-text">
+                    <a href="bgs-raging.html">➔ 【関連調査資料】水の上で燃え盛る炎。レイジングスピリッツ発掘現場の歴史はこちら</a>
+                </p>
             </div>
         </section>
         <section class="article-block reveal" id="genesis">
