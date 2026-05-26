@@ -99,14 +99,61 @@
         h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
         p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
 
-        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
-        .hero-img-container:hover .hero-img { transform: scale(1.03); }
+        /* --- 【大改善】写真を背景古紙に「なじませる」ための手帳・ポラロイド風加工 --- */
+        .hero-img-container { 
+            margin: 45px auto; 
+            padding: 10px; /* 写真の白フチを作る */
+            background: #FAF7F0; /* 暖かみのある写真用の白紙色 */
+            border-radius: 4px; 
+            box-shadow: 0 12px 30px rgba(62, 56, 48, 0.15); /* 影を柔らかく */
+            border: 1px solid rgba(139, 115, 85, 0.15);
+            /* 少しだけ斜めに傾けて「手帳にペタッと貼った質感」を再現（芸術的！） */
+            transform: rotate(-1.2deg);
+            transition: transform 0.3s ease;
+        }
+        /* 偶数番目の写真は逆方向に傾けて、手作り感をアップ */
+        .hero-img-container:nth-of-type(even) {
+            transform: rotate(1.5deg);
+        }
+        .hero-img-container:hover {
+            transform: scale(1.02) rotate(0deg); /* 触るとまっすぐになる可愛いギミック */
+        }
+        .hero-img { 
+            width: 100%; height: auto; display: block; 
+            border-radius: 2px;
+            filter: var(--img-filter); 
+        }
 
         .connection-card { background: rgba(59, 89, 152, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
         body.curse-mode .connection-card { background: rgba(255, 20, 147, 0.03); }
         .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+
+        /* Instagramへのオシャレな誘導ボタン */
+        .insta-btn-wrapper {
+            text-align: center;
+            margin: 60px 0;
+        }
+        .insta-link-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--text-main);
+            border: 1px solid var(--border-light);
+            padding: 18px 30px;
+            border-radius: 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            background: rgba(255,255,255,0.05);
+        }
+        .insta-link-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: 0 0 20px var(--glow-color);
+            transform: translateY(-3px);
+        }
 
         .footer-link { text-align: center; margin-top: 80px; }
         .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
@@ -167,7 +214,6 @@
                 <img src="bb-staircase.jpeg" alt="Enchanted Castle Grand Staircase" class="hero-img">
             </div>
 
-            <!-- 【ファクトチェック】世界初のトラックレスライドはプーさんのハニーハント -->
             <p>そしてアトラクション本編の、床にレールのない「トラックレスライド」を採用した魔法のカップ。2000年に同じ東京ディズニーランドの『プーさんのハニーハント』が世界初のトラックレスライド（LPSシステム）を誕生させてから20年、本作はその技術を極限まで進化させ、まるで本当にダンスを踊っているかのような息の合った動きを実現させました。ゲストは食器たちの宴に招かれた「主賓」として、彼らと共に踊る体験をします。</p>
         </section>
 
@@ -175,16 +221,20 @@
         <section class="article-block reveal" id="props">
             <h2>III. プロップスに隠された内面</h2>
             <p>エリア内のショップやレストランには、キャラクターたちの生活感と個性が限界まで詰め込まれています。</p>
-            <p><strong>「ラ・タベルヌ・ド・ガストン（ガストンの酒場）」</strong>は、映画に登場する、彼を称えるためだけに作られた狂気の酒場です。店内中央には彼の巨大な肖像画が飾られ、壁には彼が仕留めた動物の剥製が埋め尽くされています。ガストン専用の「鹿の角で作られた巨大な椅子」も置かれ、彼の凄まじい自己顕示欲が表現されています。これはどこか、タワテラのハリソン・ハイタワー三世の収集欲にも通じる「傲慢さ」の象徴です。</p>
+            <p><strong>「ラ・タベルヌ・ド・ガストン（ガストンの酒場）」</strong>は、映画に登場する、彼を称えるためだけに作られた狂気の酒場です。店内中央には彼の巨大な肖像画が飾られ、壁には彼が仕留めた動物の剥製が埋め尽くされています。ガストン専用の「鹿の角で作られた巨大な椅子」も置かれ、彼の自己顕示欲が表現されています。</p>
+            
+            <div class="connection-card" style="border-color: #8C6239; background: rgba(140, 98, 57, 0.05);">
+                <h4>🍎 【Curator's Recommend】隠れた激ウマメニュー</h4>
+                <p>「ラ・タベルヌ・ド・ガストン」のすぐ隣のキャリッジなどで販売されている、**『ル・フウズ・チュロス（アップルキャラメル味）』**。サクサクの香ばしい生地から広がる、甘酸っぱいリンゴの豊かな香りとキャラメルの上品な甘さは抜群です。私がインパするたびに必ず買い求める、個人的に心からお勧めしたい大好きな限定メニューです。休憩のお供にぜひ！</p>
+            </div>
+
             <p>一方、村の店<strong>「ビレッジショップス」</strong>は、ベルが普段利用している本屋や商人たちの店です。「ラ・ベル・リブレリー（本屋）」には、ベルが高いところにある本を取るために使った「はしご」や、彼女が何度も読み返した愛読書がディスプレイされ、村人から「風変わりな娘」と呼ばれていた彼女の、優しく知的な生活感がそのまま残されています。</p>
         </section>
 
         <!-- IV. 音楽と技術の融合、そして日本の所作 -->
         <section class="article-block reveal" id="music-magic">
             <h2>IV. 音楽と「日本の所作」を宿したアニマトロニクス</h2>
-            <p>タワー・オブ・テラーでも見られた「音楽による空間の支配」は、このエリアでも極限まで磨き上げられています。エリア内のBGMは、のどかな村ではアコーディオンやアコースティックな温かい楽器の演奏（朝の風景など）ですが、城の森へ進むにつれて、重厚なストリングスとパイプオルガンの不気味で切ない旋律へと、シームレスに変化します。</p>
-            
-            <!-- 【追加設定】ベルの日本人の仕草を参考にしたアニマトロニクス -->
+            <p>アトラクション全体の「音楽による空間の支配」は、このエリアでも極限まで磨き上げられています。エリア内のBGMは、のどかな村ではアコーディオンやアコースティックな温かい楽器の演奏（朝の風景など）ですが、城の森へ進むにつれて、重厚なストリングスとパイプオルガンの不気味で切ない旋律へと、シームレスに変化します。</p>
             <p>そして最大の見どころは、ウォルト・ディズニー・イマジニアリング（WDI）の最新技術によって作られたベルや野獣たちの「オーディオ・アニマトロニクス（動くロボット）」です。開発初期から東京（日本）向けに完全オリジナルとして設計された本施設では、ベルの滑らかで美しい動きに、**日本人の持つ繊細な「所作や身のこなし」**（丁寧なお辞儀や、静かなうつむき方、上品な手の動き）が取り入れられています。だからこそ、彼女の動きは私たち日本のゲストの目にも信じられないほど自然で、息を呑むほどの気品とリアリティを持って心に迫るのです。</p>
         </section>
 
@@ -196,10 +246,16 @@
                 <img src="bb-dance.jpeg" alt="Belle and the Beast Dancing" class="hero-img">
             </div>
 
-            <!-- 【追加設定】野獣の不思議な復活シーンの解説 -->
             <p>アトラクションのクライマックスにして、イマジニアたちの執念の極致とも言えるのが、**「野獣が魔法の力によって人間に戻る復活の瞬間」**です。ゲストの目の前で、野獣が宙に浮かび上がり、光を放ちながらゆっくりと回転。そして、次の瞬間には不思議と人間の王子へと姿を変えています。</p>
             <p>これは、プロジェクションマッピング、光学トリック、そして高度なロボット工学が寸分の狂いもなく完全に融合した、まさに現代の最先端イリュージョンの結晶です。映画で誰もが感動したあの1991年のアニメーションの奇跡を、映像ではなく「目の前の三次元の現実」として再現するこの技術は、ディズニーが日本へ贈った最高の一瞬と言えます。魔法が解け、二人が踊る広間のラストシーンは、私たち自身が魔法の目撃者となったことを確信させてくれます。</p>
         </section>
+
+        <!-- 【新設】〇〇さんのインスタのまほもの投稿へのリンク -->
+        <div class="insta-btn-wrapper reveal">
+            <a href="https://www.instagram.com/p/DX1XYFcGJi8/?igsh=MWhjMTRycXo0dWh3dg==" class="insta-link-btn" target="_blank">
+                View on Instagram (まほもの投稿) 📸
+            </a>
+        </div>
 
         <div class="footer-link reveal">
             <a href="index.html">← HOMEへ戻る</a>
