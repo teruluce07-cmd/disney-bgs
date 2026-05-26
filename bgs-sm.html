@@ -20,6 +20,17 @@
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='optimized-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f2ebd9' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23optimized-paper)'/%3E%3C/svg%3E");
         }
 
+        body.curse-mode {
+            --bg-color: #05140E; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00FF7F; 
+            --border-light: rgba(0, 255, 127, 0.25);
+            --img-filter: brightness(0.7) contrast(1.25) saturate(1.2) hue-rotate(-20deg);
+            --glow-color: rgba(0, 255, 127, 0.4);
+            --droplet-color: rgba(0, 255, 127, 0.4); 
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%230b2015' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -32,7 +43,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 【軽量化の魔法】背景の古紙を固定レイヤーにしてスクロールを軽く --- */
+        /* 背景固定レイヤー（GPU高速化） */
         .paper-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -49,7 +60,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Apple風リキッドグラス（液体ガラス）エフェクト */
+        /* Apple風リキッドグラスエフェクト */
         .liquid-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -76,11 +87,10 @@
             max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
             background: rgba(240, 235, 220, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
         }
+        body.curse-mode .container { background: rgba(10, 25, 18, 0.45); box-shadow: inset 0 0 40px rgba(152,255,152,0.02); }
 
         .reveal {
-            opacity: 0; 
-            transform: translate3d(0, 30px, 0);
-            will-change: transform, opacity;
+            opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
             transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal.active {
@@ -141,6 +151,7 @@
 
     <div class="noise-overlay"></div>
     <div class="paper-bg"></div>
+    <div class="theme-switch" id="theme-switch">🌙</div>
 
     <!-- リキッドグラス・水しぶきの容器 -->
     <div class="liquid-container" id="liquid-container"></div>
@@ -159,7 +170,7 @@
             <div class="toc-title">Index</div>
             <ul class="toc-list">
                 <li><span>I. 密造酒が生んだ大洪水（エリアの歴史）</span><a href="#prologue">Read →</a></li>
-                <li><span>II. ブレア・ラビットと「ブレア（Br'er）」の正体</span><a href="#brer">Read →</a></li>
+                <li><span>II. うさぎどんと「ブレア（Br'er）」の謎</span><a href="#brer">Read →</a></li>
                 <li><span>III. ビーバーの建築術とクリッターの家（施設紹介）</span><a href="#spots">Read →</a></li>
                 <li><span>IV. ウエスタンランドからの「グラデーション」</span><a href="#boundaries">Read →</a></li>
                 <li><span>V. 小動物目線で作られた「スケールの魔術」</span><a href="#scale">Read →</a></li>
@@ -167,7 +178,7 @@
             </ul>
         </nav>
 
-        <!-- 【夕暮れの美しい昼の写真（sm-day.jpeg）をカバーに使用】 -->
+        <!-- 昼の美しい写真（sm-day.jpeg）をカバーに使用 -->
         <div class="hero-img-container reveal">
             <img src="sm-day.jpeg" alt="Splash Mountain Day View" class="hero-img" id="hero-img">
         </div>
@@ -180,20 +191,21 @@
             <p>大洪水により開拓途中だった人間たちは退去していきましたが、水分をたっぷり含んだ肥沃な泥地は、小動物たちにとって絶好のフロンティアとなりました。彼らは人間が残していった道具や大自然の木の根を再利用して家や作業場を作り始め、独自の文明を持つ小さな国が完成したのです。</p>
         </section>
 
-        <!-- II. ブレア・ラビットとブレア（Br'er）の謎 -->
+        <!-- II. うさぎどんとブレア（Br'er）の謎 -->
         <section class="article-block reveal" id="brer">
-            <h2>II. ブレア・ラビットと「ブレア」の正体</h2>
-            <p>ゲストが乗り込む丸太のボートは、チカピンヒルの内部を進みながら、うさぎの「ブレア・ラビット（うさぎどん）」の冒険を追体験していきます。これは、退屈な我が家を飛び出し「笑いの国」を探し求めた彼の、知恵と故郷の物語です。</p>
-            <p>旅の途中で彼を狙うのは、ずる賢いきつねの「ブレア・フォックス」と、間抜けなくまの「ブレア・ベア」。ブレア・ラビットは持ち前の機転で彼らの罠を何度もかいくぐりますが、ついにフォックスに捕まり、丘の頂上で絶体絶命の危機を迎えます。</p>
+            <h2>II. うさぎどんと「ブレア」の正体</h2>
+            <p>ゲストが乗り込む丸太のボートは、チカピンヒルの内部を進みながら、日本ではおなじみの**「うさぎどん」**の冒険を追体験していきます。これは、退屈な我が家を飛び出し「笑いの国」を探し求めた彼の、知恵と故郷の物語です。</p>
+            <p>旅の途中で彼を狙うのは、ずる賢い**「きつねどん」**と、力持ちだけど少し間抜けな**「くまどん」**。うさぎどんらは持ち前の機転で罠を何度もかいくぐりますが、ついにきつねどんに捕まり、丘の頂上で絶体絶命の危機を迎えます。</p>
             
             <div class="connection-card">
-                <h4>💡 「ブレア（Br'er）」と「〜どん」の豆知識</h4>
-                <p>アトラクション名や原作キャラクターに共通してつく「ブレア（Br'er）」という単語。これはアメリカ南部の方言（なまり）で、**「Brother（お兄さん・兄弟）」**を意味する言葉が縮まったものです。<br><br>
-                   つまり、英語のニュアンスとしては「うさぎの兄貴（Brother Rabbit）」「きつねのお兄さん（Brother Fox）」と呼び合っていることになります。日本ではこれを非常に情緒豊かに、かつ泥臭く friendly に翻訳し、**「うさぎどん（ブレア・ラビット）」「きつねどん（ブレア・フォックス）」「くまどん（ブレア・ベア）」**という愛らしい名前で呼んでいるのです。</p>
+                <h4>💡 「うさぎどん」と「ブレア」：単なる直訳ではない名前の魔法</h4>
+                <p>私たちが親しみを持って呼んでいる「うさぎどん」「きつねどん」「くまどん」という名前。実は英語のオリジナル版では、それぞれ**「Br'er Rabbit（ブレア・ラビット）」「Br'er Fox（ブレア・フォックス）」「Br'er Bear（ブレア・ベア）」**と呼ばれています。<br><br>
+                   この「ブレア（Br'er）」という言葉、実はアメリカ南部の方言（なまり）で**「Brother（お兄さん・兄弟）」**を意味する言葉が縮まったものです。<br><br>
+                   つまり、そのまま英語通りに直訳すると「うさぎのお兄さん」「きつねの兄貴」となります。しかし、日本のディズニーに導入される際、翻訳家たちはこれを単に「うさぎ兄さん」と直訳するのをやめ、日本の昔話のような温かみと愛嬌を込めて、親しみやすい**「〜どん」**という言葉でローカライズしました。単なる言葉の置き換えではなく、日本の子供たちにもスッと馴染むように計算された、素晴らしい「言葉の魔法」なのです。</p>
             </div>
 
-            <p>フォックスの罠にかかり絶体絶命のブレア・ラビットは、命がけの「最後のはっぱり（嘘）」をつきました。「煮るなり焼くなり好きにしてくれ。でも、あそこの『茨の茂み（Briar Patch）』にだけは放り込まないでくれ！」と。間抜けなフォックスたちは、彼が最も嫌がることをしようと、彼を茨の茂みへと投げ落とします。この落下こそが、ゲストが体験する最大傾斜45度のスリリングな急降下なのです。</p>
-            <p>実はうさぎである彼にとって、茨の茂みは「自分が生まれ育った最も安全な我が家」でした。フォックスたちの裏をかいて無事生還した彼は、やっぱり自分が元いた故郷こそが最高の「笑いの国」だったと気づき、クリッターたちが総出で彼の帰還を歓迎する、お祝いに満ちたフィナーレ（Zip-A-Dee-Doo-Dah）で幕を閉じます。</p>
+            <p>きつねどんの罠にかかり絶体絶命のうさぎどんは、命がけの「最後のはったり（嘘）」をつきました。「煮るなり焼くなり好きにしてくれ。でも、あそこの『茨の茂み（Briar Patch）』にだけは放り込まないでくれ！」と。間抜けな彼らは、うさぎどんが最も嫌がることをしようと、彼を茨の茂みへと投げ落とします。この落下こそが、ゲストが体験する最大傾斜45度のスリリングな急降下なのです。</p>
+            <p>実はうさぎである彼にとって、トゲに囲まれた茨の茂みは「自分が生まれ育った最も安全な我が家」でした。彼らの裏をかいて無事生還したうさぎどんは、やっぱり自分が元いた故郷こそが最高の「笑いの国」だったと気づき、クリッターたちが総出で彼の帰還を歓迎する、お祝いに満ちたフィナーレ（Zip-A-Dee-Doo-Dah）で幕を閉じます。</p>
         </section>
 
         <!-- III. 施設詳細 -->
@@ -222,18 +234,17 @@
             <p>また、道端のあちこちには、人間（ハンター）のブーツの足跡が残されています。クリッターたちはハンターに怯えるのではなく、彼らの仕掛けたトラップを生活道具に改造し、残された大きなブーツを「植木鉢」や「看板」としてユーモアたっぷりに再利用して暮らしています。このような高い知性とたくましさが、エリアの至る所で表現されています。</p>
         </section>
 
-        <!-- VI. 世界で唯一の「スプラッシュ」 [NEW!] -->
+        <!-- VI. 世界で唯一の「スプラッシュ」 -->
         <section class="article-block reveal" id="legacy">
             <h2>VI. 世界で唯一、東京に遺された「奇跡」</h2>
             <p>これまで、世界中の複数のディズニーパークに存在したスプラッシュ・マウンテン。しかし現在、その歴史は極めて大きな変革期を迎えています。</p>
-            <p>アメリカ・フロリダのウォルト・ディズニー・ワールド（2024年6月28日オープン）および、カリフォルニアのディズニーランド（2024年11月15日オープン）では、長年親しまれたスプラッシュ・マウンテンが完全にクローズされ、映画『プリンセスと魔法のキス』をテーマにした**「ティアナのバイユー・アドベンチャー（Tiana's Bayou Adventure）」**というまったく新しいアトラクションへと生まれ変わりました。</p>
+            <p>アメリカ・フロリダのウォルト・ディズニー・ワールドおよび、カリフォルニアのディズニーランドでは、長年親しまれたスプラッシュ・マウンテンが完全にクローズされ、映画『プリンセスと魔法のキス』をテーマにした**「ティアナのバイユー・アドベンチャー（Tiana's Bayou Adventure）」**というまったく新しいアトラクションへと生まれ変わりました。</p>
             
-            <!-- 【妖しく輝く夜の写真（sm-night.jpeg）をこのクライマックスセクションに配置】 -->
             <div class="hero-img-container">
                 <img src="sm-night.jpeg" alt="Splash Mountain Night Lit View" class="hero-img">
             </div>
 
-            <p>これにより、1946年の映画『南部の唄』をベースにしたクラシックなスプラッシュ・マウンテンと、名曲「ジッパ・ディー・ドゥー・ダー（Zip-A-Dee-Doo-Dah）」を乗車中に聴くことができるアトラクションは、**全世界で唯一、この「東京ディズニーランド」だけに遺されることになった**のです。アメリカのオリジナルが新時代へと移行する中で、ここ日本のクリッターカントリーだけが、ブレア・ラビットたちの陽気で心優しい冒険の歴史を今もそのまま守り続けている、世界でも極めて貴重な「約束の地」となっています。</p>
+            <p>これにより、1946年の映画『南部の唄』をベースにしたクラシックなスプラッシュ・マウンテンと、名曲「ジッパ・ディー・ドゥー・ダー（Zip-A-Dee-Doo-Dah）」を乗車中に聴くことができるアトラクションは、**全世界で唯一、この「東京ディズニーランド」だけに遺されることになった**のです。アメリカのオリジナルが新時代へと移行する中で、ここ日本のクリッターカントリーだけが、うさぎどんたちの陽気で心優しい冒険の歴史を今もそのまま守り続けている、世界でも極めて貴重な「約束の地」となっています。</p>
         </section>
 
         <div class="footer-link reveal">
@@ -242,6 +253,19 @@
     </div>
 
     <script>
+        /* 昼夜スイッチ（昼：sm-day.jpeg ➔ 夜：sm-night.jpeg ） */
+        const themeSwitch = document.getElementById('theme-switch');
+        const heroImg = document.getElementById('hero-img');
+        
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            const isNight = document.body.classList.contains('curse-mode');
+            themeSwitch.textContent = isNight ? '☀️' : '🌙';
+            
+            // 昼と夜の写真の切り替え
+            heroImg.src = isNight ? 'sm-night.jpeg' : 'sm-day.jpeg';
+        });
+
         /* 優雅なスクロールフェードイン */
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
