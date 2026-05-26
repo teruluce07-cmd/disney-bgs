@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGS Deep Report: Beauty and the Beast | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- 昼夜（フランスの古紙・呪われた紫の魔導書）カラー設定 --- */
+        :root {
+            /* デフォルト：フランスの片田舎を思わせる、ベージュとロイヤルブルーの古紙モード */
+            --bg-color: #E2D7C5; 
+            --text-main: #2D231E; 
+            --accent-gold: #3B5998; /* フランス皇室を思わせるロイヤルブルー */
+            --border-light: rgba(59, 89, 152, 0.2);
+            --img-filter: brightness(0.95) contrast(1.05);
+            --glow-color: rgba(59, 89, 152, 0.25);
+            
+            /* シワを表現した、超くしゃくしゃ紙の3Dフィルター */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+        }
+
+        body.curse-mode {
+            /* スイッチON：呪われた野獣の城（漆黒の闇×魔法の薔薇のピンクマゼンタ）モード */
+            --bg-color: #100615; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #FF1493; /* 妖しく輝く魔法の薔薇のマゼンタピンク */
+            --border-light: rgba(255, 20, 147, 0.25);
+            --img-filter: brightness(0.8) contrast(1.2) saturate(1.2);
+            --glow-color: rgba(255, 20, 147, 0.45);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%2322082b' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 背景固定レイヤー（GPU高速化） */
+        .paper-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
+            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
+        }
+
+        .container { 
+            position: relative; z-index: 10;
+            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
+            background: rgba(245, 240, 230, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        }
+        body.curse-mode .container { background: rgba(15, 10, 20, 0.45); box-shadow: inset 0 0 40px rgba(255,20,147,0.02); }
+
+        .reveal {
+            opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active { opacity: 1; transform: translate3d(0, 0, 0); }
+
+        .back-btn {
+            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
+            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
+            border-bottom: 1px solid transparent; transition: color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
+
+        /* 目次 */
+        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
+
+        /* 本文 */
+        .article-block { margin-bottom: 70px; text-align: justify; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
+        .hero-img-container:hover .hero-img { transform: scale(1.03); }
+
+        .connection-card { background: rgba(59, 89, 152, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        body.curse-mode .connection-card { background: rgba(255, 20, 147, 0.03); }
+        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
+        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+
+        .footer-link { text-align: center; margin-top: 80px; }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="paper-bg"></div>
+    <div class="theme-switch" id="theme-switch">🌹</div>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Portal</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Beauty and the Beast</h1>
+            <div class="subtitle-jp">魔法の薔薇が紡ぐ、光と影のフレンチ・ゴシック</div>
+        </header>
+
+        <!-- 目次 -->
+        <nav class="toc-box reveal">
+            <div class="toc-title">Index</div>
+            <ul class="toc-list">
+                <li><span>I. 呪われた城への空間演出（プロローグ）</span><a href="#prologue">Read →</a></li>
+                <li><span>II. 魔法のものがたり：Qラインと城内の秘密</span><a href="#castle-secrets">Read →</a></li>
+                <li><span>III. プロップスに隠されたキャラクターの内面</span><a href="#props">Read →</a></li>
+                <li><span>IV. 天才が手掛けた、音楽と技術の融合（没入感）</span><a href="#music-magic">Read →</a></li>
+                <li><span>V. S.E.A.の影と「傲慢」という名の罰</span><a href="#curse-thought">Read →</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1枚目：昼の美しいお城の外観（bb-castle.jpeg） -->
+        <div class="hero-img-container reveal">
+            <img src="bb-castle.jpeg" alt="Beast's Castle Exterior" class="hero-img">
+        </div>
+
+        <!-- I. プロローグ -->
+        <section class="article-block reveal" id="prologue">
+            <h2>I. 呪われた城への空間演出</h2>
+            <p>2020年、ファンタジーランドに誕生した『美女と野獣』のエリア。ここは単に映画のセットを美しく再現しただけではなく、エリアに足を踏み入れた瞬間から映画のストーリー順に景色や空気感が変化していく、計算され尽くした**「歩く映画体験」**の仕掛けが施されています。</p>
+            <p>エントランスに佇むベルの父の家「モーリスのコテージ」を抜けると、のどかで活気ある「村の広場」へと出ます。ここでは映画の「朝の風景」が聞こえてきそうな、陽気なフランスの片田舎が広がっていますが、村を抜けて野獣の城へと進むにつれ、景色は一変して薄暗い「深い森」へと変わります。映画でモーリスが狼に襲われ迷い込んだ、あのひんやりとした不気味な森が、緻密な植栽と岩組によって見事に演出されているのです。城の前に架かる頑丈な石橋を渡ることで、ゲストは「人間の世界（日常）」から「魔法の世界（非日常）」へと完全に引き離されます。</p>
+            
+            <!-- 2枚目：不気味な夜の入り口（bb-entrance.jpeg） -->
+            <div class="hero-img-container reveal">
+                <img src="bb-entrance.jpeg" alt="Maurice's Cottage and Forest Path" class="hero-img">
+            </div>
+        </section>
+
+        <!-- II. 城内の秘密 -->
+        <section class="article-block reveal" id="castle-secrets">
+            <h2>II. 魔法のものがたり：Qラインと城内の秘密</h2>
+            <p>そびえ立つ約30mの城内に入ると、ゲストはただ並ぶだけでなく、この「城に遺された記憶」を追体験していくことになります。</p>
+            <p>最初に足を踏み入れる大広間の応接室には、意思を持った「暖炉」があります。よく見ると、呪いで家具に変えられてしまったルミエールやコグスワースの気配が、暖炉の彫刻装飾のなかに隠されています。さらにその先、ベルと野獣が少しずつ心を通わせていく名シーンの舞台となった「朝食ルーム」や「大階段」へと進みます。</p>
+            
+            <!-- 3枚目：大階段（bb-staircase.jpeg） -->
+            <div class="hero-img-container reveal">
+                <img src="bb-staircase.jpeg" alt="Enchanted Castle Grand Staircase" class="hero-img">
+            </div>
+
+            <p>そしてアトラクション本編の、世界初の「トラックレス（レールのない）ライド」を採用した魔法のカップ。なぜこのカップがこれほど滑らかに、まるで生きているように踊るように動くのか。それに対するBGS的な理由は、**「城全体にかけられた『すべての調度品が命を持つ』という魔女の呪いに、ゲストも完全に巻き込まれているから」**という完璧なものです。ゲストは単なる観客ではなく、食器たちの宴に招かれた「主賓」として、彼らと共に踊る体験をするのです。</p>
+        </section>
+
+        <!-- III. キャラクターの内面 -->
+        <section class="article-block reveal" id="props">
+            <h2>III. プロップスに隠された内面</h2>
+            <p>エリア内のショップやレストランには、キャラクターたちの生活感と個性が限界まで詰め込まれています。</p>
+            <p><strong>「ラ・タベルヌ・ド・ガストン（ガストンの酒場）」</strong>は、映画に登場する、彼を称えるためだけに作られた狂気の酒場です。店内中央には彼の巨大な肖像画が飾られ、壁には彼が仕留めた動物の剥製（トロフィー）が埋め尽くされています。ガストン専用の「鹿の角で作られた巨大な椅子」も置かれ、彼の凄まじい自己顕示欲が表現されています。これはどこか、タワテラのハリソン・ハイタワー三世の収集欲にも通じる「傲慢さ」の象徴です。</p>
+            <p>一方、村の店<strong>「ビレッジショップス」</strong>は、ベルが普段利用している本屋や商人たちの店です。「ラ・ベル・リブレリー（本屋）」には、ベルが高いところにある本を取るために使った「はしご」や、彼女が何度も読み返した愛読書がディスプレイされ、村人から「風変わりな娘」と呼ばれていた彼女の、優しく知的な生活感がそのまま残されています。</p>
+        </section>
+
+        <!-- IV. 音楽と技術の融合 -->
+        <section class="article-block reveal" id="music-magic">
+            <h2>IV. 音楽と技術の融合（没入感）</h2>
+            <p>タワー・オブ・テラーでも見られた「音楽による空間の支配」は、このエリアでも極限まで磨き上げられています。エリア内のBGMは、のどかな村ではアコーディオンやアコースティックな温かい楽器の演奏（朝の風景など）ですが、城の森へ進むにつれて、重厚なストリングスとパイプオルガンの不気味で切ない旋律へと、シームレスに変化します。</p>
+            
+            <!-- 4枚目：ボールルームのダンス（bb-dance.jpeg） -->
+            <div class="hero-img-container reveal">
+                <img src="bb-dance.jpeg" alt="Belle and the Beast Dancing" class="hero-img">
+            </div>
+
+            <p>また、ウォルト・ディズニー・イマジニアリング（WDI）の最高峰の技術「オーディオ・アニマトロニクス」により、ベルや野獣、お城の仲間たちが「本当にそこで息をして生きている」かのような、映画からそのまま飛び出してきたかのような極限の動きを実現。1991年のあのアニメーション映画の中に自分自身が完全に迷い込んでしまったかのような、究極の没入感を生み出しているのです。</p>
+        </section>
+
+        <!-- V. S.E.A.の影と「傲慢」 -->
+        <section class="article-block reveal" id="curse-thought">
+            <h2>V. S.E.A.の影と「傲慢」という名の罰</h2>
+            <p>ここからは、サイト内の他の記事と繋がるディープな裏設定の考察コラムです。</p>
+            <p>美女と野獣の時代設定は18世紀中頃のフランス。この時代、地上では「S.E.A.」の探検家たちが科学や発明で世界を変えようと躍進していました。しかし、野獣の城は「魔女の呪い」という非科学的なオカルトの力によって、時代の進歩から完全に隔離され、時間が止められていたのです。</p>
+            
+            <div class="connection-card">
+                <h4>💡 ガストンとハイタワー三世の「共通テーマ」</h4>
+                <p>ガストンの酒場に飾られた「略奪された剥製たち」は、ハイタワー三世の略奪美術コレクションのミニチュア版のようでもあります。ディズニーが描く「ガストン（野獣）」と「ハイタワー三世」には、**『人間の強欲と傲慢さ』、そしてそれに下される『突然の失踪・呪いという罰』**という、完全に共通した文学的テーマが隠されています。野獣の城は愛によって呪いが解かれましたが、ハイタワーのホテルは今も呪われたまま。この対比こそが、パークの歴史をさらに深く、面白くしています。</p>
+            </div>
+        </section>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌹';
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
