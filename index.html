@@ -95,7 +95,7 @@
         .walt-quote cite { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-style: normal; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 10px; opacity: 0.7; }
         .walt-quote-jp { font-size: 0.7rem; opacity: 0.5; letter-spacing: 0.05em; }
 
-        /* --- 目次 (TOC) --- */
+        /* --- 【大整理】コンパクトな古紙タグ型目次 (TOC) --- */
         .toc-box {
             background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 25px; border-radius: 8px; margin-bottom: 60px; text-align: left;
         }
@@ -130,15 +130,12 @@
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        /* 縦長写真を綺麗に収めるためのトリミング調整 */
-        .sm-img-align { object-position: center 45% !important; }
+        .fs-img-align { object-position: center 15% !important; }
         .btm-img-align { object-position: center 90% !important; }
         .bb-img-align { object-position: center 10% !important; }
-        .fs-img-align { object-position: center 15% !important; }
+        .sm-img-align { object-position: center 45% !important; }
         .soarin-img-align { object-position: center 25% !important; }
         .tl-img-align { object-position: center 50% !important; }
-        
-        /* 【追加：インディお城（ピラミッド）用の縦長写真専用トリミング調整】 */
         .indy-img-align { object-position: center 30% !important; }
 
         /* S.E.A.カード専用 */
@@ -170,16 +167,61 @@
         .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .article-list.grid-mode .read-btn { font-size: 0.65rem; }
 
-        /* グリッド表示の時の、完璧な上寄せ設定 */
         .article-list.grid-mode .sm-img-align { object-position: center 35% !important; }
         .article-list.grid-mode .btm-img-align { object-position: center 90% !important; }
         .article-list.grid-mode .bb-img-align { object-position: center 10% !important; }
         .article-list.grid-mode .fs-img-align { object-position: center 15% !important; }
         .article-list.grid-mode .soarin-img-align { object-position: center 25% !important; }
         .article-list.grid-mode .tl-img-align { object-position: center 40% !important; }
-        
-        /* グリッド表示の時のインディ用の完璧な上寄せ調整 */
         .article-list.grid-mode .indy-img-align { object-position: center 20% !important; }
+
+        /* --- 【新設】Apple風リキッドすりガラスの注意書きモーダル --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        .modal-box {
+            background: #FAF7F0; /* 暖かみのある柔らかい白 */
+            border: 1px solid var(--accent-gold);
+            padding: 35px 25px 25px; border-radius: 12px;
+            width: 90%; max-width: 400px;
+            text-align: justify;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            position: relative;
+            color: #33302E; font-size: 0.8rem; line-height: 1.8;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute; top: 15px; right: 15px;
+            cursor: pointer; font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem; color: var(--accent-gold);
+            border: none; background: transparent; font-weight: bold;
+            letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        body.curse-mode .modal-box {
+            background: #0B1021; color: #E2E8F0; border-color: var(--accent-gold);
+        }
+        /* コピーライト横の極小リンク */
+        .site-notice-trigger {
+            cursor: pointer; text-decoration: underline; transition: color 0.3s;
+        }
+        .site-notice-trigger:hover {
+            color: var(--accent-gold);
+        }
 
         /* 💻 パソコン ＆ iPadレスポンシブ */
         @media (min-width: 768px) {
@@ -221,11 +263,10 @@
             </div>
         </section>
 
-        <!-- パーク別・コンパクトタグ型目次 (TOC) -->
+        <!-- パーク別目次 (TOC) -->
         <nav class="toc-box">
             <div class="toc-title">Quick Navigation</div>
             
-            <!-- 東京ディズニーランド -->
             <div class="toc-section">
                 <span class="toc-section-title">Tokyo Disneyland (TDL)</span>
                 <div class="toc-tags">
@@ -236,7 +277,6 @@
                 </div>
             </div>
 
-            <!-- 東京ディズニーシー -->
             <div class="toc-section">
                 <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
                 <div class="toc-tags">
@@ -246,7 +286,7 @@
                     <a href="#soarin-card">Soarin'</a>
                     <a href="#sea-card">S.E.A. Archives</a>
                     <a href="#raging-card">Raging Spirits</a>
-                    <a href="#indy-card">Indiana Jones</a> <!-- 【追加】インディ・ジョーンズ -->
+                    <a href="#indy-card">Indiana Jones</a>
                 </div>
             </div>
 
@@ -267,7 +307,7 @@
         <!-- 記事カード一覧 -->
         <div class="article-list grid-mode" id="article-list">
             
-            <!-- 【1：スプラッシュ・マウンテン】 -->
+            <!-- 1本目：スプラッシュ・マウンテン -->
             <a href="bgs-sm.html" class="article-card" id="sm-card">
                 <div class="img-wrapper">
                     <img src="sm-day.jpeg" alt="Splash Mountain" class="sm-img-align">
@@ -278,7 +318,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【2：ビッグサンダー・マウンテン】 -->
+            <!-- 2本目：ビッグサンダー・マウンテン -->
             <a href="bgs-btm.html" class="article-card" id="btm-card">
                 <div class="img-wrapper">
                     <img src="btm-exterior.jpeg" alt="Big Thunder Mountain" class="btm-img-align">
@@ -289,7 +329,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【3：美女と野獣】 -->
+            <!-- 3本目：美女と野獣 -->
             <a href="bgs-bb.html" class="article-card" id="bb-card">
                 <div class="img-wrapper">
                     <img src="bb-castle.jpeg" alt="Enchanted Castle" class="bb-img-align">
@@ -300,7 +340,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【4：トゥモローランド】 -->
+            <!-- 4本目：トゥモローランド -->
             <a href="bgs-tl.html" class="article-card" id="tl-card">
                 <div class="img-wrapper">
                     <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain" class="tl-img-align">
@@ -311,7 +351,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【5：タワー・オブ・テラー】 -->
+            <!-- 5本目：タワー・オブ・テラー -->
             <a href="bgs-tot.html" class="article-card" id="tot-card">
                 <div class="img-wrapper">
                     <img src="tot-exterior.jpg" alt="Hotel Hightower">
@@ -322,18 +362,18 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【6：シンドバッド・ストーリーブック・ヴォヤッジ】 -->
+            <!-- 6本目：シンドバッド・ストーリーブック・ヴォヤッジ -->
             <a href="bgs-sindbad.html" class="article-card" id="sindbad-card">
                 <div class="img-wrapper">
                     <img src="DSC00234_Original.jpeg" alt="Sindbad's Voyage">
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈作品の傑作へと生まれ変わるまで。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【7：ファンタジースプリングス】 -->
+            <!-- 7本目：ファンタジースプリングス -->
             <a href="bgs-fs.html" class="article-card" id="fs-card">
                 <div class="img-wrapper">
                     <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="fs-img-align">
@@ -344,7 +384,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【8：ソアリン】 -->
+            <!-- 8本目：ソアリン -->
             <a href="bgs-soarin.html" class="article-card" id="soarin-card">
                 <div class="img-wrapper">
                     <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum" class="soarin-img-align">
@@ -355,7 +395,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【9：S.E.A.（秘密結社）】 -->
+            <!-- 9本目：S.E.A. -->
             <a href="bgs-sea.html" class="article-card" id="sea-card">
                 <div class="img-wrapper sea-thumbnail-bg">
                     <div class="sea-mini-crest">
@@ -368,7 +408,7 @@
                 <div class="read-btn">Explore the Archives →</div>
             </a>
 
-            <!-- 【10：レイジングスピリッツ】 -->
+            <!-- 10本目：レイジングスピリッツ -->
             <a href="bgs-raging.html" class="article-card" id="raging-card">
                 <div class="img-wrapper">
                     <img src="raging-altar.jpeg" alt="Raging Spirits Altar">
@@ -379,7 +419,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【11：インディ・ジョーンズ（NEW！）】（indy-img-alignを付与） -->
+            <!-- 11本目：インディ・ジョーンズ -->
             <a href="bgs-indy.html" class="article-card" id="indy-card">
                 <div class="img-wrapper">
                     <img src="indy-temple.jpeg" alt="Indiana Jones Temple" class="indy-img-align">
@@ -410,14 +450,30 @@
 
             <h4>III. 3350億円の「風化する本物」</h4>
             <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
-            TDSには、近年オープンした新興パーク（上海など）のような, LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った辺りです。</p>
+            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではない、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った辺りです。</p>
 
             <h4>IV. 魔法の泉と、世界一の評価</h4>
             <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級 of **約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、指示通りにそして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
         </section>
         </div>
 
-        <footer>&copy; TERU_LUCE_</footer>
+        <!-- コピーライトとひっそり佇む注意書きリンク -->
+        <footer>
+            &copy; TERU_LUCE_ | <span class="site-notice-trigger" id="notice-trigger">Notes</span>
+        </footer>
+    </div>
+
+    <!-- 【新設】すりガラスで美しく浮かび上がる注意書きモーダル -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close" id="modal-close">Close</button>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 20px; font-style: italic; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">Site Notes</h3>
+            <p>このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、大変お手数ですが、InstagramまたはXのDMにてご報告いただけますと幸いです。</p>
+            <p style="margin-top: 15px;">また、掲載している写真は画角や見やすさにこだわって調整を行っておりますが、見にくかったり、掲載位置に誤りがあったりする場合も、同様にご指摘いただけますと助かります。</p>
+            <p style="margin-top: 15px; border-top: 1px dashed var(--border-light); padding-top: 15px; font-weight: bold; color: var(--accent-gold); font-size: 0.75rem;">
+                ※本サイトに掲載されているすべての写真データの著作権は、管理者に帰属します。無断転載・複製はご遠慮ください。
+            </p>
+        </div>
     </div>
 
     <script>
@@ -437,6 +493,14 @@
             viewGridBtn.classList.add('active-toggle');
             viewListBtn.classList.remove('active-toggle');
         });
-    </script>
-</body>
-</html>
+
+        /* --- 【新設】さりげないポップアップの開閉制御 --- */
+        const noticeTrigger = document.getElementById('notice-trigger');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalClose = document.getElementById('modal-close');
+
+        noticeTrigger.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+        });
+
+        modalClose.a
