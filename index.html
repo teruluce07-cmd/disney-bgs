@@ -128,6 +128,11 @@
         .fs-img-align { object-position: center 15% !important; }
         .btm-img-align { object-position: center 90% !important; }
 
+        /* 【バグ対策】縦長のお城の写真（bb-castle.jpeg）の上の尖塔部分が絶対に切れないようにする調整 */
+        .bb-img-align {
+            object-position: center 10% !important;
+        }
+
         /* S.E.A.カード専用：画像不要でお洒落に浮かび上がるCSS製エンブレムサムネイル */
         .sea-thumbnail-bg {
             background-color: #0b1523 !important;
@@ -304,7 +309,8 @@
             <!-- 8本目：美女と野獣 -->
             <a href="bgs-bb.html" class="article-card" id="bb-card">
                 <div class="img-wrapper">
-                    <img src="bb-castle.jpeg" alt="Enchanted Castle">
+                    <!-- 【バグ修正】bb-img-alignを付与して、お城の上の尖塔が切れないようにトリミング調整しました -->
+                    <img src="bb-castle.jpeg" alt="Enchanted Castle" class="bb-img-align">
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Beauty and the Beast</h2>
