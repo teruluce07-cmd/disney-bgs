@@ -40,118 +40,32 @@
             transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 背景固定レイヤー（軽量化仕様） --- */
-        .paper-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            background-image: 
-                radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%),
-                var(--paper-texture);
-            background-size: cover;
-            transform: translate3d(0, 0, 0);
-            will-change: transform;
-            pointer-events: none;
-        }
-
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         .container { 
-            position: relative; z-index: 1;
             max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
         }
+        body.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
 
-        /* スクロールフェードイン */
-        .reveal {
-            opacity: 0; 
-            transform: translate3d(0, 35px, 0);
-            will-change: transform, opacity;
-            transition: all 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .reveal.active {
-            opacity: 1; 
-            transform: translate3d(0, 0, 0);
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* --- ヘッダー --- */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); }
-        .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--text-main); text-decoration: none; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 60px; border-bottom: 1px solid var(--border-light); transition: border-color 0.8s; }
+        .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--text-main); text-decoration: none; transition: color 0.8s; }
         .profile-btn {
             display: inline-block; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em;
             color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 10px 20px; border-radius: 40px; text-transform: uppercase; transition: all 0.4s ease;
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
 
-        /* --- 【新設】ウェルカム・ヒーローエリア（殺風景を解消） --- */
-        .intro-hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 60px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        /* 【iPadバグ修正】ドナルドの写真を表示する枠 */
-        .intro-portrait {
-            width: 100px !important;
-            height: 120px !important;
-            border-radius: 50px 50px 0 0; /* 上だけ丸いアーチ型 */
-            overflow: hidden;
-            border: 1px solid var(--accent-gold);
-            box-shadow: 0 8px 20px var(--glow-color);
-            margin-bottom: 30px;
-            background: #111;
-            display: block; /* 余計な伸縮を抑える */
-        }
-        /* 【iPadバグ修正】画像自体に直接サイズを固定し、暴走を防ぐ */
-        .intro-portrait img {
-            width: 100px !important;
-            height: 120px !important;
-            object-fit: cover;
-            filter: var(--img-filter);
-            display: block;
-        }
-
-        .intro-message {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            line-height: 2.2;
-            margin-bottom: 35px;
-            opacity: 0.95;
-            letter-spacing: 0.05em;
-        }
-
-        /* ウォルト・ディズニーの名言 */
-        .walt-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            font-style: italic;
-            font-weight: 600;
-            color: var(--accent-gold);
-            line-height: 1.5;
-            margin-bottom: 12px;
-            padding: 0 10px;
-        }
-        .walt-quote cite {
-            display: block;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.55rem;
-            font-style: normal;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-        .walt-quote-jp {
-            font-size: 0.7rem;
-            opacity: 0.5;
-            letter-spacing: 0.05em;
+        /* 導入文 */
+        .intro-text {
+            text-align: center; margin-bottom: 60px; font-size: 0.85rem; color: var(--text-main); opacity: 0.8; letter-spacing: 0.05em; line-height: 2.2;
         }
 
         /* --- 目次 (TOC) --- */
@@ -233,6 +147,11 @@
         
         .fs-img-align { object-position: center 15% !important; }
 
+        /* 【新設・iPadバグ修正】縦長写真の下部に映るスチームトラクターを美しく中央に持ってくる設定 */
+        .btm-img-align {
+            object-position: center 90% !important;
+        }
+
         .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
         .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
@@ -285,7 +204,7 @@
             <a href="profile.html" class="profile-btn">Profile</a>
         </header>
 
-        <!-- ウェルカム・ヒーローエリア（画像固定サイズ修正） -->
+        <!-- ウェルカム・ヒーローエリア -->
         <section class="intro-hero reveal">
             <div class="intro-portrait">
                 <img src="IMG_2226.jpeg" alt="Curator Profile Picture">
@@ -376,7 +295,8 @@
             <!-- 5本目：ビッグサンダー・マウンテン -->
             <a href="bgs-btm.html" class="article-card" id="btm-card">
                 <div class="img-wrapper">
-                    <img src="btm-exterior.jpeg" alt="Big Thunder Mountain">
+                    <!-- btm-img-alignクラスを追加し、手前の赤い機関車（トラクター）を美しく中央に配置します -->
+                    <img src="btm-exterior.jpeg" alt="Big Thunder Mountain" class="btm-img-align">
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Big Thunder Mountain</h2>
