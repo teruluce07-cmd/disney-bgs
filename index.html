@@ -129,7 +129,7 @@
         .btm-img-align { object-position: center 90% !important; }
         .bb-img-align { object-position: center 10% !important; }
 
-        /* S.E.A.カード専用 */
+        /* S.E.A.カード専用：画像不要でお洒落に浮かび上がるCSS製エンブレムサムネイル */
         .sea-thumbnail-bg {
             background-color: #0b1523 !important;
             display: flex; justify-content: center; align-items: center;
@@ -142,41 +142,18 @@
             font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
         }
 
-        /* --- 豪華なコラムカード（舞浜の軌跡） --- */
+        .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
+        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
+        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
+        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
+
+        /* --- 広告カード（舞浜の軌跡） --- */
         .chronicle-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 40px 25px;
-            text-align: justify;
-            margin-top: 80px;
-            transition: border-color 0.8s ease;
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
         }
-        .chronicle-card h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: var(--accent-gold);
-            text-align: center;
-            margin-bottom: 25px;
-            letter-spacing: 0.1em;
-            font-style: italic;
-        }
-        .chronicle-card h4 {
-            font-family: 'Noto Serif JP', serif;
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: var(--text-main);
-            margin: 25px 0 10px;
-            border-left: 3px solid var(--accent-gold);
-            padding-left: 10px;
-            line-height: 1.5;
-        }
-        .chronicle-card p {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            line-height: 2;
-        }
+        .chronicle-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--accent-gold); text-align: center; margin-bottom: 25px; letter-spacing: 0.1em; font-style: italic; }
+        .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
+        .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; }
 
         /* --- グリッド表示 --- */
         .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -238,7 +215,8 @@
                 <li><span>VI. Soarin': Fantastic Flight (ソアリン)</span><a href="#soarin-card">Scroll →</a></li>
                 <li><span>VII. S.E.A. Archives (探検家学会大百科)</span><a href="#sea-card">Scroll →</a></li>
                 <li><span>VIII. Beauty and the Beast (美女と野獣)</span><a href="#bb-card">Scroll →</a></li>
-                <li><span>IX. Curator Profile (管理者プロフィール)</span><a href="profile.html">View →</a></li>
+                <li><span>IX. Tomorrowland (トゥモローランド)</span><a href="#tl-card">Scroll →</a></li>
+                <li><span>X. Curator Profile (管理者プロフィール)</span><a href="profile.html">View →</a></li>
             </ul>
         </nav>
 
@@ -320,7 +298,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 7本目：S.E.A.（秘密結社） -->
+            <!-- 7本目：S.E.A. -->
             <a href="bgs-sea.html" class="article-card" id="sea-card">
                 <div class="img-wrapper sea-thumbnail-bg">
                     <div class="sea-mini-crest">
@@ -344,11 +322,20 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
+            <!-- 9本目：トゥモローランド (NEW!) -->
+            <a href="bgs-tl.html" class="article-card" id="tl-card">
+                <div class="img-wrapper">
+                    <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Tomorrowland</h2>
+                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテンの初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
         </div>
 
-        <!-- -------------------------------------------
-           📜 【新設：特別コラム】舞浜の軌跡（The Maihama Chronicle）
-        ------------------------------------------- -->
+        <!-- 特別コラム：舞浜の軌跡 -->
         <div class="reveal">
             <section class="chronicle-card">
                 <h3>The Maihama Chronicle</h3>
@@ -362,12 +349,12 @@
                 <p>1983年4月15日、東京ディズニーランド（TDL）は「アメリカ国外で初のディズニーテーマパーク」として産声を上げました。当時、米国のディズニー本社は日本での成功に懐疑的であり、自社の資金投資を拒んだため、OLCが100%資金を調達してライセンス契約のみで建設されました。しかし蓋を開けてみれば、初年度から1000万人を超える驚異的なゲストが押し寄せ、本社の予想をはるかに上回る大成功を収め、世界中のディズニー幹部たちを大いに驚かせたのです。</p>
 
                 <h4>II. 幻の「映画スタジオ計画」から「海」への大逆転</h4>
-                <p>TDLの大成功を受け、1988年に「第2パーク構想」が正式に発表されます。当初、米国ディズニー社が強く提案し、開発が決定していたのは、映画スタジオをテーマにした『ディズニー・ハリウッド・スタジオ・テーマパーク at 東京ディズニーランド』でした。しかし1991年、OLCの加賀見俊夫社長（当時）らは「日本には米国のような根深い映画文化が馴染んでおらず、リピーター獲得に大きな懸念がある」と判断し、なんとディズニー社に対してスタジオ計画の**「白紙撤回」**を突きつけました。<br>
+                <p>TDLの大成功を受け、1988年に「第2パーク構想」が正式に発表されます。当初、米国ディズニー社が強く提案し、開発が決定していたのは、映画スタジオをテーマにした『ディズニー・ハリウッド・スタジオ・テーマパーク at 東京ディズニーランド』でした。しかし1991年、OLCの加賀見俊夫社長（当時）らは「日本には米国のような映画文化が馴染んでおらず、リピーター獲得に大きな懸念がある」と判断し、なんとディズニー社に対してスタジオ計画の**「白紙撤回」**を突きつけました。<br>
                 長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあまり「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
 
                 <h4>III. 3350億円の「風化する本物」</h4>
                 <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
-                TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という驚異的な経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰のテーマパーク」と絶賛される所以です。</p>
+                TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛される所以です。</p>
 
                 <h4>IV. 魔法の泉と、世界一の評価</h4>
                 <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級の**約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、そして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
