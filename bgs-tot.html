@@ -6,140 +6,69 @@
     <title>BGS Deep Report: Tower of Terror | teru_luce_</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- 昼夜（古紙・焦げ紙）カラー設定 --- */
         :root {
-            --bg-color: #E2D7C5; 
-            --text-main: #2D231E; 
-            --accent-gold: #8C6239; 
-            --border-light: rgba(45, 35, 30, 0.2);
-            --img-filter: brightness(0.9) contrast(1.1) sepia(30%);
-            --glow-color: rgba(140, 98, 57, 0.2);
+            --bg-color: #E2D7C5; --text-main: #2D231E; --accent-gold: #8C6239; --border-light: rgba(45, 35, 30, 0.2);
+            --img-filter: brightness(0.9) contrast(1.1) sepia(30%); --glow-color: rgba(140, 98, 57, 0.2);
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fbf8f3' surfaceScale='3.5'%3E%3CfeDistantLight azimuth='60' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
         }
-
         body.curse-mode {
-            --bg-color: #070911; 
-            --text-main: #E2E8F0; 
-            --accent-gold: #00FF7F; 
-            --border-light: rgba(0, 255, 127, 0.2);
-            --img-filter: brightness(0.7) contrast(1.25) hue-rotate(90deg);
-            --glow-color: rgba(0, 255, 127, 0.4);
+            --bg-color: #070911; --text-main: #E2E8F0; --accent-gold: #00FF7F; --border-light: rgba(0, 255, 127, 0.2);
+            --img-filter: brightness(0.7) contrast(1.25) hue-rotate(90deg); --glow-color: rgba(0, 255, 127, 0.4);
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23141b2e' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
         }
-
+        img { max-width: 100% !important; height: auto; }
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Noto Serif JP', serif;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
-            background-size: cover; background-attachment: fixed;
-            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
-            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
-        }
-
-        .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        .container { 
-            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
-            background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
-        }
+        body { font-family: 'Noto Serif JP', serif; background-color: var(--bg-color); background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture); background-size: cover; background-attachment: fixed; color: var(--text-main); line-height: 2.2; overflow-x: hidden; transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased; }
+        .noise-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+        .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease; position: relative; z-index: 10; }
         body.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
-
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* 戻るボタン */
-        .back-btn {
-            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
-            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
-            border-bottom: 1px solid transparent; transition: color 0.3s;
-        }
+        .back-btn { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px; border-bottom: 1px solid transparent; transition: color 0.3s; }
         .back-btn:hover { border-color: var(--accent-gold); }
-
-        /* スイッチ（月 🌙） */
-        .theme-switch {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
-        }
+        .theme-switch { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease; }
         .theme-switch:hover { transform: scale(1.1); }
-
-        /* ヘッダー＆紋章（自動トリミング） */
         .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
-        .logo-wrapper {
-            width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 20px;
-            border: 2px solid var(--accent-gold); box-shadow: 0 0 20px var(--glow-color);
-            display: flex; justify-content: center; align-items: center; background: #111; transition: border-color 0.8s ease, box-shadow 0.8s ease;
-        }
+        .logo-wrapper { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 20px; border: 2px solid var(--accent-gold); box-shadow: 0 0 20px var(--glow-color); display: flex; justify-content: center; align-items: center; background: #111; transition: border-color 0.8s ease, box-shadow 0.8s ease; }
         .logo-img { height: 110%; width: auto; object-fit: cover; transition: filter 0.8s ease; filter: var(--img-filter); }
-
         .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
         h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
         .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
-
-        /* 目次 */
         .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
         .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
         .toc-list { list-style: none; padding: 0; }
         .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
         .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
         .toc-list a:hover { color: var(--accent-gold); }
-
-        /* 古い台帳風の年表テーブル */
-        .timeline-table {
-            width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.8rem;
-            border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
-        }
-        .timeline-table th, .timeline-table td {
-            padding: 10px 12px; text-align: left; border-bottom: 1px dashed var(--border-light);
-        }
-        .timeline-table th {
-            font-family: 'Montserrat', sans-serif; color: var(--accent-gold); letter-spacing: 0.1em; font-size: 0.75rem;
-        }
-
-        /* 本文 */
+        .timeline-table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.8rem; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+        .timeline-table th, .timeline-table td { padding: 10px 12px; text-align: left; border-bottom: 1px dashed var(--border-light); }
+        .timeline-table th { font-family: 'Montserrat', sans-serif; color: var(--accent-gold); letter-spacing: 0.1em; font-size: 0.75rem; }
         .article-block { margin-bottom: 70px; text-align: justify; }
         h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
         h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
         p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
-
-        /* 画像 */
         .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
         .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
         .hero-img-container:hover .hero-img { transform: scale(1.03); }
-
-        /* 豆知識 */
         .connection-card { background: rgba(140, 98, 57, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
         .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
-
         .footer-link { text-align: center; margin-top: 80px; }
         .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
     </style>
 </head>
 <body>
-
     <div class="noise-overlay"></div>
     <div class="theme-switch" id="theme-switch">🌙</div>
-
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portal</a>
-
         <header class="header-section reveal">
-            <div class="logo-wrapper">
-                <img src="tot-logo.png" alt="Hotel Hightower Crest" class="logo-img">
-            </div>
+            <div class="logo-wrapper"><img src="tot-logo.png" alt="Hotel Hightower Crest" class="logo-img"></div>
             <div class="bgs-tag">Background Story</div>
             <h1>Hotel Hightower</h1>
             <div class="subtitle-jp">傲慢なる略奪の果てと、影の忠臣</div>
         </header>
-
-        <!-- 目次 -->
         <nav class="toc-box reveal">
             <div class="toc-title">Index</div>
             <ul class="toc-list">
@@ -150,142 +79,69 @@
                 <li><span>V. 独自の神話学（アメリカ版との差異）</span><a href="#genesis">Read →</a></li>
             </ul>
         </nav>
-
-        <!-- 夕暮れのホテルハイタワー写真 -->
-        <div class="hero-img-container reveal">
-            <img src="tot-exterior.jpg" alt="Tower of Terror Exterior" class="hero-img">
-        </div>
-
-        <!-- I. プロローグ & 年表 -->
+        <div class="hero-img-container reveal"><img src="tot-exterior.jpg" alt="Tower of Terror Exterior" class="hero-img"></div>
         <section class="article-block reveal" id="prologue">
             <h2>I. 1899年の失踪劇</h2>
             <p>1912年のアメリカ・ニューヨーク。人々が「恐怖のホテル（タワー・オブ・テラー）」と呼び畏怖する壮麗な廃墟「ホテル・ハイタワー」。現在、この建物はニューヨーク市保存協会による見学ツアーが催され、一般に公開されていますが、その静寂の裏には、1899年12月31日の大晦日に起きたオーナー失踪事件が眠っています。</p>
             <p>創設者のハリソン・ハイタワー三世は、富と名声、誠実さとは無縁のあくなき収集欲の象徴でした。彼は世界中を巡って美術品や文化遺産を半ば「略奪」に近い形で集め、それを誇示するためにこの巨大なホテルを建設したのです。その歪んだ自己顕示欲は、ネオ・ゴシック、ムガル（イスラム風）、ビザンティンといった世界の多様な建築様式を無理やり一つの塔に融合させた、美しくも奇怪なホテルの外観そのものに現れています。</p>
-            
-            <!-- ヴィンテージ風歴史年表 -->
             <table class="timeline-table">
-                <thead>
-                    <tr>
-                        <th>Year</th>
-                        <th>Event</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Year</th><th>Event</th></tr></thead>
                 <tbody>
-                    <tr>
-                        <td>1835年</td>
-                        <td>ハリソン・ハイタワー三世 誕生。</td>
-                    </tr>
-                    <tr>
-                        <td>1886年</td>
-                        <td>父の大邸宅を継承。世界規模の略奪探検と収集を本格化。</td>
-                    </tr>
-                    <tr>
-                        <td>1892年</td>
-                        <td>自らの富の象徴である「ホテル・ハイタワー」を開業。</td>
-                    </tr>
-                    <tr>
-                        <td>1899年</td>
-                        <td>コンゴ川流域のムトゥンドゥ族から「シリキ・ウトゥンドゥ」を強奪。</td>
-                    </tr>
-                    <tr>
-                        <td>1899年12月31日</td>
-                        <td>ホテル内での記者会見直後、エレベーター落下事故により謎の失踪。</td>
-                    </tr>
-                    <tr>
-                        <td>1912年</td>
-                        <td>ニューヨーク市保存協会により、ホテル内の見学ツアーが開始される。</td>
-                    </tr>
+                    <tr><td>1835年</td><td>ハリソン・ハイタワー三世 誕生。</td></tr>
+                    <tr><td>1886年</td><td>父の大邸宅を継承。世界規模の略奪探検と収集を本格化。</td></tr>
+                    <tr><td>1892年</td><td>自らの富の象徴である「ホテル・ハイタワー」を開業。</td></tr>
+                    <tr><td>1899年</td><td>コンゴ川流域のムトゥンドゥ族から「シリキ・ウトゥンドゥ」を強奪。</td></tr>
+                    <tr><td>1899年12月31日</td><td>ホテル内での記者会見直後、エレベーター落下事故により謎の失踪。</td></tr>
+                    <tr><td>1912年</td><td>ニューヨーク市保存協会により、ホテル内の見学ツアーが開始される。</td></tr>
                 </tbody>
             </table>
         </section>
-
-        <!-- II. 8つの掟 & 数秘術 -->
         <section class="article-block reveal" id="taboos">
             <h2>II. 呪いの偶像と8つの掟</h2>
             <p>この悲劇を紐解く最大のカギが、アフリカのムトゥンドゥ族が崇拝していた精霊の偶像「シリキ・ウトゥンドゥ」です。これは単なる木彫りの置物ではなく、内部には「古代の呪術師の実際の遺骨」が仕込まれ、全身に無数の金属片が打ち込まれた恐るべき呪物でした。偶像には、扱う者が絶対に破ってはならない「8つの掟」が存在しました。</p>
-            
             <div class="connection-card">
                 <h4>シリキ・ウトゥンドゥ：8つの掟</h4>
-                <p>1. 崇拝すること。<br>
-                   2. 燃やさないこと。<br>
-                   3. 閉ざされた場所にしまわないこと。<br>
-                   4. おろそかにしないこと。<br>
-                   5. 馬鹿にしないこと。<br>
-                   6. 他人に渡さないこと。<br>
-                   7. 放置しないこと。<br>
-                   8. 恐れること。</p>
+                <p>1. 崇拝すること。<br>2. 燃やさないこと。<br>3. 閉ざされた場所にしまわないこと。<br>4. おろそかにしないこと。<br>5. 馬鹿にしないこと。<br>6. 他人に渡さないこと。<br>7. 放置しないこと。<br>8. 恐れること。</p>
             </div>
-            
             <p>傲慢の極みにあったハイタワー三世は、木箱に閉じ込め、公の記者会見で呪いを嘲笑し、エレベーター内では吸っていた葉巻の火をその頭に押し付けるなど、あらゆる掟を徹底的に踏みにじりました。実は、ハイタワーの探検隊がムトゥンドゥ族を襲撃した際、原住民たちは突然戦闘をやめ、あっさりと偶像を明け渡したと言われています。それは降伏ではなく、「掟を破ったハイタワーが、精霊の手によって確実に破滅する」ことを彼らが確信していたからでした。</p>
-            
             <p>深夜0時、エレベーターを襲った不気味な緑色の雷撃。生存者の証言によれば、ハイタワー三世はただ落下したのではなく、「シリキ・ウトゥンドゥの放つ緑の光に引きずり込まれるようにして消えた」とも、「自室から大広間（ボールルーム）へ吹き飛ばされた」とも言われています。残されていたのは、彼の被っていたトルコ風の帽子だけでした。</p>
-
             <div class="connection-card">
                 <h4>👁️ 不吉なる数秘術「13」の連鎖</h4>
-                <p>このホテルには、不吉な数字「13」の奇妙な連鎖が刻まれています。<br>
-                   ・事件からツアー開始までの空白期間：**13年**（1899年〜1912年）<br>
-                   ・ハイタワー失踪の総人数および関係者の数：**13人**<br>
-                   ・秘密の書斎へ続く階段の段数：**13段**<br>
-                   ・部屋に遺された呪術道具や重要書類の数：**13個**<br>
-                   これらは、偶然ではなくすべて呪いの仕掛けの一部なのです。</p>
+                <p>このホテルには、不吉な数字「13」の奇妙な連鎖が刻まれています。<br>・事件からツアー開始までの空白期間：**13年**（1899年〜1912年）<br>・ハイタワー失踪の総人数および関係者の数：**13人**<br>・秘密の書斎へ続く階段の段数：**13段**<br>・部屋に遺された呪術道具や重要書類の数：**13個**<br>これらは、偶然ではなくすべて呪いの仕掛けの一部なのです。</p>
             </div>
         </section>
-
-        <!-- III. スメルディング & S.E.A. -->
         <section class="article-block reveal" id="sea">
             <h2>III. 秘密結社「S.E.A.」と影の忠臣</h2>
-            <p>ホテル・ハイタワーの物語は、単体のオカルト事件に留まりません。ハイタワー三世は、ディズニーシー全体の海洋探検史を繋ぐ、世界規模の探検家＆冒険家協会「S.E.A. (Society of Explorers and Adventurers)」の最初期メンバーでした。彼のあくなき強奪行為は、この組織の絶大な特権を利用して行われていました。ソアリンの「カメリア・ファルコ」や、香港の「ヘンリー・ミスティック卿」とも深い繋がりがあり、ミスティック卿の邸宅には、彼とハイタワー三世がシリキ・ウトゥンドゥを抱えて微笑む不気味な絵画が今も飾られています。</p>
-            
+            <!-- 【修正箇所】S.E.A.の歴史を正確に修正 -->
+            <p>ホテル・ハイタワーの物語は、単体のオカルト事件に留まりません。ハイタワー三世は、ディズニーシー全体の海洋探検史を繋ぐ、世界規模の探検家＆冒険家協会「S.E.A. (Society of Explorers and Adventurers)」のメンバーでした。1538年の大航海時代にコロンブスやダ・ヴィンチらによって創設されたこの歴史ある学会において、ハイタワー三世は19世紀の「再興期」を支えた主要メンバーの一人として名を連ねています。彼のあくなき強奪行為は、この組織の絶大な特権を利用して行われていました。</p>
+            <p>ソアリンの「カメリア・ファルコ」や、香港の「ヘンリー・ミスティック卿」とも深い繋がりがあり、ミスティック卿の邸宅には、彼とハイタワー三世がシリキ・ウトゥンドゥを抱えて微笑む不気味な絵画が今も飾られています。</p>
             <div class="connection-card">
                 <h4>執事スメルディングの「異常な忠誠心」</h4>
-                <p>ハイタワーに仕えた従順な執事「アーチボルト・スメルディング」。20ヶ国語以上を操る超エリートの彼は、ホテルのいたる所にその姿を残しています。<br><br>
-                   ・**ロビー正面の巨大壁画：** 右下で熱心に略奪品の目録を記録する姿。<br>
-                   ・**アフリカ探検の壁画：** 迫り来る原住民を足止めするため、吊り橋を大きなナイフで容赦なく切り落とそうとする冷酷無比な姿。<br>
-                   ・**ラジャのプール（現メモラビリア）の写真：** プールサイドで、水着を着用しているにも関わらず、黒い帽子（ボーラーハット）を被ったまま直立不動している異常な姿。<br><br>
-                   彼は主の失踪後、自らも姿を消したとされていましたが、実は偽名を使ってライバルの娘ベアトリスに接触。ホテルの解体を防ぐために彼女を操り、「見学ツアー（タワー・オブ・テラー）」を裏で仕組んだ真の黒幕なのです。</p>
+                <p>ハイタワーに仕えた従順な執事「アーチボルト・スメルディング」。20ヶ国語以上を操る超エリートの彼は、ホテルのいたる所にその姿を残しています。<br><br>・**ロビー正面の巨大壁画：** 右下で熱心に略奪品の目録を記録する姿。<br>・**アフリカ探検の壁画：** 迫り来る原住民を足止めするため、吊り橋を大きなナイフで容赦なく切り落とそうとする冷酷無比な姿。<br>・**ラジャのプール（現メモラビリア）の写真：** プールサイドで、水着を着用しているにも関わらず、黒い帽子（ボーラーハット）を被ったまま直立不動している異常な姿。<br><br>彼は主の失踪後、自らも姿を消したとされていましたが、実は偽名を使ってライバルの娘ベアトリスに接触。ホテルの解体を防ぐために彼女を操り、「見学ツアー（タワー・オブ・テラー）」を裏で仕組んだ真の黒幕なのです。</p>
             </div>
         </section>
-
-        <!-- IV. 確執 & レイジング荷物 -->
         <section class="article-block reveal" id="conflict">
             <h2>IV. S.S.コロンビア号との確執</h2>
             <p>ホテルのすぐ隣、アメリカンウォーターフロントの港に港々しく停泊する巨大客船「S.S.コロンビア号」。この船を所有するU.S.スチームシップカンパニーのオーナーである「コーネリアス・エンディコット三世」は、ハイタワー三世の親の代からの終生のライバルでした。</p>
             <p>海運で近代都市の「光」と「商業的進歩」を象徴するエンディコットと、私的な収集欲と古代への「闇」を体現したホテル・ハイタワー。二つの巨大な富豪文化は、同じ都市の中で常に激しいせめぎ合いを見せていました。ハイタワー三世の失踪後、コーネリアスはホテルを解体し「エンディコット・グランドホテル」を建てようと画策します。しかし、ハイタワーの探検に密かに憧れていた娘「ベアトリス」が、父の開発計画に反発して「保存協会」を設立したことで、ホテルは守られることになりました。</p>
-
             <div class="connection-card">
                 <h4>📦 ロストリバーデルタ「レイジングスピリッツ」の物証</h4>
                 <p>ハイタワーの魔の手は、はるか南米の発掘現場にも及んでいました。レイジングスピリッツの遺跡発掘現場には、今も積み残された木箱が散乱しています。その側面には、はっきりと**「HOTEL HIGHTOWER」**の文字が刻まれています。これは、1912年のアメリカンウォーターフロントと、南米の古代遺跡の時間が、「ハイタワーの略奪と物資の輸送」という線でリアルに繋がっている決定的な証拠なのです。</p>
             </div>
         </section>
-
-        <!-- V. 差異 & 制作秘話 -->
         <section class="article-block reveal" id="genesis">
             <h2>V. 独自の神話学（アメリカ版との差異）</h2>
             <p>世界中のディズニーに存在する「タワー・オブ・テラー」ですが、日本の東京ディズニーシーのものは、世界でも類を見ない完全オリジナルな世界観を誇ります。</p>
             <p>海外版（フロリダやパリなど）は、アメリカの伝説的なSF番組『トワイライト・ゾーン』をライセンスに持ち、1939年のハリウッドの超常現象ホテルを描いています。しかし、日本への導入にあたり、この古典TV番組が日本の若者層に馴染みが薄いこと、安定したディズニーシー全体のコンセプトを崩さないために、オリエンタルランドとWDI（ウォルト・ディズニー・イマジニアリング）はライセンスを外し、総工費約210億円を投じてこの地に馴染む独自の歴史神話を構築しました。</p>
             <p>「都市伝説」「ギルド時代の秘密結社」「一族の利権争い」を組み込んだ東京版は、単なるホラーを超えた、極めて完成度の高い「歴史ドキュメンタリー」としての廃墟美を完成させたのです。アトラクション専用に書き下ろされた重厚なオーケストラと不気味なパイプオルガン、聖歌隊のコーラスは、乗る前から私たちを「ハイタワー三世の歪んだ世界」へと引きずり込んでいきます。</p>
         </section>
-
-        <div class="footer-link reveal">
-            <a href="index.html">← HOMEへ戻る</a>
-        </div>
+        <div class="footer-link reveal"><a href="index.html">← HOMEへ戻る</a></div>
     </div>
-
     <script>
         const themeSwitch = document.getElementById('theme-switch');
-        themeSwitch.addEventListener('click', () => {
-            document.body.classList.toggle('curse-mode');
-            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
-        });
-
+        themeSwitch.addEventListener('click', () => { document.body.classList.toggle('curse-mode'); themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙'; });
         const reveals = document.querySelectorAll('.reveal');
-        const revealOnScroll = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
-            });
-        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        const revealOnScroll = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (!entry.isIntersecting) return; entry.target.classList.add('active'); observer.unobserve(entry.target); }); }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
         reveals.forEach(reveal => revealOnScroll.observe(reveal));
         setTimeout(() => { reveals[0].classList.add('active'); }, 100);
     </script>
