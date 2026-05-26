@@ -130,12 +130,16 @@
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        .fs-img-align { object-position: center 15% !important; }
+        /* 縦長写真を綺麗に収めるためのトリミング調整 */
+        .sm-img-align { object-position: center 45% !important; }
         .btm-img-align { object-position: center 90% !important; }
         .bb-img-align { object-position: center 10% !important; }
-        .sm-img-align { object-position: center 45% !important; }
+        .fs-img-align { object-position: center 15% !important; }
         .soarin-img-align { object-position: center 25% !important; }
         .tl-img-align { object-position: center 50% !important; }
+        
+        /* 【追加：インディお城（ピラミッド）用の縦長写真専用トリミング調整】 */
+        .indy-img-align { object-position: center 30% !important; }
 
         /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
@@ -150,7 +154,7 @@
             font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
         }
 
-        /* --- 豪華なコラムカード（舞浜の軌跡） --- */
+        /* --- コラムカード --- */
         .chronicle-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
         }
@@ -173,6 +177,9 @@
         .article-list.grid-mode .fs-img-align { object-position: center 15% !important; }
         .article-list.grid-mode .soarin-img-align { object-position: center 25% !important; }
         .article-list.grid-mode .tl-img-align { object-position: center 40% !important; }
+        
+        /* グリッド表示の時のインディ用の完璧な上寄せ調整 */
+        .article-list.grid-mode .indy-img-align { object-position: center 20% !important; }
 
         /* 💻 パソコン ＆ iPadレスポンシブ */
         @media (min-width: 768px) {
@@ -238,7 +245,8 @@
                     <a href="#fs-card">Fantasy Springs</a>
                     <a href="#soarin-card">Soarin'</a>
                     <a href="#sea-card">S.E.A. Archives</a>
-                    <a href="#raging-card">Raging Spirits</a> <!-- 【追加】レイジングスピリッツ -->
+                    <a href="#raging-card">Raging Spirits</a>
+                    <a href="#indy-card">Indiana Jones</a> <!-- 【追加】インディ・ジョーンズ -->
                 </div>
             </div>
 
@@ -360,7 +368,7 @@
                 <div class="read-btn">Explore the Archives →</div>
             </a>
 
-            <!-- 【10：レイジングスピリッツ（NEW！）】 -->
+            <!-- 【10：レイジングスピリッツ】 -->
             <a href="bgs-raging.html" class="article-card" id="raging-card">
                 <div class="img-wrapper">
                     <img src="raging-altar.jpeg" alt="Raging Spirits Altar">
@@ -368,6 +376,17 @@
                 <div class="card-tag">Featured Story</div>
                 <h2>Raging Spirits</h2>
                 <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な超自然現象の謎と、失われた足場の真実を追う。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
+            <!-- 【11：インディ・ジョーンズ（NEW！）】（indy-img-alignを付与） -->
+            <a href="bgs-indy.html" class="article-card" id="indy-card">
+                <div class="img-wrapper">
+                    <img src="indy-temple.jpeg" alt="Indiana Jones Temple" class="indy-img-align">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Indiana Jones</h2>
+                <p>若さの泉を守る守護神と、冒険家が遺した足跡。パコが企てた秘密の魔宮ツアーと、水上飛行機に隠されたC-3POのイースターエッグの真相に迫る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
@@ -391,7 +410,7 @@
 
             <h4>III. 3350億円の「風化する本物」</h4>
             <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
-            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ, 本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った辺りです。</p>
+            TDSには、近年オープンした新興パーク（上海など）のような, LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った辺りです。</p>
 
             <h4>IV. 魔法の泉と、世界一の評価</h4>
             <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級 of **約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、指示通りにそして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
