@@ -43,7 +43,7 @@
             transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
 
-        /* 背景固定レイヤー */
+        /* 背景固定レイヤー（GPU高速化） */
         .paper-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
@@ -130,15 +130,12 @@
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        /* -------------------------------------------
-           📸 【新・トリミング魔法】通常（リスト）表示の時の切り抜き位置
-        ------------------------------------------- */
-        .sm-img-align { object-position: center 45% !important; }     /* スプラッシュ：より中央に調整 */
-        .btm-img-align { object-position: center 75% !important; }    /* ビッグサンダー：より全体が見えるように */
-        .bb-img-align { object-position: center 25% !important; }     /* 美女と野獣：正面玄関も見える上品な位置 */
-        .fs-img-align { object-position: center 30% !important; }     /* ファンタジー：水と岩のバランスが良い位置 */
-        .soarin-img-align { object-position: center 45% !important; } /* ソアリン：ドームが最も美しく収まる位置 */
-        .tl-img-align { object-position: center 50% !important; }     /* トゥモローランド：全体が整う位置 */
+        .fs-img-align { object-position: center 15% !important; }
+        .btm-img-align { object-position: center 90% !important; }
+        .bb-img-align { object-position: center 10% !important; }
+        .sm-img-align { object-position: center 45% !important; }
+        .soarin-img-align { object-position: center 25% !important; }
+        .tl-img-align { object-position: center 50% !important; }
 
         /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
@@ -153,12 +150,7 @@
             font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
         }
 
-        .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
-        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
-        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
-        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
-
-        /* 特別コラム：舞浜の軌跡 */
+        /* --- 豪華なコラムカード（舞浜の軌跡） --- */
         .chronicle-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
         }
@@ -166,10 +158,7 @@
         .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
         .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; }
 
-        /* -------------------------------------------
-           田 【最重要】グリッド表示（Grid Mode）がONの時の切り抜き位置
-           （完璧なバランスだった上寄せ設定を、ここにすべて退避させました）
-        ------------------------------------------- */
+        /* --- グリッド表示 --- */
         .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .article-list.grid-mode .article-card { padding: 15px; border-radius: 6px; }
         .article-list.grid-mode .img-wrapper { aspect-ratio: 1 / 1; margin-bottom: 12px; }
@@ -177,7 +166,7 @@
         .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .article-list.grid-mode .read-btn { font-size: 0.65rem; }
 
-        /* グリッド表示の時だけの、完璧な上寄せ設定 */
+        /* グリッド表示の時の、完璧な上寄せ設定 */
         .article-list.grid-mode .sm-img-align { object-position: center 35% !important; }
         .article-list.grid-mode .btm-img-align { object-position: center 90% !important; }
         .article-list.grid-mode .bb-img-align { object-position: center 10% !important; }
@@ -249,6 +238,7 @@
                     <a href="#fs-card">Fantasy Springs</a>
                     <a href="#soarin-card">Soarin'</a>
                     <a href="#sea-card">S.E.A. Archives</a>
+                    <a href="#raging-card">Raging Spirits</a> <!-- 【追加】レイジングスピリッツ -->
                 </div>
             </div>
 
@@ -269,7 +259,7 @@
         <!-- 記事カード一覧 -->
         <div class="article-list grid-mode" id="article-list">
             
-            <!-- 【1：スプラッシュ・マウンテン】（sm-img-alignを付与） -->
+            <!-- 【1：スプラッシュ・マウンテン】 -->
             <a href="bgs-sm.html" class="article-card" id="sm-card">
                 <div class="img-wrapper">
                     <img src="sm-day.jpeg" alt="Splash Mountain" class="sm-img-align">
@@ -302,7 +292,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【4：トゥモローランド】（tl-img-alignを新規適用！） -->
+            <!-- 【4：トゥモローランド】 -->
             <a href="bgs-tl.html" class="article-card" id="tl-card">
                 <div class="img-wrapper">
                     <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain" class="tl-img-align">
@@ -331,7 +321,7 @@
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈作品の傑作へと生まれ変わるまで。</p>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
@@ -370,6 +360,17 @@
                 <div class="read-btn">Explore the Archives →</div>
             </a>
 
+            <!-- 【10：レイジングスピリッツ（NEW！）】 -->
+            <a href="bgs-raging.html" class="article-card" id="raging-card">
+                <div class="img-wrapper">
+                    <img src="raging-altar.jpeg" alt="Raging Spirits Altar">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Raging Spirits</h2>
+                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な超自然現象の謎と、失われた足場の真実を追う。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
         </div>
 
         <!-- 特別コラム：舞浜の軌跡 -->
@@ -386,8 +387,37 @@
 
             <h4>II. 幻の「映画スタジオ計画」から「海」への大逆転</h4>
             <p>TDLの大成功を受け、1988年に「第2パーク構想」が正式に発表されます。当初、米国ディズニー社が強く提案し、開発が決定していたのは、映画スタジオをテーマにした『ディズニー・ハリウッド・スタジオ・テーマパーク at 東京ディズニーランド』でした。しかし1991年、OLCの加賀見俊夫社長（当時）らは「日本には米国のような映画文化が馴染んでおらず、リピーター獲得に大きな懸念がある」と判断し、なんとディズニー社に対してスタジオ計画の**「白紙撤回」**を突きつけました。<br>
-            長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあまり「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
+            長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあたりに「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
 
             <h4>III. 3350億円の「風化する本物」</h4>
             <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
-            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないか
+            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ, 本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った辺りです。</p>
+
+            <h4>IV. 魔法の泉と、世界一の評価</h4>
+            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級 of **約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、指示通りにそして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
+        </section>
+        </div>
+
+        <footer>&copy; TERU_LUCE_</footer>
+    </div>
+
+    <script>
+        /* --- レイアウト切り替え（List ⇄ Grid） --- */
+        const viewListBtn = document.getElementById('view-list');
+        const viewGridBtn = document.getElementById('view-grid');
+        const articleList = document.getElementById('article-list');
+
+        viewListBtn.addEventListener('click', () => {
+            articleList.classList.remove('grid-mode');
+            viewListBtn.classList.add('active-toggle');
+            viewGridBtn.classList.remove('active-toggle');
+        });
+
+        viewGridBtn.addEventListener('click', () => {
+            articleList.classList.add('grid-mode');
+            viewGridBtn.classList.add('active-toggle');
+            viewListBtn.classList.remove('active-toggle');
+        });
+    </script>
+</body>
+</html>
