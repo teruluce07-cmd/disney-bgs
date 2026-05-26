@@ -19,6 +19,16 @@
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='optimized-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23e6f0f5' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23optimized-paper)'/%3E%3C/svg%3E");
         }
 
+        body.curse-mode {
+            --bg-color: #030814; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00E5FF; 
+            --border-light: rgba(0, 229, 255, 0.25);
+            --img-filter: brightness(0.7) contrast(1.25) saturate(1.3);
+            --glow-color: rgba(0, 229, 255, 0.45);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23101d33' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -31,7 +41,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 【軽量化の魔法】背景の古紙を固定レイヤーにしてスクロールを軽くする仕掛け --- */
+        /* --- 背景固定レイヤー（軽量化仕様） --- */
         .paper-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -104,6 +114,7 @@
     <div class="paper-bg"></div>
 
     <div class="container">
+        <!-- index.html（ポータル）へ戻る -->
         <a href="index.html" class="back-btn">← Back to Portal</a>
 
         <header class="header-section reveal">
@@ -116,8 +127,8 @@
         <nav class="toc-box reveal">
             <div class="toc-title">Index</div>
             <ul class="toc-list">
-                <li><span>I. 未来の宇宙港「トゥモローランド」（プロローグ）</span><a href="#prologue">Read →</a></li>
-                <li><span>II. スペース・マウンテン：コズミック・エネルギーの旅</span><a href="#space">Read →</a></li>
+                <li><span>I. 未来都市が背負った「時間」という名の宿命</span><a href="#prologue">Read →</a></li>
+                <li><span>II. スペース・マウンテン：直線の過去と、曲線の未来</span><a href="#space">Read →</a></li>
                 <li><span>III. スター・ツアーズ：1401便の緊急出発</span><a href="#startours">Read →</a></li>
                 <li><span>IV. モンスターズ・インク：笑い声あふれる停電の夜</span><a href="#monsters">Read →</a></li>
                 <li><span>V. バズ・ライトイヤー：帝王ザーグと結晶の遺産</span><a href="#buzz">Read →</a></li>
@@ -139,7 +150,7 @@
 
         <!-- II. スペースマウンテン（新旧対比 ＆ パリ版） -->
         <section class="article-block reveal" id="space">
-            <h2>II. スペース・マウンテン：コズミック・エネルギーの旅</h2>
+            <h2>II. スペース・マウンテン：直線の過去と、曲線の未来</h2>
             <p>1983年の開園からエリアの絶対的象徴として君臨してきた、初代「スペース・マウンテン」。この巨大な純白のドームは、宇宙管制センターであり、未知の宇宙エネルギーを回収する「ステーション」としてのBGSを持っています。</p>
             <p>ゲストが乗り込むのは、ステーションにドック入りしている「新型ロケット」です。搭乗プラットフォームでロケットに未知の宇宙エネルギーが急速充填され、そのエネルギーを一気に解放することで、秒読みとともにロケットは大気圏を脱出して超高速度での宇宙旅行へと出発します。2024年7月31日に多くのゲストに惜しまれながら一度クローズし、現在は2027年のリニューアルに向けて新たなロケットの準備が進んでいます。</p>
 
@@ -159,65 +170,10 @@
                    このオブジェクトは、ロケットが旅立つたび、消費された宇宙エネルギーを自動的に吸収し、再びロケットへと充填するための装置というBGSが設定されていました。青く美しく脈打つこの光は、これから未知の暗黒宇宙へと旅立つゲストの緊張感とロマンを静かに引き立てる、スペースマウンテンの魂とも言える象徴的な存在でした。</p>
             </div>
 
+            <!-- 【追加修正：見出しをより直接的、BGSに特化した「レトロフューチャー」の文言に修正】 -->
             <div class="connection-card">
-                <h4>🔮 フランス・パリに眠る「19世紀の宇宙航行」</h4>
-                <p>実は、フランスのディズニーランド・パリのスペース・マウンテンは、東京の「白い未来的なドーム」とは全く異なる姿をしています。パリのエリアは、あえて19世紀のフランスのSF小説家ジュール・ヴェルヌが夢見た「レトロフューチャー（スチームパンク）」をテーマにしているため、ドームは美しい真鍮（ブラス）や銅色で覆われています。<br><br>
-                   宇宙船を打ち出すため、ドームの横には「コロンビアード大砲」と呼ばれる巨大な砲身が設置され、大爆発とともに乗客を月世界へと撃ち出すという、全く異なるクラシックでロマンチックな世界観が作られています。</p>
+                <h4>🔮 フランス・パリ：過去の人が夢見た「レトロフューチャー」</h4>
+                <p>実は、フランスのディズニーランド・パリにあるスペース・マウンテンは、東京の「白い近未来的なドーム」とはまったく異なる、**「レトロフューチャー（過去の人々が思い描いた未来）」**をテーマにしています。19世紀のフランスのSF小説家ジュール・ヴェルヌの『月世界旅行』の世界観（スチームパンク）がベースになっており、ドーム全体が真鍮やブロンズで覆われています。<br><br>
+                   宇宙船（ビークル）を打ち出すため、ドームの横には「コロンビアード大砲」と呼ばれる巨大な大砲が設置され、大爆発の白煙とともに月世界へとゲストを撃ち出すという、クラシックでロマンチックな宇宙旅行が今もなお語り継がれています。</p>
             </div>
-        </section>
-
-        <!-- III. スター・ツアーズ -->
-        <section class="article-block reveal" id="startours">
-            <h2>III. スター・ツアーズ：スタースピーダー1401便の緊急出発</h2>
-            <p>日々、スタースピーダー1000が銀河の様々な惑星へとフライトを続けている、星間旅行会社「スター・ツアーズ」。</p>
-            <p>ゲストが乗り込む「1401便」は、出航前の点検中、整備用ドロイドであるC-3POが不注意からパイロット席に居座った状態で、自動出発許可が下りてしまいます。さらに、宇宙港で帝国軍に強制停車させられ、機内に「反乱軍のスパイ（乗船しているゲストの顔写真）」が潜入していることを告げられます。C-3POはスパイを守り、安全な反乱軍の秘密基地へと送り届けるべく、自動操縦で銀河の様々な惑星へと超空間ワープを繰り返す緊急逃避行へと巻き込まれるのです。</p>
-        </section>
-
-        <!-- IV. モンスターズインク -->
-        <section class="article-block reveal" id="monsters">
-            <h2>IV. モンスターズ・インク：笑い声あふれる停電の夜</h2>
-            <p>映画『モンスターズ・インク』のその後を描いた「モンスターズ・インク“ライド＆ゴーシーク！”」。</p>
-            <p>映画の結末において、モンスターズ社は「悲鳴（恐怖）」のエネルギーから「笑い声」をエネルギーに変換するクリーンな方法へと経営方針を転換しました。新社長となったサリーは、遊びにきた人間の少女「ブー」を楽しませるため、マイク・ワゾウスキが発案した「フラッシュライトかくれんぼゲーム」を開催します。</p>
-            <p>ゲーム開始とともに、お城のメインパワースイッチがオフになり、モンスターシティは夜の停電状態へと包まれます。ゲストはセキュリティトラムに乗り込み、ヘルメットに描かれた「M」のロゴを狙ってライトを照らすことで、隠れているモンスターたちを見つけ出すゲームに参加するのです。</p>
-        </section>
-
-        <!-- V. バズライトイヤー -->
-        <section class="article-block reveal" id="buzz">
-            <h2>V. バズ・ライトイヤー：帝王ザーグと結晶の遺産</h2>
-            <p>2024年10月に20年の歴史を終えた「バズ・ライトイヤーのアストロブラスター」。このアトラクションは、おもちゃのバズが主人公として活躍する劇中劇アニメの世界を舞台にしていました。</p>
-            
-            <!-- 4枚目：バズの緑の看板写真（tl-buzz.jpeg） -->
-            <div class="hero-img-container reveal">
-                <img src="tl-buzz.jpeg" alt="Buzz Lightyear's Astro Blasters Entrance" class="hero-img">
-            </div>
-
-            <p>悪の帝王ザーグは、おもちゃたちの万能エネルギー「クリストリック・フュージョン」バッテリーを強奪し、銀河を支配する巨大兵器の稼働を目論んでいました。私たちは新人レンジャーとして、緑色の光線銃「アストロブラスター」を持ち、二人乗りの「XP-38型スペースクルーザー」に乗ってプラネットZへと突入しました。</p>
-            <p>アトラクションの入り口の天井に飾られていた宇宙船は、私たちが乗ったXP-38型スペースクルーザーではなく、バズ自身が愛用する「42型スタークルーザー」であるという、イマジニアによるマニアックなビジュアルの描き分けがなされていました。クローズ後、ここは『シュガー・ラッシュ』のゲーム世界へと生まれ変わりますが、かつて銀河の平和を守るためにアストロブラスターを握りしめ、ザーグの「Z」マークを狙い続けたあの思い出は、トゥモローランドの歴史の一部として今も眠っています。</p>
-        </section>
-
-        <!-- VI. スティッチ -->
-        <section class="article-block reveal" id="stitch">
-            <h2>VI. スティッチ・エンカウンター：宇宙連邦の広大な監視網</h2>
-            <p>シアター型アトラクション「スティッチ・エンカウンター」。この施設は、宇宙の秩序を守る「宇宙連邦（Galactic Federation）」によって設置された最先端の**「スティッチ・モニタリング・ステーション（スティッチ監視宇宙ステーション）」**です。</p>
-            <p>イタズラ好きで暴れん坊のエイリアン「試作品626号（スティッチ）」が、宇宙のあちこちを縦横無尽に飛び回ってトラブルを起こさないよう、宇宙連邦のキャスト（オペレーター）たちが巨大なスクリーンを使って彼を24時間監視しています。ゲストは、この監視ステーションへの「一般見学者」として招き入れられますが、不気味で厳格な監視の目をかいくぐり、スティッチがスクリーン越しにいたずらっぽくゲストの顔を覗き込んできて、リアルタイムに会話やゲームを始めてしまう……という、テクノロジーと宇宙のユーモアが融合した微笑ましいBGSが設定されています。</p>
-        </section>
-
-        <div class="footer-link reveal">
-            <a href="index.html">← HOMEへ戻る</a>
-        </div>
-    </div>
-
-    <script>
-        const reveals = document.querySelectorAll('.reveal');
-        const revealOnScroll = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
-            });
-        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-        reveals.forEach(reveal => revealOnScroll.observe(reveal));
-        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
-    </script>
-</body>
-</html>
+        </secti
