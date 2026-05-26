@@ -55,7 +55,6 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* コンテナ全体をふんわり表示させるCSSアニメーション */
         .container { 
             position: relative; z-index: 1;
             width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
@@ -127,13 +126,25 @@
         }
         .article-card:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         
-        .img-wrapper { width: 100%; aspect-ratio: 16 / 10; border-radius: 4px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: aspect-ratio 0.5s ease; }
+        /* 【最重要：3:2のカメラ黄金比に統一】これで写真全体のスケール感（大きさ）のバランスが完璧に揃います */
+        .img-wrapper { 
+            width: 100%; 
+            aspect-ratio: 3 / 2; /* 16:10から、写真本来の最も美しい3:2に変更 */
+            border-radius: 4px; 
+            overflow: hidden; 
+            margin-bottom: 25px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+            transition: aspect-ratio 0.5s ease; 
+        }
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        .fs-img-align { object-position: center 15% !important; }
-        .btm-img-align { object-position: center 90% !important; }
-        .bb-img-align { object-position: center 10% !important; }
+        /* 縦長写真を綺麗に収めるための、1枚ずつの専用ピンポイント調整（物によるズレを完全解消） */
+        .sm-img-align { object-position: center 35% !important; } /* スプラッシュ：落下と山が綺麗に映る位置 */
+        .btm-img-align { object-position: center 90% !important; } /* ビッグサンダー：手前の機関車トラクターを強調 */
+        .bb-img-align { object-position: center 10% !important; } /* 美女と野獣：お城の上の尖塔が切れない位置 */
+        .fs-img-align { object-position: center 15% !important; } /* ファンタジースプリングス：ピーターパンの岩顔 */
+        .soarin-img-align { object-position: center 25% !important; } /* ソアリン：夕暮れの博物館ドームを中央に */
 
         /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
@@ -148,7 +159,12 @@
             font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
         }
 
-        /* --- コラムカード --- */
+        .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
+        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
+        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
+        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
+
+        /* --- 特別コラム：舞浜の軌跡 --- */
         .chronicle-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
         }
@@ -204,10 +220,11 @@
             </div>
         </section>
 
-        <!-- パーク別目次 (TOC) -->
+        <!-- パーク別・コンパクトタグ型目次 (TOC) -->
         <nav class="toc-box">
             <div class="toc-title">Quick Navigation</div>
             
+            <!-- 東京ディズニーランド -->
             <div class="toc-section">
                 <span class="toc-section-title">Tokyo Disneyland (TDL)</span>
                 <div class="toc-tags">
@@ -218,6 +235,7 @@
                 </div>
             </div>
 
+            <!-- 東京ディズニーシー -->
             <div class="toc-section">
                 <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
                 <div class="toc-tags">
@@ -246,10 +264,10 @@
         <!-- 記事カード一覧 -->
         <div class="article-list grid-mode" id="article-list">
             
-            <!-- 【1：スプラッシュ・マウンテン】 -->
+            <!-- 【1：スプラッシュ・マウンテン】（sm-img-alignを新規適用！） -->
             <a href="bgs-sm.html" class="article-card" id="sm-card">
                 <div class="img-wrapper">
-                    <img src="sm-day.jpeg" alt="Splash Mountain">
+                    <img src="sm-day.jpeg" alt="Splash Mountain" class="sm-img-align">
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Splash Mountain</h2>
@@ -323,10 +341,10 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【8：ソアリン】 -->
+            <!-- 【8：ソアリン】（soarin-img-alignを新規適用！） -->
             <a href="bgs-soarin.html" class="article-card" id="soarin-card">
                 <div class="img-wrapper">
-                    <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum">
+                    <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum" class="soarin-img-align">
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Soarin'</h2>
