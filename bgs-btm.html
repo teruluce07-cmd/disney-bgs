@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGS Deep Report: Big Thunder Mountain | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- 昼夜（赤土の古紙・雷撃とゴールドラッシュの闇）カラー設定 --- */
+        :root {
+            /* デフォルト：アメリカ西部の乾いた赤土と砂漠の古紙モード */
+            --bg-color: #D3B99F; 
+            --text-main: #331A0F; /* 焦げた木炭ブラウン */
+            --accent-gold: #B25329; /* 荒野のテラコッタ・レッド */
+            --border-light: rgba(178, 83, 41, 0.2);
+            --img-filter: brightness(0.95) contrast(1.05) sepia(20%);
+            --glow-color: rgba(178, 83, 41, 0.25);
+            
+            /* 渇いた荒野の岩肌を表現した、超くしゃくしゃ紙の3Dフィルター */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f9ede0' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+        }
+
+        body.curse-mode {
+            /* スイッチON：精霊の怒り（漆黒の闇×輝くゴールド＆雷撃）モード */
+            --bg-color: #0D0B09; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #FFA500; /* 黄金に輝くネオンオレンジ */
+            --border-light: rgba(255, 165, 0, 0.25);
+            --img-filter: brightness(0.7) contrast(1.3) saturate(1.2);
+            --glow-color: rgba(255, 165, 0, 0.45);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%232b1e10' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 羊皮紙の上に重ねた薄い半透明の書類（可読性アップ） */
+        .container { 
+            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
+            background: rgba(245, 237, 222, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        }
+        body.curse-mode .container { background: rgba(15, 12, 10, 0.45); box-shadow: inset 0 0 40px rgba(255,165,0,0.02); }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .back-btn {
+            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
+            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
+            border-bottom: 1px solid transparent; transition: color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
+
+        /* 目次 */
+        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
+
+        /* 本文セクション */
+        .article-block { margin-bottom: 70px; text-align: justify; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
+        .hero-img-container:hover .hero-img { transform: scale(1.03); }
+
+        .connection-card { background: rgba(178, 83, 41, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        body.curse-mode .connection-card { background: rgba(255, 165, 0, 0.03); }
+        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
+        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+
+        .footer-link { text-align: center; margin-top: 80px; }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="theme-switch" id="theme-switch">🌙</div>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Portal</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Big Thunder Mountain</h1>
+            <div class="subtitle-jp">警告を破りし蒸気の咆哮と、黄金の呪い</div>
+        </header>
+
+        <!-- 目次 -->
+        <nav class="toc-box reveal">
+            <div class="toc-title">Index</div>
+            <ul class="toc-list">
+                <li><span>I. 黄金に沸いた荒野の歴史（プロローグ）</span><a href="#prologue">Read →</a></li>
+                <li><span>II. 鉱山の崩壊と「無人列車の暴走」</span><a href="#collapse">Read →</a></li>
+                <li><span>III. 水没したゴーストタウン（ウエスタンランドの謎）</span><a href="#tumbleweed">Read →</a></li>
+                <li><span>IV. イマジニアが掘り出した19世紀の「本物」</span><a href="#imagineering">Read →</a></li>
+                <li><span>V. 機関車たちに名付けられた「6つの決意」</span><a href="#locomotives">Read →</a></li>
+            </ul>
+        </nav>
+
+        <!-- メインビジュアル（btm-exterior.jpeg） -->
+        <div class="hero-img-container reveal">
+            <img src="btm-exterior.jpeg" alt="Big Thunder Mountain View" class="hero-img">
+        </div>
+
+        <!-- I. プロローグ -->
+        <section class="article-block reveal" id="prologue">
+            <h2>I. 黄金に沸いた荒野</h2>
+            <p>1800年代後半、アメリカ西部のゴールドラッシュ時代。未開の荒野に異様な姿でそびえ立つ赤土の岩山「ビッグサンダー・マウンテン」。一見、ただの荒涼とした廃鉱を猛スピードで駆け抜けるスリリングなコースターに見えますが、その背景には、かつて黄金に目を眩まされた白人たちの強欲と、山に宿る「精霊の怒り」の物語が隠されています。</p>
+            <p>この山の周辺には、古くからその土地を神聖な神の領域として崇めるネイティブ・アメリカンが暮らしていました。彼らはこの山を「ビッグサンダー（偉大なる雷）」と呼び、「山には恐ろしい精霊（怪鳥サンダーバード）が住んでおり、山の金塊を荒らす者には恐ろしい災いが降りかかる」と警告し、決して足を踏み入れませんでした。</p>
+            <p>しかし1840年代、この山から純度の高い金塊が発見されると事態は一変します。一獲千金を狙う白人の採掘者たちが大挙して押し寄せ、ゴールドラッシュの波に乗って山を丸ごと買い取り、大規模な採掘会社「ビッグサンダー・マイニング・カンパニー」を設立した大富豪、セドナ・ローウェル社長によって、山肌は容赦なく削られ、最新鋭の蒸気機関が導入されていきました。</p>
+        </section>
+
+        <!-- II. 鉱山の崩壊 -->
+        <section class="article-block reveal" id="collapse">
+            <h2>II. 崩壊と「無人の暴走」</h2>
+            <p>セドナ社長の乱開発によってふもとには鉱山都市「タブルウィード」が形成され、掘り出した金塊を運ぶための鉱山列車（マイントレイン）の線路が山全体に張り巡らされました。しかし、人間の強欲な略奪がピークに達したとき、ついにネイティブ・アメリカンの警告が現実となります。</p>
+            <p>採掘が山の奥深くに及ぶにつれ、誰もいない坑道から不気味な地鳴りが響き、不可解な事故が相次ぐようになります。そして1880年代のある日、不気味な雷鳴とともに凄まじい大地震が山とタブルウィードの街を襲い、多くの鉱夫が生き埋めになりました。精霊の怒りに恐怖した人々は、一瞬にして道具を捨てて山から逃げ出し、街はゴーストタウンと化したのです。</p>
+            <p>しかし、物語はここで終わりません。無人となった数年後、誰もいないはずの山から、突然「シュッシュッ、ポッポッ」という蒸気機関の音が聞こえ始めました。なんと、機関士も誰も乗っていないはずの鉱山列車が、まるで山に宿る精霊に操られるかのように、凄まじいスピードで今もなお山中を暴走し続けているのです。現在のゲストは、この「呪われた無人の暴走列車」にスリルを求めて乗り込む、命知らずな冒険家なのです。</p>
+        </section>
+
+        <!-- III. ゴーストタウン -->
+        <section class="article-block reveal" id="tumbleweed">
+            <h2>III. 水没したタブルウィードの残骸</h2>
+            <p>ビッグサンダー・マウンテンのBGSは、アトラクションの外にまで地続きに繋がっています。アトラクションの周囲や、蒸気船マークトウェイン号、ウエスタンランド鉄道に乗って金鉱の裏側に回ると、**水に浸かって半分沈んでしまった家屋や、誰もいない寂れた建物**が見えます。</p>
+            <p>これこそが、大地震と洪水によって一夜にして水没し、滅び去った幻の鉱山都市「タブルウィード」のゴーストタウンとしての現在の姿です。また、アトラクションの待ち列（Qライン）の途中には、ビッグサンダー・マイニング・カンパニーの事務所跡があり、かつて使われていた採掘の計画図や、セドナ社長の私物、ゴールドラッシュ当時の古い書類などが生々しく残されており、数分前まで誰かがそこで働いていたかのような臨場感を漂わせています。</p>
+        </section>
+
+        <!-- IV. 本物の機材 -->
+        <section class="article-block reveal" id="imagineering">
+            <h2>IV. イマジニアが掘り出した19世紀の「本物」</h2>
+            <p>ディズニーの空間デザイナー「イマジニア」たちは、この広大なゴールドラッシュの舞台を100%本物にするため、驚異的な執念を注ぎ込みました。アトラクションの周囲やQラインに転がっているアンティークな採掘機、蒸気ボイラー、破砕機などは、すべて映画のセット用のハリウッド製レプリカではありません。イマジニアたちはアメリカ中を旅し、**19世紀のゴールドラッシュ時代に、本物の鉱山で実際に使われ、そのまま打ち捨てられていた廃機材を何トンも買い取り、そのまま日本のパークへ輸送して配置**したのです。そのため、鉄の錆び方や木材の風化具合は、すべて「本物の歴史」が刻まれたリアルなものです。</p>
+            <p>また、鉱山内の壁や木箱に書かれたグラフィティ（落書き）は、当時の鉱夫の筆跡や、使われていたチョークの成分まで研究して再現。赤土の尖った岩肌は、ユタ州にある大自然の驚異「ブライスキャニオン国立公園」をモデルにし、日本の雨の多い気候でも荒野の岩山に見えるよう、何層もの職人の塗装（エイジング）が施されています。</p>
+        </section>
+
+        <!-- V. 6台の列車 -->
+        <section class="article-block reveal" id="locomotives">
+            <h2>V. 暴走機関車たちに名付けられた「6つの決意」</h2>
+            <p>ゲストが乗り込む6台の鉱山列車には、それぞれゴールドラッシュや西部の荒野をユーモラスに表現した、異なる名前がつけられています。これらは、これから暴走列車に挑むゲストを鼓舞する（あるいはちょっと皮肉った）イマジニアの遊び心が隠されたプロップスです。</p>
+            
+            <div class="connection-card">
+                <h4>🚂 機関車たちの名前と意味</h4>
+                <p><strong>・I.B. Hearty</strong>（I be hearty：私は元気だ / 頑丈な心臓）<br>
+                   <strong>・U.B. Bold</strong>（You be bold：大胆にいこう）<br>
+                   <strong>・U.R. Courageous</strong>（You are courageous：お前は勇敢だ）<br>
+                   <strong>・C.W. Bold</strong>（See who's bold：誰が大胆か見てみろ）<br>
+                   <strong>・B.V. Brave</strong>（Be very brave：非常に勇敢であれ）<br>
+                   <strong>・I.M. Brave</strong>（I am brave：私は勇敢だ）</p>
+            </div>
+            <p>この名前に恥じぬ「勇気」を持って、赤土の岩山を暴走するマイントレインへと足を踏み入れてください。精霊は、今もあなたの心の中にある「強欲」を試しているかもしれません。</p>
+        </section>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
