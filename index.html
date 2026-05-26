@@ -8,20 +8,16 @@
     <style>
         /* --- 昼夜（超・くしゃくしゃ古紙）カラー設定 --- */
         :root {
-            /* デフォルト：超くしゃくしゃな紅茶染めの「古紙」モード */
             --bg-color: #E2D7C5; 
             --text-main: #2D231E; 
             --accent-gold: #8C6239; 
             --border-light: rgba(45, 35, 30, 0.2);
             --img-filter: brightness(0.9) contrast(1.1) sepia(30%);
             --glow-color: rgba(140, 98, 57, 0.2);
-            
-            /* シワをさらに強く（surfaceScale='5'）した超くしゃくしゃ紙 of 3Dフィルター */
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
         }
 
         body.curse-mode {
-            /* スイッチON：黒く焦げて煤けた「呪いの焦げ紙」モード */
             --bg-color: #070911; 
             --text-main: #E2E8F0; 
             --accent-gold: #00FF7F; 
@@ -32,10 +28,7 @@
         }
 
         /* スムーズスクロール有効化 */
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -52,7 +45,6 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 羊皮紙の上に重ねた薄い半透明の書類（可読性アップ） */
         .container { 
             max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
@@ -113,7 +105,6 @@
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease, filter 0.8s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        /* ピーターパンの顔（写真の上半分）が綺麗に映るようにトリミング位置を調整 */
         .fs-img-align {
             object-position: center 15% !important;
         }
@@ -144,14 +135,15 @@
             アトラクションの待ち時間とかに見てください。
         </p>
 
-        <!-- 目次 -->
+        <!-- 目次 (TOC) -->
         <nav class="toc-box reveal">
             <div class="toc-title">Exhibits Index</div>
             <ul class="toc-list">
                 <li><span>I. Tower of Terror (タワー・オブ・テラー)</span><a href="#tot-card">Scroll →</a></li>
                 <li><span>II. Sindbad's Voyage (シンドバッド)</span><a href="#sindbad-card">Scroll →</a></li>
                 <li><span>III. Fantasy Springs (ファンタジースプリングス)</span><a href="#fs-card">Scroll →</a></li>
-                <li><span>IV. Curator Profile (管理者プロフィール)</span><a href="profile.html">View →</a></li>
+                <li><span>IV. Splash Mountain (スプラッシュ・マウンテン)</span><a href="#sm-card">Scroll →</a></li>
+                <li><span>V. Curator Profile (管理者プロフィール)</span><a href="profile.html">View →</a></li>
             </ul>
         </nav>
 
@@ -180,15 +172,25 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 3本目：ファンタジースプリングス（写真位置調整版） -->
+            <!-- 3本目：ファンタジースプリングス -->
             <a href="bgs-fs.html" class="article-card" id="fs-card">
                 <div class="img-wrapper">
-                    <!-- fs-img-align クラスを付与して切り抜き位置を自動調整しています -->
                     <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="fs-img-align">
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Fantasy Springs</h2>
                 <p>湧き出る精霊の記憶と、公爵夫人の招待状。ディズニーシー最奥地にひっそりと佇む泉が意味する、パークの壮大な「水の循環」の答えとは。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
+            <!-- 4本目：スプラッシュ・マウンテン (jpeg版！) -->
+            <a href="bgs-sm.html" class="article-card" id="sm-card">
+                <div class="img-wrapper">
+                    <img src="sm-day.jpeg" alt="Splash Mountain">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Splash Mountain</h2>
+                <p>泥地に根づく知恵と、大洪水の忘れ物。アライグマの失敗が引き起こした大洪水から、ブレア・ラビットが命をかけて仕掛けた「最後のはっぱり」まで、小動物たちの歴史を追う。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
