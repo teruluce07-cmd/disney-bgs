@@ -6,6 +6,7 @@
     <title>TDS BGS & Photography | HOME</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
+        /* --- 昼夜（超・くしゃくしゃ古紙）カラー設定 --- */
         :root {
             --bg-color: #E2D7C5; 
             --text-main: #2D231E; 
@@ -13,16 +14,22 @@
             --border-light: rgba(45, 35, 30, 0.2);
             --img-filter: brightness(0.9) contrast(1.1) sepia(30%);
             --glow-color: rgba(140, 98, 57, 0.2);
-            
-            /* シワの計算量を軽くし、GPU向けに最適化した3Dフィルター */
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='optimized-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='4'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23optimized-paper)'/%3E%3C/svg%3E");
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
         }
 
+        body.curse-mode {
+            --bg-color: #070911; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00FF7F; 
+            --border-light: rgba(0, 255, 127, 0.2);
+            --img-filter: brightness(0.7) contrast(1.25) hue-rotate(90deg);
+            --glow-color: rgba(0, 255, 127, 0.4);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23141b2e' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
+        /* スムーズスクロール有効化 */
+        html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html {
-            scroll-behavior: smooth;
-        }
 
         body {
             font-family: 'Noto Serif JP', serif;
@@ -33,7 +40,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 【魔法】背景を独立させ、GPU（映像チップ）で固定処理して軽くする仕掛け --- */
+        /* --- 背景固定レイヤー（軽量化仕様） --- */
         .paper-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -42,7 +49,6 @@
                 radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%),
                 var(--paper-texture);
             background-size: cover;
-            /* 3Dグラフィック加速を強制し、スクロール時の再読み込みをゼロにします */
             transform: translate3d(0, 0, 0);
             will-change: transform;
             pointer-events: none;
@@ -59,7 +65,7 @@
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
         }
 
-        /* スクロールフェードインもGPUで滑らかに */
+        /* スクロールフェードイン */
         .reveal {
             opacity: 0; 
             transform: translate3d(0, 35px, 0);
@@ -72,7 +78,7 @@
         }
 
         /* --- ヘッダー --- */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 60px; border-bottom: 1px solid var(--border-light); }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); }
         .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--text-main); text-decoration: none; }
         .profile-btn {
             display: inline-block; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em;
@@ -80,9 +86,69 @@
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
 
-        /* 導入文 */
-        .intro-text {
-            text-align: center; margin-bottom: 60px; font-size: 0.85rem; color: var(--text-main); opacity: 0.8; letter-spacing: 0.05em; line-height: 2.2;
+        /* --- 【新設】ウェルカム・ヒーローエリア（殺風景を解消） --- */
+        .intro-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        /* ドナルドの写真を美術館風の「アーチ窓」にトリミング */
+        .intro-portrait {
+            width: 100px;
+            height: 120px;
+            border-radius: 50px 50px 0 0; /* 上だけ丸いアーチ型 */
+            overflow: hidden;
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 8px 20px var(--glow-color);
+            margin-bottom: 30px;
+            background: #111;
+        }
+        .intro-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: var(--img-filter);
+        }
+
+        .intro-message {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 2.2;
+            margin-bottom: 35px;
+            opacity: 0.95;
+            letter-spacing: 0.05em;
+        }
+
+        /* ウォルト・ディズニーの名言 */
+        .walt-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--accent-gold);
+            line-height: 1.5;
+            margin-bottom: 12px;
+            padding: 0 10px;
+        }
+        .walt-quote cite {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.55rem;
+            font-style: normal;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+        .walt-quote-jp {
+            font-size: 0.7rem;
+            opacity: 0.5;
+            letter-spacing: 0.05em;
         }
 
         /* --- 目次 (TOC) --- */
@@ -216,11 +282,24 @@
             <a href="profile.html" class="profile-btn">Profile</a>
         </header>
 
-        <!-- メッセージ -->
-        <p class="intro-text reveal">
-            このサイトではディズニーのBGSについて紹介してます。<br>
-            アトラクションの待ち時間とかに見てください。
-        </p>
+        <!-- 【新・お洒落ウェルカムエリア（ドナルドのアーチ写真 ＆ ウォルトの名言）】 -->
+        <section class="intro-hero reveal">
+            <div class="intro-portrait">
+                <img src="IMG_2226.jpeg" alt="Curator Profile Picture">
+            </div>
+            <div class="intro-content">
+                <p class="intro-message">
+                    このサイトではディズニーのBGSについて紹介してます。<br>
+                    アトラクションの待ち時間とかに見てください。
+                </p>
+                <blockquote class="walt-quote">
+                    "Disneyland will never be completed.<br>
+                    It will continue to grow as long as there is imagination left in the world."
+                    <cite>— Walt Disney</cite>
+                </blockquote>
+                <p class="walt-quote-jp">「ディズニーランドは永遠に完成しない。世界に想像力がある限り、成長し続けるだろう。」</p>
+            </div>
+        </section>
 
         <!-- 目次 (TOC) -->
         <nav class="toc-box reveal">
@@ -296,7 +375,7 @@
     </div>
 
     <script>
-        /* --- レイアウト切り替えの魔法（List ⇄ Grid） --- */
+        /* --- レイアウト切り替え（List ⇄ Grid） --- */
         const viewListBtn = document.getElementById('view-list');
         const viewGridBtn = document.getElementById('view-grid');
         const articleList = document.getElementById('article-list');
