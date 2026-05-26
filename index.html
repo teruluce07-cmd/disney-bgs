@@ -43,7 +43,7 @@
             transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
 
-        /* 背景固定レイヤー（GPU高速化） */
+        /* 背景固定レイヤー */
         .paper-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
@@ -126,25 +126,19 @@
         }
         .article-card:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         
-        /* 【最重要：3:2のカメラ黄金比に統一】これで写真全体のスケール感（大きさ）のバランスが完璧に揃います */
-        .img-wrapper { 
-            width: 100%; 
-            aspect-ratio: 3 / 2; /* 16:10から、写真本来の最も美しい3:2に変更 */
-            border-radius: 4px; 
-            overflow: hidden; 
-            margin-bottom: 25px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
-            transition: aspect-ratio 0.5s ease; 
-        }
+        .img-wrapper { width: 100%; aspect-ratio: 3 / 2; border-radius: 4px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: aspect-ratio 0.5s ease; }
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        /* 縦長写真を綺麗に収めるための、1枚ずつの専用ピンポイント調整（物によるズレを完全解消） */
-        .sm-img-align { object-position: center 35% !important; } /* スプラッシュ：落下と山が綺麗に映る位置 */
-        .btm-img-align { object-position: center 90% !important; } /* ビッグサンダー：手前の機関車トラクターを強調 */
-        .bb-img-align { object-position: center 10% !important; } /* 美女と野獣：お城の上の尖塔が切れない位置 */
-        .fs-img-align { object-position: center 15% !important; } /* ファンタジースプリングス：ピーターパンの岩顔 */
-        .soarin-img-align { object-position: center 25% !important; } /* ソアリン：夕暮れの博物館ドームを中央に */
+        /* -------------------------------------------
+           📸 【新・トリミング魔法】通常（リスト）表示の時の切り抜き位置
+        ------------------------------------------- */
+        .sm-img-align { object-position: center 45% !important; }     /* スプラッシュ：より中央に調整 */
+        .btm-img-align { object-position: center 75% !important; }    /* ビッグサンダー：より全体が見えるように */
+        .bb-img-align { object-position: center 25% !important; }     /* 美女と野獣：正面玄関も見える上品な位置 */
+        .fs-img-align { object-position: center 30% !important; }     /* ファンタジー：水と岩のバランスが良い位置 */
+        .soarin-img-align { object-position: center 45% !important; } /* ソアリン：ドームが最も美しく収まる位置 */
+        .tl-img-align { object-position: center 50% !important; }     /* トゥモローランド：全体が整う位置 */
 
         /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
@@ -164,7 +158,7 @@
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
         .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
 
-        /* --- 特別コラム：舞浜の軌跡 --- */
+        /* 特別コラム：舞浜の軌跡 */
         .chronicle-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
         }
@@ -172,13 +166,24 @@
         .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
         .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; }
 
-        /* --- グリッド表示 --- */
+        /* -------------------------------------------
+           田 【最重要】グリッド表示（Grid Mode）がONの時の切り抜き位置
+           （完璧なバランスだった上寄せ設定を、ここにすべて退避させました）
+        ------------------------------------------- */
         .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .article-list.grid-mode .article-card { padding: 15px; border-radius: 6px; }
         .article-list.grid-mode .img-wrapper { aspect-ratio: 1 / 1; margin-bottom: 12px; }
         .article-list.grid-mode .article-card h2 { font-size: 1.15rem; margin-bottom: 8px; }
         .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .article-list.grid-mode .read-btn { font-size: 0.65rem; }
+
+        /* グリッド表示の時だけの、完璧な上寄せ設定 */
+        .article-list.grid-mode .sm-img-align { object-position: center 35% !important; }
+        .article-list.grid-mode .btm-img-align { object-position: center 90% !important; }
+        .article-list.grid-mode .bb-img-align { object-position: center 10% !important; }
+        .article-list.grid-mode .fs-img-align { object-position: center 15% !important; }
+        .article-list.grid-mode .soarin-img-align { object-position: center 25% !important; }
+        .article-list.grid-mode .tl-img-align { object-position: center 40% !important; }
 
         /* 💻 パソコン ＆ iPadレスポンシブ */
         @media (min-width: 768px) {
@@ -264,7 +269,7 @@
         <!-- 記事カード一覧 -->
         <div class="article-list grid-mode" id="article-list">
             
-            <!-- 【1：スプラッシュ・マウンテン】（sm-img-alignを新規適用！） -->
+            <!-- 【1：スプラッシュ・マウンテン】（sm-img-alignを付与） -->
             <a href="bgs-sm.html" class="article-card" id="sm-card">
                 <div class="img-wrapper">
                     <img src="sm-day.jpeg" alt="Splash Mountain" class="sm-img-align">
@@ -297,10 +302,10 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【4：トゥモローランド】 -->
+            <!-- 【4：トゥモローランド】（tl-img-alignを新規適用！） -->
             <a href="bgs-tl.html" class="article-card" id="tl-card">
                 <div class="img-wrapper">
-                    <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain">
+                    <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain" class="tl-img-align">
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Tomorrowland</h2>
@@ -326,7 +331,7 @@
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈作品の傑作へと生まれ変わるまで。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
@@ -341,7 +346,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 【8：ソアリン】（soarin-img-alignを新規適用！） -->
+            <!-- 【8：ソアリン】 -->
             <a href="bgs-soarin.html" class="article-card" id="soarin-card">
                 <div class="img-wrapper">
                     <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum" class="soarin-img-align">
@@ -385,33 +390,4 @@
 
             <h4>III. 3350億円の「風化する本物」</h4>
             <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
-            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った辺りです。</p>
-
-            <h4>IV. 魔法の泉と、世界一の評価</h4>
-            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級 of **約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、指示通りにそして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
-        </section>
-        </div>
-
-        <footer>&copy; TERU_LUCE_</footer>
-    </div>
-
-    <script>
-        /* --- レイアウト切り替え（List ⇄ Grid） --- */
-        const viewListBtn = document.getElementById('view-list');
-        const viewGridBtn = document.getElementById('view-grid');
-        const articleList = document.getElementById('article-list');
-
-        viewListBtn.addEventListener('click', () => {
-            articleList.classList.remove('grid-mode');
-            viewListBtn.classList.add('active-toggle');
-            viewGridBtn.classList.remove('active-toggle');
-        });
-
-        viewGridBtn.addEventListener('click', () => {
-            articleList.classList.add('grid-mode');
-            viewGridBtn.classList.add('active-toggle');
-            viewListBtn.classList.remove('active-toggle');
-        });
-    </script>
-</body>
-</html>
+            TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないか
