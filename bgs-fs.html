@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGS Deep Report: Fantasy Springs | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- 昼夜（水の古紙・魔法の夜泉）カラー設定 --- */
+        :root {
+            /* デフォルト：透き通る水の源、ベージュと水色の古紙モード */
+            --bg-color: #E6E1D3; 
+            --text-main: #2C3E50; /* 澄んだ深水ブルーグレー */
+            --accent-gold: #4A90E2; /* 水色（アクアブルー） */
+            --border-light: rgba(74, 144, 226, 0.2);
+            --img-filter: brightness(0.95) contrast(1.05) saturate(1.1);
+            --glow-color: rgba(74, 144, 226, 0.25);
+            
+            /* くしゃくしゃの質感と、うっすらと水の滲んだテクスチャ */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f2f8fc' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+        }
+
+        body.curse-mode {
+            /* スイッチON：夜の魔法の泉（深海ネイビー×光るターコイズ）モード */
+            --bg-color: #0A192F; 
+            --text-main: #E6F2FF; 
+            --accent-gold: #00F5FF; /* 妖しく光るターコイズネオン */
+            --border-light: rgba(0, 245, 255, 0.2);
+            --img-filter: brightness(0.8) contrast(1.2) saturate(1.3);
+            --glow-color: rgba(0, 245, 255, 0.4);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23112240' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            background-image: 
+                /* 泉の底に吸い込まれるような水色のグラデーション */
+                radial-gradient(circle at 50% 50%, rgba(217, 235, 252, 0.3) 0%, rgba(0,0,0,0.15) 100%),
+                var(--paper-texture);
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+        }
+        body.curse-mode {
+            background-image: radial-gradient(circle at 50% 50%, rgba(0, 245, 255, 0.03) 0%, rgba(0,0,0,0.3) 100%), var(--paper-texture);
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .container { 
+            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
+            background: rgba(240, 245, 250, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        }
+        body.curse-mode .container { background: rgba(10, 25, 47, 0.45); box-shadow: inset 0 0 40px rgba(0,245,255,0.02); }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .back-btn {
+            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
+            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
+            border-bottom: 1px solid transparent; transition: color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
+
+        /* 目次 */
+        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
+
+        /* 本文セクション */
+        .article-block { margin-bottom: 70px; text-align: justify; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
+        .hero-img-container:hover .hero-img { transform: scale(1.03); }
+
+        /* 水色アクセントのカード */
+        .connection-card { background: rgba(74, 144, 226, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        body.curse-mode .connection-card { background: rgba(0, 245, 255, 0.03); }
+        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
+        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+
+        .footer-link { text-align: center; margin-top: 80px; }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="theme-switch" id="theme-switch">🌙</div>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Portal</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Fantasy Springs</h1>
+            <div class="subtitle-jp">湧き出る精霊の記憶と、公爵夫人の招待状</div>
+        </header>
+
+        <!-- 目次 -->
+        <nav class="toc-box reveal">
+            <div class="toc-title">Index</div>
+            <ul class="toc-list">
+                <li><span>I. 始まりの泉（全体のテーマと基本BGS）</span><a href="#prologue">Read →</a></li>
+                <li><span>II. 地理的帰結（ディズニーシー全体の水の循環）</span><a href="#water-cycle">Read →</a></li>
+                <li><span>III. 3つの物語世界への旅（各エリアの深掘り）</span><a href="#three-realms">Read →</a></li>
+                <li><span>IV. イマジニアが吹き込んだ「息づく世界」</span><a href="#imagineering">Read →</a></li>
+            </ul>
+        </nav>
+
+        <!-- 魔法の泉・ピーターパン滝のお写真（IMG_1070_Original.jpegを使用） -->
+        <div class="hero-img-container reveal">
+            <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs Magical Waterfalls" class="hero-img">
+        </div>
+
+        <!-- I. プロローグとテーマ -->
+        <section class="article-block reveal" id="prologue">
+            <h2>I. 始まりの泉</h2>
+            <p>東京ディズニーシーの最奥地、岩間を抜けた先に広がるのは、豊かな水と光に満ちた「ファンタジースプリングス」。このテーマポート全体の根底を支えるのは、**「水の精霊」**と、旅を愛した一人の高貴な女性**「ダッチェス（公爵夫人）」**の物語です。</p>
+            <p>かつて、この地に住んでいた「水の精霊」たちは、不思議な力に導かれて世界中を旅しました。精霊たちは旅先で、ピーターパンやラプンツェル、アナとエルサといった「感動的なファンタジーの物語」に出会います。故郷の泉に戻った精霊たちは、その魔法の力を使って、自分たちが見てきた感動の記憶を**「石や木、水、そして滝」の形へと美しく彫り込んで再現**しました。エリアに数多く点在するキャラクターのロックアートは、精霊たちが遺した感動の記憶なのです。</p>
+            
+            <div class="connection-card">
+                <h4>🏰 ファンタジースプリングスホテル誕生のBGS</h4>
+                <p>時が流れ、旅と冒険をこよなく愛する「ダッチェス（公爵夫人）」と呼ばれる一人の高貴な女性が、この美しく湧き出る魔法の泉を発見します。彼女は小川をたどるうちに、この精霊が遺した物語の世界にすっかり魅了されてしまいました。彼女は泉の近くに小さな夏の別荘を建て、やがて彼女の多くの友人たちをこの美しい世界でもてなすために、壮麗な宮殿を建てました。これこそが、現在の**「東京ディズニーシー・ファンタジースプリングスホテル」**の始まりなのです。</p>
+            </div>
+        </section>
+
+        <!-- II. 地理的水の循環 -->
+        <section class="article-block reveal" id="water-cycle">
+            <h2>II. ディズニーシー「水の循環」の答え</h2>
+            <p>ファンタジースプリングスは、ディズニーシー開園から20年の時を経て完成したエリアですが、実は**「ディズニーシー全体の空間コンセプトを美しく完結させる、パズルの最後の1ピース」**という地理的な意味を持っています。</p>
+            <p>ディズニーシーは「海」をテーマにしていますが、パーク内の水は、ある完璧な地理的循環を描いています。</p>
+            
+            <p style="text-align: center; color: var(--accent-gold); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.1em; margin: 30px 0;">
+                The Ocean (ハーバー) ➔ The River (ロストリバー) ➔ The Springs (泉)
+            </p>
+            
+            <p>メディテレーニアンハーバーという「広大な海」から始まった水は、ロストリバーデルタという「川」となり、その川をさらに山奥へと遡った最果てに、すべての水が湧き出る始まりの場所**「泉（スプリングス）」**が存在する。つまり、ファンタジースプリングスがパークの最奥地に位置しているのは、**「ディズニーシーのすべての水の源流（はじまりの場所）に、ついにゲストがたどり着いた」**という、壮大な空間ストーリーを意味しているのです。</p>
+        </section>
+
+        <!-- III. 3つのエリア深掘り -->
+        <section class="article-block reveal" id="three-realms">
+            <h2>III. Three Realms</h2>
+            <p>泉から流れ出る水は、精霊たちが愛した3つの異なる物語の世界へとゲストを誘います。</p>
+
+            <p><strong>フローズンキングダム（『アナと雪の女王』）</strong><br>
+            舞台は、映画第1作の『その後の世界』。エルサが氷の魔法をありのままに受け入れ、アレンデール王国が真の温かさを取り戻した幸福な時代です。お城の門を開放したレストラン「アレンデール・ロイヤルバンケット」や、サウナのオーケンが平和を祝して開いた「オーケンのオーケーフード」など、村全体に平和な日常と笑顔が息づいています。</p>
+
+            <p><strong>ラプンツェルの森（『塔の上のラプンツェル』）</strong><br>
+            ラプンツェルが18年間過ごした塔がそびえ立つ、静かな深い森。森の中にひっそりと佇む「スナグリーダックリング」は、かつての荒くれ者たちの酒場ですが、BGSとしては**「夢を叶えた荒くれ者たちが、それぞれの特技（ピアノや料理、装飾）を活かして経営している、愛にあふれたアットホームなレストラン」**になっています。店内には彼らが夢を叶えた証（装飾や道具）がたくさん飾られており、ただの怖い酒場ではなく、温かい場所として描かれています。</p>
+
+            <p><strong>ピーターパンのネバーランド（『ピーター・パン』）</strong><br>
+            冒険心あふれる子供たちの国。ここでは、ゲスト自身が「ロストキッズ（迷子たち）」の一員となります。ロストキッズたちが漂流物や難破船の端切れ、おもちゃなどを集めて手作りした秘密基地のレストラン「ルックアウト・クックアウト」は、子供たちの無邪気な遊び心が細部まで再現されています。</p>
+        </section>
+
+        <!-- IV. イマジニアの努力 -->
+        <section class="article-block reveal" id="imagineering">
+            <h2>IV. Imagineers' Craft</h2>
+            <p>ディズニーの空間を作り上げる職人「イマジニア」たちは、ファンタジースプリングスを単なる「映画のセット」ではなく、**「本当にそこに存在する、歴史の息づいた街」**にするために、驚異的なこだわりを注ぎ込みました。</p>
+            <p>レストランの棚に置かれたコップや本、壁の傷、ルックアウト・クックアウトに落ちている子供たちのパジャマに至るまで、すべてイマジニアが「誰が、なぜここにこれを置いたのか」の物語を1から考えて配置し、何千ものアイテムに手作業でエイジング（古びた加工）を施しました。</p>
+            
+            <p>また、キャラクターの岩や滝を作る「ロックワーク（彫刻技術）」では、水が流れたときの「音」や「しぶきの飛び方」まで何年もかけて綿密に計算。さらに、浦安の現実世界のビル群やパーク外の建物を絶対にゲストに見せないよう、植物の高さ、植える角度、密度に至るまで日本の造園チームと連携して極限まで計算し、完全に「深い森の奥底の泉」に包まれる世界を作り上げたのです。</p>
+        </section>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
