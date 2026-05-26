@@ -14,8 +14,6 @@
             --border-light: rgba(28, 45, 55, 0.2);
             --img-filter: brightness(0.95) contrast(1.05);
             --glow-color: rgba(0, 139, 139, 0.25);
-            
-            /* 軽量化した3Dシワフィルター */
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='optimized-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23e6f0f5' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23optimized-paper)'/%3E%3C/svg%3E");
         }
 
@@ -35,22 +33,17 @@
         body {
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 2.2;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 背景固定レイヤー（軽量化仕様） --- */
+        /* 背景固定レイヤー（GPU高速化） */
         .paper-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
-            background-size: cover;
-            transform: translate3d(0, 0, 0);
-            will-change: transform;
-            pointer-events: none;
+            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
         }
 
         .noise-overlay {
@@ -63,6 +56,7 @@
             max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
             background: rgba(230, 240, 245, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
         }
+        body.curse-mode .container { background: rgba(5, 12, 26, 0.45); box-shadow: inset 0 0 40px rgba(0,229,255,0.03); }
 
         .reveal {
             opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
@@ -77,6 +71,13 @@
         }
         .back-btn:hover { border-color: var(--accent-gold); }
 
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+
         .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
         .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
         h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
@@ -89,6 +90,43 @@
         .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
         .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
         .toc-list a:hover { color: var(--accent-gold); }
+
+        /* --- 記事本文と余白調整 --- */
+        .article-block { 
+            margin-bottom: 90px; /* 余白をさらに大きく確保 */
+            text-align: justify; 
+        }
+        h2 { 
+            font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; font-style: italic; 
+            color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; 
+        }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+
+        /* --- 【新設】本をめくるような美しい仕切り線（Section Divider） --- */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 80px 0;
+            opacity: 0.7;
+            user-select: none;
+            pointer-events: none;
+        }
+        .section-divider::before, .section-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+        }
+        .section-divider span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            letter-spacing: 0.3em;
+            margin: 0 20px;
+            font-weight: bold;
+        }
 
         /* 写真をなじませる手帳・ポラロイド風加工 */
         .hero-img-container { 
@@ -114,7 +152,6 @@
     <div class="paper-bg"></div>
 
     <div class="container">
-        <!-- index.html（ポータル）へ戻る -->
         <a href="index.html" class="back-btn">← Back to Portal</a>
 
         <header class="header-section reveal">
@@ -143,10 +180,13 @@
 
         <!-- I. プロローグ -->
         <section class="article-block reveal" id="prologue">
-            <h2>I. 宇宙への玄関口</h2>
-            <p>東京ディズニーランドの右奥に広がる、白く幾何学的な未来都市「トゥモローランド」。このエリアは、人類が夢見る輝かしい「未来のスペースポート（宇宙港）」として作られました。</p>
-            <p>エリア内を歩くと目に入る直線的なデザインや幾何学的な建物は、20世紀後半の人々が思い描いた、工業的で力強い宇宙時代のシンボルです。現在、2027年に向けた大規模な建て替え工事により、さらに有機的で美しい「曲線」を取り入れた、人と地球に優しい最新のスペースポートへと進化を続けています。時代ごとに変化する未来の夢を体験できるのが、このテーマランド最大の特徴です。</p>
+            <h2>I. トゥモローランドが背負う宿命</h2>
+            <p>東京ディズニーランドの右奥に広がる、白く幾何学的な未来都市「トゥモローランド」。このエリアは、ファンタジーランドやウェスタンランドといった「完成された過去」を描く他の土地とは異なり、**「同時代依存（Contemporary Dependency）」**という美しくも過酷な宿命を背負っています。</p>
+            <p>1955年にアメリカで最初のテーマランドが作られた際、デザインの基盤となったのは、当時の流行であった「未来へのオプティミズム（楽観主義）」でした。しかし、技術が進歩し、かつて夢見た「ロケット」や「宇宙旅行」が日常のものとなった瞬間、未来都市は現実によって追い越され、たちまち「古い過去の跡」へと陳腐化してしまいます。「styles had to keep up（デザインは更新され続けなければならない）」。この絶対的なルールを背負っているからこそ、トゥモローランドは絶えず物理的な変化（自己変革）を課され、常に最新の未来を模索し続ける、最もエネルギーに満ちた土地なのです。</p>
         </section>
+
+        <!-- 星空の仕切り線（1つ目） -->
+        <div class="section-divider reveal"><span>✦ ✦ ✦</span></div>
 
         <!-- II. スペースマウンテン（新旧対比 ＆ パリ版） -->
         <section class="article-block reveal" id="space">
@@ -154,7 +194,7 @@
             <p>1983年の開園からエリアの絶対的象徴として君臨してきた、初代「スペース・マウンテン」。この巨大な純白のドームは、宇宙管制センターであり、未知の宇宙エネルギーを回収する「ステーション」としてのBGSを持っています。</p>
             <p>ゲストが乗り込むのは、ステーションにドック入りしている「新型ロケット」です。搭乗プラットフォームでロケットに未知の宇宙エネルギーが急速充填され、そのエネルギーを一気に解放することで、秒読みとともにロケットは大気圏を脱出して超高速度での宇宙旅行へと出発します。2024年7月31日に多くのゲストに惜しまれながら一度クローズし、現在は2027年のリニューアルに向けて新たなロケットの準備が進んでいます。</p>
 
-            <!-- 2枚目：ドーム夜景「tl-space-night.jpeg」を配置 -->
+            <!-- 2枚目：ドーム夜景「tl-space-night.jpeg」 -->
             <div class="hero-img-container reveal">
                 <img src="tl-space-night.jpeg" alt="Space Mountain Night View" class="hero-img">
             </div>
@@ -170,10 +210,77 @@
                    このオブジェクトは、ロケットが旅立つたび、消費された宇宙エネルギーを自動的に吸収し、再びロケットへと充填するための装置というBGSが設定されていました。青く美しく脈打つこの光は、これから未知の暗黒宇宙へと旅立つゲストの緊張感とロマンを静かに引き立てる、スペースマウンテンの魂とも言える象徴的な存在でした。</p>
             </div>
 
-            <!-- 【追加修正：見出しをより直接的、BGSに特化した「レトロフューチャー」の文言に修正】 -->
             <div class="connection-card">
                 <h4>🔮 フランス・パリ：過去の人が夢見た「レトロフューチャー」</h4>
                 <p>実は、フランスのディズニーランド・パリにあるスペース・マウンテンは、東京の「白い近未来的なドーム」とはまったく異なる、**「レトロフューチャー（過去の人々が思い描いた未来）」**をテーマにしています。19世紀のフランスのSF小説家ジュール・ヴェルヌの『月世界旅行』の世界観（スチームパンク）がベースになっており、ドーム全体が真鍮やブロンズで覆われています。<br><br>
                    宇宙船（ビークル）を打ち出すため、ドームの横には「コロンビアード大砲」と呼ばれる巨大な大砲が設置され、大爆発の白煙とともに月世界へとゲストを撃ち出すという、クラシックでロマンチックな宇宙旅行が今もなお語り継がれています。</p>
             </div>
-        </secti
+        </section>
+
+        <!-- 星空の仕切り線（2つ目） -->
+        <div class="section-divider reveal"><span>✦ ✦ ✦</span></div>
+
+        <!-- III. スター・ツアーズ -->
+        <section class="article-block reveal" id="startours">
+            <h2>III. スター・ツアーズ：スタースピーダー1401便の緊急出発</h2>
+            <p>日々、スタースピーダー1000が銀河の様々な惑星へとフライトを続けている、星間旅行会社「スター・ツアーズ」。</p>
+            <p>ゲストが乗り込む「1401便」は、出航前の点検中、整備用ドロイドであるC-3POが不注意からパイロット席に居座った状態で、自動出発許可が下りてしまいます。さらに、宇宙港で帝国軍に強制停車させられ、機内に「反乱軍のスパイ（乗船しているゲストの顔写真）」が潜入していることを告げられます。C-3POはスパイを守り、安全な反乱軍の秘密基地へと送り届けるべく、自動操縦で銀河の様々な惑星へと超空間ワープを繰り返す緊急逃避行へと巻き込まれるのです。</p>
+        </section>
+
+        <!-- 星空の仕切り線（3つ目） -->
+        <div class="section-divider reveal"><span>✦ ✦ ✦</span></div>
+
+        <!-- IV. モンスターズインク -->
+        <section class="article-block reveal" id="monsters">
+            <h2>IV. モンスターズ・インク：笑い声あふれる停電の夜</h2>
+            <p>映画『モンスターズ・インク』のその後を描いた「モンスターズ・インク“ライド＆ゴーシーク！”」。</p>
+            <p>映画の結末において、モンスターズ社は「悲鳴（恐怖）」のエネルギーから「笑い声」をエネルギーに変換するクリーンな方法へと経営方針を転換しました。新社長となったサリーは、遊びにきた人間の少女「ブー」を楽しませるため、マイク・ワゾウスキが発案した「フラッシュライトかくれんぼゲーム」を開催します。</p>
+            <p>ゲーム開始とともに、お城のメインパワースイッチがオフになり、モンスターシティは夜の停電状態へと包まれます。ゲストはセキュリティトラムに乗り込み、ヘルメットに描かれた「M」のロゴを狙ってライトを照らすことで、隠れているモンスターたちを見つけ出すゲームに参加するのです。</p>
+        </section>
+
+        <!-- 星空の仕切り線（4つ目） -->
+        <div class="section-divider reveal"><span>✦ ✦ ✦</span></div>
+
+        <!-- V. バズライトイヤー -->
+        <section class="article-block reveal" id="buzz">
+            <h2>V. バズ・ライトイヤー：帝王ザーグと結晶の遺産</h2>
+            <p>2024年10月に20年の歴史を終えた「バズ・ライトイヤーのアストロブラスター」。このアトラクションは、おもちゃのバズが主人公として活躍する劇中劇アニメの世界を舞台にしていました。</p>
+            
+            <!-- 4枚目：バズの緑の看板写真（tl-buzz.jpeg） -->
+            <div class="hero-img-container reveal">
+                <img src="tl-buzz.jpeg" alt="Buzz Lightyear's Astro Blasters Entrance" class="hero-img">
+            </div>
+
+            <p>悪の帝王ザーグは、おもちゃたちの万能エネルギー「クリストリック・フュージョン」バッテリーを強奪し、銀河を支配する巨大兵器の稼働を目論んでいました。私たちは新人レンジャーとして、緑色の光線銃「アストロブラスター」を持ち、二人乗りの「XP-38型スペースクルーザー」に乗ってプラネットZへと突入しました。</p>
+            <p>アトラクションの入り口の天井に飾られていた宇宙船は、私たちが乗ったXP-38型スペースクルーザーではなく、バズ自身が愛用する「42型スタークルーザー」であるという、イマジニアによるマニアックなビジュアルの描き分けがなされていました。クローズ後、ここは『シュガー・ラッシュ』のゲーム世界へと生まれ変りますが、かつて銀河の平和を守るためにアストロブラスターを握りしめ、ザーグの「Z」マークを狙い続けたあの思い出は、トゥモローランドの歴史の一部として今も眠っています。</p>
+        </section>
+
+        <!-- 星空の仕切り線（5つ目） -->
+        <div class="section-divider reveal"><span>✦ ✦ ✦</span></div>
+
+        <!-- VI. スティッチ -->
+        <section class="article-block reveal" id="stitch">
+            <h2>VI. スティッチ・エンカウンター：宇宙連邦の広大な監視網</h2>
+            <p>シアター型アトラクション「スティッチ・エンカウンター」。この施設は、宇宙の秩序を守る「宇宙連邦（Galactic Federation）」によって設置された最先端の**「スティッチ・モニタリング・ステーション（スティッチ監視宇宙ステーション）」**です。</p>
+            <p>イタズラ好きで暴れん坊 of エイリアン「試作品626号（スティッチ）」が、宇宙のあちこちを縦横無尽に飛び回ってトラブルを起こさないよう、宇宙連邦のキャスト（オペレーター）たちが巨大なスクリーンを使って彼を24時間監視しています。ゲストは、この監視ステーションへの「一般見学者」として招き入れられますが、不気味で厳格な監視の目をかいくぐり、スティッチがスクリーン越しにいたずらっぽくゲストの顔を覗き込んできて、リアルタイムに会話やゲームを始めてしまう……という、テクノロジーと宇宙のユーモアが融合した微笑ましいBGSが設定されています。</p>
+        </section>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
