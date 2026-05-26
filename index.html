@@ -95,17 +95,56 @@
         .walt-quote cite { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-style: normal; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 10px; opacity: 0.7; }
         .walt-quote-jp { font-size: 0.7rem; opacity: 0.5; letter-spacing: 0.05em; }
 
-        /* --- 目次 (TOC) --- */
+        /* --- 【新・大改善】パーク別・コンパクトな古紙タグ型の目次 --- */
         .toc-box {
-            background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px;
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-light);
+            padding: 25px; border-radius: 8px; margin-bottom: 60px;
+            text-align: left;
         }
         .toc-title {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em;
+            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic;
+            color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em;
         }
-        .toc-list { list-style: none; padding: 0; }
-        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
-        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
-        .toc-list a:hover { color: var(--accent-gold); }
+        .toc-section {
+            margin-bottom: 15px;
+        }
+        .toc-section-title {
+            font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--accent-gold); display: block; margin-bottom: 8px; font-weight: 600;
+        }
+        .toc-tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        /* 丸みのある上品な古紙タグボタン */
+        .toc-tags a {
+            background: rgba(45, 35, 30, 0.04);
+            border: 1px solid var(--border-light);
+            padding: 4px 12px; border-radius: 30px;
+            font-size: 0.75rem; color: var(--text-main); text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        body.curse-mode .toc-tags a {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .toc-tags a:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border-color: var(--text-main);
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+        .toc-footer {
+            text-align: center; margin-top: 20px; padding-top: 15px;
+            border-top: 1px dashed var(--border-light);
+        }
+        .toc-footer a {
+            font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--accent-gold); text-decoration: none; font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .toc-footer a:hover {
+            color: var(--text-main);
+        }
 
         /* --- 記事見出し ＆ レイアウト切替スイッチ --- */
         .list-header { display: flex; justify-content: space-between; align-items: center; margin: 60px 0 30px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; }
@@ -114,7 +153,7 @@
         .layout-toggle button { background: transparent; border: none; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
         .layout-toggle button.active-toggle { background: var(--accent-gold); color: var(--bg-color); font-weight: 600; }
 
-        /* --- 記事カードリスト --- */
+        /* --- 記事カードリスト（デフォルトをGridにするため、Flexは後から上書きします） --- */
         .article-list { display: flex; flex-direction: column; gap: 45px; transition: all 0.5s ease; }
         .article-card {
             text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease;
@@ -129,7 +168,7 @@
         .btm-img-align { object-position: center 90% !important; }
         .bb-img-align { object-position: center 10% !important; }
 
-        /* S.E.A.カード専用：画像不要でお洒落に浮かび上がるCSS製エンブレムサムネイル */
+        /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
             background-color: #0b1523 !important;
             display: flex; justify-content: center; align-items: center;
@@ -147,21 +186,21 @@
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
         .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
 
-        /* --- 広告カード（舞浜の軌跡） --- */
-        .chronicle-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
-        }
-        .chronicle-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--accent-gold); text-align: center; margin-bottom: 25px; letter-spacing: 0.1em; font-style: italic; }
-        .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
-        .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; }
-
-        /* --- グリッド表示 --- */
+        /* --- グリッド表示（これがデフォルトになります） --- */
         .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .article-list.grid-mode .article-card { padding: 15px; border-radius: 6px; }
         .article-list.grid-mode .img-wrapper { aspect-ratio: 1 / 1; margin-bottom: 12px; }
         .article-list.grid-mode .article-card h2 { font-size: 1.15rem; margin-bottom: 8px; }
         .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .article-list.grid-mode .read-btn { font-size: 0.65rem; }
+
+        /* 項目カード */
+        .chronicle-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
+        }
+        .chronicle-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--accent-gold); text-align: center; margin-bottom: 25px; letter-spacing: 0.1em; font-style: italic; }
+        .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
+        .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; }
 
         /* 💻 パソコン ＆ iPadレスポンシブ */
         @media (min-width: 768px) {
@@ -203,34 +242,50 @@
             </div>
         </section>
 
-        <!-- 目次 (TOC) -->
+        <!-- 【新設計】パーク別・コンパクトタグ型目次 (TOC) -->
         <nav class="toc-box reveal">
-            <div class="toc-title">Exhibits Index</div>
-            <ul class="toc-list">
-                <li><span>I. Tower of Terror (タワー・オブ・テラー)</span><a href="#tot-card">Scroll →</a></li>
-                <li><span>II. Sindbad's Voyage (シンドバッド)</span><a href="#sindbad-card">Scroll →</a></li>
-                <li><span>III. Fantasy Springs (ファンタジースプリングス)</span><a href="#fs-card">Scroll →</a></li>
-                <li><span>IV. Splash Mountain (スプラッシュ・マウンテン)</span><a href="#sm-card">Scroll →</a></li>
-                <li><span>V. Big Thunder Mountain (ビッグサンダー・マウンテン)</span><a href="#btm-card">Scroll →</a></li>
-                <li><span>VI. Soarin': Fantastic Flight (ソアリン)</span><a href="#soarin-card">Scroll →</a></li>
-                <li><span>VII. S.E.A. Archives (探検家学会大百科)</span><a href="#sea-card">Scroll →</a></li>
-                <li><span>VIII. Beauty and the Beast (美女と野獣)</span><a href="#bb-card">Scroll →</a></li>
-                <li><span>IX. Tomorrowland (トゥモローランド)</span><a href="#tl-card">Scroll →</a></li>
-                <li><span>X. Curator Profile (管理者プロフィール)</span><a href="profile.html">View →</a></li>
-            </ul>
+            <div class="toc-title">Quick Navigation</div>
+            
+            <!-- 東京ディズニーランド -->
+            <div class="toc-section">
+                <span class="toc-section-title">Tokyo Disneyland (TDL)</span>
+                <div class="toc-tags">
+                    <a href="#sm-card">Splash Mt.</a>
+                    <a href="#btm-card">Big Thunder</a>
+                    <a href="#bb-card">Beauty & Beast</a>
+                    <a href="#tl-card">Tomorrowland</a>
+                </div>
+            </div>
+
+            <!-- 東京ディズニーシー -->
+            <div class="toc-section">
+                <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
+                <div class="toc-tags">
+                    <a href="#tot-card">Tower of Terror</a>
+                    <a href="#sindbad-card">Sindbad's Voyage</a>
+                    <a href="#fs-card">Fantasy Springs</a>
+                    <a href="#soarin-card">Soarin'</a>
+                    <a href="#sea-card">S.E.A. Archives</a>
+                </div>
+            </div>
+
+            <div class="toc-footer">
+                <a href="profile.html">Curator Profile ➔</a>
+            </div>
         </nav>
 
         <!-- 切り替えヘッダーエリア -->
         <div class="list-header reveal">
             <h2 class="section-title" style="margin: 0;">Exhibits</h2>
             <div class="layout-toggle">
-                <button id="view-list" class="active-toggle">☰ List</button>
-                <button id="view-grid">田 Grid</button>
+                <button id="view-list">☰ List</button>
+                <!-- 田 Grid を最初からアクティブに設定 -->
+                <button id="view-grid" class="active-toggle">田 Grid</button>
             </div>
         </div>
 
-        <!-- 記事カード一覧 -->
-        <div class="article-list reveal" id="article-list">
+        <!-- 記事カード一覧（最初から grid-mode クラスを付与） -->
+        <div class="article-list reveal grid-mode" id="article-list">
             
             <!-- 1本目：タワー・オブ・テラー -->
             <a href="bgs-tot.html" class="article-card" id="tot-card">
@@ -322,7 +377,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 9本目：トゥモローランド (NEW!) -->
+            <!-- 9本目：トゥモローランド -->
             <a href="bgs-tl.html" class="article-card" id="tl-card">
                 <div class="img-wrapper">
                     <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain">
@@ -354,10 +409,10 @@
 
                 <h4>III. 3350億円の「風化する本物」</h4>
                 <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
-                TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛される所以です。</p>
+                TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰 of テーマパーク」と絶賛されるように至った所以です。</p>
 
                 <h4>IV. 魔法の泉と、世界一の評価</h4>
-                <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級の**約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、そして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
+                <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級の**約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、指示通りにそして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
             </section>
         </div>
 
@@ -365,6 +420,7 @@
     </div>
 
     <script>
+        /* --- レイアウト切り替え（デフォルトをGridに変更） --- */
         const viewListBtn = document.getElementById('view-list');
         const viewGridBtn = document.getElementById('view-grid');
         const articleList = document.getElementById('article-list');
