@@ -8,23 +8,19 @@
     <style>
         /* --- 昼夜（赤土の古紙・雷撃とゴールドラッシュの闇）カラー設定 --- */
         :root {
-            /* デフォルト：アメリカ西部の乾いた赤土と砂漠の古紙モード */
             --bg-color: #D3B99F; 
-            --text-main: #331A0F; /* 焦げた木炭ブラウン */
-            --accent-gold: #B25329; /* 荒野のテラコッタ・レッド */
+            --text-main: #331A0F; 
+            --accent-gold: #B25329; 
             --border-light: rgba(178, 83, 41, 0.2);
             --img-filter: brightness(0.95) contrast(1.05) sepia(20%);
             --glow-color: rgba(178, 83, 41, 0.25);
-            
-            /* 渇いた荒野の岩肌を表現した、超くしゃくしゃ紙の3Dフィルター */
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f9ede0' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
         }
 
         body.curse-mode {
-            /* スイッチON：精霊の怒り（漆黒の闇×輝くゴールド＆雷撃）モード */
             --bg-color: #0D0B09; 
             --text-main: #E2E8F0; 
-            --accent-gold: #FFA500; /* 黄金に輝くネオンオレンジ */
+            --accent-gold: #FFA500; 
             --border-light: rgba(255, 165, 0, 0.25);
             --img-filter: brightness(0.7) contrast(1.3) saturate(1.2);
             --glow-color: rgba(255, 165, 0, 0.45);
@@ -48,15 +44,35 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 羊皮紙の上に重ねた薄い半透明の書類（可読性アップ） */
+        /* --- 背景を固定して軽くする仕様 --- */
+        .paper-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
+            background-size: cover;
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
+            pointer-events: none;
+        }
+
         .container { 
+            position: relative; z-index: 10;
             max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
             background: rgba(245, 237, 222, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
         }
         body.curse-mode .container { background: rgba(15, 12, 10, 0.45); box-shadow: inset 0 0 40px rgba(255,165,0,0.02); }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal {
+            opacity: 0; 
+            transform: translate3d(0, 30px, 0);
+            will-change: transform, opacity;
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1; 
+            transform: translate3d(0, 0, 0);
+        }
 
         .back-btn {
             display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
@@ -107,6 +123,7 @@
 <body>
 
     <div class="noise-overlay"></div>
+    <div class="paper-bg"></div>
     <div class="theme-switch" id="theme-switch">🌙</div>
 
     <div class="container">
@@ -125,12 +142,12 @@
                 <li><span>I. 黄金に沸いた荒野の歴史（プロローグ）</span><a href="#prologue">Read →</a></li>
                 <li><span>II. 鉱山の崩壊と「無人列車の暴走」</span><a href="#collapse">Read →</a></li>
                 <li><span>III. 水没したゴーストタウン（ウエスタンランドの謎）</span><a href="#tumbleweed">Read →</a></li>
-                <li><span>IV. イマジニアが掘り出した19世紀の「本物」</span><a href="#imagineering">Read →</a></li>
+                <li><span>IV. 1898年製の本物：スチームトラクターの交渉劇</span><a href="#imagineering">Read →</a></li>
                 <li><span>V. 機関車たちに名付けられた「6つの決意」</span><a href="#locomotives">Read →</a></li>
             </ul>
         </nav>
 
-        <!-- メインビジュアル（btm-exterior.jpeg） -->
+        <!-- メインビジュアル（〇〇さんが撮影した極上の縦長写真がピッタリはまります！） -->
         <div class="hero-img-container reveal">
             <img src="btm-exterior.jpeg" alt="Big Thunder Mountain View" class="hero-img">
         </div>
@@ -155,17 +172,25 @@
         <section class="article-block reveal" id="tumbleweed">
             <h2>III. 水没したタブルウィードの残骸</h2>
             <p>ビッグサンダー・マウンテンのBGSは、アトラクションの外にまで地続きに繋がっています。アトラクションの周囲や、蒸気船マークトウェイン号、ウエスタンランド鉄道に乗って金鉱の裏側に回ると、**水に浸かって半分沈んでしまった家屋や、誰もいない寂れた建物**が見えます。</p>
-            <p>これこそが、大地震と洪水によって一夜にして水没し、滅び去った幻の鉱山都市「タブルウィード」のゴーストタウンとしての現在の姿です。また、アトラクションの待ち列（Qライン）の途中には、ビッグサンダー・マイニング・カンパニーの事務所跡があり、かつて使われていた採掘の計画図や、セドナ社長の私物、ゴールドラッシュ当時の古い書類などが生々しく残されており、数分前まで誰かがそこで働いていたかのような臨場感を漂わせています。</p>
+            <p>これこそが、大地震と洪水によって一夜にして水没し、滅び去ったゴーストタウン「タブルウィード」の現在の姿です。また、アトラクションの待ち列（Qライン）の途中には、ビッグサンダー・マイニング・カンパニーの事務所跡があり、かつて使われていた採掘の計画図や、セドナ社長の私物、ゴールドラッシュ当時の古い書類などが生々しく残されており、数分前まで誰かがそこで働いていたかのような臨場感を漂わせています。</p>
         </section>
 
-        <!-- IV. 本物の機材 -->
+        <!-- IV. 本物のスチームトラクターの物語 -->
         <section class="article-block reveal" id="imagineering">
-            <h2>IV. イマジニアが掘り出した19世紀の「本物」</h2>
-            <p>ディズニーの空間デザイナー「イマジニア」たちは、この広大なゴールドラッシュの舞台を100%本物にするため、驚異的な執念を注ぎ込みました。アトラクションの周囲やQラインに転がっているアンティークな採掘機、蒸気ボイラー、破砕機などは、すべて映画のセット用のハリウッド製レプリカではありません。イマジニアたちはアメリカ中を旅し、**19世紀のゴールドラッシュ時代に、本物の鉱山で実際に使われ、そのまま打ち捨てられていた廃機材を何トンも買い取り、そのまま日本のパークへ輸送して配置**したのです。そのため、鉄の錆び方や木材の風化具合は、すべて「本物の歴史」が刻まれたリアルなものです。</p>
-            <p>また、鉱山内の壁や木箱に書かれたグラフィティ（落書き）は、当時の鉱夫の筆跡や、使われていたチョークの成分まで研究して再現。赤土の尖った岩肌は、ユタ州にある大自然の驚異「ブライスキャニオン国立公園」をモデルにし、日本の雨の多い気候でも荒野の岩山に見えるよう、何層もの職人の塗装（エイジング）が施されています。</p>
+            <h2>IV. 1898年製の本物：スチームトラクターの交渉劇</h2>
+            <p>ディズニーの空間デザイナー「イマジニア」たちは、この広大なゴールドラッシュの舞台を100%本物にするため、驚異的な執念を注ぎ込みました。エントランスの左側に置かれている、アンティークな赤と緑の車体を持つ重厚な**「スチームトラクター（蒸気トラクター）」**。多くの人は精巧に作られたレプリカだと思って通り過ぎますが、実はこれ、**1898年（今から120年以上前）にアメリカで製造され、実際に鉱山で食料や物資を運んでいた「本物のトラクター」**なのです。現在、世界に数台しか残っていない極めて貴重な歴史的遺物です。</p>
+            
+            <div class="connection-card">
+                <h4>💡 ウォルトの執念と、奥さんの大激怒による奇跡の交渉</h4>
+                <p>なぜこのような世界的なお宝が、東京ディズニーランドにあるのでしょうか。そこにはイマジニアとウォルト・ディズニーの並外れた執念が隠されています。<br><br>
+                   このトラクターは、もともとカリフォルニア・アナハイムのディズニーランド建設時、ウォルト・ディズニーが買収した土地の農場主が持っていたものでした。ウォルトはその機能美に一目惚れし「売ってくれ」と頼み込みましたが、頑なに拒否されてしまいます。その後、1971年のフロリダ（WDW）建設時にも、さらには1990年代に映画『バック・トゥ・ザ・フューチャーPART3』の撮影チームが「ドクの工場の背景に貸してくれ」と頼んだ時も、頑固な農場主はすべて拒否し続けました。<br><br>
+                   しかし1980年代、東京ディズニーランドの建設時にイマジニアが「どうせダメ元で…」と4回目の交渉に向かった際、隣で話を聞いていた**農場主の奥さんが大激怒**したのです。<br>
+                   「いい加減にして！30年間うちで一度も使っていないこのポンコツを売り飛ばして、そのお金で私をどこか旅行に連れて行ってよ！」と。<br>
+                   奥さんの一喝にシュンとなった農場主はついに首を縦に振り、ディズニーは30年越しの悲願を達成し、トラクターを日本へ運ぶことができました。この「意味のないほど本物にこだわる」イマジニアの情熱こそが、Qラインに本物の息吹を与えています。</p>
+            </div>
         </section>
 
-        <!-- V. 6台の列車 -->
+        <!-- V. 6台の列車 ＆ 幻の花 -->
         <section class="article-block reveal" id="locomotives">
             <h2>V. 暴走機関車たちに名付けられた「6つの決意」</h2>
             <p>ゲストが乗り込む6台の鉱山列車には、それぞれゴールドラッシュや西部の荒野をユーモラスに表現した、異なる名前がつけられています。これらは、これから暴走列車に挑むゲストを鼓舞する（あるいはちょっと皮肉った）イマジニアの遊び心が隠されたプロップスです。</p>
@@ -179,6 +204,13 @@
                    <strong>・B.V. Brave</strong>（Be very brave：非常に勇敢であれ）<br>
                    <strong>・I.M. Brave</strong>（I am brave：私は勇敢だ）</p>
             </div>
+
+            <div class="connection-card" style="border-color: #00FF7F; background: rgba(0, 255, 127, 0.03);">
+                <h4>🌵 数十年に一度だけ咲き、枯れる「幻の花」</h4>
+                <p>ビッグサンダー・マウンテンの周囲に植えられているサボテンや植物は、すべて「本物」です。ウエスタンリバー鉄道に乗って山の裏側に差しかかった際、左手の崖に見える**「アオノリュウゼツラン」**という植物は、日本ではなんと**30〜50年に一度（1世紀に一度とも言われ、英名はセンチュリー・プラント）しか花を咲かせない奇跡の植物**です。<br><br>
+                   開花期になると、高さ10メートルほどのアスパラガスのような巨大な花茎を一気に伸ばし、黄色い美しい花を咲かせ、**花が咲き終わると自らの全てのエネルギーを使い果たしてパタッと倒れて枯死（枯れてしまう）**してしまいます。2024年の夏、パーク内でこのリュウゼツランが開花した際は、全国ニュース（TBS「ゴゴスマ」など）で中継されるほどの大騒ぎとなりました。この奇跡の花を見られたら、あなたの人生にも最大の幸運が訪れるかもしれません。</p>
+            </div>
+
             <p>この名前に恥じぬ「勇気」を持って、赤土の岩山を暴走するマイントレインへと足を踏み入れてください。精霊は、今もあなたの心の中にある「強欲」を試しているかもしれません。</p>
         </section>
 
