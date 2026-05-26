@@ -127,13 +127,9 @@
         
         .fs-img-align { object-position: center 15% !important; }
         .btm-img-align { object-position: center 90% !important; }
+        .bb-img-align { object-position: center 10% !important; }
 
-        /* 【バグ対策】縦長のお城の写真（bb-castle.jpeg）の上の尖塔部分が絶対に切れないようにする調整 */
-        .bb-img-align {
-            object-position: center 10% !important;
-        }
-
-        /* S.E.A.カード専用：画像不要でお洒落に浮かび上がるCSS製エンブレムサムネイル */
+        /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
             background-color: #0b1523 !important;
             display: flex; justify-content: center; align-items: center;
@@ -146,10 +142,41 @@
             font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
         }
 
-        .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
-        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
-        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
-        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
+        /* --- 豪華なコラムカード（舞浜の軌跡） --- */
+        .chronicle-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 40px 25px;
+            text-align: justify;
+            margin-top: 80px;
+            transition: border-color 0.8s ease;
+        }
+        .chronicle-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 0.1em;
+            font-style: italic;
+        }
+        .chronicle-card h4 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin: 25px 0 10px;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 10px;
+            line-height: 1.5;
+        }
+        .chronicle-card p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            line-height: 2;
+        }
 
         /* --- グリッド表示 --- */
         .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -159,7 +186,7 @@
         .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .article-list.grid-mode .read-btn { font-size: 0.65rem; }
 
-        /* 💻 パソコン ＆ iPad（横画面）向けレスポンシブ対応 */
+        /* 💻 パソコン ＆ iPadレスポンシブ */
         @media (min-width: 768px) {
             .container { max-width: 750px; padding: 50px 40px 120px; }
             .article-list.grid-mode { grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -309,7 +336,6 @@
             <!-- 8本目：美女と野獣 -->
             <a href="bgs-bb.html" class="article-card" id="bb-card">
                 <div class="img-wrapper">
-                    <!-- 【バグ修正】bb-img-alignを付与して、お城の上の尖塔が切れないようにトリミング調整しました -->
                     <img src="bb-castle.jpeg" alt="Enchanted Castle" class="bb-img-align">
                 </div>
                 <div class="card-tag">Featured Story</div>
@@ -318,6 +344,34 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
+        </div>
+
+        <!-- -------------------------------------------
+           📜 【新設：特別コラム】舞浜の軌跡（The Maihama Chronicle）
+        ------------------------------------------- -->
+        <div class="reveal">
+            <section class="chronicle-card">
+                <h3>The Maihama Chronicle</h3>
+                <p style="font-size: 0.85rem; font-weight: bold; text-align: center; color: var(--accent-gold); margin-bottom: 25px;">
+                    妥協なき「本物」が創り上げた、舞浜の奇跡
+                </p>
+                
+                <p>私たちが当たり前のように足を踏み入れている東京ディズニーリゾート（TDR）。しかしこの地には、米国のディズニー本社も震え上がらせた、オリエンタルランド（OLC）の「妥協なき本物への情熱」と、血の滲むような開発史が眠っています。ここでは、現実世界のほんの少しのドラマを紐解いてみましょう。</p>
+
+                <h4>I. 奇跡の船出と「アメリカ外初」の衝撃</h4>
+                <p>1983年4月15日、東京ディズニーランド（TDL）は「アメリカ国外で初のディズニーテーマパーク」として産声を上げました。当時、米国のディズニー本社は日本での成功に懐疑的であり、自社の資金投資を拒んだため、OLCが100%資金を調達してライセンス契約のみで建設されました。しかし蓋を開けてみれば、初年度から1000万人を超える驚異的なゲストが押し寄せ、本社の予想をはるかに上回る大成功を収め、世界中のディズニー幹部たちを大いに驚かせたのです。</p>
+
+                <h4>II. 幻の「映画スタジオ計画」から「海」への大逆転</h4>
+                <p>TDLの大成功を受け、1988年に「第2パーク構想」が正式に発表されます。当初、米国ディズニー社が強く提案し、開発が決定していたのは、映画スタジオをテーマにした『ディズニー・ハリウッド・スタジオ・テーマパーク at 東京ディズニーランド』でした。しかし1991年、OLCの加賀見俊夫社長（当時）らは「日本には米国のような根深い映画文化が馴染んでおらず、リピーター獲得に大きな懸念がある」と判断し、なんとディズニー社に対してスタジオ計画の**「白紙撤回」**を突きつけました。<br>
+                長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあまり「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
+
+                <h4>III. 3350億円の「風化する本物」</h4>
+                <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
+                TDSには、近年オープンした新興パーク（上海など）のような、LEDスクリーンやドローンを駆使した最新の派手なアトラクションは少ないかもしれません。しかし、本物のレンガ、本物の石、本物の木材を使い、イマジニアたちの特殊なエイジング（風化塗装）技術によって1センチ単位で作り込まれた街並みは、**「時間が経っても劣化（傷む）するのではなく、本物だからこそ、時と共に美しく風化し、味わいが増す」**という驚異的な経年美化を実現しています。この執念こそが、海外のコアなディズニーファンからも「世界で最も美しい最高峰のテーマパーク」と絶賛される所以です。</p>
+
+                <h4>IV. 魔法の泉と、世界一の評価</h4>
+                <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としてはテーマパーク史上最大級の**約2500億円**が投じられました。この桁違いの投資額とスケールは、1983年の開園当初から現在に至るまで、ゲストに「本物の魔法」を届けるために一切妥協しないという、OLCとイマジニアたちの揺るぎなき執念の現れです。海、川、そして全ての源流である「泉（スプリングス）」へと繋がるこの舞浜の地は、今や日本国内だけでなく、世界中のファンが一生に一度は訪れたいと願う、世界で最も贅沢な「夢とイマジネーションの結晶」なのです。</p>
+            </section>
         </div>
 
         <footer>&copy; TERU_LUCE_</footer>
