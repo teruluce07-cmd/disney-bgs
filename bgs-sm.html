@@ -15,18 +15,9 @@
             --img-filter: brightness(0.95) contrast(1.05);
             --glow-color: rgba(46, 59, 30, 0.25);
             --droplet-color: rgba(74, 144, 226, 0.35); 
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f2ebd9' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
-        }
-
-        body.curse-mode {
-            --bg-color: #05140E; 
-            --text-main: #E2E8F0; 
-            --accent-gold: #00FF7F; 
-            --border-light: rgba(0, 255, 127, 0.25);
-            --img-filter: brightness(0.85) contrast(1.15);
-            --glow-color: rgba(0, 255, 127, 0.4);
-            --droplet-color: rgba(0, 255, 127, 0.4); 
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%230b2015' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+            
+            /* 軽量化した3Dシワフィルター */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='optimized-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f2ebd9' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23optimized-paper)'/%3E%3C/svg%3E");
         }
 
         html { scroll-behavior: smooth; }
@@ -35,13 +26,22 @@
         body {
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.18) 100%), var(--paper-texture);
-            background-size: cover; background-attachment: fixed;
-            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
-            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+            color: var(--text-main);
+            line-height: 2.2;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        body.curse-mode {
-            background-image: radial-gradient(circle at 50% 50%, rgba(0, 255, 127, 0.03) 0%, rgba(0,0,0,0.3) 100%), var(--paper-texture);
+
+        /* --- 【軽量化の魔法】背景の古紙を固定レイヤーにしてスクロールを軽く --- */
+        .paper-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.18) 100%), var(--paper-texture);
+            background-size: cover;
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
+            pointer-events: none;
         }
 
         .noise-overlay {
@@ -49,7 +49,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Apple風リキッドグラスエフェクト */
+        /* Apple風リキッドグラス（液体ガラス）エフェクト */
         .liquid-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -65,21 +65,28 @@
             transition: background-color 0.8s ease;
         }
         @keyframes fall {
-            0% { transform: translateY(-50px) scale(0.8); opacity: 0; }
+            0% { transform: translate3d(0, -50px, 0) scale(0.8); opacity: 0; }
             15% { opacity: 1; }
             85% { opacity: 1; }
-            100% { transform: translateY(110vh) scale(1.2); opacity: 0; }
+            100% { transform: translate3d(0, 110vh, 0) scale(1.2); opacity: 0; }
         }
 
         .container { 
             position: relative; z-index: 10;
             max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
-            background: rgba(240, 235, 220, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+            background: rgba(240, 235, 220, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
         }
-        body.curse-mode .container { background: rgba(10, 25, 18, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal {
+            opacity: 0; 
+            transform: translate3d(0, 30px, 0);
+            will-change: transform, opacity;
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1; 
+            transform: translate3d(0, 0, 0);
+        }
 
         .back-btn {
             display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
@@ -87,13 +94,6 @@
             border-bottom: 1px solid transparent; transition: color 0.3s;
         }
         .back-btn:hover { border-color: var(--accent-gold); }
-
-        .theme-switch {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
-        }
-        .theme-switch:hover { transform: scale(1.1); }
 
         .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
         .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
@@ -119,7 +119,6 @@
         .hero-img-container:hover .hero-img { transform: scale(1.03); }
 
         .connection-card { background: rgba(46, 59, 30, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
-        body.curse-mode .connection-card { background: rgba(152, 255, 152, 0.03); }
         .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
 
@@ -141,7 +140,7 @@
     </svg>
 
     <div class="noise-overlay"></div>
-    <div class="theme-switch" id="theme-switch">🌙</div>
+    <div class="paper-bg"></div>
 
     <!-- リキッドグラス・水しぶきの容器 -->
     <div class="liquid-container" id="liquid-container"></div>
@@ -160,16 +159,17 @@
             <div class="toc-title">Index</div>
             <ul class="toc-list">
                 <li><span>I. 密造酒が生んだ大洪水（エリアの歴史）</span><a href="#prologue">Read →</a></li>
-                <li><span>II. ブレア・ラビットの命がけの「はっぱり」</span><a href="#brer">Read →</a></li>
+                <li><span>II. ブレア・ラビットと「ブレア（Br'er）」の正体</span><a href="#brer">Read →</a></li>
                 <li><span>III. ビーバーの建築術とクリッターの家（施設紹介）</span><a href="#spots">Read →</a></li>
                 <li><span>IV. ウエスタンランドからの「グラデーション」</span><a href="#boundaries">Read →</a></li>
                 <li><span>V. 小動物目線で作られた「スケールの魔術」</span><a href="#scale">Read →</a></li>
+                <li><span>VI. 世界で唯一、東京に遺された「奇跡」</span><a href="#legacy">Read →</a></li>
             </ul>
         </nav>
 
-        <!-- 昼夜で写真が切り替わるメインビジュアル（jpeg指定に変更） -->
+        <!-- 【夕暮れの美しい昼の写真（sm-day.jpeg）をカバーに使用】 -->
         <div class="hero-img-container reveal">
-            <img src="sm-day.jpeg" alt="Splash Mountain" class="hero-img" id="hero-img">
+            <img src="sm-day.jpeg" alt="Splash Mountain Day View" class="hero-img" id="hero-img">
         </div>
 
         <!-- I. プロローグ -->
@@ -180,57 +180,60 @@
             <p>大洪水により開拓途中だった人間たちは退去していきましたが、水分をたっぷり含んだ肥沃な泥地は、小動物たちにとって絶好のフロンティアとなりました。彼らは人間が残していった道具や大自然の木の根を再利用して家や作業場を作り始め、独自の文明を持つ小さな国が完成したのです。</p>
         </section>
 
-        <!-- II. ブレア・ラビット -->
+        <!-- II. ブレア・ラビットとブレア（Br'er）の謎 -->
         <section class="article-block reveal" id="brer">
-            <h2>II. ブレア・ラビットの冒険</h2>
+            <h2>II. ブレア・ラビットと「ブレア」の正体</h2>
             <p>ゲストが乗り込む丸太のボートは、チカピンヒルの内部を進みながら、うさぎの「ブレア・ラビット（うさぎどん）」の冒険を追体験していきます。これは、退屈な我が家を飛び出し「笑いの国」を探し求めた彼の、知恵と故郷の物語です。</p>
-            <p>旅の途中で彼を狙うのは、ずる賢いきつねの「ブレア・フォックス」と、間抜けなくまの「ブレア・ベア」。ブレア・ラビットは持ち前の機転で彼らの罠を何度もかいくぐりますが、ついにフォックスに捕まり、丘の頂上（落差16mの落下ポイント）で絶体絶命の危機を迎えます。</p>
-            <p>そのとき、ブレア・ラビットは命がけの「最後のはっぱり（嘘）」をつきました。「煮るなり焼くなり好きにしてくれ。でも、あそこの『茨の茂み（Briar Patch）』にだけは放り込まないでくれ！」と。間抜けなフォックスたちは、彼が最も嫌がることをしようと、彼を茨の茂みへと投げ落とします。この落下こそが、ゲストが体験する最大傾斜45度のスリリングな急降下なのです。</p>
+            <p>旅の途中で彼を狙うのは、ずる賢いきつねの「ブレア・フォックス」と、間抜けなくまの「ブレア・ベア」。ブレア・ラビットは持ち前の機転で彼らの罠を何度もかいくぐりますが、ついにフォックスに捕まり、丘の頂上で絶体絶命の危機を迎えます。</p>
             
             <div class="connection-card">
-                <h4> Briar Patch（茨の茂み）の真実</h4>
-                <p>実は、うさぎであるブレア・ラビットにとって、トゲに囲まれた茨の茂みは「自分が生まれ育った最も安全な我が家」そのものでした。フォックスたちの裏をかいて無事生還した彼は、やっぱり自分が元いた故郷こそが最高の「笑いの国」だったと気づきます。最後は豪華な蒸気船「ジッパ・ディー・レディ号」に乗ったクリッターたちが総出で彼の帰還を歓迎する、お祝いに満ちたフィナーレで幕を閉じます。</p>
+                <h4>💡 「ブレア（Br'er）」と「〜どん」の豆知識</h4>
+                <p>アトラクション名や原作キャラクターに共通してつく「ブレア（Br'er）」という単語。これはアメリカ南部の方言（なまり）で、**「Brother（お兄さん・兄弟）」**を意味する言葉が縮まったものです。<br><br>
+                   つまり、英語のニュアンスとしては「うさぎの兄貴（Brother Rabbit）」「きつねのお兄さん（Brother Fox）」と呼び合っていることになります。日本ではこれを非常に情緒豊かに、かつ泥臭く friendly に翻訳し、**「うさぎどん（ブレア・ラビット）」「きつねどん（ブレア・フォックス）」「くまどん（ブレア・ベア）」**という愛らしい名前で呼んでいるのです。</p>
             </div>
+
+            <p>フォックスの罠にかかり絶体絶命のブレア・ラビットは、命がけの「最後のはっぱり（嘘）」をつきました。「煮るなり焼くなり好きにしてくれ。でも、あそこの『茨の茂み（Briar Patch）』にだけは放り込まないでくれ！」と。間抜けなフォックスたちは、彼が最も嫌がることをしようと、彼を茨の茂みへと投げ落とします。この落下こそが、ゲストが体験する最大傾斜45度のスリリングな急降下なのです。</p>
+            <p>実はうさぎである彼にとって、茨の茂みは「自分が生まれ育った最も安全な我が家」でした。フォックスたちの裏をかいて無事生還した彼は、やっぱり自分が元いた故郷こそが最高の「笑いの国」だったと気づき、クリッターたちが総出で彼の帰還を歓迎する、お祝いに満ちたフィナーレ（Zip-A-Dee-Doo-Dah）で幕を閉じます。</p>
         </section>
 
         <!-- III. 施設詳細 -->
         <section class="article-block reveal" id="spots">
             <h2>III. 泥地に建てられた街</h2>
             <p>クリッターカントリーにあるすべての施設は、大洪水の歴史とキャラクターたちの物語の中にシームレスに組み込まれています。</p>
-
             <p><strong>グランマ・サラのキッチン（レストラン）</strong><br>
-            ジャコウネズミの「サラ・オズボーン（サラおばあちゃん）」が営むレストラン。彼女はクリッターで一番の料理の達人であり、評判を聞きつけて遠くからやってくる仲間たちをもてなすために自宅を開放しました。この建物は、大洪水のあとに腕利きの建築家である「ビーバーブラザーズ」が、頑丈な木の根や泥を巧みに利用して建てた2階建ての巣の構造をしています。</p>
-
+            ジャコウネズミの「サラ・オズボーン（サラおばあちゃん）」が営むレストラン。彼女はクリッターで一番の料理の達人であり、自宅を開放しました。この建物は、大洪水のあとに腕利きの建築家である「ビーバーブラザーズ」が、頑丈な木の根や泥を巧みに利用して建てた2階建ての巣の構造をしています。</p>
             <p><strong>ラケッティのラクーンサルーン（軽食）</strong><br>
             かつて大爆発を起こしたアライグマの「ラケッティ」のお店。彼はあの大事故のあと深く反省し、密造酒造りから完全に足を洗いました。現在は、訪れるゲストのために爽やかで安全なソフトクリームやチュロスを販売しています。看板に自分の顔を描いているのは、彼の誠実な決意の証なのです。</p>
-
             <p><strong>フート＆ハラー・ハイドアウト（ショップ）</strong><br>
             ここはもともと、クリッターの子供たちが大人の目を盗んで集まる「秘密基地（ハイドアウト）」でした。店名の「フート（フクロウの鳴き真似）」と「ハラー（大声の叫び）」は、子供たちが秘密基地に入るための「合言葉」からきており、見張りを知らせ合うための可愛いシステムが元になっています。</p>
-
-            <p><strong>ビーバーブラザーズのカヌー探険</strong><br>
-            建築家のビーバー「クローレンス」と「ブリュースター」の兄弟が、自分たちの作った頑丈な丸太のカヌーを使い、人間に向けてアメリカ河の大自然を体験するツアーとして運営しているアトラクションです。</p>
         </section>
 
         <!-- IV. 境界線 -->
         <section class="article-block reveal" id="boundaries">
             <h2>IV. ウエスタンランドからの境界線</h2>
             <p>クリッターカントリーは、隣接する「ウエスタンランド」と地続きのアメリカ開拓史のグラデーションを持っています。</p>
-            <p>ウエスタンランドは「19世紀後半のアメリカ西部の開拓街」であり、人間が作った文明の賑やかさがあります。そこからビッグサンダー・マウンテン（荒涼とした鉱山）側を抜け、クリッターカントリーへと歩みを進めると、だんだんと植物の緑が深く、濃くなっていきます。</p>
-            <p>「人間が開拓したフロンティアの街」のすぐ隣には、「人間が簡単には踏み込めない、野生の小動物たちが独自の知恵で生きる深い森」が広がっているという、アメリカの大自然の圧倒的な奥行きが、歩くだけで体感できるように設計されているのです。</p>
+            <p>ウエスタンランドは「19世紀後半のアメリカ西部の開拓街」であり、人間が作った文明の賑やかさがあります。そこからビッグサンダー・マウンテン側を抜け、クリッターカントリーへと歩みを進めると、だんだんと植物の緑が深く、濃くなっていきます。「人間が開拓したフロンティアの街」のすぐ隣には、「野生の小動物たちが独自の知恵で生きる深い森」が広がっているという、アメリカの大自然の圧倒的な奥行きが、歩くだけで体感できるように設計されているのです。</p>
         </section>
 
         <!-- V. イマジニアの魔術 -->
         <section class="article-block reveal" id="scale">
             <h2>V. 小動物たちの「スケール魔術」</h2>
-            <p>ディズニーの空間デザイナー「イマジニア」たちは、このエリアを「本当に小動物たちが暮らしている場所」にするため、驚異的なギミックを仕込みました。</p>
-            <p>エリアに入ると分かりますが、小動物たちが作ったドア、窓、階段、看板、さらには街灯にいたるまで、すべて人間のサイズより一回りも二回りも小さく作られています。これにより、ゲストはエリアに足を踏み入れた瞬間、自分自身が絵本の中のクリッターサイズに縮んでしまったかのような錯覚（強制遠近法）を覚えます。</p>
-            
+            <p>ディズニーの空間デザイナー「イマジニア」たちは、このエリアを「本当に小動物たちが暮らしている場所」にするため、驚異的なギミックを仕込みました。エリアに入ると分かりますが、小動物たちが作ったドア、窓、階段、看板、さらには街灯にいたるまで、すべて人間のサイズより一回りも二回りも小さく作られています。これにより、ゲストはエリアに足を踏み入れた瞬間、自分自身が絵本の中のクリッターサイズに縮んでしまったかのような錯覚（強制遠近法）を覚えます。</p>
             <p>また、道端のあちこちには、人間（ハンター）のブーツの足跡が残されています。クリッターたちはハンターに怯えるのではなく、彼らの仕掛けたトラップを生活道具に改造し、残された大きなブーツを「植木鉢」や「看板」としてユーモアたっぷりに再利用して暮らしています。このような高い知性とたくましさが、エリアの至る所で表現されています。</p>
+        </section>
 
-            <div class="connection-card">
-                <h4>🎙️ オーディオ・アニマトロニクス100体の奇跡</h4>
-                <p>スプラッシュ・マウンテンの中には、100体以上の「動くロボット（アニマトロニクス）」が暮らしています。実は、カリフォルニアのディズニーランドで最初に企画された際、当時クローズした『アメリカ・シングス』というショーに登場していた動物ロボットたちを大量に移籍・再利用しました。それらのキャラクターに完璧なプログラムと衣装を施したことで、どこを向いても生命感に満ち溢れた、パーク史上屈指の登場密度を誇る傑作ライドが誕生したのです。</p>
+        <!-- VI. 世界で唯一の「スプラッシュ」 [NEW!] -->
+        <section class="article-block reveal" id="legacy">
+            <h2>VI. 世界で唯一、東京に遺された「奇跡」</h2>
+            <p>これまで、世界中の複数のディズニーパークに存在したスプラッシュ・マウンテン。しかし現在、その歴史は極めて大きな変革期を迎えています。</p>
+            <p>アメリカ・フロリダのウォルト・ディズニー・ワールド（2024年6月28日オープン）および、カリフォルニアのディズニーランド（2024年11月15日オープン）では、長年親しまれたスプラッシュ・マウンテンが完全にクローズされ、映画『プリンセスと魔法のキス』をテーマにした**「ティアナのバイユー・アドベンチャー（Tiana's Bayou Adventure）」**というまったく新しいアトラクションへと生まれ変わりました。</p>
+            
+            <!-- 【妖しく輝く夜の写真（sm-night.jpeg）をこのクライマックスセクションに配置】 -->
+            <div class="hero-img-container">
+                <img src="sm-night.jpeg" alt="Splash Mountain Night Lit View" class="hero-img">
             </div>
+
+            <p>これにより、1946年の映画『南部の唄』をベースにしたクラシックなスプラッシュ・マウンテンと、名曲「ジッパ・ディー・ドゥー・ダー（Zip-A-Dee-Doo-Dah）」を乗車中に聴くことができるアトラクションは、**全世界で唯一、この「東京ディズニーランド」だけに遺されることになった**のです。アメリカのオリジナルが新時代へと移行する中で、ここ日本のクリッターカントリーだけが、ブレア・ラビットたちの陽気で心優しい冒険の歴史を今もそのまま守り続けている、世界でも極めて貴重な「約束の地」となっています。</p>
         </section>
 
         <div class="footer-link reveal">
@@ -239,19 +242,6 @@
     </div>
 
     <script>
-        /* 昼夜スイッチ（jpegに設定変更） */
-        const themeSwitch = document.getElementById('theme-switch');
-        const heroImg = document.getElementById('hero-img');
-        
-        themeSwitch.addEventListener('click', () => {
-            document.body.classList.toggle('curse-mode');
-            const isNight = document.body.classList.contains('curse-mode');
-            themeSwitch.textContent = isNight ? '☀️' : '🌙';
-            
-            // 昼と夜の写真の切り替え（jpeg）
-            heroImg.src = isNight ? 'sm-night.jpeg' : 'sm-day.jpeg';
-        });
-
         /* 優雅なスクロールフェードイン */
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
