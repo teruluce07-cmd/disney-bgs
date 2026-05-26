@@ -45,16 +45,9 @@
 
         /* 背景固定レイヤー（GPU高速化） */
         .paper-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            background-image: 
-                radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%),
-                var(--paper-texture);
-            background-size: cover;
-            transform: translate3d(0, 0, 0);
-            will-change: transform;
-            pointer-events: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
+            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
         }
 
         .noise-overlay {
@@ -62,28 +55,20 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* --- 【大改善】コンテナ全体を、開いた瞬間に優雅にフェードインさせる（バグ皆無のCSS仕様） --- */
+        /* コンテナ全体をふんわり表示させるCSSアニメーション */
         .container { 
             position: relative; z-index: 1;
             width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
             transition: background 0.8s ease, max-width 0.5s ease;
-            
-            /* 開いた瞬間に、サイト全体を1.2秒かけてフワッと表示するアニメーション */
             animation: pageLoadFade 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             will-change: transform, opacity;
         }
         body.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
 
         @keyframes pageLoadFade {
-            from {
-                opacity: 0;
-                transform: translate3d(0, 15px, 0);
-            }
-            to {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
+            from { opacity: 0; transform: translate3d(0, 15px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
         /* --- ヘッダー --- */
@@ -135,7 +120,7 @@
         .layout-toggle button { background: transparent; border: none; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
         .layout-toggle button.active-toggle { background: var(--accent-gold); color: var(--bg-color); font-weight: 600; }
 
-        /* --- 記事カードリスト（revealクラスを廃止して、最初から常時表示にします） --- */
+        /* --- 記事カードリスト --- */
         .article-list { display: flex; flex-direction: column; gap: 45px; transition: all 0.5s ease; }
         .article-card {
             text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease;
@@ -162,11 +147,6 @@
         .sea-thumbnail-bg .sea-mini-letters {
             font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
         }
-
-        .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
-        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
-        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
-        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
 
         /* --- コラムカード --- */
         .chronicle-card {
@@ -198,7 +178,6 @@
     <div class="paper-bg"></div>
     <div class="noise-overlay"></div>
 
-    <!-- コンテナ自体を最初からフワッと1.2秒かけて確実に表示する（100%バグ回避仕様） -->
     <div class="container">
         <!-- ヘッダー -->
         <header class="header">
@@ -225,7 +204,7 @@
             </div>
         </section>
 
-        <!-- 目次 (TOC) -->
+        <!-- パーク別目次 (TOC) -->
         <nav class="toc-box">
             <div class="toc-title">Quick Navigation</div>
             
@@ -264,43 +243,10 @@
             </div>
         </div>
 
-        <!-- 記事カード一覧（最初から常時表示に設定されているため、絶対に消えません） -->
+        <!-- 記事カード一覧 -->
         <div class="article-list grid-mode" id="article-list">
             
-            <!-- 1本目：タワー・オブ・テラー -->
-            <a href="bgs-tot.html" class="article-card" id="tot-card">
-                <div class="img-wrapper">
-                    <img src="tot-exterior.jpg" alt="Hotel Hightower">
-                </div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Tower of Terror</h2>
-                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。そしてディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <!-- 2本目：シンドバッド・ストーリーブック・ヴォヤッジ -->
-            <a href="bgs-sindbad.html" class="article-card" id="sindbad-card">
-                <div class="img-wrapper">
-                    <img src="DSC00234_Original.jpeg" alt="Sindbad's Voyage">
-                </div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <!-- 3本目：ファンタジースプリングス -->
-            <a href="bgs-fs.html" class="article-card" id="fs-card">
-                <div class="img-wrapper">
-                    <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="fs-img-align">
-                </div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Fantasy Springs</h2>
-                <p>湧き出る精霊の記憶と、公爵夫人の招待状。ディズニーシー最奥地にひっそりと佇む泉が意味する、パークの壮大な「水の循環」の答えとは。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <!-- 4本目：スプラッシュ・マウンテン -->
+            <!-- 【1：スプラッシュ・マウンテン】 -->
             <a href="bgs-sm.html" class="article-card" id="sm-card">
                 <div class="img-wrapper">
                     <img src="sm-day.jpeg" alt="Splash Mountain">
@@ -311,7 +257,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 5本目：ビッグサンダー・マウンテン -->
+            <!-- 【2：ビッグサンダー・マウンテン】 -->
             <a href="bgs-btm.html" class="article-card" id="btm-card">
                 <div class="img-wrapper">
                     <img src="btm-exterior.jpeg" alt="Big Thunder Mountain" class="btm-img-align">
@@ -322,7 +268,62 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 6本目：ソアリン -->
+            <!-- 【3：美女と野獣】 -->
+            <a href="bgs-bb.html" class="article-card" id="bb-card">
+                <div class="img-wrapper">
+                    <img src="bb-castle.jpeg" alt="Enchanted Castle" class="bb-img-align">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Beauty and the Beast</h2>
+                <p>魔法の薔薇が紡ぐ、光と影 of フレンチ・ゴシック。フランスの片田舎から「呪われた城」へ誘う空間トリックと、日本独自の所作を宿した愛のものがたり。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
+            <!-- 【4：トゥモローランド】 -->
+            <a href="bgs-tl.html" class="article-card" id="tl-card">
+                <div class="img-wrapper">
+                    <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Tomorrowland</h2>
+                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテンの初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
+            <!-- 【5：タワー・オブ・テラー】 -->
+            <a href="bgs-tot.html" class="article-card" id="tot-card">
+                <div class="img-wrapper">
+                    <img src="tot-exterior.jpg" alt="Hotel Hightower">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Tower of Terror</h2>
+                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。そしてディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
+            <!-- 【6：シンドバッド・ストーリーブック・ヴォヤッジ】 -->
+            <a href="bgs-sindbad.html" class="article-card" id="sindbad-card">
+                <div class="img-wrapper">
+                    <img src="DSC00234_Original.jpeg" alt="Sindbad's Voyage">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Sindbad's Voyage</h2>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
+            <!-- 【7：ファンタジースプリングス】 -->
+            <a href="bgs-fs.html" class="article-card" id="fs-card">
+                <div class="img-wrapper">
+                    <img src="IMG_1070_Original.jpeg" alt="Fantasy Springs" class="fs-img-align">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Fantasy Springs</h2>
+                <p>湧き出る精霊の記憶と、公爵夫人の招待状。ディズニーシー最奥地にひっそりと佇む泉が意味する、パークの壮大な「水の循環」の答えとは。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
+            <!-- 【8：ソアリン】 -->
             <a href="bgs-soarin.html" class="article-card" id="soarin-card">
                 <div class="img-wrapper">
                     <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum">
@@ -333,7 +334,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 7本目：S.E.A. -->
+            <!-- 【9：S.E.A.（秘密結社）】 -->
             <a href="bgs-sea.html" class="article-card" id="sea-card">
                 <div class="img-wrapper sea-thumbnail-bg">
                     <div class="sea-mini-crest">
@@ -344,28 +345,6 @@
                 <h2>S.E.A. Archives</h2>
                 <p>1538年に創設された、探検家・冒険家学会。世界中のパーク、アトラクション、ホテルを結ぶ、ディズニー最高峰の巨大な大河神話を完全解剖する。</p>
                 <div class="read-btn">Explore the Archives →</div>
-            </a>
-
-            <!-- 8本目：美女と野獣 -->
-            <a href="bgs-bb.html" class="article-card" id="bb-card">
-                <div class="img-wrapper">
-                    <img src="bb-castle.jpeg" alt="Enchanted Castle" class="bb-img-align">
-                </div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Beauty and the Beast</h2>
-                <p>魔法の薔薇が紡ぐ、光と影のフレンチ・ゴシック。フランスの片田舎から「呪われた城」へ誘う空間トリックと、日本独自の所作を宿した愛のものがたり。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <!-- 9本目：トゥモローランド -->
-            <a href="bgs-tl.html" class="article-card" id="tl-card">
-                <div class="img-wrapper">
-                    <img src="tl-space-day.jpeg" alt="Tomorrowland Space Mountain">
-                </div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Tomorrowland</h2>
-                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテンの初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
-                <div class="read-btn">Explore the Story →</div>
             </a>
 
         </div>
@@ -384,7 +363,7 @@
 
             <h4>II. 幻の「映画スタジオ計画」から「海」への大逆転</h4>
             <p>TDLの大成功を受け、1988年に「第2パーク構想」が正式に発表されます。当初、米国ディズニー社が強く提案し、開発が決定していたのは、映画スタジオをテーマにした『ディズニー・ハリウッド・スタジオ・テーマパーク at 東京ディズニーランド』でした。しかし1991年、OLCの加賀見俊夫社長（当時）らは「日本には米国のような映画文化が馴染んでおらず、リピーター獲得に大きな懸念がある」と判断し、なんとディズニー社に対してスタジオ計画の**「白紙撤回」**を突きつけました。<br>
-            長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあたりに「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
+            長年の計画を断念せざるを得なくなった当時のディズニー社社長フランク・ウェルズは、絶望のあまり「我々のやってきたことはシシュフォスの石（無駄骨）だったのか」と嘆いたとされています。しかしこの勇気ある決断こそが、1992年に「海」をテーマにした、世界で唯一無二のパーク『東京ディズニーシー（TDS）』の神話へと舵を切るきっかけとなったのです。</p>
 
             <h4>III. 3350億円の「風化する本物」</h4>
             <p>2001年にグランドオープンしたTDSの総工費は、ミラコスタを含めて実に**約3350億円**。OLCはデザインや建築素材において一切の妥協を拒否しました。<br>
@@ -410,4 +389,11 @@
             viewGridBtn.classList.remove('active-toggle');
         });
 
-        vi
+        viewGridBtn.addEventListener('click', () => {
+            articleList.classList.add('grid-mode');
+            viewGridBtn.classList.add('active-toggle');
+            viewListBtn.classList.remove('active-toggle');
+        });
+    </script>
+</body>
+</html>
