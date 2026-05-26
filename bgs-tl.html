@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGS Deep Report: Tomorrowland | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- 昼夜（SF回路図の古紙・ハイパースペースの光）カラー設定 --- */
+        :root {
+            --bg-color: #BAC6CD; 
+            --text-main: #1C2D37; 
+            --accent-gold: #008B8B; 
+            --border-light: rgba(28, 45, 55, 0.2);
+            --img-filter: brightness(0.95) contrast(1.05);
+            --glow-color: rgba(0, 139, 139, 0.25);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23e6f0f5' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+        }
+
+        body.curse-mode {
+            --bg-color: #030814; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00E5FF; 
+            --border-light: rgba(0, 229, 255, 0.25);
+            --img-filter: brightness(0.7) contrast(1.25) saturate(1.3);
+            --glow-color: rgba(0, 229, 255, 0.45);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23101d33' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .paper-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
+            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
+        }
+
+        .container { 
+            position: relative; z-index: 10;
+            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
+            background: rgba(230, 240, 245, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        }
+        body.curse-mode .container { background: rgba(5, 12, 26, 0.45); box-shadow: inset 0 0 40px rgba(0,229,255,0.03); }
+
+        .reveal {
+            opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active { opacity: 1; transform: translate3d(0, 0, 0); }
+
+        .back-btn {
+            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
+            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
+            border-bottom: 1px solid transparent; transition: color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
+
+        /* 目次 */
+        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
+
+        /* 写真をなじませる手帳・ポラロイド風加工 */
+        .hero-img-container { 
+            margin: 45px auto; padding: 10px; background: #FAF7F0; border-radius: 4px; 
+            box-shadow: 0 12px 30px rgba(62, 76, 85, 0.15); border: 1px solid rgba(139, 115, 85, 0.15);
+            transform: rotate(-1.2deg); transition: transform 0.3s ease;
+        }
+        .hero-img-container:nth-of-type(even) { transform: rotate(1.5deg); }
+        .hero-img-container:hover { transform: scale(1.02) rotate(0deg); }
+        .hero-img { width: 100%; height: auto; display: block; border-radius: 2px; filter: var(--img-filter); }
+
+        .connection-card { background: rgba(58, 127, 147, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        body.curse-mode .connection-card { background: rgba(0, 229, 255, 0.03); }
+        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
+        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+
+        .footer-link { text-align: center; margin-top: 80px; }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="paper-bg"></div>
+    <div class="theme-switch" id="theme-switch">🚀</div>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Portal</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Tomorrowland</h1>
+            <div class="subtitle-jp">未来を夢見た人々のロマンと、時間の戦い</div>
+        </header>
+
+        <!-- 目次 -->
+        <nav class="toc-box reveal">
+            <div class="toc-title">Index</div>
+            <ul class="toc-list">
+                <li><span>I. 未来都市が背負った「時間」という名の宿命</span><a href="#prologue">Read →</a></li>
+                <li><span>II. スペース・マウンテン：初代ロケットの終焉と明日</span><a href="#space">Read →</a></li>
+                <li><span>III. スター・ツアーズ：銀河宇宙法14条B項の秘密</span><a href="#startours">Read →</a></li>
+                <li><span>IV. バズ・ライトイヤー：クリストリック・フュージョンの遺産</span><a href="#buzz">Read →</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1枚目：クレーンが写る歴史的瞬間の写真（tl-space-day.jpeg） -->
+        <div class="hero-img-container reveal">
+            <img src="tl-space-day.jpeg" alt="Space Mountain Final Ignition Day View" class="hero-img">
+        </div>
+
+        <!-- I. プロローグ（宿命） -->
+        <section class="article-block reveal" id="prologue">
+            <h2>I. トゥモローランドが背負う宿命</h2>
+            <p>東京ディズニーランドの右奥に広がる、白く幾何学的な未来都市「トゥモローランド」。このエリアは、ファンタジーランドやウェスタンランドといった「完成された過去」を描く他の土地とは異なり、**「同時代依存（Contemporary Dependency）」**という美しくも過酷な宿命を背負っています。</p>
+            <p>1955年にアメリカで最初のテーマランドが作られた際、デザインの基盤となったのは、当時の流行であった「未来へのオプティミズム（楽観主義）」でした。しかし、技術が進歩し、かつて夢見た「ロケット」や「コンピューター」が日常のものとなった瞬間、未来都市は現実によって追い越され、たちまち「古い過去の跡」へと陳腐化してしまいます。「styles had to keep up（デザインは更新され続けなければならない）」。この絶対的なルールを背負っているからこそ、トゥモローランドは絶えず物理的な変化（自己変革）を課され、常に最新の未来を模索し続ける、最もエネルギーに満ちた土地なのです。</p>
+        </section>
+
+        <!-- II. スペースマウンテン -->
+        <section class="article-block reveal" id="space">
+            <h2>II. スペース・マウンテン：初代ロケットの終焉と明日</h2>
+            <p>1983年の開園からエリアの絶対的象徴として君臨してきた「スペース・マウンテン」。高さ38メートル、直径61メートルの巨大な純白のドームは、宇宙管制センターであり、未知の宇宙エネルギーを回収する「ステーション」としてのBGSを持っています。</p>
+            
+            <!-- 【追加修正：2枚目にドーム夜景「tl-space-night.jpeg」を配置】 -->
+            <div class="hero-img-container reveal">
+                <img src="tl-space-night.jpeg" alt="Space Mountain Night View" class="hero-img">
+            </div>
+
+            <p>私たちは、ステーションにドック入りしている「新型ロケット」に乗り込み、エネルギーの急速充填とともに秒読みを開始。大気圏を突き抜けて星雲や流星群の嵐の中を疾走しました。2024年7月31日、多くのゲストに「最後のフライト（The Final Ignition）」を惜しまれながら、第一章の歴史に幕を下ろしました。現在、背後ではクレーンが動き、2027年に向けた約700億円にのぼる大規模なフルリニューアルが進んでいます。これはまさに、「未来を追いかけ、常に変わり続けなければならない」というトゥモローランドの生存本能の表れなのです。</p>
+
+            <!-- 【追加修正：3枚目に、ドーム内部ステーションの美しい青いオブジェ写真（tl-space-station.jpeg）を配置】 -->
+            <div class="hero-img-container reveal">
+                <img src="tl-space-station.jpeg" alt="Space Mountain Queue Interior Station Object" class="hero-img">
+            </div>
+
+            <div class="connection-card">
+                <h4>🚀 【Photo Memoir】未来への架け橋、ステーションの記憶</h4>
+                <p>上の写真は、かつてドーム内の搭乗プラットフォーム（乗り場）の頭上に静かに、しかし圧倒的な存在感を放って吊り下げられていた巨大な「宇宙船（エネルギーカプセル）のオブジェクト」です。<br><br>
+                   青く発光する液体のような光ファイバーが脈打つこのオブジェクトは、ロケットが旅立つたび、消費されたコズミック・エネルギーを吸収し、再びロケットへと充填するための装置というBGSが設定されていました。出発の際、機内から見上げたこの近未来的で厳かなブルーの光は、これから未知の暗黒の宇宙空間へと旅立つ緊張感とロマンを最高潮に高めてくれる、不変の美しさを持ったスペマンの魂でした。</p>
+            </div>
+        </section>
+
+        <!-- III. スター・ツアーズ（銀河宇宙法） -->
+        <section class="article-block reveal" id="startours">
+            <h2>III. スター・ツアーズ：銀河宇宙法14条B項の秘密</h2>
+            <p>日々、スタースピーダー1000（1401便）が銀河の様々な惑星へと予測不能なフライトを続けている「スター・ツアーズ」。1989年にオープンした旧版（キャプテンRX-24、通称レックスの操縦でエンドアへ向かう観光旅行）から、現在の反乱軍を助ける緊迫した時代へと設定が一新されていますが、そのキューライン（待ち列）には非常にマニアックなBGSが散りばめられています。</p>
+            <p>荷物検査を行うおしゃべりなセキュリティドロイド（G2-9Tなど）や、頭上のアナウンス。彼らがつぶやく冗談のようなルールは、実は**「銀河連邦宇宙法（Galactic Transit Regulations）」**という実在する法典に基づいています。</p>
+            
+            <div class="connection-card">
+                <h4>💡 「銀河宇宙法第14条B項」と密輸の禁止</h4>
+                <p>特にG2ドロイドが「サーマル・デトネーター（熱科学手榴弾）」や「スペース・スラグ（宇宙ワーム）」などの危険物を持ち込もうとする客に警告しているルールは、銀河を安全に航行するための厳しい法規です。<br><br>
+                   私たちが乗り込む1401便において、C-3POが知らずに「反乱軍のスパイ」を乗せたまま緊急発進してしまうトラブルが発生しますが、これは帝国軍の視点から見ると**「銀河宇宙法14条B項（未許可の指名手配および危険対象の移送禁止）」**に対する明らかな違法行為です。ダース・ベイダーが宇宙船をフォースで強制停車させてまでスパイを探し出そうとするのも、この厳格な宇宙法と、帝国の法秩序を守るためという、極めてリアルで緊迫したバックグラウンドのうえに成り立っているのです。</p>
+            </div>
+        </section>
+
+        <!-- IV. バズライトイヤー -->
+        <section class="article-block reveal" id="buzz">
+            <h2>IV. バズ・ライトイヤー：クリストリック・フュージョンの遺産</h2>
+            <p>2024年10月、多くのスペースレンジャーに惜しまれながら20年の歴史を終えた「バズ・ライトイヤーのアストロブラスター」。このアトラクションは、おもちゃのバズが主人公として活躍する劇中劇アニメの世界を舞台にしていました。</p>
+            
+            <!-- 4枚目：バズの緑の看板写真（tl-buzz.jpeg） -->
+            <div class="hero-img-container reveal">
+                <img src="tl-buzz.jpeg" alt="Buzz Lightyear's Astro Blasters Entrance" class="hero-img">
+            </div>
+
+            <p>悪の帝王ザーグは、おもちゃたちの万能エネルギー「クリストリック・フュージョン（Crystolic Fusion）」バッテリーを強奪し、銀河を支配する巨大兵器の稼働を目論んでいました。私たちは新人レンジャーとして、緑色の光線銃「アストロブラスター」を持ち、二人乗りの「XP-38型スペースクルーザー」に乗ってプラネットZへと突入しました。</p>
+            <p>実は、アトラクションの入り口の天井に飾られていた宇宙船は、私たちが乗ったXP-38型スペースクルーザーではなく、バズ自身が愛用する「42型スタークルーザー」であるという、イマジニアによるマニアックなビジュアルの描き分けがなされていました。クローズ後、ここは『シュガー・ラッシュ』のゲーム世界へと生まれ変わりますが、かつて銀河の平和を守るために大人も子供もアストロブラスターを握りしめ、ザーグの「Z」マークを狙い続けたあの熱量と記憶は、トゥモローランドの「未来に挑み続けた歴史」の一部として、これからも語り継がれていくことでしょう。</p>
+        </section>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🚀';
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
