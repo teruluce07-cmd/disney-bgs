@@ -45,6 +45,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
+        /* 羊皮紙の上に重ねた薄い半透明の書類 */
         .container { 
             max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
@@ -94,25 +95,109 @@
         }
         .theme-switch:hover { transform: scale(1.1); }
 
-        /* --- 記事カードリスト --- */
-        .article-list { display: flex; flex-direction: column; gap: 45px; }
+        /* --- 記事見出し ＆ レイアウト切替スイッチ --- */
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 60px 0 30px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+            transition: border-color 0.8s ease;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--accent-gold);
+            transition: color 0.8s ease;
+        }
+        .layout-toggle {
+            display: flex;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 4px;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            transition: all 0.8s ease;
+        }
+        body.curse-mode .layout-toggle {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .layout-toggle button {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .layout-toggle button.active-toggle {
+            background: var(--accent-gold);
+            color: var(--bg-color);
+            font-weight: 600;
+        }
+
+        /* --- 記事カード（通常リスト表示） --- */
+        .article-list { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 45px; 
+            transition: all 0.5s ease;
+        }
         .article-card {
             text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease;
         }
         .article-card:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         
-        .img-wrapper { width: 100%; aspect-ratio: 16 / 10; border-radius: 4px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .img-wrapper { width: 100%; aspect-ratio: 16 / 10; border-radius: 4px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: aspect-ratio 0.5s ease; }
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease, filter 0.8s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        .fs-img-align {
-            object-position: center 15% !important;
-        }
+        .fs-img-align { object-position: center 15% !important; }
 
         .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
-        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s; }
-        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; }
-        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; }
+        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s, font-size 0.4s ease; }
+        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
+        .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
+
+        /* --- ユーザーが切り替えた時の「グリッド表示（Grid Mode）」スタイル --- */
+        .article-list.grid-mode {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* iPad/スマホでも見やすい2列配置 */
+            gap: 15px;
+        }
+        .article-list.grid-mode .article-card {
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .article-list.grid-mode .img-wrapper {
+            aspect-ratio: 1 / 1; /* 写真をオシャレなインスタ風正方形（1:1）に変化 */
+            margin-bottom: 12px;
+        }
+        .article-list.grid-mode .article-card h2 {
+            font-size: 1.15rem; /* グリッドに合わせて文字を小さく調整 */
+            margin-bottom: 8px;
+        }
+        .article-list.grid-mode .article-card p {
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            /* 高さを揃えるため、4行目以降を自動で「...」に省略する魔法 */
+            display: -webkit-box;
+            -webkit-line-clamp: 3; 
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .article-list.grid-mode .read-btn {
+            font-size: 0.65rem;
+        }
 
         footer { text-align: center; margin-top: 120px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.4; }
     </style>
@@ -147,8 +232,18 @@
             </ul>
         </nav>
 
-        <!-- 記事カード一覧 -->
-        <div class="article-list reveal">
+        <!-- 切り替えヘッダーエリア -->
+        <div class="list-header reveal">
+            <h2 class="section-title" style="margin: 0;">Exhibits</h2>
+            <!-- レイアウト切り替えボタン -->
+            <div class="layout-toggle">
+                <button id="view-list" class="active-toggle">☰ List</button>
+                <button id="view-grid">田 Grid</button>
+            </div>
+        </div>
+
+        <!-- 記事カード一覧（id: article-listを追加） -->
+        <div class="article-list reveal" id="article-list">
             
             <!-- 1本目：タワー・オブ・テラー -->
             <a href="bgs-tot.html" class="article-card" id="tot-card">
@@ -157,7 +252,7 @@
                 </div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Tower of Terror</h2>
-                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。そしてディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
+                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜 of 真実。そしてディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
@@ -183,7 +278,7 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
-            <!-- 4本目：スプラッシュ・マウンテン (jpeg版！) -->
+            <!-- 4本目：スプラッシュ・マウンテン -->
             <a href="bgs-sm.html" class="article-card" id="sm-card">
                 <div class="img-wrapper">
                     <img src="sm-day.jpeg" alt="Splash Mountain">
@@ -200,12 +295,31 @@
     </div>
 
     <script>
+        /* 昼夜テーマスイッチ */
         const themeSwitch = document.getElementById('theme-switch');
         themeSwitch.addEventListener('click', () => {
             document.body.classList.toggle('curse-mode');
             themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
         });
 
+        /* --- レイアウト切り替えの魔法（List ⇄ Grid） --- */
+        const viewListBtn = document.getElementById('view-list');
+        const viewGridBtn = document.getElementById('view-grid');
+        const articleList = document.getElementById('article-list');
+
+        viewListBtn.addEventListener('click', () => {
+            articleList.classList.remove('grid-mode');
+            viewListBtn.classList.add('active-toggle');
+            viewGridBtn.classList.remove('active-toggle');
+        });
+
+        viewGridBtn.addEventListener('click', () => {
+            articleList.classList.add('grid-mode');
+            viewGridBtn.classList.add('active-toggle');
+            viewListBtn.classList.remove('active-toggle');
+        });
+
+        /* 優雅なスクロールフェードイン */
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
