@@ -14,17 +14,9 @@
             --border-light: rgba(28, 45, 55, 0.2);
             --img-filter: brightness(0.95) contrast(1.05);
             --glow-color: rgba(0, 139, 139, 0.25);
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23e6f0f5' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
-        }
-
-        body.curse-mode {
-            --bg-color: #030814; 
-            --text-main: #E2E8F0; 
-            --accent-gold: #00E5FF; 
-            --border-light: rgba(0, 229, 255, 0.25);
-            --img-filter: brightness(0.7) contrast(1.25) saturate(1.3);
-            --glow-color: rgba(0, 229, 255, 0.45);
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23101d33' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+            
+            /* 軽量化した3Dシワフィルター */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='optimized-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23e6f0f5' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23optimized-paper)'/%3E%3C/svg%3E");
         }
 
         html { scroll-behavior: smooth; }
@@ -33,10 +25,22 @@
         body {
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
-            background-size: cover; background-attachment: fixed;
-            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
-            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+            color: var(--text-main);
+            line-height: 2.2;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 【軽量化の魔法】背景の古紙を固定レイヤーにしてスクロールを軽くする仕掛け --- */
+        .paper-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
+            background-size: cover;
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
+            pointer-events: none;
         }
 
         .noise-overlay {
@@ -44,25 +48,22 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 背景固定レイヤー（GPU高速化） */
-        .paper-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
-            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
-        }
-
         .container { 
             position: relative; z-index: 10;
             max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
             background: rgba(230, 240, 245, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
         }
-        body.curse-mode .container { background: rgba(5, 12, 26, 0.45); box-shadow: inset 0 0 40px rgba(0,229,255,0.03); }
 
         .reveal {
-            opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
+            opacity: 0; 
+            transform: translate3d(0, 30px, 0);
+            will-change: transform, opacity;
             transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .reveal.active { opacity: 1; transform: translate3d(0, 0, 0); }
+        .reveal.active {
+            opacity: 1; 
+            transform: translate3d(0, 0, 0);
+        }
 
         .back-btn {
             display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
@@ -70,13 +71,6 @@
             border-bottom: 1px solid transparent; transition: color 0.3s;
         }
         .back-btn:hover { border-color: var(--accent-gold); }
-
-        .theme-switch {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
-        }
-        .theme-switch:hover { transform: scale(1.1); }
 
         .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
         .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
@@ -102,7 +96,6 @@
         .hero-img { width: 100%; height: auto; display: block; border-radius: 2px; filter: var(--img-filter); }
 
         .connection-card { background: rgba(58, 127, 147, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
-        body.curse-mode .connection-card { background: rgba(0, 229, 255, 0.03); }
         .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
 
@@ -114,7 +107,6 @@
 
     <div class="noise-overlay"></div>
     <div class="paper-bg"></div>
-    <div class="theme-switch" id="theme-switch">🚀</div>
 
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portal</a>
@@ -130,11 +122,11 @@
             <div class="toc-title">Index</div>
             <ul class="toc-list">
                 <li><span>I. 未来都市が背負った「時間」という名の宿命</span><a href="#prologue">Read →</a></li>
-                <li><span>II. スペース・マウンテン：初代ロケットの終焉と宇宙のエネルギー</span><a href="#space">Read →</a></li>
-                <li><span>III. スター・ツアーズ：銀河を巡るスリリングな星間旅行</span><a href="#startours">Read →</a></li>
-                <li><span>IV. モンスターズ・インク：笑い声が生み出すクリーンエネルギー</span><a href="#monsters">Read →</a></li>
-                <li><span>V. スティッチ・エンカウンター：銀河連邦の交信ステーション</span><a href="#stitch">Read →</a></li>
-                <li><span>VI. バズ・ライトイヤー：クリストリック・フュージョンの遺産</span><a href="#buzz">Read →</a></li>
+                <li><span>II. スペース・マウンテン：直線の過去と、曲線の未来</span><a href="#space">Read →</a></li>
+                <li><span>III. スター・ツアーズ：1401便の緊急出発</span><a href="#startours">Read →</a></li>
+                <li><span>IV. モンスターズ・インク：笑い声あふれる停電の夜</span><a href="#monsters">Read →</a></li>
+                <li><span>V. バズ・ライトイヤー：帝王ザーグと結晶の遺産</span><a href="#buzz">Read →</a></li>
+                <li><span>VI. スティッチ：宇宙連邦の広大な監視網</span><a href="#stitch">Read →</a></li>
             </ul>
         </nav>
 
@@ -146,68 +138,67 @@
         <!-- I. プロローグ（宿命） -->
         <section class="article-block reveal" id="prologue">
             <h2>I. トゥモローランドが背負う宿命</h2>
-            <p>東京ディズニーランドの右奥に広がる、白く幾何学的な未来都市「トゥモローランド」。このエリアは、ファンタジーランドやウェスタンランドといった「完成された過去」を描く他の土地とは異なり、**「同時代依存（Contemporary Dependency）」**という美しくも過酷な宿命を背負っています。</p>
-            <p>1955年にアメリカで最初のテーマランドが作られた際、デザインの基盤となったのは、当時の流行であった「未来へのオプティミズム（楽観主義）」でした。しかし、技術が進歩し、かつて夢見た「ロケット」や「コンピューター」が日常のものとなった瞬間、未来都市は現実によって追い越され、たちまち「古い過去の跡」へと陳腐化してしまいます。「styles had to keep up（デザインは更新され続けなければならない）」。この絶対的なルールを背負っているからこそ、トゥモローランドは絶えず物理的な変化（自己変革）を課され、常に最新の未来を模索し続ける、最もエネルギーに満ちた土地なのです。</p>
+            <p>東京ディズニーランドの右奥に広がる、白く幾何学的な未来都市「トゥモローランド」。このエリアは、ファンタジーランドやウエスタンランドといった「完成された過去」を描く他の土地とは異なり、**「同時代依存（Contemporary Dependency）」**という美しくも過酷な宿命を背負っています。</p>
+            <p>1955年にアメリカで最初のテーマランドが作られた際、デザインの基盤となったのは、当時の流行であった「未来へのオプティミズム（楽観主義）」でした。しかし、技術が進歩し、かつて夢見た「ロケット」や「宇宙旅行」が日常のものとなった瞬間、未来都市は現実によって追い越され、たちまち「古い過去の跡」へと陳腐化してしまいます。「styles had to keep up（デザインは更新され続けなければならない）」。この絶対的なルールを背負っているからこそ、トゥモローランドは絶えず物理的な変化（自己変革）を課され、常に最新の未来を模索し続ける、最もエネルギーに満ちた土地なのです。</p>
         </section>
 
-        <!-- II. スペースマウンテン -->
+        <!-- II. スペースマウンテン（新旧対比 ＆ パリ版） -->
         <section class="article-block reveal" id="space">
-            <h2>II. スペース・マウンテン：初代ロケットの終焉と明日</h2>
-            <p>1983年の開園からエリアの絶対的象徴として君臨してきた「スペース・マウンテン」。高さ38メートル、直径61メートルの巨大な純白のドームは、宇宙管制センターであり、未知の宇宙エネルギーを回収する「ステーション」としてのBGSを持っています。</p>
-            
-            <!-- 2枚目にドーム夜景「tl-space-night.jpeg」を配置 -->
-            <div class="hero-img-container reveal">
-                <img src="tl-space-night.jpeg" alt="Space Mountain Night View" class="hero-img">
+            <h2>II. スペース・マウンテン：直線の過去と、曲線の未来</h2>
+            <p>1983年の開園からエリアの絶対的象徴として君臨してきた、初代「スペース・マウンテン」。この巨大な純白のドームは、宇宙管制センターであり、未知の宇宙エネルギーを回収する「ステーション」としてのBGSを持っています。</p>
+            <p>2024年7月31日、多くのゲストに「最後のフライト（The Final Ignition）」を惜しまれながら一度クローズし、現在、2027年に向けた約700億円にのぼる大規模なフルリニューアルが進んでいます。</p>
+
+            <div class="connection-card">
+                <h4>📐 「直線」から「曲線」へ：移り変わる未来のイメージ</h4>
+                <p>1983年に作られた初代スペース・マウンテンや、周囲の古いトゥモローランドの景観は、鉄骨の規則的なグリッドや「直線系」のデザインが多用されていました。これは、20世紀後半の人々が思い描いた、工業的で力強い未来の象徴です。<br><br>
+                   対して、現在建設中の2代目スペース・マウンテンは、流れるような美しい**「曲線（有機的）」**なデザインが採用されています。これは21世紀の現代人が夢見る、自然とテクノロジーが融合したエコで柔らかな未来像を表しています。しかし、この美しい曲線デザインでさえ、時が流れればいつしか「過去の人が夢見た、古めかしい未来の跡」に見えるようになるかもしれない……。この「未来がいつか過去に追い抜かれる」という切ない時間旅行のロマンこそが、トゥモローランドの最大の魅力なのです。</p>
             </div>
 
-            <p>私たちは、ステーションにドック入りしている「新型ロケット」に乗り込み、エネルギーの急速充填とともに秒読みを開始。大気圏を突き抜けて星雲や流星群の嵐の中を疾走しました。2024年7月31日、多くのゲストに「最後のフライト（The Final Ignition）」を惜しまれながら、第一章の歴史に幕を下ろしました。現在、背後ではクレーンが動き、2027年に向けた約700億円にのぼる大規模なフルリニューアルが進んでいます。これはまさに、「未来を追いかけ、常に変わり続けなければならない」というトゥモローランドの生存本能の表れなのです。</p>
-
-            <!-- 3枚目に、ドーム内部ステーションの美しい青いオブジェ写真（tl-space-station.jpeg）を配置 -->
+            <!-- 2枚目：ドーム内部ステーションの美しい青いオブジェ写真（tl-space-station.jpeg） -->
             <div class="hero-img-container reveal">
                 <img src="tl-space-station.jpeg" alt="Space Mountain Queue Interior Station Object" class="hero-img">
             </div>
 
             <div class="connection-card">
-                <h4>🚀 【Photo Memoir】未来への架け橋、ステーションの記憶</h4>
-                <p>上の写真は、かつてドーム内の搭乗プラットフォーム（乗り場）の頭上に静かに、しかし圧倒的な存在感を放って吊り下げられていた巨大な「宇宙船（エネルギーカプセル）のオブジェクト」です。<br><br>
-                   青く発光する液体のような光ファイバーが脈打つこのオブジェクトは、ロケットが旅立つたび、消費されたコズミック・エネルギーを吸収し、再びロケットへと充填するための装置というBGSが設定されていました。出発の際、機内から見上げたこの近未来的で厳かなブルーの光は、これから未知の暗黒の宇宙空間へと旅立つ緊張感とロマンを最高潮に高めてくれる、不変の美しさを持ったスペマンの魂でした。</p>
+                <h4>🔮 フランス・パリに眠る「過去の人が見た未来（レトロフューチャー）」</h4>
+                <p>実は、フランスのディズニーランド・パリのスペース・マウンテンは、東京やアメリカの「白い未来的なドーム」とは全く異なる姿をしています。パリのエリア（ディスカバリーランド）は、未来が陳腐化する問題を避けるため、あえて19世紀のSF小説家ジュール・ヴェルヌが夢見た**「レトロフューチャー（スチームパンク）」**をテーマにしているのです。<br><br>
+                   そのため、パリのスペース・マウンテンは真鍮や銅色のドームで覆われており、宇宙船はゆっくり登るのではなく、巨大な大砲の砲身から大爆発とともに空へ一気に打ち出されます。東京の「移り変わる未来」と、パリの「不変のクラシック未来」、二つのマウンテンの思想の対比は非常に深いロマンに満ちています。</p>
             </div>
         </section>
 
-        <!-- III. スター・ツアーズ（銀河宇宙法なし） -->
+        <!-- III. スター・ツアーズ -->
         <section class="article-block reveal" id="startours">
-            <h2>III. スター・ツアーズ：銀河を巡る星間旅行</h2>
-            <p>日々、スタースピーダー1000（1401便）が銀河の様々な惑星へと予測不能なフライトを続けている「スター・ツアーズ」。1989年にオープンした旧版（キャプテンRX-24、通称レックスの不慣れな操縦で、彗星群に衝突しながらエンドアへ向かう観光旅行）から、現在は『エピソード3』と『エピソード4』の「間」の帝国軍の暗黒時代へと設定が一新されています。</p>
-            <p>スター・ツアーズ社の最新鋭の宇宙船「スタースピーダー1000」が、出航前の点検中、整備ドロイドであるC-3POが不注意からパイロット席に居座った状態で自動出発許可が下りてしまい、そのままパイロット不在のまま緊急発進することになります。さらに出発直後、帝国軍に強制停車させられ、機内に「反乱軍のスパイ（乗船しているゲストの中から選ばれた1人）」が潜入していることを指摘され、C-3POはスパイを守り、反乱軍の秘密基地まで安全に送り届けるべく、銀河の様々な惑星へと逃避行を繰り広げます。映画そのままの宇宙港の緊迫感溢れる演出が、私たちを瞬時にスター・ウォーズの壮大な世界へと引きずり込んでくれます。</p>
+            <h2>III. スター・ツアーズ：スタースピーダー1401便の緊急出発</h2>
+            <p>日々、スタースピーダー1000が銀河の様々な惑星へと予測不能なフライトを続けている「スター・ツアーズ」。1989年にオープンした旧版（キャプテンレックスの操縦でエンドアへ向かう観光旅行）から、現在は映画の『エピソード3』と『エピソード4』の間の暗黒の時代へと設定が一新されています。</p>
+            <p>ゲストが乗り込む「1401便」は、出航前の点検中、整備用ドロイドであるC-3POが不注意からパイロット席に居座った状態で、自動出発許可が下りてしまいます。さらに、宇宙港で帝国軍に強制停車させられ、機内に「反乱軍のスパイ」が潜入していることを告げられます。C-3POはスパイを守り、安全な反乱軍の秘密基地へと送り届けるべく、自動操縦で銀河の様々な惑星へと超空間ワープを繰り返す逃避行へと巻き込まれるのです。</p>
         </section>
 
-        <!-- IV. モンスターズインク（新規） -->
+        <!-- IV. モンスターズインク -->
         <section class="article-block reveal" id="monsters">
-            <h2>IV. モンスターズ・インク：笑い声が生み出すクリーンエネルギー</h2>
-            <p>映画『モンスターズ・インク』のその後を描いた、東京オリジナルの温かいBGSを持つアトラクションです。</p>
-            <p>映画の結末において、モンスターシティにエネルギーを供給する「モンスターズ社」は、人間の子供から悲鳴（Scream）を奪うシステムから、笑顔と笑い声（Laughter）をエネルギーに変換するクリーンな方法へと経営方針を180度転換しました。</p>
-            <p>新しい社長であるサリーは、親友である人間の少女「ブー」が再びモンスターシティに遊びに来ることを知り、彼女を大いに楽しませるために、マイクが発案した大規模なイベント「フラッシュライトかくれんぼゲーム」を開催します。ゲームの開始とともにメインパワールームのスイッチをOFFにすることで、社内およびモンスターシティ全体が意図的に停電し、夜の静寂へと包まれます。ゲストは警備用の「セキュリティトラム」に乗り込み、ヘルメットに描かれた「M」のロゴマークを狙ってフラッシュライトを照らすことで、いたるところに隠れているお茶目なモンスターたちを「発見」し、彼らと一緒にかくれんぼを楽しむ役割を担っているのです。</p>
+            <h2>IV. モンスターズ・インク：笑い声あふれる停電の夜</h2>
+            <p>映画『モンスターズ・インク』のその後を描いた、完全オリジナルストーリーが展開される「モンスターズ・インク“ライド＆ゴーシーク！”」。</p>
+            <p>映画の結末において、モンスターズ社は「悲鳴（恐怖）」のエネルギーから「笑い声」をエネルギーに変換するクリーンな方法へと経営方針を転換しました。新社長となったサリーは、遊びにきた人間の少女「ブー」を楽しませるため、マイク・ワゾウスキが発案した「フラッシュライトかくれんぼゲーム」を開催します。ゲーム開始とともに、お城のメインパワースイッチがオフになり、モンスターシティは夜の停電状態へと包まれます。ゲストはセキュリティトラムに乗り込み、ヘルメットに描かれた「M」のロゴを狙ってライトを照らすことで、隠れているモンスターたちを見つけ出す役割を担うのです。</p>
         </section>
 
-        <!-- V. スティッチ（新規） -->
-        <section class="article-block reveal" id="stitch">
-            <h2>V. スティッチ・エンカウンター：銀河連邦の交信ステーション</h2>
-            <p>宇宙を飛び回るいたずら好きなエイリアン、スティッチとリアルタイムで交信する「スティッチ・エンカウンター」。この美しいガラスドームのような建物は、BGS上、**「銀河連邦（Galactic Federation）が地球に開設した、スティッチ専用の交信・監視ポート」**という設定になっています。</p>
-            <p>いたずらが大好きな試作品626号（スティッチ）が、宇宙を漂流しながら寂しくないように、そして彼が再びトラブルを起こさないように、銀河連邦のモニターを通じて地球のゲストが優しく彼に話しかけ、交流するための最先端の通信基地なのです。スクリーンの裏側では、銀河連邦のセキュリティシステムや、彼を追いかけるガントゥ船長の宇宙船のレーダーデータなどが緻密に稼働しており、映画『リロ＆スティッチ』のSFテクノロジーの世界観が、私たちの暮らす現代のトゥモローランドへとシームレスに繋げられています。</p>
-        </section>
-
-        <!-- VI. バズライトイヤー -->
+        <!-- V. バズライトイヤー -->
         <section class="article-block reveal" id="buzz">
-            <h2>VI. バズ・ライトイヤー：クリストリック・フュージョンの遺産</h2>
+            <h2>V. バズ・ライトイヤー：帝王ザーグと結晶の遺産</h2>
             <p>2024年10月、多くのスペースレンジャーに惜しまれながら20年の歴史を終えた「バズ・ライトイヤーのアストロブラスター」。このアトラクションは、おもちゃのバズが主人公として活躍する劇中劇アニメの世界を舞台にしていました。</p>
             
-            <!-- 4枚目：バズの緑の看板写真（tl-buzz.jpeg） -->
+            <!-- 3枚目：バズの緑の看板写真（tl-buzz.jpeg） -->
             <div class="hero-img-container reveal">
                 <img src="tl-buzz.jpeg" alt="Buzz Lightyear's Astro Blasters Entrance" class="hero-img">
             </div>
 
-            <p>悪の帝王ザーグは、おもちゃたちの万能エネルギー「クリストリック・フュージョン（Crystolic Fusion）」バッテリーを強奪し、銀河を支配する巨大兵器の稼働を目論んでいました。私たちは新人レンジャーとして、緑色の光線銃「アストロブラスター」を持ち、二人乗りの「XP-38型スペースクルーザー」に乗ってプラネットZへと突入しました。</p>
-            <p>実は、アトラクションの入り口の天井に飾られていた宇宙船は、私たちが乗ったXP-38型スペースクルーザーではなく、バズ自身が愛用する「42型スタークルーザー」であるという、イマジニアによるマニアックなビジュアルの描き分けがなされていました。クローズ後、ここは『シュガー・ラッシュ』のゲーム世界へと生まれ変わりますが、かつて銀河の平和を守るために大人も子供もアストロブラスターを握りしめ、ザーグの「Z」マークを狙い続けたあの熱量と記憶は、トゥモローランドの「未来に挑み続けた歴史」の一部として、これからも語り継がれていくことでしょう。</p>
+            <p>悪の帝王ザーグは、おもちゃたちの万能エネルギー「クリストリック・フュージョン」バッテリーを強奪し、銀河を支配する巨大兵器の稼働を目論んでいました。私たちは新人レンジャーとして、緑色の光線銃「アストロブラスター」を持ち、二人乗りの「XP-38型スペースクルーザー」に乗ってプラネットZへと突入しました。</p>
+            <p>アトラクションの入り口の天井に飾られていた宇宙船は、私たちが乗ったXP-38型スペースクルーザーではなく、バズ自身が愛用する「42型スタークルーザー」であるという、イマジニアによるマニアックなビジュアルの描き分けがなされていました。クローズ後、ここは『シュガー・ラッシュ』のゲーム世界へと生まれ変わりますが、かつて銀河の平和を守るために大人も子供もアストロブラスターを握りしめ、ザーグの「Z」マークを狙い続けたあの熱量と記憶は、トゥモローランドの「未来に挑み続けた歴史」の一部として、これからも語り継がれていくことでしょう。</p>
+        </section>
+
+        <!-- VI. スティッチ（NEW！） -->
+        <section class="article-block reveal" id="stitch">
+            <h2>VI. スティッチ・エンカウンター：宇宙連邦の広大な監視網</h2>
+            <p>シアター型アトラクション「スティッチ・エンカウンター」。この施設は、宇宙の秩序を守る「宇宙連邦（Galactic Federation）」によって設置された最先端の**「スティッチ・モニタリング・ステーション（スティッチ監視宇宙ステーション）」**です。</p>
+            <p>イタズラ好きで暴れん坊のエイリアン「試作品626号（スティッチ）」が、宇宙のあちこちを縦横無尽に飛び回ってトラブルを起こさないよう、宇宙連邦のキャスト（オペレーター）たちが巨大なスクリーンを使って彼を24時間監視しています。ゲストは、この監視ステーションへの「一般見学者」として招き入れられますが、不気味で厳格な監視の目をかいくぐり、スティッチがスクリーン越しにいたずらっぽくゲストの顔を覗き込んできて、リアルタイムに会話やゲームを始めてしまう……という、テクノロジーと宇宙のユーモアが融合した微笑ましいBGSが設定されています。</p>
         </section>
 
         <div class="footer-link reveal">
@@ -216,12 +207,6 @@
     </div>
 
     <script>
-        const themeSwitch = document.getElementById('theme-switch');
-        themeSwitch.addEventListener('click', () => {
-            document.body.classList.toggle('curse-mode');
-            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🚀';
-        });
-
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
