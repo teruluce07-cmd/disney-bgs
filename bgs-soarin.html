@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGS Deep Report: Soarin' | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- 昼夜（大理石の古紙・コズミック・フライトの星空）カラー設定 --- */
+        :root {
+            /* デフォルト：博物館の美しい大理石と、澄み渡る空の水色モード */
+            --bg-color: #E2D7C5; 
+            --text-main: #2D231E; 
+            --accent-gold: #3A7F93; /* 澄み切った19世紀の空のティールブルー */
+            --border-light: rgba(58, 127, 147, 0.2);
+            --img-filter: brightness(0.95) contrast(1.05) sepia(10%);
+            --glow-color: rgba(58, 127, 147, 0.25);
+            
+            /* 空気のうねりと歴史を表現した、超くしゃくしゃ紙の3Dフィルター */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+        }
+
+        body.curse-mode {
+            /* スイッチON：コズミック・フライト（夜空の飛行）モード */
+            --bg-color: #070D1A; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #F39C12; /* 満天の星とランプが輝くゴールド */
+            --border-light: rgba(243, 156, 18, 0.25);
+            --img-filter: brightness(0.8) contrast(1.25) saturate(1.2);
+            --glow-color: rgba(243, 156, 18, 0.45);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23101c33' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
+            background-size: cover; background-attachment: fixed;
+            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 独立させた背景紙レイヤー */
+        .paper-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
+            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
+        }
+
+        .container { 
+            position: relative; z-index: 10;
+            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
+            background: rgba(245, 240, 230, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        }
+        body.curse-mode .container { background: rgba(10, 18, 32, 0.45); box-shadow: inset 0 0 40px rgba(243,156,18,0.02); }
+
+        .reveal {
+            opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.active { opacity: 1; transform: translate3d(0, 0, 0); }
+
+        .back-btn {
+            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
+            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
+            border-bottom: 1px solid transparent; transition: color 0.3s;
+        }
+        .back-btn:hover { border-color: var(--accent-gold); }
+
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
+        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
+
+        /* 目次 */
+        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
+
+        /* 本文 */
+        .article-block { margin-bottom: 70px; text-align: justify; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
+        .hero-img-container:hover .hero-img { transform: scale(1.03); }
+
+        /* 海外比較用のテーブル */
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.8rem;
+            border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 10px 12px; text-align: left; border-bottom: 1px dashed var(--border-light);
+        }
+        .comparison-table th {
+            font-family: 'Montserrat', sans-serif; color: var(--accent-gold); letter-spacing: 0.1em; font-size: 0.75rem;
+        }
+
+        .connection-card { background: rgba(58, 127, 147, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        body.curse-mode .connection-card { background: rgba(243, 156, 18, 0.03); }
+        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
+        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+
+        .footer-link { text-align: center; margin-top: 80px; }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="paper-bg"></div>
+    <div class="theme-switch" id="theme-switch">🌙</div>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Back to Portal</a>
+
+        <header class="header-section reveal">
+            <div class="bgs-tag">Background Story</div>
+            <h1>Soarin'</h1>
+            <div class="subtitle-jp">カメリアとハイタワー三世の確執、そして日本との因縁</div>
+        </header>
+
+        <!-- 目次 -->
+        <nav class="toc-box reveal">
+            <div class="toc-title">Index</div>
+            <ul class="toc-list">
+                <li><span>I. 現代SFから「歴史ロマン」への大改変（日米比較）</span><a href="#prologue">Read →</a></li>
+                <li><span>II. カメリア vs ハイタワー三世（S.E.A.の光と影）</span><a href="#conflict">Read →</a></li>
+                <li><span>III. 日本「明治維新・岩倉使節団」との鳥肌が立つ繋がり</span><a href="#meiji">Read →</a></li>
+                <li><span>IV. 天井ロビーに広がる「空を夢見た人類の歴史画」</span><a href="#rotunda">Read →</a></li>
+                <li><span>V. 絵画に命が吹き込まれるイマジニアの魔法</span><a href="#magic">Read →</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1本目：夕暮れの美しい外観（soarin-exterior.jpegを使用！） -->
+        <div class="hero-img-container reveal">
+            <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum Exterior" class="hero-img">
+        </div>
+
+        <!-- I. プロローグと日米比較 -->
+        <section class="article-block reveal" id="prologue">
+            <h2>I. 現代SFから「歴史ロマン」への大改変</h2>
+            <p>メディテレーニアンハーバーのなだらかな丘の上に建つ、美しいルネサンス様式の博物館「ファンタスティック・フライト・ミュージアム」。世界中のパークに存在する大人気アトラクション「ソアリン」ですが、ここ東京ディズニーシー（TDS）のものは、**世界で最も重厚な「歴史ロマンと魔法」のストーリー**が散りばめられています。</p>
+            <p>海外版の「現代的な空港やハンググライダー」というSFな設定から、TDS版は「19世紀を舞台にした飛行への情熱と、イマジネーションの旅」というエモーショナルな物語へ180度、驚異的なリビルドが行われました。</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>比較項目</th>
+                        <th>海外パーク（米国・上海）</th>
+                        <th>東京ディズニーシー（日本）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>舞台設定</td>
+                        <td>現代的なハンググライダーツアー</td>
+                        <td>19世紀の飛行博物館</td>
+                    </tr>
+                    <tr>
+                        <td>飛行具</td>
+                        <td>アルミと金属の工業グライダー</td>
+                        <td>木と布とハヤブサが織りなす「ドリームフライヤー」</td>
+                    </tr>
+                    <tr>
+                        <td>案内人</td>
+                        <td>パトリック（現代の客室乗務員）</td>
+                        <td>カメリア・ファルコ（19世紀の女性飛行家）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- II. カメリア vs ハイタワー三世 -->
+        <section class="article-block reveal" id="conflict">
+            <h2>II. カメリア vs ハイタワー三世：S.E.A.の光と影</h2>
+            <p>TDSのソアリンに隠された最大のミステリー。それは、カメリア・ファルコと、あの『タワー・オブ・テラー』の主人公**「ハリソン・ハイタワー三世」との醜い確執**です。二人は世界規模の探検家学会「S.E.A.」の会員（同期）でしたが、その思想は「光と影」のように正反対でした。</p>
+            <p>カメリアは「空を飛ぶ夢を、世界中の多くの人と分かち合いたい」と願った優しき女性。対して、強欲なハイタワー三世は「世界で偉大なのは自分だけ」と考え、手に入れた宝をホテルに独占・隠匿しました。彼はカメリアが研究していた「ドリームフライヤーの設計図」や彼女の博物館のコレクションに目をつけ、力ずくで乗っ取ろうと卑劣な圧力をかけていました。</p>
+            
+            <div class="connection-card">
+                <h4>🔎 待ち列に遺された「確執の証拠」</h4>
+                <p>博物館のロビーに飾られたS.E.A.の大きな集合写真には、誇らしげに座る若きカメリアと、そのすぐ近くで傲慢な顔をして映るハイタワー三世の姿が描かれています。カメリアは彼の執拗な買収工作や脅迫に決して屈せず、純粋な情熱でこの博物館を守り抜きました。この二人の対立を知ると、ソアリンの美しさと、タワー・オブ・テラーの恐ろしさが、ひとつの歴史として重厚に繋がります。</p>
+            </div>
+        </section>
+
+        <!-- III. 日本との繋がり -->
+        <section class="article-block reveal" id="meiji">
+            <h2>III. 「岩倉使節団」が訪れた博物館</h2>
+            <p>メディテレーニアンハーバーというイタリアの地でありながら、この博物館には日本の近代化（明治維新）の歴史が美しく絡んでいます。博物館の中には、カメリアが晩年（1872年、当時71歳）に、**日本から訪れた使節団を迎えて挨拶をしている絵画**が飾られています。</p>
+            <p>この絵画に描かれている日本の紳士たちは、実在した**「岩倉使節団」**（岩倉具視や木戸孝允、伊藤博文、大久保利通など）です。ヨーロッパの優れた技術を学びに来ていた彼らは、カメリアの飛行への狂熱的な情熱とドリームフライヤーに深い感銘を受けました。そして彼らが日本に持ち帰った「空への夢」のバトンが巡り巡って、現代の私たちがこの地でドリームフライヤーに出会えるという、鳥肌が立つような時空を超えた歴史の伏線が張られているのです。</p>
+        </section>
+
+        <!-- IV. 大天井ロビー（NEW：提供されたお写真） -->
+        <section class="article-block reveal" id="rotunda">
+            <h2>IV. 常設展示室に響く、空への祈り</h2>
+            <p>博物館の奥へと進むと広がる、息を呑むほどに美しい大天井のドーム型ロビー。ここには、カメリアの父チェザーレ・ファルコが世界中で集め、描いた「人類が太古より夢見た空への歴史画」が、東洋から西洋、中東の神話に至るまで、ドームを囲むように飾られています。</p>
+            
+            <!-- 2枚目：大天井と人々の美しい写真（soarin-interior.jpegを使用！） -->
+            <div class="hero-img-container">
+                <img src="soarin-interior.jpeg" alt="Fantastic Flight Museum Rotunda" class="hero-img">
+            </div>
+
+            <p>壁画をよく見ると、神話に登場する「空飛ぶカーペット」や「翼を持った馬（ペガサス）」、ダ・ヴィンチの飛行設計図、さらには空を飛ぼうとする「ゾウ」や「ライオン」の姿など、人類が抱いた空への憧れがユーモアと芸術性たっぷりに描き込まれています。このロビーで、頭上の美しい青空の天井画を見上げながら、世界中の歴史や魔法を感じる時間こそが、私たちの「イマジネーション（想像力）」を高め、次の部屋でドリームフライヤーを起動するための最も重要なプロローグなのです。</p>
+        </section>
+
+        <!-- V. イマジニアの魔法 -->
+        <section class="article-block reveal" id="magic">
+            <h2>V. 絵画に命が吹き込まれるイマジニアの魔法</h2>
+            <p>カメリアの肖像画が飾られた「特別回 回顧室」で、白黒の絵から彼女が立体的に動き出すあの瞬間。ここにはイマジニアによる驚異的な最新プロジェクションマッピング技術が使われています。単に動画を絵の上に写すのではなく、**「油絵のキャンバスに描かれた独特の絵の具の凹凸や筆跡（キャンバスの質感）」**を完璧に維持したまま、彼女のスピリットを美しく動かしているのです。</p>
+            <p>また、彼女が放った愛鳥ハヤブサ「アレッタ」の影が天井を飛び回る演出では、立体的なサラウンド音響と同期させることで、本当にハヤブサの風が頭上を駆け抜けるような「リアルな気配」を五感に訴えかけています。すべては、科学ではなく、ゲストの「想像力」という名の魔法を信じさせるための、緻密な計算の結晶なのです。</p>
+        </section>
+
+        <div class="footer-link reveal">
+            <a href="index.html">← HOMEへ戻る</a>
+        </div>
+    </div>
+
+    <script>
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.classList.toggle('curse-mode');
+            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
