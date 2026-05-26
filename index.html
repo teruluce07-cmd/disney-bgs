@@ -27,11 +27,8 @@
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23141b2e' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
         }
 
-        /* --- 【最重要】すべての画像の暴走を防ぐグローバルリセットコード --- */
-        img {
-            max-width: 100% !important;
-            height: auto;
-        }
+        /* 画像サイズ暴走バグ完全リセット */
+        img { max-width: 100% !important; height: auto; }
 
         /* スムーズスクロール有効化 */
         html { scroll-behavior: smooth; }
@@ -46,7 +43,7 @@
             transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
 
-        /* 背景固定レイヤー */
+        /* 背景固定レイヤー（GPU高速化） */
         .paper-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -65,13 +62,9 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* コンテナ（スマホ用のデフォルト幅） */
         .container { 
             position: relative; z-index: 1;
-            width: 100%;
-            max-width: 540px; 
-            margin: 0 auto; 
-            padding: 40px 25px 100px; 
+            width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
             transition: background 0.8s ease, max-width 0.5s ease;
         }
@@ -79,15 +72,10 @@
 
         /* スクロールフェードイン */
         .reveal {
-            opacity: 0; 
-            transform: translate3d(0, 35px, 0);
-            will-change: transform, opacity;
-            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0; transform: translate3d(0, 35px, 0); will-change: transform, opacity;
+            transition: all 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .reveal.active {
-            opacity: 1; 
-            transform: translate3d(0, 0, 0);
-        }
+        .reveal.active { opacity: 1; transform: translate3d(0, 0, 0); }
 
         /* --- ヘッダー --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); transition: border-color 0.8s; }
@@ -98,142 +86,43 @@
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
 
-        /* --- ウェルカム・ヒーローエリア --- */
-        .intro-hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 60px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        /* 【バグ対策】表示枠を完全にブロック化し、ブラウザによる自動伸縮を防ぐ */
+        /* プロフィールアーチ写真枠バグ修正 */
+        .intro-hero { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
         .intro-portrait {
-            width: 100px !important;
-            height: 120px !important;
-            border-radius: 50px 50px 0 0; /* 上だけ丸いアーチ型 */
-            overflow: hidden;
-            border: 1px solid var(--accent-gold);
-            box-shadow: 0 8px 20px var(--glow-color);
-            margin-bottom: 30px;
-            background: #111;
-            display: inline-block; /* 縦並び時でも引き伸ばされないよう固定 */
+            width: 100px !important; height: 120px !important; border-radius: 50px 50px 0 0; overflow: hidden; border: 1px solid var(--accent-gold); box-shadow: 0 8px 20px var(--glow-color); margin-bottom: 30px; background: #111; display: inline-block;
         }
-        /* 【バグ対策】中の画像自体のピクセルサイズを強制固定 */
-        .intro-portrait img {
-            width: 100px !important;
-            height: 120px !important;
-            object-fit: cover !important;
-            display: block !important;
-            filter: var(--img-filter);
-        }
+        .intro-portrait img { width: 100px !important; height: 120px !important; object-fit: cover !important; display: block !important; filter: var(--img-filter); }
 
-        .intro-message {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            line-height: 2.2;
-            margin-bottom: 35px;
-            opacity: 0.95;
-            letter-spacing: 0.05em;
-        }
+        .intro-message { font-size: 0.85rem; color: var(--text-main); line-height: 2.2; margin-bottom: 35px; opacity: 0.95; letter-spacing: 0.05em; }
 
-        /* ウォルト・ディズニーの名言 */
+        /* ウォルトの名言 */
         .walt-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            font-style: italic;
-            font-weight: 600;
-            color: var(--accent-gold);
-            line-height: 1.5;
-            margin-bottom: 12px;
-            padding: 0 10px;
+            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; font-weight: 600; color: var(--accent-gold); line-height: 1.5; margin-bottom: 12px; padding: 0 10px;
         }
-        .walt-quote cite {
-            display: block;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.55rem;
-            font-style: normal;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-        .walt-quote-jp {
-            font-size: 0.7rem;
-            opacity: 0.5;
-            letter-spacing: 0.05em;
-        }
+        .walt-quote cite { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-style: normal; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 10px; opacity: 0.7; }
+        .walt-quote-jp { font-size: 0.7rem; opacity: 0.5; letter-spacing: 0.05em; }
 
         /* --- 目次 (TOC) --- */
         .toc-box {
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid var(--border-light);
-            padding: 30px; border-radius: 4px; margin-bottom: 60px;
+            background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px;
         }
         .toc-title {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic;
-            color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em;
+            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em;
         }
         .toc-list { list-style: none; padding: 0; }
-        .toc-list li {
-            border-bottom: 1px dashed var(--border-light);
-            padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem;
-        }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
         .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
         .toc-list a:hover { color: var(--accent-gold); }
 
         /* --- 記事見出し ＆ レイアウト切替スイッチ --- */
-        .list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 60px 0 30px;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 10px;
-        }
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 300;
-            font-style: italic;
-            color: var(--accent-gold);
-        }
-        .layout-toggle {
-            display: flex;
-            gap: 4px;
-            background: rgba(0, 0, 0, 0.05);
-            padding: 4px;
-            border-radius: 20px;
-            border: 1px solid var(--border-light);
-        }
-        .layout-toggle button {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            padding: 6px 12px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-        .layout-toggle button.active-toggle {
-            background: var(--accent-gold);
-            color: var(--bg-color);
-            font-weight: 600;
-        }
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin: 60px 0 30px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--accent-gold); }
+        .layout-toggle { display: flex; gap: 4px; background: rgba(0, 0, 0, 0.05); padding: 4px; border-radius: 20px; border: 1px solid var(--border-light); }
+        .layout-toggle button { background: transparent; border: none; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
+        .layout-toggle button.active-toggle { background: var(--accent-gold); color: var(--bg-color); font-weight: 600; }
 
         /* --- 記事カードリスト --- */
-        .article-list { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 45px; 
-            transition: all 0.5s ease;
-        }
+        .article-list { display: flex; flex-direction: column; gap: 45px; transition: all 0.5s ease; }
         .article-card {
             text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease;
         }
@@ -251,51 +140,18 @@
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
         .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; transition: font-size 0.4s ease; }
 
-        /* --- グリッド表示 (スマートフォン時) --- */
-        .article-list.grid-mode {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 15px;
-        }
-        .article-list.grid-mode .article-card {
-            padding: 15px;
-            border-radius: 6px;
-        }
-        .article-list.grid-mode .img-wrapper {
-            aspect-ratio: 1 / 1; 
-            margin-bottom: 12px;
-        }
-        .article-list.grid-mode .article-card h2 {
-            font-size: 1.15rem; 
-            margin-bottom: 8px;
-        }
-        .article-list.grid-mode .article-card p {
-            font-size: 0.75rem;
-            line-height: 1.6;
-            margin-bottom: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .article-list.grid-mode .read-btn {
-            font-size: 0.65rem;
-        }
+        /* --- グリッド表示 --- */
+        .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .article-list.grid-mode .article-card { padding: 15px; border-radius: 6px; }
+        .article-list.grid-mode .img-wrapper { aspect-ratio: 1 / 1; margin-bottom: 12px; }
+        .article-list.grid-mode .article-card h2 { font-size: 1.15rem; margin-bottom: 8px; }
+        .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .article-list.grid-mode .read-btn { font-size: 0.65rem; }
 
-        /* -------------------------------------------
-           💻 パソコン ＆ iPad（横画面）向けレスポンシブ対応
-        ------------------------------------------- */
+        /* 💻 パソコン ＆ iPad（横画面）向けレスポンシブ対応 */
         @media (min-width: 768px) {
-            /* PCでは中央のコンテナ幅を少し広げて、優雅な余白を演出 */
-            .container {
-                max-width: 750px;
-                padding: 50px 40px 120px;
-            }
-            /* PCでグリッドモードにした時は、大画面を活かした「美しい3列表示」に切り替え */
-            .article-list.grid-mode {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
+            .container { max-width: 750px; padding: 50px 40px 120px; }
+            .article-list.grid-mode { grid-template-columns: repeat(3, 1fr); gap: 20px; }
         }
 
         footer { text-align: center; margin-top: 120px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.4; }
@@ -303,7 +159,6 @@
 </head>
 <body>
 
-    <!-- 独立させた背景紙レイヤー -->
     <div class="paper-bg"></div>
     <div class="noise-overlay"></div>
 
@@ -314,7 +169,7 @@
             <a href="profile.html" class="profile-btn">Profile</a>
         </header>
 
-        <!-- ウェルカム・ヒーローエリア（完全バグ修正版） -->
+        <!-- ウェルカム・ヒーローエリア -->
         <section class="intro-hero reveal">
             <div class="intro-portrait">
                 <img src="IMG_2226.jpeg" alt="Curator Profile Picture">
@@ -342,7 +197,8 @@
                 <li><span>III. Fantasy Springs (ファンタジースプリングス)</span><a href="#fs-card">Scroll →</a></li>
                 <li><span>IV. Splash Mountain (スプラッシュ・マウンテン)</span><a href="#sm-card">Scroll →</a></li>
                 <li><span>V. Big Thunder Mountain (ビッグサンダー・マウンテン)</span><a href="#btm-card">Scroll →</a></li>
-                <li><span>VI. Curator Profile (管理者プロフィール)</span><a href="profile.html">View →</a></li>
+                <li><span>VI. Soarin': Fantastic Flight (ソアリン)</span><a href="#soarin-card">Scroll →</a></li>
+                <li><span>VII. Curator Profile (管理者プロフィール)</span><a href="profile.html">View →</a></li>
             </ul>
         </nav>
 
@@ -413,13 +269,23 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
 
+            <!-- 6本目：ソアリン（NEW！） -->
+            <a href="bgs-soarin.html" class="article-card" id="soarin-card">
+                <div class="img-wrapper">
+                    <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum">
+                </div>
+                <div class="card-tag">Featured Story</div>
+                <h2>Soarin'</h2>
+                <p>19世紀の博物館に秘められた、空を飛ぶ夢の歴史。カメリアとハイタワー三世の確執、そして日本の明治維新を支えたあの使節団との驚くべき因縁に迫る。</p>
+                <div class="read-btn">Explore the Story →</div>
+            </a>
+
         </div>
 
         <footer>&copy; TERU_LUCE_</footer>
     </div>
 
     <script>
-        /* --- レイアウト切り替え（List ⇄ Grid） --- */
         const viewListBtn = document.getElementById('view-list');
         const viewGridBtn = document.getElementById('view-grid');
         const articleList = document.getElementById('article-list');
