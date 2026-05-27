@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東京ディズニーシーの空間叙事詩 | teru_luce_</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 昼夜カラー：海の知性を引き立てる、少し青みがかった高貴な古紙トーン */
+            --bg-color: #D3CBB5; 
+            --text-main: #1D2A24; 
+            --accent-gold: #7A5330; 
+            --border-light: rgba(29, 42, 36, 0.2);
+            --img-filter: brightness(0.95) contrast(1.05) sepia(10%); 
+            --glow-color: rgba(29, 42, 36, 0.15);
+            
+            /* FIX: 昼用の、アンティークな和紙風マスキングテープ（付箋）のカラー */
+            --tape-color: rgba(195, 170, 130, 0.65);
+            /* FIX: 写真用紙のフチの色 */
+            --photo-border-bg: #FAF6EE;
+
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fbf8f3' surfaceScale='3.5'%3E%3CfeDistantLight azimuth='60' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+        }
+        /* FIX: ダークモード変数を body ではなく html.curse-mode に適用することで、
+           body兄弟要素である背景（.paper-bg）でも変数が正しく継承されるように変更 */
+        html.curse-mode {
+            --bg-color: #040A12; 
+            --text-main: #E2E8F0; 
+            --accent-gold: #00FF7F; 
+            --border-light: rgba(0, 255, 127, 0.2);
+            --img-filter: brightness(0.7) contrast(1.2) saturate(1.1) hue-rotate(-15deg); 
+            --glow-color: rgba(0, 255, 127, 0.4);
+            
+            /* FIX: 呪い夜用の、魔術を帯びた蛍光グリーンの光る付箋テープのカラー */
+            --tape-color: rgba(0, 255, 127, 0.45);
+            /* FIX: 写真用紙のフチの色を夜用に暗く沈ませる */
+            --photo-border-bg: #0C131F;
+
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23141b2e' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+        }
+        img { max-width: 100% !important; height: auto; }
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* FIX: background-attachment: fixed は iOS Safari でスクロール時に表示崩れを起こすため削除し、
+           代わりに position: fixed を持つ .paper-bg でスクロールに影響されない背景を担保 */
+        body { 
+            font-family: 'Noto Serif JP', serif; 
+            background-color: var(--bg-color); 
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture); 
+            background-size: cover; 
+            color: var(--text-main); 
+            line-height: 2.2; 
+            overflow-x: hidden; 
+            transition: background-color 0.8s ease, color 0.8s ease; 
+            -webkit-font-smoothing: antialiased; 
+        }
+        
+        /* 背景を固定して軽くする仕様 */
+        .paper-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
+            background-size: cover; transform: translate3d(0, 0, 0); pointer-events: none;
+        }
+
+        .noise-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+        .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease; position: relative; z-index: 10; }
+        html.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
+        
+        /* FIX: transition: all を個別のプロパティ指定へ変更 */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* FIX: transition: all を個別のプロパティ指定へ変更 */
+        .back-btn { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+        .back-btn:hover { border-color: var(--accent-gold); }
+        
+        /* FIX: キーボード操作やスクリーンリーダー等に対応した適切なbutton要素へ変更 */
+        .theme-switch { 
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; 
+            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center; 
+            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+            border: none; transition: transform 0.3s ease, background-color 0.8s ease; 
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+        .theme-switch:focus-visible { outline: 2px solid var(--text-main); outline-offset: 3px; }
+
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Noto Serif JP', serif; font-size: 1.6rem; font-weight: 400; margin: 15px 0 20px; letter-spacing: 0.02em; line-height: 1.6; text-align: left; }
+        h1 span { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--accent-gold); letter-spacing: 0.1em; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .subtitle-jp { font-size: 0.85rem; font-weight: 300; letter-spacing: 0.05em; opacity: 0.8; text-align: justify; margin-top: 25px; line-height: 2; border-left: 2px solid var(--accent-gold); padding-left: 15px; }
+        
+        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        .toc-list { list-style: none; padding: 0; }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        
+        /* FIX: transition: all を個別のプロパティ指定へ変更 */
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
+        
+        /* レスポンシブテーブル用スクロールラッパー */
+        .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 30px 0; border: 1px solid var(--border-light); border-radius: 4px; }
+        .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; min-width: 550px; }
+        .timeline-table th, .timeline-table td { padding: 12px 14px; text-align: left; border-bottom: 1px dashed var(--border-light); line-height: 1.8; }
+        .timeline-table tr:last-child th, .timeline-table tr:last-child td { border-bottom: none; }
+        .timeline-table th { font-family: 'Noto Serif JP', serif; font-weight: bold; color: var(--accent-gold); letter-spacing: 0.05em; background: rgba(0, 0, 0, 0.02); border-bottom: 1px solid var(--border-light); }
+        html.curse-mode .timeline-table th { background: rgba(255, 255, 255, 0.02); }
+
+        .article-block { margin-bottom: 70px; text-align: justify; }
+        h2 { font-family: 'Noto Serif JP', serif; font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 50px; margin-bottom: 25px; display: flex; align-items: center; line-height: 1.5; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.85rem; font-weight: 300; margin-bottom: 20px; opacity: 0.95; }
+        p strong { font-weight: bold; color: var(--accent-gold); }
+
+        /* FIX: 写真が「古いノートに付箋（テープ）で貼られているような立体感」にするためのスクラップ調デザイン */
+        .hero-img-container { 
+            position: relative; 
+            margin: 55px auto 45px; /* 上部にはみ出す付箋テープの余白を考慮 */
+            padding: 12px 12px 18px 12px; /* 写真の白い紙枠（ポラロイド・印画紙風） */
+            background: var(--photo-border-bg); 
+            border-radius: 2px; /* 四角くシャープな印画紙カット */
+            max-width: 95%;
+            
+            /* 紙の上に置かれているような、柔らかな浮き上がりのドロップシャドウ */
+            box-shadow: 2px 10px 24px rgba(0, 0, 0, 0.14); 
+            
+            /* 手作り感を演出するため、少し（-1.5度）斜めに傾けて配置 */
+            transform: rotate(-1.5deg); 
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.8s, box-shadow 0.8s;
+        }
+
+        /* FIX: 写真の上部に斜めにペタッと貼られた、半透明の付箋（マスキングテープ）を擬似要素で表現 */
+        .hero-img-container::before {
+            content: "";
+            position: absolute;
+            top: -15px; /* 写真用紙からはみ出すように配置 */
+            left: 50%;
+            transform: translateX(-50%) rotate(2.5deg); /* テープを少し傾けてさらに手作り感を高める */
+            width: 105px;
+            height: 28px;
+            background-color: var(--tape-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            
+            /* すりガラス効果で、写真と背後の古紙がうっすら透けてボケるリアルな粘着感を表現 */
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            
+            /* 左右のちぎれた質感を表現するため、グラデーションによるギザギザ透過を施す */
+            mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            
+            pointer-events: none; /* テープ自体の操作は行わせない */
+            z-index: 20;
+            opacity: 0.9;
+            transition: background-color 0.8s ease;
+        }
+
+        /* 夜モード時は紙の影を深くして、怪しげな光をほんのりまとう */
+        html.curse-mode .hero-img-container {
+            box-shadow: 2px 10px 25px rgba(0, 0, 0, 0.45), 0 0 12px rgba(0, 255, 127, 0.1);
+        }
+
+        /* FIX: ホバーした際、写真がフワッとまっすぐに戻りつつ、手前に軽く浮き上がるクラフト的な挙動を追加 */
+        .hero-img-container:hover { 
+            transform: rotate(0deg) scale(1.02); 
+            box-shadow: 4px 15px 30px rgba(0, 0, 0, 0.18); 
+        }
+        html.curse-mode .hero-img-container:hover {
+            box-shadow: 4px 15px 30px rgba(0, 0, 0, 0.55), 0 0 15px rgba(0, 255, 127, 0.15);
+        }
+
+        /* FIX: 写真が「貼ってある実物」に見えるよう、透過ブレンドは行わない。
+           長押し保存、ドラッグ、右クリック等からの保護は極めて強固に維持 */
+        .hero-img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            filter: var(--img-filter); 
+            mix-blend-mode: normal; /* 背景との透過は行わず、写真プリント自体のトーンとして処理 */
+            transition: filter 0.8s ease; 
+            
+            /* 保存防止策のコアCSS */
+            pointer-events: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* 夜モード（curse-mode）時のみ、馴染むように少し不透明度を調整して暗闇に溶け込ませる */
+        html.curse-mode .hero-img {
+            opacity: 0.85;
+        }
+        
+        .connection-card { background: rgba(29, 42, 36, 0.03); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        .connection-card h3 { font-family: 'Noto Serif JP', serif; font-size: 0.8rem; font-weight: bold; color: var(--accent-gold); margin-bottom: 15px; }
+        .connection-card p { font-size: 0.8rem; line-height: 1.8; margin-bottom: 0; }
+        
+        .footer-link { text-align: center; margin-top: 80px; }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+        
+        .cross-link-text {
+            font-size: 0.8rem; font-style: italic; margin-top: 15px; color: var(--accent-gold); text-align: right;
+        }
+        /* FIX: transition: all を個別のプロパティ指定へ変更 */
+        .cross-link-text a {
+            color: inherit; text-decoration: underline; transition: color 0.3s;
+        }
+        .cross-link-text a:hover {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="paper-bg" aria-hidden="true"></div>
+    
+    <!-- FIX: ディブ要素から、キーボード操作やスクリーンリーダー等に対応した適切なbutton要素へ修正 -->
+    <button class="theme-switch" id="theme-switch" aria-label="ダークモードに切り替え" aria-pressed="false">🌙</button>
+    
+    <div class="container">
+        <!-- メインポータルへ戻るリンク（作りを踏襲） -->
+        <a href="index.html" class="back-btn">← Back to Portal</a>
+        
+        <header class="header-section reveal">
+            <div class="bgs-tag">Academic Deep Report</div>
+            <h1>
+                <span>Geopolitical & Philosophical Analysis</span>
+                東京ディズニーシーの空間叙事詩：「冒険とイマジネーションの海」を巡る全8テーマポートの地政学的・思想的連環分析
+            </h1>
+            <div class="subtitle-jp">
+                東京ディズニーシー（TDS）は、世界で唯一「海」をコンセプトとしたディズニーテーマパークであり、その固有性を担保するために、各エリアを「テーマランド」ではなく「テーマポート（港）」と呼称している 。パーク全体を貫くグランドテーマ「冒険とイマジネーションの海」は、単なる表層的なスローガンではなく、すべての港を歴史的、地理的、さらには思想的に結びつける深層の設計論理として機能している。[1][2]
+            </div>
+        </header>
+        
+        <nav class="toc-box reveal" aria-label="セクション目次">
+            <div class="toc-title">Index</div>
+            <ul class="toc-list">
+                <li><span>I. 空間構築思想（ハイパーリアリティ）</span><a href="#philosophy">Read →</a></li>
+                <li><span>II. 全8テーマポートのストーリーマッピング</span><a href="#mapping">Read →</a></li>
+                <li><span>III. 各ポートのBGS詳細と物語的解釈</span><a href="#interpret">Read →</a></li>
+                <li><span>IV. 地政学的階層と植民地主義的構造</span><a href="#geopolitics">Read →</a></li>
+                <li><span>V. S.E.A.を軸とする思想的連環</span><a href="#sea-connection">Read →</a></li>
+                <li><span>VI. 時代と地域を調停する交通システム</span><a href="#transit">Read →</a></li>
+                <li><span>VII. 境界の美学（聴覚・視覚の制御技術）</span><a href="#borders">Read →</a></li>
+            </ul>
+        </nav>
+        
+        <!-- FIX: ドラッグでの保存行為を完全に防ぐため draggable="false" を画像に付与。
+             スクラップにテープで貼ったリアルな浮き上がり質感 -->
+        <div class="hero-img-container reveal">
+            <img src="tds-map.jpg" alt="Tokyo DisneySea Theme Port Map" class="hero-img" id="hero-img" draggable="false" loading="eager">
+        </div>
+
+        <section class="article-block reveal" id="philosophy">
+            <h2>I. 空間構築思想：現実らしさの編集とハイパーリアリティ</h2>
+            <p>東京ディズニーシーにおける空間構築の要諦は、「現実の忠実な再現」ではなく、「現実らしさの編集（ハイパーリアル）」にある 。空間の細部に至るまで作り込まれた意匠や看板、あるいは経年劣化を施した壁面は、単なる視覚的装飾ではない 。これらはすべて、そこに「かつて誰が住み、何を行っていたのか」を無言で伝える「意味を持った痕跡」であり、来園者に空間を能動的に読解させるための精緻な装置として機能している 。 [1][2]</p>
+            <p>東京ディズニーランド（TDL）との構築思想の対比は、両パークのキャラクター受容や世界観のあり方を理解する上で極めて重要である 。</p>
+            <p>さらに、東京ディズニーシーが初期から培ってきた「景観を物語として受け取る（ナラティブ消費）」というゲストの受容態度は、後発の新テーマポートを受け入れる強力な土壌となった 。初期のキャラクター色が抑えられていた時代にゲストが学習した「細部の意味を拾う」という態度があったからこそ、架空の映画世界（ディズニーファンタジー）が地続きに接続されたときにも、大きな違和感や断絶として受け取られにくかったのである 。 [1]</p>
+        </section>
+
+        <section class="article-block reveal" id="mapping">
+            <h2>II. 全8テーマポートのストーリーマッピング</h2>
+            <p>TDSを構成する8つのテーマポートは、それぞれが固有の「設定年代」と「地理的・文化的モデル」を持ち、独自のストーリーを紡いでいる 。</p>
+            
+            <!-- レスポンシブ対応スクロールラッパー -->
+            <div class="table-wrapper">
+                <table class="timeline-table">
+                    <thead>
+                        <tr>
+                            <th>テーマポート</th>
+                            <th>設定年代</th>
+                            <th>地理的・文化的モデル</th>
+                            <th>物語の核心（BGS設定）</th>
+                            <th>空間における統合的役割</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>メディテレーニアンハーバー</strong></td>
+                            <td>1901年</td>
+                            <td>南ヨーロッパ（地中海、ヴェネツィア等）</td>
+                            <td>ルネサンスと大航海時代の賛美。古き良き漁村「ポルト・パラディーゾ」、運河の街「パラッツォ・カナル」、要塞「エクスプローラーズ・ランディング」から成る。</td>
+                            <td>パークの玄関口。S.E.A.の精神的原点。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>アメリカンウォーターフロント</strong></td>
+                            <td>1912年</td>
+                            <td>アメリカ東海岸（ニューヨーク、ケープコッド）</td>
+                            <td>20世紀初頭の活気ある大都市ニューヨークと、ハリケーンの脅威にさらされる素朴な漁村ケープコッドの対比。</td>
+                            <td>産業革命と資本主義の台頭、アメリカの独立精神の象徴。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ポートディスカバリー</strong></td>
+                            <td>未来（時空を超えた時代）</td>
+                            <td>自然と科学が調和した近未来のマリーナ</td>
+                            <td>ケープコッドの市民が空想した「ハリケーンを克服した未来」の港。気象コントロールなど最先端科学を追求する。</td>
+                            <td>過去の人々のイマジネーションが結実した未来像。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ロストリバーデルタ</strong></td>
+                            <td>1930年代</td>
+                            <td>カリブ海に面した中央アメリカの未開のジャングル</td>
+                            <td>1880年代のハリケーンで出現した「エル・リオ・ペルディード（失われた河）」と古代遺跡。一獲千金を狙う者や考古学者が集う。</td>
+                            <td>「未開の地」へのフロンティア・スピリットと探検欲の象徴。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ファンタジースプリングス</strong></td>
+                            <td>伝説の時代</td>
+                            <td>魔法の泉が導くディズニーファンタジーの世界</td>
+                            <td>好奇心旺盛な水の精霊が、水の旅の途中で出会った物語を岩に刻み込んだ伝説の地。</td>
+                            <td>現実らしさの編集からファンタジーの世界へと没入させる物語の源泉。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>アラビアンコースト</strong></td>
+                            <td>13世紀</td>
+                            <td>中東・イスラーム世界（アラビアンナイトの世界）</td>
+                            <td>ジーニーの魔法によって作られた、魔法と神秘に満ちたエキゾティックな宮殿と港町。</td>
+                            <td>ヨーロッパに航海技術を伝播させた、大航海時代前史の役割。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>マーメイドラグーン</strong></td>
+                            <td>現代（人間界と地続き）</td>
+                            <td>ディズニー映画『リトル・マーメイド』の海底王国</td>
+                            <td>人魚姫アリエルと仲間たちが暮らす、カラフルで平和な海底世界「アンダー・ザ・シー」。</td>
+                            <td>人間と海底の住人が集う、平和と協調のドメイン。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ミステリアスアイランド</strong></td>
+                            <td>1870年代</td>
+                            <td>南太平洋の火山島（ジュール・ヴェルヌのSF世界）</td>
+                            <td>天才科学者ネモ船長が拓いた驚異に満ちた秘密基地。活火山のカルデラ内で地底や深海の研究が行われる。</td>
+                            <td>科学的理性とイマジネーションによる、人類の極限探究。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="article-block reveal" id="interpret">
+            <h2>III. 各ポートのBGS詳細と物語的解釈</h2>
+            <p><strong>メディテレーニアンハーバー</strong><br>
+            1901年の南欧を舞台とし、大航海時代とルネサンスの賛美が主眼に置かれている 。要塞「エクスプローラーズ・ランディング」は天文学や航海術の結晶であり、パラッツォ・カナル（運河沿い）の建物には、繰り返される高潮や洪水によって残された「白い水の跡（acqua alta）」やくすんだポールなど、本物のヴェネツィアが持つ過酷な生活の痕跡が精緻に再現されている 。 [1][2][3]</p>
+            
+            <p><strong>アメリカンウォーターフロント</strong><br>
+            1912年のアメリカ東海岸であり、高度に発達した近代科学技術と自由な独立精神（コロンブスの発見の遺産の開花）に満ちたニューヨークと、質素で敬虔なケープコッドの二面性を持つ 。看板の一つ一つから街を走る自動車に至るまで、20世紀初頭の人々の営みと息遣いが「意味を持った痕跡」として散りばめられている 。 [1][2][3]</p>
+            
+            <p><strong>ポートディスカバリー</strong><br>
+            ケープコッドの住民たちが、常に生活を脅かす「ハリケーンを克服した未来」を空想して描いた絵画やヴィジョンが起源となっている 。時空を超えた未来のマリーナは、過去の人間が抱いた切実な祈りとイマジネーションが結実した場所である 。</p>
+            
+            <p><strong>ロストリバーデルタ</strong><br>
+            1930年代の中央アメリカ、かつて深いジャングルに閉ざされていた地域である 。しかし1880年代に大ハリケーンが襲ったことで、失われていた河「エル・リオ・ペルディード（失われた河）」とともに古代文明の遺跡が突如出現した 。この発見のニュースが世界を駆け巡り、考古学者や一獲千金を狙う冒険家たちが大挙して押し寄せ、入植者たちの居留地が形成されるに至った 。 [1][2][3]</p>
+            
+            <p><strong>ファンタジースプリングス</strong><br>
+            はるか遠い場所に住む水の精霊が、好奇心の赴くまま水の流れに乗って旅をし、出会ったディズニーファンタジーの物語（『ピーター・パン』『アナと雪の女王』『塔の上のラプンツェル』など）に感銘を受け、その物語を泉の周囲の岩や木に魔法で刻み込んだ 。この伝説的な土地のBGSには、「トンボに導かれてこの魔法の泉を発見したダッチェスという女性」の設定が存在し、彼女が泉の傍らに建てたホテル（ファンタジースプリングスホテル）が、ゲストをファンタジーの世界へ没入させる物理的な起点となっている 。 [1][2][3]</p>
+            
+            <p><strong>アラビアンコースト</strong><br>
+            13世紀のアラビアを舞台とした、ジーニーの魔法による宮殿と港町である 。このエリアは、歴史的には「大航海時代前史」としての極めて重要な地政学的役割を担っている 。ムスリム商人や中国の商人が用いたダウ船やジャンク船、そしてコンパス（羅針盤）などの技術がヨーロッパに伝播したことで、後のメディテレーニアンハーバーの大航海時代が幕を開けたのである 。</p>
+            
+            <p><strong>マーメイドラグーン</strong><br>
+            アリエルと人間たちが共に楽しむために作られた海底王国であり、カラフルな「アンダー・ザ・シー」の世界が広がる 。深海の神秘的な美しさと、種族を超えた平和な協調が、滴る水の意匠によって表現されている 。 [1][2][3]</p>
+            
+            <p><strong>ミステリアスアイランド</strong><br>
+            1870年代、産業革命の科学万能主義が極限に達した時代、国家の干渉や戦争を嫌った天才科学者ネモ船長が、プロメテウス火山のカルデラ内部に設立した秘密基地である 。彼はここで、人類が不可能と考えていた地底や深海の探究を極秘裏に進めている 。 [1][2][3]</p>
+        </section>
+
+        <section class="article-block reveal" id="geopolitics">
+            <h2>IV. 空間配置における地政学的階層と植民地主義的構造</h2>
+            <p>東京ディズニーシーの空間配置（ゾーニング）には、文化地理学的な観点から「不可視の支配構造」が反映されていると指摘されている 。 [1]</p>
+            <p>エントランスに近いエリアには、西欧文明の象徴である「地中海」や「ニューヨーク」といったゲストにとっての精神的「ホーム（主体）」が配置されている 。一方、パークの最奥部（通称：奥地）には、未開のジャングルである「ロストリバーデルタ」や、魔法の国「アラビアンコースト」といった「他者（異国・自然）」が配置されている 。 [1]</p>
+            <p>この構造は、19世紀から20世紀にかけて開催された「万国博覧会」（1893年シカゴ万博のミッドウェー・プレザンスや、1931年パリ植民地博覧会など）の空間構築と極めて高い共通点を持つ 。万博は、入口に「文明国」を、奥地に「被支配地域の展示」を置くことで、訪問者に民族や文明の序列化を無意識のうちに内面化させる政治的装置であった 。 [1]</p>
+            <p>さらに、文化地理学的分析は、この空間デザインが歴史的プロセスを再現する5段階のイデオロギー的シーケンスとして機能していることを示している 。</p>
+            <p>TDSは、実際の歴史に存在する植民地支配の過酷な現実（反乱、略奪、疫病など）を徹底的に排除・不可視化し、エンターテインメントという安全な形で理想化されたフィクションとして世界の序列を体験させる、極めて高度な空間メディアなのである 。</p>
+        </section>
+
+        <section class="article-block reveal" id="sea-connection">
+            <h2>V. 歴史的技術伝播とS.E.A.を軸とする思想的連環</h2>
+            <p>この地政学的配置の中で、テーマポート同士を精神的・歴史的に結びつける絶対的な縦糸が「S.E.A.（Society of Explorers and Adventurers）」の存在である 。1538年にメディテレーニアンハーバーの「フォートレス・エクスプロレーション」を原点（組織の誕生）として設立されたこの秘密結社は、本来異なる時代・地域に位置する複数のストーリーを、一貫した探求の歴史へと統合している 。 [1][2]</p>
+            <p>S.E.A.の活動、および技術・思想の連環は、単なる知的好奇心の歴史にとどまらず、人間の「憧れ（知的好奇心）」と「支配・強奪（所有欲）」の二面性を、BGS of 細部において鋭く描き出している 。</p>
+        </section>
+
+        <section class="article-block reveal" id="transit">
+            <h2>VI. 時代と地域を調停する交通システムと身体的リアリティ</h2>
+            <p>異なる設定年代と地理的矛盾を抱える広大なテーマポート間をシームレスに繋ぐため、パーク内には極めて高度なBGSと演出を施した交通システムが稼働している。 [1][2][3]</p>
+            
+            <p><strong>ディズニーシー・トランジットスチーマーライン：海路の法秩序</strong><br>
+            19世紀後半から20世紀前半にアメリカ北東部で運航していた小型蒸気船をモデルとするこの蒸気船は、メディテレーニアンハーバー（1901年）、アメリカンウォーターフロント（1912年）、ロストリバーデルタ（1930年代）という、地理的にも時代的にも本来交わるはずのない水を物理的に循環させる 。 [1][2][3]</p>
+            
+            <p>このシステムにおける特筆すべきBGSは、港に進入する際の「側方標識（航行ルール）」の厳格な適用である 。</p>
+            
+            <p><strong>ディズニーシー・エレクトリックレールウェイ：時空の調停</strong><br>
+            1912年のアメリカンウォーターフロント（過去）と、未来のポートディスカバリー（未来）を直接結ぶこの鉄道は、本来世界観の崩壊をもたらす「禁じ手（時代の断絶）」である 。しかし、TDSは以下の3つの重層的な演出によってこの矛盾を止揚している。</p>
+        </section>
+
+        <section class="article-block reveal" id="borders">
+            <h2>VII. 境界の美学：聴覚・視覚の制御技術</h2>
+            <p>テーマポート同士のシームレスな移行と外界からの切断を完全なものにするため、TDSは物理的境界（リミナル・スペース）における精緻な感覚制御技術を適用している。 [1]</p>
+            
+            <p><strong>音響的・視覚的な「滝」の遮断壁</strong><br>
+            パーク内では常にエリア独自のエリアミュージック（BGM）が流れているが、それらが境界付近で混ざり合って不協和音を奏でるのを防ぐため、境界線には「滝」や「急流」などの激しい自然音が配置されている 。 [1]</p>
+            
+            <p>例えば、「ミステリアスアイランド（火山）」と「マーメイドラグーン（海底）」の境界には巨大な滝が設置されている 。この滝の轟音は、双方の音楽を物理的にかき消す「自然の防音壁」として機能すると同時に、境界の頭上を通っているバックステージ用道路を走る一般車両の走行音を完全に消し去っている 。岩場とスチームパンクの冷徹な世界から、滴る水とカラフルなサンゴの世界へと移り変わる空間のグラデーションは、この水響によって完璧に調和させられている 。 [1]</p>
+            
+            <p>また、ショップ内部においても、一歩足を踏み入れた瞬間に床のタイルや壁面のテクスチャが劇的に変化する箇所があり、物理的な扉を設けることなく、ゲストに対して直感的に別の物語空間へ入ったことを自覚させる工夫が施されている 。 [1]</p>
+            
+            <p><strong>借景（Shakkei）と外界の徹底的なコントロール</strong><br>
+            ディズニーパークの原則は外界を見せないことであるが、アメリカンウォーターフロントのS.S.コロンビア号周辺からポートディスカバリーにかけての沿岸部では、あえて外の「東京湾」を視野に取り込む「借景」の技術が使われている 。パーク内の海と外界の海が水平線において完全に繋がっているように錯覚させ、海の広大さと説得力を何倍にも拡張するためである 。 [1]</p>
+            
+            <p>この視覚的一体感を成立させるため、外界を走るディズニーリゾートライン（モノレール）の線路の高さをこの区間だけあえて低く抑え、かつ外壁の高さをミリ単位で調整することで、道路や一般車両などの「現実世界のノイズ」だけを完全にブラインドし、ただ「青い海と空だけが重なり合う」ように設計されている 。 [1]</p>
+        </section>
+
+        <section class="article-block reveal" id="conclusion">
+            <h2>結論：イマジネーションによる空間の統合</h2>
+            <p>東京ディズニーシーが描く「冒険とイマジネーションの海」とは、単に散らばった8つの港を繋ぐ言葉ではない。それは、人類の歴史における「未知への渇望（大航海時代・ルネサンス）」から「近代科学技術（産業革命・SF）」、そして「精神の内奥におけるファンタジー（魔法の泉）」に至るまでの、壮大な人類の精神史・探求史を統合する思想的プラットフォームである 。 [1]</p>
+            <p>空間地理学的な「文明と他者」の地政学的階層を巧みに内包しつつも 、S.E.A.という横断的なネットワークや 、側方標識などの現実世界の海洋ルールを模した航路 、時空のパラドックスを止揚する演出によって 、TDSはゲストに対して「この世界は、見ようとすれば、至る所に意味を持った痕跡（物語）が満ちている」という極めて深いナラティブ体験を学習させる 。 [1]</p>
+            <p>「この世界に想像力が残っている限り、永遠に完成しない」という思想のもと、現実らしさの編集によって立ち上げられた東京ディズニーシーは、来園者ひとりひとりのイマジネーションという最後の鍵が差し込まれることで、初めてその広大な「冒険の海」を完成させ、今日も新たな物語を泉に刻みながら拡張を続けているのである 。 [1]</p>
+        </section>
+
+        <div class="footer-link reveal"><a href="index.html">← HOMEへ戻る</a></div>
+    </div>
+    
+    <script>
+        // FIX: プライベートブラウジング等のアクセスエラーを防ぐため localStorage 操作を try-catch でカプセル化
+        function safeGetStorage(key) {
+            try { return localStorage.getItem(key); } catch (e) { return null; }
+        }
+        function safeSetStorage(key, value) {
+            try { localStorage.setItem(key, value); } catch (e) { /* 無視 */ }
+        }
+
+        const themeSwitch = document.getElementById('theme-switch');
+        const heroImg     = document.getElementById('hero-img');
+
+        // FIX: ポータルサイトと一貫した昼夜（呪い）テーマ状態の読み込み・適用処理。
+        // bodyではなくhtml要素にクラスを付与するルールを踏襲。
+        function applyTheme(isDark) {
+            document.documentElement.classList.toggle('curse-mode', isDark);
+            themeSwitch.textContent = isDark ? '☀️' : '🌙';
+            themeSwitch.setAttribute('aria-label', isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え');
+            themeSwitch.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            
+            // 地図画像は1種類のため、夜モード時もそのままブレンドとopacity調整で馴染ませます
+        }
+
+        // 初期読み込み時にポータルのテーマ設定を継承する
+        const savedTheme = safeGetStorage('teru-theme');
+        if (savedTheme === 'dark') {
+            applyTheme(true);
+        } else {
+            applyTheme(false);
+        }
+
+        themeSwitch.addEventListener('click', () => {
+            const isDark = !document.documentElement.classList.contains('curse-mode');
+            applyTheme(isDark);
+            safeSetStorage('teru-theme', isDark ? 'dark' : 'light');
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries, observer) => { 
+            entries.forEach(entry => { 
+                if (!entry.isIntersecting) return; 
+                entry.target.classList.add('active'); 
+                observer.unobserve(entry.target); 
+            }); 
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
