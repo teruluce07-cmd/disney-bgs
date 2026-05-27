@@ -16,7 +16,6 @@
             --glow-color: rgba(46, 59, 30, 0.25);
             --droplet-color: rgba(74, 144, 226, 0.35); 
             
-            /* 軽量化した3Dシワフィルター */
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='optimized-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f2ebd9' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23optimized-paper)'/%3E%3C/svg%3E");
         }
 
@@ -41,9 +40,11 @@
             line-height: 2.2;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.8s ease, color 0.8s ease;
         }
 
-        /* 背景固定レイヤー（GPU高速化） */
+        /* 背景固定レイヤー */
+        /* FIX 4: will-change: transform を削除（このレイヤーは変形しないため不要なGPUメモリを消費） */
         .paper-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -51,7 +52,6 @@
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.18) 100%), var(--paper-texture);
             background-size: cover;
             transform: translate3d(0, 0, 0);
-            will-change: transform;
             pointer-events: none;
         }
 
@@ -89,9 +89,12 @@
         }
         body.curse-mode .container { background: rgba(10, 25, 18, 0.45); box-shadow: inset 0 0 40px rgba(152,255,152,0.02); }
 
+        /* FIX 5: transition:all → 個別プロパティに限定。will-change はJS側でアニメーション完了後に解除 */
         .reveal {
-            opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
-            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
+            transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal.active {
             opacity: 1; 
@@ -132,6 +135,18 @@
         .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
 
+        /* BUG 2 FIX: テーマスイッチを div → button スタイルに合わせたスタイリング */
+        .theme-switch {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background-color: var(--accent-gold); color: var(--bg-color);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease, background-color 0.8s ease;
+            border: none;
+        }
+        .theme-switch:hover { transform: scale(1.1); }
+        .theme-switch:focus-visible { outline: 2px solid var(--text-main); outline-offset: 3px; }
+
         .footer-link { text-align: center; margin-top: 80px; }
         .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
     </style>
@@ -139,7 +154,8 @@
 <body>
 
     <!-- Apple風リキッドグラスを背景に発生させるSVGフィルター -->
-    <svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <!-- aria-hidden でスクリーンリーダーから隠す -->
+    <svg aria-hidden="true" style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <filter id="liquid-glass">
                 <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
@@ -149,12 +165,14 @@
         </defs>
     </svg>
 
-    <div class="noise-overlay"></div>
-    <div class="paper-bg"></div>
-    <div class="theme-switch" id="theme-switch">🌙</div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="paper-bg" aria-hidden="true"></div>
+
+    <!-- BUG 2 FIX: div → button に変更。role/tabindex/aria-label/aria-pressed を付与 -->
+    <button class="theme-switch" id="theme-switch" aria-label="ダークモードに切り替え" aria-pressed="false">🌙</button>
 
     <!-- リキッドグラス・水しぶきの容器 -->
-    <div class="liquid-container" id="liquid-container"></div>
+    <div class="liquid-container" id="liquid-container" aria-hidden="true"></div>
 
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portal</a>
@@ -178,7 +196,6 @@
             </ul>
         </nav>
 
-        <!-- 昼の美しい写真（sm-day.jpeg）をカバーに使用 -->
         <div class="hero-img-container reveal">
             <img src="sm-day.jpeg" alt="Splash Mountain Day View" class="hero-img" id="hero-img">
         </div>
@@ -192,16 +209,17 @@
         </section>
 
         <!-- II. うさぎどんとブレア（Br'er）の謎 -->
+        <!-- BUG 1 FIX: **テキスト** (Markdown記法) を <strong>タグ</strong> に全置換 -->
         <section class="article-block reveal" id="brer">
             <h2>II. うさぎどんと「ブレア」の正体</h2>
-            <p>ゲストが乗り込む丸太のボートは、チカピンヒルの内部を進みながら、日本ではおなじみの**「うさぎどん」**の冒険を追体験していきます。これは、退屈な我が家を飛び出し「笑いの国」を探し求めた彼の、知恵と故郷の物語です。</p>
-            <p>旅の途中で彼を狙うのは、ずる賢い**「きつねどん」**と、力持ちだけど少し間抜けな**「くまどん」**。うさぎどんらは持ち前の機転で罠を何度もかいくぐりますが、ついにきつねどんに捕まり、丘の頂上で絶体絶命の危機を迎えます。</p>
+            <p>ゲストが乗り込む丸太のボートは、チカピンヒルの内部を進みながら、日本ではおなじみの<strong>「うさぎどん」</strong>の冒険を追体験していきます。これは、退屈な我が家を飛び出し「笑いの国」を探し求めた彼の、知恵と故郷の物語です。</p>
+            <p>旅の途中で彼を狙うのは、ずる賢い<strong>「きつねどん」</strong>と、力持ちだけど少し間抜けな<strong>「くまどん」</strong>。うさぎどんらは持ち前の機転で罠を何度もかいくぐりますが、ついにきつねどんに捕まり、丘の頂上で絶体絶命の危機を迎えます。</p>
             
             <div class="connection-card">
                 <h4>💡 「うさぎどん」と「ブレア」：単なる直訳ではない名前の魔法</h4>
-                <p>私たちが親しみを持って呼んでいる「うさぎどん」「きつねどん」「くまどん」という名前。実は英語のオリジナル版では、それぞれ**「Br'er Rabbit（ブレア・ラビット）」「Br'er Fox（ブレア・フォックス）」「Br'er Bear（ブレア・ベア）」**と呼ばれています。<br><br>
-                   この「ブレア（Br'er）」という言葉、実はアメリカ南部の方言（なまり）で**「Brother（お兄さん・兄弟）」**を意味する言葉が縮まったものです。<br><br>
-                   つまり、そのまま英語通りに直訳すると「うさぎのお兄さん」「きつねの兄貴」となります。しかし、日本のディズニーに導入される際、翻訳家たちはこれを単に「うさぎ兄さん」と直訳するのをやめ、日本の昔話のような温かみと愛嬌を込めて、親しみやすい**「〜どん」**という言葉でローカライズしました。単なる言葉の置き換えではなく、日本の子供たちにもスッと馴染むように計算された、素晴らしい「言葉の魔法」なのです。</p>
+                <p>私たちが親しみを持って呼んでいる「うさぎどん」「きつねどん」「くまどん」という名前。実は英語のオリジナル版では、それぞれ<strong>「Br'er Rabbit（ブレア・ラビット）」「Br'er Fox（ブレア・フォックス）」「Br'er Bear（ブレア・ベア）」</strong>と呼ばれています。<br><br>
+                   この「ブレア（Br'er）」という言葉、実はアメリカ南部の方言（なまり）で<strong>「Brother（お兄さん・兄弟）」</strong>を意味する言葉が縮まったものです。<br><br>
+                   つまり、そのまま英語通りに直訳すると「うさぎのお兄さん」「きつねの兄貴」となります。しかし、日本のディズニーに導入される際、翻訳家たちはこれを単に「うさぎ兄さん」と直訳するのをやめ、日本の昔話のような温かみと愛嬌を込めて、親しみやすい<strong>「〜どん」</strong>という言葉でローカライズしました。単なる言葉の置き換えではなく、日本の子供たちにもスッと馴染むように計算された、素晴らしい「言葉の魔法」なのです。</p>
             </div>
 
             <p>きつねどんの罠にかかり絶体絶命のうさぎどんは、命がけの「最後のはったり（嘘）」をつきました。「煮るなり焼くなり好きにしてくれ。でも、あそこの『茨の茂み（Briar Patch）』にだけは放り込まないでくれ！」と。間抜けな彼らは、うさぎどんが最も嫌がることをしようと、彼を茨の茂みへと投げ落とします。この落下こそが、ゲストが体験する最大傾斜45度のスリリングな急降下なのです。</p>
@@ -235,16 +253,17 @@
         </section>
 
         <!-- VI. 世界で唯一の「スプラッシュ」 -->
+        <!-- BUG 1 FIX: ** 記法を <strong> タグに置換 -->
         <section class="article-block reveal" id="legacy">
             <h2>VI. 世界で唯一、東京に遺された「奇跡」</h2>
             <p>これまで、世界中の複数のディズニーパークに存在したスプラッシュ・マウンテン。しかし現在、その歴史は極めて大きな変革期を迎えています。</p>
-            <p>アメリカ・フロリダのウォルト・ディズニー・ワールドおよび、カリフォルニアのディズニーランドでは、長年親しまれたスプラッシュ・マウンテンが完全にクローズされ、映画『プリンセスと魔法のキス』をテーマにした**「ティアナのバイユー・アドベンチャー（Tiana's Bayou Adventure）」**というまったく新しいアトラクションへと生まれ変わりました。</p>
+            <p>アメリカ・フロリダのウォルト・ディズニー・ワールドおよび、カリフォルニアのディズニーランドでは、長年親しまれたスプラッシュ・マウンテンが完全にクローズされ、映画『プリンセスと魔法のキス』をテーマにした<strong>「ティアナのバイユー・アドベンチャー（Tiana's Bayou Adventure）」</strong>というまったく新しいアトラクションへと生まれ変わりました。</p>
             
             <div class="hero-img-container">
                 <img src="sm-night.jpeg" alt="Splash Mountain Night Lit View" class="hero-img">
             </div>
 
-            <p>これにより、1946年の映画『南部の唄』をベースにしたクラシックなスプラッシュ・マウンテンと、名曲「ジッパ・ディー・ドゥー・ダー（Zip-A-Dee-Doo-Dah）」を乗車中に聴くことができるアトラクションは、**全世界で唯一、この「東京ディズニーランド」だけに遺されることになった**のです。アメリカのオリジナルが新時代へと移行する中で、ここ日本のクリッターカントリーだけが、うさぎどんたちの陽気で心優しい冒険の歴史を今もそのまま守り続けている、世界でも極めて貴重な「約束の地」となっています。</p>
+            <p>これにより、1946年の映画『南部の唄』をベースにしたクラシックなスプラッシュ・マウンテンと、名曲<strong>「ジッパ・ディー・ドゥー・ダー（Zip-A-Dee-Doo-Dah）」</strong>を乗車中に聴くことができるアトラクションは、<strong>全世界で唯一、この「東京ディズニーランド」だけに遺されることになった</strong>のです。アメリカのオリジナルが新時代へと移行する中で、ここ日本のクリッターカントリーだけが、うさぎどんたちの陽気で心優しい冒険の歴史を今もそのまま守り続けている、世界でも極めて貴重な「約束の地」となっています。</p>
         </section>
 
         <div class="footer-link reveal">
@@ -253,50 +272,95 @@
     </div>
 
     <script>
-        /* 昼夜スイッチ（昼：sm-day.jpeg ➔ 夜：sm-night.jpeg ） */
+        // BUG 2 FIX: localStorage でテーマを永続化（index.html と同じ仕組み）
+        function safeGetStorage(key) {
+            try { return localStorage.getItem(key); } catch (e) { return null; }
+        }
+        function safeSetStorage(key, value) {
+            try { localStorage.setItem(key, value); } catch (e) { /* 無視 */ }
+        }
+
+        // BUG 3 FIX: ページ読み込み時に保存済みテーマを復元
         const themeSwitch = document.getElementById('theme-switch');
-        const heroImg = document.getElementById('hero-img');
-        
+        const heroImg     = document.getElementById('hero-img');
+
+        function applyTheme(isDark) {
+            document.body.classList.toggle('curse-mode', isDark);
+            themeSwitch.textContent = isDark ? '☀️' : '🌙';
+            themeSwitch.setAttribute('aria-label', isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え');
+            themeSwitch.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            heroImg.src = isDark ? 'sm-night.jpeg' : 'sm-day.jpeg';
+        }
+
+        const savedTheme = safeGetStorage('teru-theme');
+        if (savedTheme === 'dark') applyTheme(true);
+
         themeSwitch.addEventListener('click', () => {
-            document.body.classList.toggle('curse-mode');
-            const isNight = document.body.classList.contains('curse-mode');
-            themeSwitch.textContent = isNight ? '☀️' : '🌙';
-            
-            // 昼と夜の写真の切り替え
-            heroImg.src = isNight ? 'sm-night.jpeg' : 'sm-day.jpeg';
+            const isDark = !document.body.classList.contains('curse-mode');
+            applyTheme(isDark);
+            safeSetStorage('teru-theme', isDark ? 'dark' : 'light');
         });
 
-        /* 優雅なスクロールフェードイン */
+        // FIX 5: .reveal の will-change をアニメーション中のみ有効にし、完了後解除
         const reveals = document.querySelectorAll('.reveal');
+
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
+                const el = entry.target;
+                el.style.willChange = 'transform, opacity';
+                el.classList.add('active');
+                // transitionend で will-change を解放
+                el.addEventListener('transitionend', () => {
+                    el.style.willChange = 'auto';
+                }, { once: true });
+                observer.unobserve(el);
             });
         }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-        reveals.forEach(reveal => revealOnScroll.observe(reveal));
-        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
 
-        /* Apple風「リキッドグラス水しぶき」を自動生成するJS */
-        const container = document.getElementById('liquid-container');
-        
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        // 最初の要素は画面内にあるため手動でトリガー
+        setTimeout(() => {
+            const first = reveals[0];
+            if (first) {
+                first.style.willChange = 'transform, opacity';
+                first.classList.add('active');
+                first.addEventListener('transitionend', () => {
+                    first.style.willChange = 'auto';
+                }, { once: true });
+            }
+        }, 100);
+
+        // FIX 6: setInterval の参照を保持し、タブ非表示時に停止 → 再表示時に再開
+        const liquidContainer = document.getElementById('liquid-container');
+        let dropletInterval = null;
+
         function createDroplet() {
             const droplet = document.createElement('div');
             droplet.className = 'droplet';
-            
-            const size = Math.random() * 25 + 15 + 'px'; 
+            const size = Math.random() * 25 + 15 + 'px';
             droplet.style.width = size;
             droplet.style.height = size;
             droplet.style.left = Math.random() * 100 + '%';
-            droplet.style.setProperty('--speed', (Math.random() * 5 + 6) + 's'); 
-            
-            container.appendChild(droplet);
-            
+            droplet.style.setProperty('--speed', (Math.random() * 5 + 6) + 's');
+            liquidContainer.appendChild(droplet);
             setTimeout(() => { droplet.remove(); }, 12000);
         }
 
-        setInterval(createDroplet, 600);
+        function startDroplets() {
+            if (!dropletInterval) dropletInterval = setInterval(createDroplet, 600);
+        }
+        function stopDroplets() {
+            clearInterval(dropletInterval);
+            dropletInterval = null;
+        }
+
+        startDroplets();
+
+        // Page Visibility API でバックグラウンド時に停止
+        document.addEventListener('visibilitychange', () => {
+            document.hidden ? stopDroplets() : startDroplets();
+        });
     </script>
 </body>
 </html>
