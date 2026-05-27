@@ -18,8 +18,7 @@
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
         }
  
-        /* FIX 3: ダークモード変数を :root ではなく html 要素に当てることで
-           .paper-bg（body外ではなくbody兄弟要素）でも CSS変数が正しく継承される */
+        /* FIX 3: curse-mode を body ではなく html に適用 */
         html.curse-mode {
             --bg-color: #070911; 
             --text-main: #E2E8F0; 
@@ -114,7 +113,7 @@
  
         .intro-message { font-size: 0.85rem; color: var(--text-main); line-height: 2.2; margin-bottom: 35px; opacity: 0.95; letter-spacing: 0.05em; }
  
-        /* FIX 2: ウォルトの名言 — cite を blockquote の外に出す構造に合わせてスタイル調整 */
+        /* FIX 2: cite を blockquote の外に出す構造に合わせてスタイル調整 */
         .walt-quote {
             font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; font-weight: 600; color: var(--accent-gold); line-height: 1.5; margin-bottom: 8px; padding: 0 10px;
         }
@@ -172,8 +171,17 @@
         .soarin-img-align { object-position: center 25% !important; }
         .tl-img-align { object-position: center 50% !important; }
         .indy-img-align { object-position: center 30% !important; }
-        /* FIX: 新規マップカード用の中央アライメント */
-        .map-img-align { object-position: center center !important; }
+        
+        /* FIX: 新規コラムの地図画像を「ちょっと古くなった古地図」のような黄金色の質感にする専用CSSフィルター */
+        .epic-map-filter { 
+            object-position: center center !important; 
+            filter: brightness(0.85) contrast(1.05) sepia(75%) hue-rotate(-5deg) saturate(0.85) !important;
+            transition: transform 1.5s ease, filter 0.8s ease !important;
+        }
+        /* 夜（呪い）モードの時は、古地図が怪しく青緑色に燐光するようなフィルターに切り替える */
+        html.curse-mode .epic-map-filter {
+            filter: brightness(0.7) contrast(1.25) sepia(50%) hue-rotate(85deg) saturate(1.25) !important;
+        }
  
         /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
@@ -212,7 +220,7 @@
         .article-list.grid-mode .soarin-img-align { object-position: center 25% !important; }
         .article-list.grid-mode .tl-img-align { object-position: center 40% !important; }
         .article-list.grid-mode .indy-img-align { object-position: center 20% !important; }
-        .article-list.grid-mode .map-img-align { object-position: center center !important; }
+        .article-list.grid-mode .epic-map-filter { object-position: center center !important; }
  
         /* --- コラムカード（舞浜の軌跡） --- */
         /* FIX: transition: all を個別のプロパティ指定へ変更 */
@@ -329,7 +337,7 @@
             <div class="toc-section">
                 <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
                 <div class="toc-tags">
-                    <!-- FIX: 新しい総括レポート「Spatial Epic」への目次リンクをTDSセクションの先頭に埋め込み -->
+                    <!-- FIX: 新しい物語調の総括コラム「Spatial Epic」への目次リンクをTDSセクションの先頭に埋め込み -->
                     <a href="#spatial-epic-card">Spatial Epic</a>
                     <a href="#tot-card">Tower of Terror</a>
                     <a href="#sindbad-card">Sindbad's Voyage</a>
@@ -399,13 +407,14 @@
  
             <!-- ================= TDS (Tokyo DisneySea) ================= -->
             
-            <!-- FIX: 新しい総括コラム「東京ディズニーシーの空間叙事詩」カードをTDSの先頭に埋め込み -->
+            <!-- FIX: 新しい総括コラム「東京ディズニーシーの空間叙事詩」カードをTDSの先頭に埋め込み。
+                 画像には古地図風のヴィンテージフィルタークラス「epic-map-filter」を設定 -->
             <a href="bgs-spatial-epic.html" class="article-card" id="spatial-epic-card">
-                <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" class="map-img-align" loading="lazy" draggable="false"></div>
-                <div class="card-tag">Special Analysis</div>
+                <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" class="epic-map-filter" loading="lazy" draggable="false"></div>
+                <div class="card-tag">Special Chronicle</div>
                 <h2>TDS Spatial Epic</h2>
-                <p>冒険とイマジネーションの海を巡る、全8テーマポートの地政学的・思想的連環分析。文明と他者の支配構造、S.E.A.の誕生、境界の感覚制御、借景の技術を体系的に紐解く。</p>
-                <div class="read-btn">Explore the Analysis →</div>
+                <p>「冒険とイマジネーションの海」を巡る、美しき全8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、そして魔法の泉へと紡がれる時空を超えた旅路へ。</p>
+                <div class="read-btn">Explore the Chronicle →</div>
             </a>
 
             <!-- FIX: 写真に draggable="false" を付与し保存防止 -->
@@ -422,7 +431,7 @@
                 <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" loading="lazy" draggable="false"></div>
                 <div class="card-tag">Featured Story</div>
                 <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖 of ボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
@@ -536,7 +545,7 @@
  
         const themeSwitch = document.getElementById('theme-switch');
  
-        // FIX 3: curse-mode を body ではなく html に付け替える（CSS変数スコープを広げる）
+        // FIX 3: curse-mode を body ではなく html に付け替える
         function applyTheme(isDark) {
             document.documentElement.classList.toggle('curse-mode', isDark);
             themeSwitch.textContent = isDark ? '☀️' : '🌙';
