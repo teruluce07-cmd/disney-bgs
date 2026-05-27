@@ -7,7 +7,7 @@
     <title>TDS BGS & Photography | HOME</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- 昼（古紙）カラー設定 --- */
+        /* --- 昼夜（超・くしゃくしゃ古紙）カラー設定 --- */
         :root {
             --bg-color: #E2D7C5; 
             --text-main: #2D231E; 
@@ -27,11 +27,22 @@
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
             background-size: cover;
+            /* FIX C: background-attachment:fixed はiOS Safariで非対応のため削除。紙テクスチャは .paper-bg(fixed要素)側で描画される */
             color: var(--text-main); line-height: 2.2; overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
 
-        /* 背景固定レイヤー */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* 背景固定レイヤー（GPU高速化） */
+        /* FIX 5: will-change: transform を削除。このレイヤーは変形しないため不要なGPUメモリを消費していた */
         .paper-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
@@ -47,6 +58,8 @@
             position: relative; z-index: 1;
             width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
+            transition: background 0.8s ease, max-width 0.5s ease;
+            /* FIX B: will-change はアニメーション中のみ有効にし、完了後JSで解除する */
             animation: pageLoadFade 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
@@ -55,8 +68,10 @@
             to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); }
-        .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--text-main); text-decoration: none; }
+        /* --- ヘッダー --- */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); transition: border-color 0.8s; }
+        .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--text-main); text-decoration: none; transition: color 0.8s; }
+        /* FIX D: h1テキストはheader-logoのスタイルを引き継ぎ、ブラウザデフォルトの h1 装飾をリセット */
         .header-logo-text { font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; color: inherit; margin: 0; }
         .profile-btn {
             display: inline-block; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em;
@@ -64,6 +79,7 @@
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
 
+        /* プロフィールアーチ写真枠 */
         .intro-hero { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
         .intro-portrait {
             width: 100px !important; height: 120px !important; border-radius: 50px 50px 0 0; overflow: hidden; border: 1px solid var(--accent-gold); box-shadow: 0 8px 20px var(--glow-color); margin-bottom: 30px; background: #111; display: inline-block;
@@ -72,37 +88,52 @@
 
         .intro-message { font-size: 0.85rem; color: var(--text-main); line-height: 2.2; margin-bottom: 35px; opacity: 0.95; letter-spacing: 0.05em; }
 
+        /* ウォルトの名言 */
         .walt-quote {
             font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; font-weight: 600; color: var(--accent-gold); line-height: 1.5; margin-bottom: 12px; padding: 0 10px;
         }
         .walt-quote cite { display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-style: normal; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 10px; opacity: 0.7; }
         .walt-quote-jp { font-size: 0.7rem; opacity: 0.5; letter-spacing: 0.05em; }
 
-        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 25px; border-radius: 8px; margin-bottom: 60px; text-align: left; }
-        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        /* --- 目次 (TOC) --- */
+        .toc-box {
+            background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 25px; border-radius: 8px; margin-bottom: 60px; text-align: left;
+        }
+        .toc-title {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em;
+        }
         .toc-section { margin-bottom: 15px; }
         .toc-section-title { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold); display: block; margin-bottom: 8px; font-weight: 600; }
         .toc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
         .toc-tags a { background: rgba(45, 35, 30, 0.04); border: 1px solid var(--border-light); padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; color: var(--text-main); text-decoration: none; transition: all 0.3s ease; }
         .toc-tags a:hover { background: var(--text-main); color: var(--bg-color); border-color: var(--text-main); box-shadow: 0 0 10px var(--glow-color); }
         .toc-footer { text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border-light); }
-        .toc-footer a { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold); text-decoration: none; font-weight: bold; }
+        .toc-footer a { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold); text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
+        .toc-footer a:hover { color: var(--text-main); }
 
+        /* --- 記事見出し ＆ レイアウト切替スイッチ --- */
         .list-header { display: flex; justify-content: space-between; align-items: center; margin: 60px 0 30px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; }
         .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--accent-gold); }
         .layout-toggle { display: flex; gap: 4px; background: rgba(0, 0, 0, 0.05); padding: 4px; border-radius: 20px; border: 1px solid var(--border-light); }
         .layout-toggle button { background: transparent; border: none; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
         .layout-toggle button.active-toggle { background: var(--accent-gold); color: var(--bg-color); font-weight: 600; }
 
+        /* --- 記事カードリスト --- */
+        /* FIX A: transition:all → 個別プロパティに限定（display変更はアニメーション不可なので gap のみ対象にする） */
         .article-list { display: flex; flex-direction: column; gap: 45px; transition: gap 0.4s ease; }
-        .article-card { text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease; }
+        .article-card {
+            text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease;
+        }
         .article-card:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .article-card:focus-visible { outline: 2px solid var(--accent-gold); outline-offset: 4px; border-radius: 8px; }
 
+        /* FIX 4: aspect-ratio のトランジションを削除（ブラウザサポート不安定）。
+           代わりに height をアニメーションさせてレイアウト崩れを防ぐ */
         .img-wrapper { width: 100%; aspect-ratio: 3 / 2; border-radius: 4px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
         
-        /* 特定画像の位置調整 */
+        /* 縦長写真を綺麗に収めるためのトリミング調整 */
         .fs-img-align { object-position: center 15% !important; }
         .btm-img-align { object-position: center 90% !important; }
         .bb-img-align { object-position: center 10% !important; }
@@ -111,227 +142,28 @@
         .tl-img-align { object-position: center 50% !important; }
         .indy-img-align { object-position: center 30% !important; }
 
-        .sea-thumbnail-bg { background-color: #0b1523 !important; display: flex; justify-content: center; align-items: center; }
-        .sea-thumbnail-bg .sea-mini-crest { width: 90px; height: 90px; border-radius: 50%; border: 1.5px dashed var(--accent-gold); display: flex; justify-content: center; align-items: center; }
-        .sea-thumbnail-bg .sea-mini-letters { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff; }
+        /* S.E.A.カード専用 */
+        .sea-thumbnail-bg {
+            background-color: #0b1523 !important;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .sea-thumbnail-bg .sea-mini-crest {
+            width: 90px; height: 90px; border-radius: 50%;
+            border: 1.5px dashed var(--accent-gold); display: flex; justify-content: center; align-items: center;
+        }
+        .sea-thumbnail-bg .sea-mini-letters {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: #fff;
+        }
 
         .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
-        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; }
-        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; }
+        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s; }
+        /* FIX A: transition:all → opacity と font-size のみ対象にする */
+        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: opacity 0.4s ease; }
         .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; }
 
-        /* グリッド表示設定 */
+        /* --- グリッド表示 --- */
         .article-list.grid-mode { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .article-list.grid-mode .article-card { padding: 15px; border-radius: 6px; }
         .article-list.grid-mode .img-wrapper { aspect-ratio: 1 / 1; margin-bottom: 12px; }
         .article-list.grid-mode .article-card h2 { font-size: 1.15rem; margin-bottom: 8px; }
-        .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-        .chronicle-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; }
-        .chronicle-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--accent-gold); text-align: center; margin-bottom: 25px; letter-spacing: 0.1em; font-style: italic; }
-        .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
-        .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; margin-bottom: 15px; }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-box { background: #FAF7F0; border: 1px solid var(--accent-gold); padding: 35px 25px 25px; border-radius: 12px; width: 90%; max-width: 400px; position: relative; color: #33302E; font-size: 0.8rem; line-height: 1.8; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        .modal-overlay.active .modal-box { transform: scale(1); }
-        .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: var(--accent-gold); border: none; background: transparent; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; }
-
-        .site-notice-trigger { cursor: pointer; text-decoration: underline; transition: color 0.3s; }
-        .site-notice-trigger:hover { color: var(--accent-gold); }
-
-        @media (min-width: 768px) {
-            .container { max-width: 750px; padding: 50px 40px 120px; }
-            .article-list.grid-mode { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        }
-        footer { text-align: center; margin-top: 120px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.4; }
-    </style>
-</head>
-<body>
-
-    <div class="paper-bg" aria-hidden="true"></div>
-    <div class="noise-overlay" aria-hidden="true"></div>
-
-    <div class="container">
-        <header class="header">
-            <a href="index.html" class="header-logo"><h1 class="header-logo-text">TERU_LUCE_</h1></a>
-            <a href="profile.html" class="profile-btn">Profile</a>
-        </header>
-
-        <section class="intro-hero">
-            <div class="intro-portrait">
-                <img src="IMG_2226.jpeg" alt="サイト管理者のプロフィール写真" fetchpriority="high">
-            </div>
-            <div class="intro-content">
-                <p class="intro-message">
-                    このサイトではディズニーのBGSについて紹介してます。<br>
-                    アトラクションの待ち時間とかに見てください。
-                </p>
-                <blockquote class="walt-quote">
-                    "Disneyland will never be completed.<br>
-                    It will continue to grow as long as there is imagination left in the world."
-                    <cite>— Walt Disney</cite>
-                </blockquote>
-                <p class="walt-quote-jp">「ディズニーランドは永遠に完成しない。世界に想像力がある限り、成長し続けるだろう。」</p>
-            </div>
-        </section>
-
-        <nav class="toc-box" aria-label="コンテンツナビゲーション">
-            <div class="toc-title">Quick Navigation</div>
-            <div class="toc-section">
-                <span class="toc-section-title">Tokyo Disneyland (TDL)</span>
-                <div class="toc-tags">
-                    <a href="#sm-card">Splash Mt.</a>
-                    <a href="#btm-card">Big Thunder</a>
-                    <a href="#bb-card">Beauty &amp; Beast</a>
-                    <a href="#tl-card">Tomorrowland</a>
-                </div>
-            </div>
-            <div class="toc-section">
-                <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
-                <div class="toc-tags">
-                    <a href="#tot-card">Tower of Terror</a>
-                    <a href="#sindbad-card">Sindbad's Voyage</a>
-                    <a href="#fs-card">Fantasy Springs</a>
-                    <a href="#soarin-card">Soarin'</a>
-                    <a href="#sea-card">S.E.A. Archives</a>
-                    <a href="#raging-card">Raging Spirits</a>
-                    <a href="#indy-card">Indiana Jones</a>
-                </div>
-            </div>
-            <div class="toc-footer"><a href="profile.html">Curator Profile ➔</a></div>
-        </nav>
-
-        <div class="list-header">
-            <h2 class="section-title" style="margin: 0;">Exhibits</h2>
-            <div class="layout-toggle" role="group" aria-label="表示レイアウト切り替え">
-                <button id="view-list" aria-pressed="false">☰ List</button>
-                <button id="view-grid" class="active-toggle" aria-pressed="true">田 Grid</button>
-            </div>
-        </div>
-
-        <div class="article-list grid-mode" id="article-list">
-            <!-- 記事カード部分は元の内容をすべて維持 -->
-            <a href="bgs-sm.html" class="article-card" id="sm-card">
-                <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Splash Mountain</h2>
-                <p>泥地に根づく知恵と、大洪水の忘れ物。アライグマの失敗が引き起こした大洪水から、ブレア・ラビットが命をかけて仕掛けた「最後のはったり」まで、小動物たちの歴史を追う。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-            
-            <a href="bgs-btm.html" class="article-card" id="btm-card">
-                <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Big Thunder Mountain</h2>
-                <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と、大自然に宿る「精霊の怒り」が招いたタブルウィード崩壊の歴史を辿る。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-bb.html" class="article-card" id="bb-card">
-                <div class="img-wrapper"><img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Beauty and the Beast</h2>
-                <p>魔法の薔薇が紡ぐ、光と影のフレンチ・ゴシック。フランスの片田舎から「呪われた城」へ誘う空間トリックと、日本独自の所作を宿した愛のものがたり。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-tl.html" class="article-card" id="tl-card">
-                <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Tomorrowland</h2>
-                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテンの初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-tot.html" class="article-card" id="tot-card">
-                <div class="img-wrapper"><img src="tot-exterior.jpg" alt="ホテル・ハイタワー外観" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Tower of Terror</h2>
-                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-sindbad.html" class="article-card" id="sindbad-card">
-                <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。シー屈指の傑作へと生まれ変わるまで。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-fs.html" class="article-card" id="fs-card">
-                <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Fantasy Springs</h2>
-                <p>湧き出る精霊の記憶と、公爵夫人の招待状。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-soarin.html" class="article-card" id="soarin-card">
-                <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Soarin'</h2>
-                <p>19世紀の博物館に秘められた、空を飛ぶ夢の歴史。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-sea.html" class="article-card" id="sea-card">
-                <div class="img-wrapper sea-thumbnail-bg" role="img" aria-label="S.E.A.（探検家・冒険家学会）のシンボルマーク">
-                    <div class="sea-mini-crest"><span class="sea-mini-letters">S.E.A.</span></div>
-                </div>
-                <div class="card-tag">The Secret Society</div>
-                <h2>S.E.A. Archives</h2>
-                <p>ディズニー最高峰の巨大な大河神話を完全解剖する。</p>
-                <div class="read-btn">Explore the Archives →</div>
-            </a>
-
-            <a href="bgs-raging.html" class="article-card" id="raging-card">
-                <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Raging Spirits</h2>
-                <p>古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な謎。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-
-            <a href="bgs-indy.html" class="article-card" id="indy-card">
-                <div class="img-wrapper"><img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" loading="lazy"></div>
-                <div class="card-tag">Featured Story</div>
-                <h2>Indiana Jones</h2>
-                <p>パコが企てた秘密の魔宮ツアーと、水上飛行機に隠された真相。</p>
-                <div class="read-btn">Explore the Story →</div>
-            </a>
-        </div>
-
-        <section class="chronicle-card">
-            <h3>The Maihama Chronicle</h3>
-            <p style="font-size: 0.85rem; font-weight: bold; text-align: center; color: var(--accent-gold); margin-bottom: 25px;">「本物」を追求し続ける、舞浜の歴史</p>
-            <p>私たちが訪れる東京ディズニーリゾート（TDR）の背景には、オリエンタルランド（OLC）とウォルト・ディズニー・カンパニーの度重なる対話と、テーマパークづくりへの真摯な取り組みが存在します。</p>
-            <h4>I. アメリカ国外初のディズニーパーク</h4>
-            <p>1983年4月15日、東京ディズニーランド（TDL）は開園しました...</p>
-            <h4>II. 映画スタジオ計画から「海」への方針転換</h4>
-            <p>1992年に「海」をテーマにしたパーク『東京ディズニーシー（TDS）』の開発へと大きく方針を転換することになります。</p>
-        </section>
-
-        <footer>
-            &copy; TERU_LUCE_ | <span class="site-notice-trigger" id="notice-trigger">Notes</span>
-        </footer>
-    </div>
-
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal-box" id="modal-box">
-            <button class="modal-close" id="modal-close">Close ✕</button>
-            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 20px; font-style: italic; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">Site Notes</h3>
-            <p>このサイトで紹介しているBGSは、正確な情報を集めておりますが、誤りがある場合はSNSにてご報告いただけますと幸いです。</p>
-        </div>
-    </div>
-
-    <script>
-        // レイアウト切り替え機能のみ維持
-        const viewListBtn = document.getElementById('view-list');
-        const viewGridBtn = document.getElementById('view-grid');
-        const articleList = document.getElementById('article-list');
-
-        function applyLayout(mode) {
-            const isGrid =
+        .article-list.grid-mode .article-card p { font-size: 0.75rem; line-height: 1.6; margin-bottom: 12px; display: -webkit-box
