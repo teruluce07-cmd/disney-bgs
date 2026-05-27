@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="東京ディズニーリゾートのアトラクションに秘められた歴史と物語、バックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
-    <!-- FIX: ディズニー総合サイトとしての最重要日本語キーワードを配置（Googleの検索に極めて引っかかりやすくなります） -->
     <meta name="keywords" content="ディズニー BGS, ディズニーシー BGS, 舞浜 BGS, バックグラウンドストーリー, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
     <meta name="robots" content="index, follow">
-    
-    <!-- FIX: 新URL「https://teruluce07-cmd.github.io/disney-bgs/」に完全最適化した canonical タグ -->
     <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/index.html">
 
-    <!-- SNSシェア時のOGP設定も新URLに完全に同期 -->
     <meta property="og:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーションの海の記録">
     <meta property="og:description" content="東京ディズニーリゾートのバックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
     <meta property="og:type" content="website">
@@ -19,11 +15,10 @@
     <meta property="og:image" content="https://teruluce07-cmd.github.io/disney-bgs/tds-map.jpg">
     <meta property="og:site_name" content="TDS BGS &amp; Photography">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーション of 海の記録">
+    <meta name="twitter:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーションの海の記録">
     <meta name="twitter:description" content="各アトラクションに秘められた壮大なバックグラウンドストーリーを深掘りします。">
     <meta name="twitter:image" content="https://teruluce07-cmd.github.io/disney-bgs/tds-map.jpg">
     
-    <!-- FIX: 検索エンジンにサイトの正しいジャンルと構造を伝えるJSON-LD（新URLへ完全同期） -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -39,9 +34,12 @@
     }
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        /* --- 昼（超・くしゃくしゃ古紙）クラシック・カラー設定 --- */
+        /* --- カラー設定 --- */
         :root {
             --bg-color: #E2D7C5; 
             --text-main: #2D231E; 
@@ -65,12 +63,12 @@
             -webkit-font-smoothing: antialiased;
         }
  
-        /* サイト内のすべての写真・ロゴ・画像に対して保存防止を適用（aタグのリンク遷移は正常に透過します） */
+        /* 画像保存防止 */
         img {
-            -webkit-touch-callout: none; /* iOS Safariでの長押し保存ポップアップを禁止 */
-            -webkit-user-select: none;   /* 画像の選択を禁止 */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
             user-select: none;
-            pointer-events: none;        /* 画像自体へのクリック・長押しイベントの到達を遮断（親要素のaタグへ透過） */
+            pointer-events: none;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -97,10 +95,9 @@
             position: relative; z-index: 1;
             width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
-            transition: background 0.8s ease, max-width 0.5s ease;
         }
  
-        /* カードが下からふわっと現れるスクロールアニメーション用のスタイル */
+        /* カードが下からふわっと現れるスクロールアニメーション */
         .reveal { 
             opacity: 0; 
             transform: translateY(30px); 
@@ -111,7 +108,7 @@
             transform: translateY(0); 
         }
 
-        /* アンカー遷移時にカードをぽっと美しく光らせるハイライト演出 */
+        /* アンカー遷移時のハイライト */
         @keyframes highlightPulse {
             0% { box-shadow: 0 0 0 0 var(--accent-gold); }
             50% { box-shadow: 0 0 20px 4px var(--accent-gold); border-color: var(--accent-gold); }
@@ -122,14 +119,13 @@
         }
  
         /* --- ヘッダー --- */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); transition: border-color 0.8s; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); }
  
-        /* h1 を外側に、a を内側に入れる正しいHTML構造 */
         .header-logo-heading {
             font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; letter-spacing: 0.1em; margin: 0;
         }
         .header-logo {
-            color: var(--text-main); text-decoration: none; transition: color 0.8s;
+            color: var(--text-main); text-decoration: none;
         }
  
         .profile-btn {
@@ -147,7 +143,6 @@
  
         .intro-message { font-size: 0.85rem; color: var(--text-main); line-height: 2.2; margin-bottom: 35px; opacity: 0.95; letter-spacing: 0.05em; }
  
-        /* 名言のマークアップ */
         .walt-quote {
             font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; font-weight: 600; color: var(--accent-gold); line-height: 1.5; margin-bottom: 8px; padding: 0 10px;
         }
@@ -184,7 +179,7 @@
         .toc-footer a { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold); text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
         .toc-footer a:hover { color: var(--text-main); }
  
-        /* --- 記事見出し ＆ レイアウト・タグ切替スイッチ --- */
+        /* --- 記事見出し & フィルター --- */
         .list-header { display: flex; flex-direction: column; gap: 15px; margin: 60px 0 30px; border-bottom: 1px solid var(--border-light); padding-bottom: 15px; }
         .list-header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--accent-gold); }
@@ -193,7 +188,6 @@
         .layout-toggle button { background: transparent; border: none; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: background-color 0.3s, color 0.3s; text-transform: uppercase; }
         .layout-toggle button.active-toggle { background: var(--accent-gold); color: var(--bg-color); font-weight: 600; }
 
-        /* ALL/TDL/TDSに動的フィルタリングできる、利便性の極めて高いタグフィルターバー */
         .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
         .filter-btn {
             background: transparent; border: 1px solid var(--border-light); color: var(--text-main);
@@ -205,7 +199,7 @@
         .filter-btn.active-toggle { background: var(--accent-gold); color: var(--bg-color); border-color: var(--accent-gold); font-weight: 600; }
  
         /* --- 記事カードリスト --- */
-        .article-list { display: flex; flex-direction: column; gap: 45px; transition: gap 0.4s ease; }
+        .article-list { display: flex; flex-direction: column; gap: 45px; }
         
         .article-card {
             position: relative;
@@ -218,12 +212,11 @@
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease, filter 0.8s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
 
-        /* 新規コラムの地図画像を「ちょっと古くなった古地図」のような黄金色の質感にする専用CSSフィルター */
+        /* 古地図フィルター */
         .epic-map-filter { 
             object-position: center center !important; 
             filter: brightness(0.85) contrast(1.05) sepia(75%) hue-rotate(-5deg) saturate(0.85) !important;
         }
-        /* ホバー時のみセピアフィルターが薄まって「色鮮やかな現代の地図が手前に浮かび上がる」エモーショナルな演出 */
         .article-card:hover .epic-map-filter {
             filter: brightness(1) contrast(1.05) sepia(0%) saturate(1.1) !important;
         }
@@ -235,11 +228,7 @@
         .soarin-img-align { object-position: center 25% !important; }
         .tl-img-align { object-position: center 50% !important; }
         .indy-img-align { object-position: center 30% !important; }
-        
-        /* FIX: レイジングスピリッツの写真アライメント（通常リスト表示用。縦に長い写真の上部〜中央の迫力あるポイントを切り取ります） */
         .raging-img-align { object-position: center 30% !important; }
-        
-        /* 新規マップカード用の中央アライメント */
         .map-img-align { object-position: center center !important; }
  
         /* S.E.A.カード専用 */
@@ -262,20 +251,18 @@
         .card-tag-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin: 0; }
         
-        /* 各カードに「読了目安」や「更新日」を表示するメタ情報エリア */
         .card-meta {
             display: flex; gap: 12px; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.05em; opacity: 0.55;
         }
 
-        /* 新着マーク「NEW」バッジ */
+        /* NEWバッジ */
         .new-badge {
             position: absolute; top: 15px; right: 15px; background: var(--accent-gold); color: var(--bg-color);
             font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-weight: bold; letter-spacing: 0.15em;
             padding: 4px 8px; border-radius: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 10;
-            transition: background-color 0.8s, color 0.8s;
         }
 
-        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s; }
+        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; }
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: opacity 0.4s ease; }
         .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; }
  
@@ -295,19 +282,17 @@
         .article-list.grid-mode .tl-img-align { object-position: center 40% !important; }
         .article-list.grid-mode .indy-img-align { object-position: center 20% !important; }
         .article-list.grid-mode .epic-map-filter { object-position: center center !important; }
-        
-        /* FIX: レイジングスピリッツの写真アライメント（グリッド正方形表示用。画画がさらにタイトになるため上部へ絶妙にシフトさせます） */
         .article-list.grid-mode .raging-img-align { object-position: center 25% !important; }
  
-        /* --- コラムカード（舞浜の軌跡） --- */
+        /* --- コラムカード --- */
         .chronicle-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px; transition: border-color 0.8s ease;
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 40px 25px; text-align: justify; margin-top: 80px;
         }
         .chronicle-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--accent-gold); text-align: center; margin-bottom: 25px; letter-spacing: 0.1em; font-style: italic; }
         .chronicle-card h4 { font-family: 'Noto Serif JP', serif; font-size: 0.85rem; font-weight: bold; color: var(--text-main); margin: 25px 0 10px; border-left: 3px solid var(--accent-gold); padding-left: 10px; line-height: 1.5; }
         .chronicle-card p { font-size: 0.8rem; opacity: 0.8; line-height: 2; margin-bottom: 15px; }
  
-        /* --- すりガラスの注意書きモーダル & イースターエッグモーダル --- */
+        /* --- モーダル --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -329,9 +314,27 @@
             letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 10px; margin: -8px -10px;
         }
         .modal-close:focus-visible { outline: 2px solid var(--accent-gold); outline-offset: 2px; border-radius: 4px; }
-        
-        .site-notice-trigger { cursor: pointer; text-decoration: underline; transition: color 0.3s; }
-        .site-notice-trigger:hover { color: var(--accent-gold); }
+
+        /* モーダル内SNSリンク */
+        .modal-sns-links { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+        .sns-btn {
+            display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
+            font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; font-weight: bold;
+            padding: 8px 16px; border-radius: 4px; text-transform: uppercase; transition: background-color 0.3s, color 0.3s;
+        }
+        .sns-btn-instagram { background: rgba(140, 98, 57, 0.1); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
+        .sns-btn-instagram:hover { background: var(--accent-gold); color: var(--bg-color); }
+
+        /* フッター */
+        footer { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.8; padding-top: 60px; }
+        .footer-notice-box { display: inline-block; margin-top: 10px; }
+        .site-notice-trigger-btn {
+            display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
+            background: rgba(140, 98, 57, 0.06); border: 1px solid var(--border-light); color: var(--accent-gold);
+            padding: 8px 18px; border-radius: 30px; font-weight: bold; cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .site-notice-trigger-btn:hover { background: var(--accent-gold); color: var(--bg-color); border-color: var(--accent-gold); }
 
         /* イースターエッグ「S.E.A.会員証」モーダル */
         .sea-certificate-box {
@@ -350,29 +353,6 @@
         .sea-cert-subtitle { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #C9A054; margin-bottom: 25px; }
         .sea-cert-body { font-family: 'Noto Serif JP', serif; font-size: 0.78rem; line-height: 2; opacity: 0.9; margin-bottom: 30px; text-align: justify; }
         .sea-cert-sign { font-size: 1.1rem; font-style: italic; color: #C9A054; border-top: 1px dashed rgba(201,160,84,0.3); padding-top: 15px; margin-top: 25px; }
-
-        /* モーダル内SNSリンク */
-        .modal-sns-links { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
-        .sns-btn {
-            display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
-            font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; font-weight: bold;
-            padding: 8px 16px; border-radius: 4px; text-transform: uppercase; transition: background-color 0.3s, color 0.3s;
-        }
-        .sns-btn-instagram { background: rgba(140, 98, 57, 0.1); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
-        .sns-btn-instagram:hover { background: var(--accent-gold); color: var(--bg-color); }
-        .sns-btn-x { background: rgba(45, 35, 30, 0.1); color: var(--text-main); border: 1px solid var(--border-light); }
-        .sns-btn-x:hover { background: var(--text-main); color: var(--bg-color); border-color: var(--text-main); }
- 
-        /* Notesボタンのサイズ改善 */
-        footer { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.8; padding-top: 60px; }
-        .footer-notice-box { display: inline-block; margin-top: 10px; }
-        .site-notice-trigger-btn {
-            display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
-            background: rgba(140, 98, 57, 0.06); border: 1px solid var(--border-light); color: var(--accent-gold);
-            padding: 8px 18px; border-radius: 30px; font-weight: bold; cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-        .site-notice-trigger-btn:hover { background: var(--accent-gold); color: var(--bg-color); border-color: var(--accent-gold); }
     </style>
 </head>
 <body>
@@ -392,7 +372,8 @@
         <!-- ウェルカム・ヒーローエリア -->
         <section class="intro-hero">
             <div class="intro-portrait">
-                <img src="IMG_2226.jpeg" alt="サイト管理者のプロフィール写真" fetchpriority="high" draggable="false">
+                <!-- プロフィール写真：ファーストビューのため eager + high priority で即時読み込み -->
+                <img src="IMG_2226.jpeg" alt="サイト管理者のプロフィール写真" fetchpriority="high" loading="eager" draggable="false">
             </div>
             <div class="intro-content">
                 <p class="intro-message">
@@ -408,7 +389,6 @@
             </div>
         </section>
 
-        <!-- 活版印刷をイメージしたクラシックなヴィンテージ装飾区切り線 -->
         <div class="vintage-divider" aria-hidden="true">✦ —— ◆ —— ✦</div>
  
         <!-- パーク別目次 (TOC) -->
@@ -455,7 +435,6 @@
                     <button id="view-grid" class="active-toggle" aria-pressed="true">田 Grid</button>
                 </div>
             </div>
-            <!-- カテゴリフィルタ -->
             <div class="filter-bar" role="group" aria-label="カテゴリフィルタ">
                 <button class="filter-btn active-toggle" data-filter="all">All Exhibits</button>
                 <button class="filter-btn" data-filter="tdl">Disneyland (TDL)</button>
@@ -463,13 +442,16 @@
             </div>
         </div>
  
-        <!-- 記事カード一覧（TDL ➔ TDS順に完全統一、かつスクロールに応じたReveal搭載） -->
+        <!-- 記事カード一覧 -->
         <div class="article-list grid-mode" id="article-list">
             
-            <!-- ================= TDL (Tokyo Disneyland) ================= -->
+            <!-- ================= TDL ================= -->
             
             <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
-                <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <!-- グリッド上部の画像：eager で即時読み込み -->
+                    <img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" loading="eager" fetchpriority="high" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 4 min</span>
@@ -480,18 +462,22 @@
             </a>
  
             <a href="bgs-btm.html" class="article-card reveal" id="btm-card" data-category="tdl">
-                <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" loading="eager" fetchpriority="high" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Big Thunder Mountain</h2>
-                <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と、大自然に宿る「精霊 of 怒り」が招いたタブルウィード崩壊の歴史を辿る。</p>
+                <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と、大自然に宿る「精霊の怒り」が招いたタンブルウィード崩壊の歴史を辿る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
             <a href="bgs-bb.html" class="article-card reveal" id="bb-card" data-category="tdl">
-                <div class="img-wrapper"><img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 4 min</span>
@@ -502,7 +488,9 @@
             </a>
  
             <a href="bgs-tl.html" class="article-card reveal" id="tl-card" data-category="tdl">
-                <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 3 min</span>
@@ -512,44 +500,52 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- ================= TDS (Tokyo DisneySea) ================= -->
+            <!-- ================= TDS ================= -->
             
             <a href="bgs-spatial-epic.html" class="article-card reveal" id="spatial-epic-card" data-category="tds">
                 <span class="new-badge">NEW</span>
-                <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" class="epic-map-filter" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" class="epic-map-filter" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Special Chronicle</span>
                     <span class="card-meta">Read: 5 min</span>
                 </div>
                 <h2>TDS Spatial Epic</h2>
-                <p>「冒険とイマジネーションの海」を巡る、美しき全 8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、精度と魔法の泉へと紡がれる時空を超えた旅路へ。</p>
+                <p>「冒険とイマジネーションの海」を巡る、美しき全8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、精霊と魔法の泉へと紡がれる時空を超えた旅路へ。</p>
                 <div class="read-btn">Explore the Chronicle →</div>
             </a>
 
             <a href="bgs-tot.html" class="article-card reveal" id="tot-card" data-category="tds">
-                <div class="img-wrapper"><img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 5 min</span>
                 </div>
                 <h2>Tower of Terror</h2>
-                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。精度とディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
+                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。精緻な世界観とディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
             <a href="bgs-sindbad.html" class="article-card reveal" id="sindbad-card" data-category="tds">
-                <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Sindbad's Voyage</h2>
-                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖 of ボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
+                <p>心のコンパスを信じて。かつて「暗黒期」と呼ばれた恐怖のボートライドが、天才アラン・メンケンの手によってシー屈指の傑作へと生まれ変わるまで。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
             <a href="bgs-fs.html" class="article-card reveal" id="fs-card" data-category="tds">
-                <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 4 min</span>
@@ -560,13 +556,15 @@
             </a>
  
             <a href="bgs-soarin.html" class="article-card reveal" id="soarin-card" data-category="tds">
-                <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 4 min</span>
                 </div>
                 <h2>Soarin'</h2>
-                <p>19世紀の博物館に秘められた、空を飛ぶ夢の歴史。カメリアとハイタワー三世の確執、精度とロマンを兼ね備えた驚くべき因縁に迫る。</p>
+                <p>19世紀の博物館に秘められた、空を飛ぶ夢の歴史。カメリアとハイタワー三世の確執、精緻なロマンを兼ね備えた驚くべき因縁に迫る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
@@ -583,20 +581,23 @@
                 <div class="read-btn">Explore the Archives →</div>
             </a>
  
-            <!-- FIX: class="raging-img-align" を適用して、トリミング位置を上寄りに調整。石像の頭部と、階段を流れる美しい炎の両方を画面に収めます。 -->
             <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
-                <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Raging Spirits</h2>
-                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な超自然現象の謎と、失われた足場の真実を追う。</p>
+                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る超自然現象の謎と、失われた足場の真実を追う。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
             <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
-                <div class="img-wrapper"><img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper">
+                    <img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" loading="lazy" draggable="false">
+                </div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 4 min</span>
@@ -627,10 +628,10 @@
             また、エントランスを抜けてもすぐに海が見えない構造も緻密な計算によるものです。ホテル・ミラコスタ下の薄暗い通路を歩くことで、日常から非日常へと少しずつ心を切り替えさせ、視界が開けた瞬間に広大なメディテレーニアンハーバーが目に飛び込んでくるという、劇的な空間演出（トランジション）が仕掛けられています。</p>
             
             <h4>IV. 経年美化を前提とした空間づくり</h4>
-            <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石, 木材を使用し、エイジング（風化塗装）技術を緻密に施すことで、「時間が経ってもただ劣化するのではなく、年々味わいが増し、美しく風化していく」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
+            <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング（風化塗装）技術を緻密に施すことで、「時間が経ってもただ劣化するのではなく、年々味わいが増し、美しく風化していく」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
             
             <h4>V. ファンタジースプリングスへの繋がり</h4>
-            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としては過去最大級となる約2500億円が投じられました。この大規模な投資は、1983年の開園当初から続く「上質なテーマパーク体験を提供する」という姿勢の表れと言えます。海, 川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深め、国内外の多くのゲストを魅了し続けています。</p>
+            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としては過去最大級となる約2500億円が投じられました。この大規模な投資は、1983年の開園当初から続く「上質なテーマパーク体験を提供する」という姿勢の表れと言えます。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深め、国内外の多くのゲストを魅了し続けています。</p>
         </section>
  
         <footer>
@@ -646,15 +647,11 @@
         <div class="modal-box" id="modal-box">
             <button class="modal-close" id="modal-close" aria-label="モーダルを閉じる">Close ✕</button>
             <h3 id="modal-title" style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 20px; font-style: italic; border-bottom: 1px solid var(--border-light); padding-bottom: 10px;">Site Notes &amp; Contacts</h3>
-            <p>このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、大変お手数ですが、InstagramまたはXのDMにてご報告いただけますと幸いです。</p>
+            <p>このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、大変お手数ですが、InstagramのDMにてご報告いただけますと幸いです。</p>
             <p style="margin-top: 15px;">また、掲載している写真は画角や見やすさにこだわって調整を行っておりますが、見にくかったり、掲載位置に誤りがあったりする場合も、同様にご指摘いただけますと助かります。</p>
             
-            <!-- 注意書きモーダル内のSNSへの実リンクボタン -->
             <div class="modal-sns-links">
-                <!-- FIX: SNSのリンク先をご指定の実際のプロフィールURLに更新 -->
                 <a href="https://www.instagram.com/teru_luce_" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-instagram">Instagram (DM)</a>
-                <!-- FIX: SNSのリンク先をご指定の実際のプロフィールURLに更新 -->
-                <a href="https://x.com/teru_luce" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-x">X (DM)</a>
             </div>
 
             <p style="margin-top: 25px; border-top: 1px dashed var(--border-light); padding-top: 15px; font-weight: bold; color: var(--accent-gold); font-size: 0.75rem;">
@@ -666,3 +663,127 @@
     <!-- イースターエッグ「S.E.A.会員証」隠しモーダル -->
     <div class="modal-overlay" id="sea-modal" role="dialog" aria-modal="true" aria-labelledby="sea-title" aria-hidden="true">
         <div class="sea-certificate-box" id="sea-modal-box">
+            <button class="modal-close sea-cert-close" id="sea-modal-close" aria-label="モーダルを閉じる">Close ✕</button>
+            <div class="sea-cert-crest">S.E.A.</div>
+            <div class="sea-cert-title" id="sea-title">Society of Explorers and Adventurers</div>
+            <div class="sea-cert-subtitle">Member's Certificate</div>
+            <p class="sea-cert-body">
+                あなたはS.E.A.の紋章を見つけた。<br>
+                探検家・冒険家学会の隠された扉を叩いたことを歓迎する。<br>
+                世界の謎を解き明かす旅は、まだ始まったばかりだ。
+            </p>
+            <div class="sea-cert-sign">— The Society of Explorers and Adventurers</div>
+        </div>
+    </div>
+
+    <script>
+        // --- レイアウト切替 ---
+        const listEl = document.getElementById('article-list');
+        const btnList = document.getElementById('view-list');
+        const btnGrid = document.getElementById('view-grid');
+
+        btnList.addEventListener('click', () => {
+            listEl.classList.remove('grid-mode');
+            btnList.classList.add('active-toggle');
+            btnGrid.classList.remove('active-toggle');
+            btnList.setAttribute('aria-pressed', 'true');
+            btnGrid.setAttribute('aria-pressed', 'false');
+        });
+        btnGrid.addEventListener('click', () => {
+            listEl.classList.add('grid-mode');
+            btnGrid.classList.add('active-toggle');
+            btnList.classList.remove('active-toggle');
+            btnGrid.setAttribute('aria-pressed', 'true');
+            btnList.setAttribute('aria-pressed', 'false');
+        });
+
+        // --- カテゴリフィルタ ---
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-toggle'));
+                btn.classList.add('active-toggle');
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.article-card').forEach(card => {
+                    const show = filter === 'all' || card.dataset.category === filter;
+                    card.style.display = show ? '' : 'none';
+                });
+            });
+        });
+
+        // --- スクロールRevealアニメーション ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- アンカーリンクのハイライト演出 ---
+        const hash = window.location.hash;
+        if (hash) {
+            const target = document.querySelector(hash);
+            if (target) {
+                setTimeout(() => target.classList.add('card-highlight'), 600);
+            }
+        }
+
+        // --- モーダル（注意書き） ---
+        const noticeTrigger = document.getElementById('notice-trigger');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalClose = document.getElementById('modal-close');
+
+        noticeTrigger.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+            modalOverlay.setAttribute('aria-hidden', 'false');
+        });
+        modalClose.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            modalOverlay.setAttribute('aria-hidden', 'true');
+        });
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                modalOverlay.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // --- イースターエッグ（S.E.A.会員証） ---
+        const seaModal = document.getElementById('sea-modal');
+        const seaModalClose = document.getElementById('sea-modal-close');
+        const seaCrest = document.querySelector('.sea-mini-crest');
+
+        if (seaCrest) {
+            seaCrest.addEventListener('click', (e) => {
+                e.preventDefault();
+                seaModal.classList.add('active');
+                seaModal.setAttribute('aria-hidden', 'false');
+            });
+        }
+        if (seaModalClose) {
+            seaModalClose.addEventListener('click', () => {
+                seaModal.classList.remove('active');
+                seaModal.setAttribute('aria-hidden', 'true');
+            });
+        }
+        seaModal.addEventListener('click', (e) => {
+            if (e.target === seaModal) {
+                seaModal.classList.remove('active');
+                seaModal.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // --- Escキーでモーダルを閉じる ---
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modalOverlay.classList.remove('active');
+                modalOverlay.setAttribute('aria-hidden', 'true');
+                seaModal.classList.remove('active');
+                seaModal.setAttribute('aria-hidden', 'true');
+            }
+        });
+    </script>
+</body>
+</html>
