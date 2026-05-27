@@ -36,7 +36,8 @@
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
-            background-size: cover; background-attachment: fixed;
+            background-size: cover;
+            /* FIX C: background-attachment:fixed はiOS Safariで非対応のため削除。紙テクスチャは .paper-bg(fixed要素)側で描画される */
             color: var(--text-main); line-height: 2.2; overflow-x: hidden;
             transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
@@ -68,8 +69,8 @@
             width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
             transition: background 0.8s ease, max-width 0.5s ease;
+            /* FIX B: will-change はアニメーション中のみ有効にし、完了後JSで解除する */
             animation: pageLoadFade 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            will-change: transform, opacity;
         }
         body.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
 
@@ -81,6 +82,8 @@
         /* --- ヘッダー --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); transition: border-color 0.8s; }
         .header-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--text-main); text-decoration: none; transition: color 0.8s; }
+        /* FIX D: h1テキストはheader-logoのスタイルを引き継ぎ、ブラウザデフォルトの h1 装飾をリセット */
+        .header-logo-text { font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; color: inherit; margin: 0; }
         .profile-btn {
             display: inline-block; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em;
             color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 10px 20px; border-radius: 40px; text-transform: uppercase; transition: all 0.4s ease;
@@ -128,7 +131,8 @@
         .layout-toggle button.active-toggle { background: var(--accent-gold); color: var(--bg-color); font-weight: 600; }
 
         /* --- 記事カードリスト --- */
-        .article-list { display: flex; flex-direction: column; gap: 45px; transition: all 0.5s ease; }
+        /* FIX A: transition:all → 個別プロパティに限定（display変更はアニメーション不可なので gap のみ対象にする） */
+        .article-list { display: flex; flex-direction: column; gap: 45px; transition: gap 0.4s ease; }
         .article-card {
             text-decoration: none; color: var(--text-main); display: block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 8px; padding: 25px; transition: all 0.4s ease;
         }
@@ -165,7 +169,8 @@
 
         .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 8px; }
         .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s; }
-        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: all 0.4s ease; }
+        /* FIX A: transition:all → opacity と font-size のみ対象にする */
+        .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: opacity 0.4s ease; }
         .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; }
 
         /* --- グリッド表示 --- */
@@ -247,7 +252,8 @@
     <div class="container">
         <!-- ヘッダー -->
         <header class="header">
-            <a href="index.html" class="header-logo">TERU_LUCE_</a>
+        <!-- FIX D: h1 がなかったためロゴをh1に変更。視覚スタイルはそのまま維持 -->
+            <a href="index.html" class="header-logo"><h1 class="header-logo-text">TERU_LUCE_</h1></a>
             <a href="profile.html" class="profile-btn">Profile</a>
         </header>
 
@@ -451,6 +457,12 @@
 
     <!-- FIX 1: defer をインラインスクリプトから削除（defer は外部スクリプト専用で、インラインでは無視される） -->
     <script>
+        // FIX B: .container の will-change をアニメーション中だけ有効にし、完了後解除してGPUメモリを解放
+        const containerEl = document.querySelector('.container');
+        containerEl.style.willChange = 'transform, opacity';
+        containerEl.addEventListener('animationend', () => {
+            containerEl.style.willChange = 'auto';
+        }, { once: true });
         // FIX 2: localStorage へのアクセスを try-catch で保護（プライベートブラウジング等でのクラッシュ防止）
         function safeGetStorage(key) {
             try { return localStorage.getItem(key); } catch (e) { return null; }
