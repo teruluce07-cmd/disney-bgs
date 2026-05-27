@@ -254,6 +254,12 @@
         .soarin-img-align { object-position: center 25% !important; }
         .tl-img-align { object-position: center 50% !important; }
         .indy-img-align { object-position: center 30% !important; }
+        
+        /* FIX: レイジングスピリッツの写真アライメント（通常リスト表示用。縦に長い写真の上部〜中央の迫力あるポイントを切り取ります） */
+        .raging-img-align { object-position: center 30% !important; }
+        
+        /* 新規マップカード用の中央アライメント */
+        .map-img-align { object-position: center center !important; }
  
         /* S.E.A.カード専用 */
         .sea-thumbnail-bg {
@@ -312,6 +318,9 @@
         .article-list.grid-mode .tl-img-align { object-position: center 40% !important; }
         .article-list.grid-mode .indy-img-align { object-position: center 20% !important; }
         .article-list.grid-mode .epic-map-filter { object-position: center center !important; }
+        
+        /* FIX: レイジングスピリッツの写真アライメント（グリッド正方形表示用。画角がさらにタイトになるため上部へ絶妙にシフトさせます） */
+        .article-list.grid-mode .raging-img-align { object-position: center 25% !important; }
  
         /* --- コラムカード（舞浜の軌跡） --- */
         .chronicle-card {
@@ -555,7 +564,7 @@
                     <span class="card-meta">Read: 5 min</span>
                 </div>
                 <h2>TDS Spatial Epic</h2>
-                <p>「冒険とイマジネーションの海」を巡る、美しき全 8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、そして魔法の泉へと紡がれる時空を超えた旅路へ。</p>
+                <p>「冒険とイマジネーションの海」を巡る、美しき全 8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、精度と魔法の泉へと紡がれる時空を超えた旅路へ。</p>
                 <div class="read-btn">Explore the Chronicle →</div>
             </a>
 
@@ -616,8 +625,9 @@
                 <div class="read-btn">Explore the Archives →</div>
             </a>
  
+            <!-- FIX: class="raging-img-align" を適用して、トリミング位置を上寄りに調整。石像の頭部と、階段を流れる美しい炎の両方を画面に収めます。 -->
             <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
-                <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" loading="lazy" draggable="false"></div>
+                <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
                     <span class="card-tag">Featured Story</span>
                     <span class="card-meta">Read: 3 min</span>
@@ -877,95 +887,3 @@
         }
  
         function openModal(type) {
-            lastFocusedElement = document.activeElement;
-            activeModal = type;
-
-            if (type === 'notice') {
-                modalOverlay.classList.add('active');
-                modalOverlay.setAttribute('aria-hidden', 'false');
-                modalClose.focus();
-                modalOverlay.addEventListener('keydown', trapFocus);
-            } else if (type === 'sea') {
-                seaModal.classList.add('active');
-                seaModal.setAttribute('aria-hidden', 'false');
-                seaModalClose.focus();
-                seaModal.addEventListener('keydown', trapFocus);
-            }
-
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            if (!activeModal) return;
-
-            if (activeModal === 'notice') {
-                modalOverlay.classList.remove('active');
-                modalOverlay.setAttribute('aria-hidden', 'true');
-                modalOverlay.removeEventListener('keydown', trapFocus);
-            } else if (activeModal === 'sea') {
-                seaModal.classList.remove('active');
-                seaModal.setAttribute('aria-hidden', 'true');
-                seaModal.removeEventListener('keydown', trapFocus);
-            }
-
-            document.body.style.overflow = '';
-            activeModal = null;
-            if (lastFocusedElement) lastFocusedElement.focus();
-        }
- 
-        noticeTrigger.addEventListener('click', () => openModal('notice'));
-        noticeTrigger.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal('notice'); }
-        });
-        modalClose.addEventListener('click', closeModal);
-        seaModalClose.addEventListener('click', closeModal);
-
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
-        seaModal.addEventListener('click', (e) => {
-            if (e.target === seaModal) closeModal();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && activeModal) { closeModal(); }
-        });
-
-        // イースターエッグの仕掛け（コナミコマンド ＆ S.E.A.紋章5回タップ）
-        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-        let konamiIndex = 0;
-        document.addEventListener('keydown', (e) => {
-            if (e.key === konamiCode[konamiIndex]) {
-                konamiIndex++;
-                if (konamiIndex === konamiCode.length) {
-                    openModal('sea');
-                    konamiIndex = 0;
-                }
-            } else {
-                konamiIndex = 0;
-            }
-        });
-
-        const seaCrest = document.querySelector('#sea-card .sea-mini-crest');
-        if (seaCrest) {
-            let clickCount = 0;
-            let lastClick = 0;
-            seaCrest.addEventListener('click', (e) => {
-                const now = Date.now();
-                if (now - lastClick < 1000) {
-                    clickCount++;
-                    if (clickCount === 5) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        openModal('sea');
-                        clickCount = 0;
-                    }
-                } else {
-                    clickCount = 1;
-                }
-                lastClick = now;
-            });
-        }
-    </script>
-</body>
-</html>
