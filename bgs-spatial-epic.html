@@ -99,14 +99,90 @@
         /* FIX: transition: all を個別のプロパティ指定へ変更 */
         .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
         .toc-list a:hover { color: var(--accent-gold); }
-        
-        /* レスポンシブテーブル用スクロールラッパー */
-        .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 30px 0; border: 1px solid var(--border-light); border-radius: 4px; }
-        .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; min-width: 550px; }
-        .timeline-table th, .timeline-table td { padding: 12px 14px; text-align: left; border-bottom: 1px dashed var(--border-light); line-height: 1.8; }
-        .timeline-table tr:last-child th, .timeline-table tr:last-child td { border-bottom: none; }
-        .timeline-table th { font-family: 'Noto Serif JP', serif; font-weight: bold; color: var(--accent-gold); letter-spacing: 0.05em; background: rgba(0, 0, 0, 0.02); border-bottom: 1px solid var(--border-light); }
-        html.curse-mode .timeline-table th { background: rgba(255, 255, 255, 0.02); }
+
+        /* FIX: 手帳のタブインデックスをタップして開閉するようなアコーディオンカード（スマホ最適化） */
+        .port-accordion {
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            margin-bottom: 12px;
+            background: rgba(0, 0, 0, 0.015);
+            overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        html.curse-mode .port-accordion {
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .port-accordion[open] {
+            background: rgba(0, 0, 0, 0.035);
+            border-color: var(--accent-gold);
+        }
+        html.curse-mode .port-accordion[open] {
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .port-summary {
+            padding: 14px 18px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none; /* デフォルトの三角アイコンを消去 */
+            user-select: none;
+            outline: none;
+        }
+        .port-summary::-webkit-details-marker {
+            display: none; /* Safari用の三角アイコン消去 */
+        }
+
+        /* 展開用のクラシカルなインジケータ記号 */
+        .port-summary::after {
+            content: "+";
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            transition: transform 0.3s ease;
+        }
+        .port-accordion[open] .port-summary::after {
+            content: "−";
+        }
+
+        .port-name {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+        .port-meta {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            opacity: 0.6;
+            margin-left: auto;
+            margin-right: 15px;
+            letter-spacing: 0.05em;
+        }
+
+        .port-content {
+            padding: 0 18px 18px 18px;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            border-top: 1px dashed var(--border-light);
+            padding-top: 15px;
+            animation: accordionSlideDown 0.3s ease-out forwards; /* スムーズな開閉フェードイン */
+        }
+        .port-content p {
+            margin-bottom: 12px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        .port-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        @keyframes accordionSlideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .article-block { margin-bottom: 70px; text-align: justify; }
         h2 { font-family: 'Noto Serif JP', serif; font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 50px; margin-bottom: 25px; display: flex; align-items: center; line-height: 1.5; }
@@ -232,7 +308,7 @@
                 TDS Spatial Epic：冒険とイマジネーションの海を巡る物語
             </h1>
             <div class="subtitle-jp">
-                世界で唯一「海」をコンセプトとし、訪れる者を遥かなる航海へと誘う東京ディズニーシー。ここは単なる遊び場ではなく、8つの固有の「港（テーマポート）」が、歴史や人々の祈り、そして魔法によって結ばれた壮大な冒険の舞台です。さあ、手元に古びた地図を広げ、それぞれの港に隠されたロマンに満ちたバックグラウンドストーリーを辿る、時空を超えた旅に出発しましょう。
+                世界で唯一「海」をコンセプトとし、訪れる者を遥かなる航海へと誘う東京ディズニーシー。ここは単なる遊び場ではなく、8つの固有の「港（テーマポート）」が、歴史や人々の祈り、空間の境界、そして魔法によって結ばれた壮大な冒険の舞台です。さあ、手元に古びた地図を広げ、それぞれの港に隠されたロマンに満ちたバックグラウンドストーリーを辿る、時空を超えた旅に出発しましょう。
             </div>
         </header>
         
@@ -256,86 +332,120 @@
 
         <section class="article-block reveal" id="prologue">
             <h2>I. 時空を超える8つの港</h2>
-            <p>東京ディズニーシーのエリアは、すべて「テーマランド」ではなく「テーマポート（港）」と呼ばれています。この呼び名こそが、私たちの冒険の旅の出発点です。すべての港は、独自の時代設定と国を持ちながらも、お互いに歴史的・物理的、そして精神的な深い繋がりを持っています。何気なく通り過ぎる建物、ふと耳にする波の音、それらすべてが、大きな一本の物語（大河神話）へと収束していくのです。</p>
+            <p>東京ディズニーシーのエリアは、すべて「テーマランド」ではなく「テーマポート（港）」と呼ばれています。この呼び名こそが、私たちの冒険の旅の出発点です。すべての港は、独自の時代設定と国を持ちながらも、お互いに歴史的・物理的、順序、そして精神的な深い繋がりを持っています。何気なく通り過ぎる建物、ふと耳にする波の音、それらすべてが、大きな一本の物語（大河神話）へと収束していくのです。</p>
             <p>ディズニーシーの景観は、細部に至るまで徹底的な「意味のある痕跡」に満ちています。そこに誰が住み、どんな風に過ごしていたのか、想像力を少し働かせるだけで、ただのレンガや古びた看板が、瑞々しい物語として語りかけてくるでしょう。これから、その隠された航海図を一枚ずつめくっていきます。</p>
         </section>
 
+        <!-- FIX: スマホで閲覧した際に、長い表によって縦に長くなりすぎるのを完璧に防ぐため、
+             タップすると各ポートの詳細ストーリーがスッと展開されるアコーディオンカード（details / summary）を実装。
+             これにより画面1つ分のコンパクトな範囲に全8ポートの情報がすっきりと収まります。 -->
         <section class="article-block reveal" id="mapping">
             <h2>II. 全8テーマポート・ストーリーマッピング</h2>
-            <p>ディズニーシーに存在する8つの魅力的な港は、それぞれが夢のような時代と美しい文化的背景を宿しています。それぞれの役割をまとめた特別な記録です。</p>
+            <p>ディズニーシーに存在する8つの魅力的な港は、それぞれが夢のような時代と美しい文化的背景を宿しています。以下のタブ（インデックス）をタップすると、それぞれの港が紡ぐ詳しい物語と役割をご覧いただけます。</p>
             
-            <!-- レスポンシブ対応スクロールラッパー -->
-            <div class="table-wrapper">
-                <table class="timeline-table">
-                    <thead>
-                        <tr>
-                            <th>テーマポート</th>
-                            <th>設定年代</th>
-                            <th>モデルとなった場所</th>
-                            <th>語り継がれる物語の核心</th>
-                            <th>この海における役割</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>メディテレーニアンハーバー</strong></td>
-                            <td>1901年</td>
-                            <td>ポルトフィーノやヴェネツィアなどの南欧</td>
-                            <td>大航海時代へのロマンとルネサンスの賛美。美しい運河の街、のどかな漁村、そして冒険者たちの要塞。</td>
-                            <td>パークの偉大な玄関口。すべての冒険への出港地。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>アメリカンウォーターフロント</strong></td>
-                            <td>1912年</td>
-                            <td>アメリカ東海岸（ニューヨークとケープコッド）</td>
-                            <td>活気に満ちた大都市ニューヨークの光と、常に自然を敬い豊漁を願う素朴な漁村ケープコッドの美しいコントラスト。</td>
-                            <td>輝かしい時代のエネルギーと、アメリカ独立精神の象徴。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ポートディスカバリー</strong></td>
-                            <td>時空を超えた未来</td>
-                            <td>科学と自然が完璧に調和した近未来のマリーナ</td>
-                            <td>嵐や過酷な自然を克服することを夢見た人々が空想した、明るいイマジネーションの結実。</td>
-                            <td>過去の人間が切実な祈りを込めて思い描いた未来。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ロストリバーデルタ</strong></td>
-                            <td>1930年代</td>
-                            <td>中央アメリカの未開の密林</td>
-                            <td>大ハリケーンが突如呼び覚ました「失われた河」と、生い茂る緑の奥深くに眠っていた古代文明の遺跡。</td>
-                            <td>未知へのフロンティア・スピリット（探検欲）の象徴。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ファンタジースプリングス</strong></td>
-                            <td>伝説の時代</td>
-                            <td>魔法の泉が導くディズニーファンタジーの地</td>
-                            <td>水の精霊が、水の旅の途中で出会った夢いっぱいのファンタジー物語を魔法で岩や木に刻み込んだ伝説の地。</td>
-                            <td>ゲストを現実からディズニーの物語へと没入させる源泉。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>アラビアンコースト</strong></td>
-                            <td>13世紀</td>
-                            <td>アラビアンナイトの神秘的な中東</td>
-                            <td>ジーニーの魔法によって作られた、エキゾティックな宮殿と、活気あふれるバザール（市場）や港町。</td>
-                            <td>航海技術や天文学をヨーロッパに伝えた、大航海時代の夜明け。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>マーメイドラグーン</strong></td>
-                            <td>現代（人間界と隣り合わせ）</td>
-                            <td>『リトル・マーメイド』の美しい海底王国</td>
-                            <td>人魚姫アリエルと仲間たちが暮らす、歌声に満ちたカラフルな海底世界「アンダー・ザ・シー」。</td>
-                            <td>人間と海底の住人が手を取り合って集う、平和と協和の象徴。</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ミステリアスアイランド</strong></td>
-                            <td>1870年代</td>
-                            <td>ジュール・ヴェルヌのSF世界（南太平洋の火山島）</td>
-                            <td>天才科学者ネモ船長が拓いた、プロメテウス火山のカルデラ内部にひっそりと佇む秘密基地。</td>
-                            <td>人の強い理性とイマジネーションが挑む、極限の探求。</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <!-- メディテレーニアンハーバー -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">メディテレーニアンハーバー</span>
+                    <span class="port-meta">1901年 / 南欧</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>ポルトフィーノやヴェネツィアなどの南欧諸国</p>
+                    <p><strong>物語の核心：</strong>大航海時代へのロマンと、偉大な人間讃歌であるルネサンスの賛美。美しい運河が煌めく「パラッツォ・カナル」、活気あるのどかな漁村「ポルト・パラディーゾ」、そして天文学や航海術の結晶である「エクスプローラーズ・ランディング」の3つのエリアから成ります。</p>
+                    <p><strong>この海での役割：</strong>東京ディズニーシーの偉大なる玄関口。すべての冒険者たちにとっての、輝かしい出港地としての意味を持ちます。</p>
+                </div>
+            </details>
+
+            <!-- アメリカンウォーターフロント -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">アメリカンウォーターフロント</span>
+                    <span class="port-meta">1912年 / 東海岸</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>アメリカ東海岸の大都市ニューヨーク、および郊外のケープコッド</p>
+                    <p><strong>物語 of 核心：</strong>20世紀初頭の高度経済成長と科学技術の発展に沸き立つ大都市ニューヨーク。そのすぐ隣には、ハリケーンなどの過酷な自然の脅威に立ち向かい、常に海への祈りと感謝を忘れない、素朴で温かい漁村ケープコッドという美しい二面性が同居しています。</p>
+                    <p><strong>この海での役割：</strong>産業革命期における圧倒的な富とエネルギー、そして市民たちが抱く自由と独立精神の象徴です。</p>
+                </div>
+            </details>
+
+            <!-- ポートディスカバリー -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">ポートディスカバリー</span>
+                    <span class="port-meta">時空を超えた未来 / マリーナ</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>科学技術と大自然が完璧なまでに調和した近未来のマリーナ</p>
+                    <p><strong>物語の核心：</strong>常に嵐や過酷な気象に生活を脅かされていたケープコッドの市民たちが、「いつか自分たちの科学の力でハリケーンを克服する」という切実な祈りを込めて思い描いた空想が、時空を超えて現実の港となりました。</p>
+                    <p><strong>この海での役割：</strong>過去の人々が胸に抱いた、温かく前向きな「未来へのイマジネーション」の結実です。</p>
+                </div>
+            </details>
+
+            <!-- ロストリバーデルタ -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">ロストリバーデルタ</span>
+                    <span class="port-meta">1930年代 / 中央アメリカ</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>中央アメリカ、カリブ海沿岸に広がる未開の密林</p>
+                    <p><strong>物語の核心：</strong>1880年代を襲った猛烈な大ハリケーンが、ジャングルの最奥に隠されていた河「エル・リオ・ペルディード（失われた河）」と、神秘的な古代遺跡を出現させました。一獲千金を夢見る冒険家や考古学者たちが一斉に大挙した、ワイルドな居留地です。</p>
+                    <p><strong>この海での役割：</strong>「未開のフロンティア」に挑む人間の飽くなき情熱と、フロンティア・スピリットの象徴です。</p>
+                </div>
+            </details>
+
+            <!-- ファンタジースプリングス -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">ファンタジースプリングス</span>
+                    <span class="port-meta">伝説の時代 / 魔法の世界</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>魔法の泉が導くディズニーファンタジーの伝説的な世界</p>
+                    <p><strong>物語の核心：</strong>好奇心あふれる水の精霊が、様々な水の旅の中で出会った『ピーター・パン』『アナと雪の女王』『塔の上のラプンツェル』といった美しいファンタジー物語に深く感動し、その記憶を魔法の泉の周囲に刻み込みました。心優しい冒険家「ダッチェス」によって発見された地です。</p>
+                    <p><strong>この海での役割：</strong>現実世界から、人々を映画に描かれた精神のファンタジー世界へと深く没入させる源泉です。</p>
+                </div>
+            </details>
+
+            <!-- アラビアンコースト -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">アラビアンコースト</span>
+                    <span class="port-meta">13世紀 / 中東</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>『アラビアンナイト』に描かれたエキゾティックなイスラーム世界</p>
+                    <p><strong>物語の核心：</strong>魔法のランプの魔人ジーニーと、優しく正義感に満ちたアラジンたちの願いによって作られたオアシスと宮殿、そして活気に満ちた港町。異国情緒に溢れたこの街は、魔法と神秘が日常に溶け込んでいます。</p>
+                    <p><strong>この海での役割：</strong>ヨーロッパ世界に造船技術や天文学、コンパス（羅針盤）を伝播させた、大航海時代の偉大な前史です。</p>
+                </div>
+            </details>
+
+            <!-- マーメイドラグーン -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">マーメイドラグーン</span>
+                    <span class="port-meta">現代 / 海底</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>映画『リトル・マーメイド』のロマンあふれる海底王国</p>
+                    <p><strong>物語の核心：</strong>人間の住む世界と陸上が大好きになった人魚姫アリエルが、海の上と下の住人たちが、種族の壁を超えて手を取り合って楽しく歌い遊べるようにと、父トリトン王に願って解放した、光と音に溢れるカラフルな「アンダー・ザ・シー」の世界です。</p>
+                    <p><strong>この海での役割：</strong>異なる世界に暮らす者同士が偏見なく集う、平和と協調のドメイン（領域）です。</p>
+                </div>
+            </details>
+
+            <!-- ミステリアスアイランド -->
+            <details class="port-accordion">
+                <summary class="port-summary">
+                    <span class="port-name">ミステリアスアイランド</span>
+                    <span class="port-meta">1870年代 / 火山島</span>
+                </summary>
+                <div class="port-content">
+                    <p><strong>モデル：</strong>ジュール・ヴェルヌが描いたSF世界、南太平洋の火山島</p>
+                    <p><strong>物語の核心：</strong>産業革命の科学万能主義が絶頂に達した時代。国家同士の醜い戦争や争いを嫌った孤高の天才科学者「ネモ船長」が、プロメテウス火山のカルデラ内部に設立した秘密基地。地底や深海の極限への挑戦を続けています。</p>
+                    <p><strong>この海での役割：</strong>人の強い科学的理性と、豊かなイマジネーションによって人類の極限の謎に挑む探究です。</p>
+                </div>
+            </details>
         </section>
 
         <section class="article-block reveal" id="interpret">
@@ -368,7 +478,7 @@
         <section class="article-block reveal" id="sea-connection">
             <h2>IV. 秘密結社「S.E.A.」が繋ぐ航海史</h2>
             <p>時代も、世界観も、まったく異なるこれら8つの美しい港たち。それらを裏側から一本の壮大な縦糸で繋いでいるのが、秘密結社「S.E.A. (Society of Explorers and Adventurers)」の存在です。1538年にメディテレーニアンハーバーの「フォートレス・エクスプロレーション」を原点（組織の誕生）として設立されたこの探検家・冒険家学会は、異なる時代に生きたメンバーたちのイマジネーションを繋ぎ続けています。</p>
-            <p>ホテル・ハイタワーのオーナーである「ハリソン・ハイタワー三世」、ソアリンのフライトに命を懸けた「カメリア・ファルコ」、そして火山を秘密基地とした「ネモ船長」など、シーの各所で活躍する著名な人物たちは、すべてこのS.E.A.のメンバー、あるいは彼らに深く関係した人々です。彼らの探求への「憧れ」と「冒険の軌跡」が、お互いの港をより深く魅力的なものに繋いでいるのです。</p>
+            <p>ホテル・ハイタワーのオーナーである「ハリソン・ハイタワー三世」、ソアリンのフライトに命を懸けた「カメリア・ファルコ」や、火山を秘密基地とした「ネモ船長」など、シーの各所で活躍する著名な人物たちは、すべてこのS.E.A.のメンバー、あるいは彼らに深く関係した人々です。彼らの探求への「憧れ」と「冒険の軌跡」が、お互いの港をより深く魅力的なものに繋いでいるのです。</p>
         </section>
 
         <section class="article-block reveal" id="transit">
