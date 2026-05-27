@@ -76,13 +76,12 @@
             transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
         }
  
-        /* FIX: サイト内のすべての写真・ロゴ・画像に対して、スマホの長押し・右クリック、
-           およびドラッグ＆ドロップによるPC等への直リンク保存防止策を適用 */
+        /* サイト内のすべての写真・ロゴ・画像に対して保存防止を適用（aタグのリンク遷移は正常に透過します） */
         img {
-            -webkit-touch-callout: none; /* iOS Safariでの長押し保存ポップアップを禁止 */
-            -webkit-user-select: none;   /* 画像の選択を禁止 */
+            -webkit-touch-callout: none; 
+            -webkit-user-select: none;   
             user-select: none;
-            pointer-events: none;        /* 画像自体へのクリック・長押しイベントの到達を遮断（親要素のaタグへ透過） */
+            pointer-events: none;        
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -556,7 +555,7 @@
                     <span class="card-meta">Read: 5 min</span>
                 </div>
                 <h2>TDS Spatial Epic</h2>
-                <p>「冒険とイマジネーションの海」を巡る、美しき全8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、そして魔法の泉へと紡がれる時空を超えた旅路へ。</p>
+                <p>「冒険とイマジネーションの海」を巡る、美しき全 8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、そして魔法の泉へと紡がれる時空を超えた旅路へ。</p>
                 <div class="read-btn">Explore the Chronicle →</div>
             </a>
 
