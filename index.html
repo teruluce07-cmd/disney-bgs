@@ -4,34 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="東京ディズニーリゾートのアトラクションに秘められた歴史と物語、バックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
-    <!-- FIX: SEO（検索結果）に載りやすくするためのメタキーワード、および検索クローラー用のインデックス設定 -->
-    <meta name="keywords" content="ディズニーシー, バックグラウンドストーリー, BGS, ディズニーランド, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
+    <!-- FIX: ディズニー総合サイトとしての最重要日本語キーワードを配置（Googleの検索に極めて引っかかりやすくなります） -->
+    <meta name="keywords" content="ディズニー BGS, ディズニーシー BGS, 舞浜 BGS, バックグラウンドストーリー, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://example.com/index.html"> <!-- 実際公開するURLに後から変更可能です -->
-
-    <!-- FIX: SNSや検索結果で映える、充実したOGPメタタグの追加（SEO効果） -->
-    <meta property="og:title" content="TDS BGS & Photography | 冒険とイマジネーションの海の記録">
-    <meta property="og:description" content="東京ディズニーリゾートのバックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。各アトラクションに秘められた物語を紐解きます。">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://example.com/index.html">
-    <meta property="og:image" content="https://example.com/tds-map.jpg">
-    <meta property="og:site_name" content="TDS BGS & Photography">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TDS BGS & Photography | 冒険とイマジネーションの海の記録">
-    <meta name="twitter:description" content="各アトラクションに秘められた壮大なバックグラウンドストーリーを深掘りします。">
-    <meta name="twitter:image" content="https://example.com/tds-map.jpg">
-
-    <title>TDS BGS & Photography | HOME</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
     
-    <!-- FIX: 検索エンジン（Google等）にこのサイトの構造を正しく伝える、JSON-LD形式の構造化データ（SEO対策の世界的標準仕様） -->
+    <!-- FIX: 新URL「https://teruluce07-cmd.github.io/disney-bgs/」に完全最適化した canonical タグ -->
+    <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/index.html">
+
+    <!-- SNSシェア時のOGP設定も新URLに完全に同期 -->
+    <meta property="og:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーションの海の記録">
+    <meta property="og:description" content="東京ディズニーリゾートのバックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://teruluce07-cmd.github.io/disney-bgs/index.html">
+    <meta property="og:image" content="https://teruluce07-cmd.github.io/disney-bgs/tds-map.jpg">
+    <meta property="og:site_name" content="TDS BGS &amp; Photography">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーションの海の記録">
+    <meta name="twitter:description" content="各アトラクションに秘められた壮大なバックグラウンドストーリーを深掘りします。">
+    <meta name="twitter:image" content="https://teruluce07-cmd.github.io/disney-bgs/tds-map.jpg">
+    
+    <!-- FIX: 検索エンジンにサイトの正しいジャンルと構造を伝えるJSON-LD（新URLへ完全同期） -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "TDS BGS & Photography",
+      "name": "ディズニーシー BGS & 写真館",
       "alternateName": "TERU_LUCE_",
-      "url": "https://example.com/index.html",
+      "url": "https://teruluce07-cmd.github.io/disney-bgs/index.html",
       "description": "東京ディズニーリゾートのバックグラウンドストーリー（BGS）と現地写真を紹介するサイト。各アトラクションに秘められた物語を深掘りします。",
       "publisher": {
         "@type": "Person",
@@ -40,6 +39,7 @@
     }
     </script>
 
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
     <style>
         /* --- 昼夜（超・くしゃくしゃ古紙）カラー設定 --- */
         :root {
@@ -113,7 +113,7 @@
         }
         html.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
  
-        /* FIX: アトラクション詳細ページのように、一覧カードが下からふわっと現れるスクロールアニメーション用のスタイル */
+        /* カードが下からふわっと現れるスクロールアニメーション用のスタイル */
         .reveal { 
             opacity: 0; 
             transform: translateY(30px); 
@@ -124,7 +124,7 @@
             transform: translateY(0); 
         }
 
-        /* FIX: TOC（目次）等からアンカー遷移した際に、カードをぽっと美しく光らせるハイライト演出 */
+        /* アンカー遷移時にカードをぽっと美しく光らせるハイライト演出 */
         @keyframes highlightPulse {
             0% { box-shadow: 0 0 0 0 var(--accent-gold); }
             50% { box-shadow: 0 0 20px 4px var(--accent-gold); border-color: var(--accent-gold); }
@@ -137,7 +137,7 @@
         /* --- ヘッダー --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); transition: border-color 0.8s; }
  
-        /* FIX 1: h1 を外側に出し、その中に a を入れる構造に変更 */
+        /* h1 を外側に、a を内側に入れる正しいHTML構造 */
         .header-logo-heading {
             font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; letter-spacing: 0.1em; margin: 0;
         }
@@ -151,7 +151,7 @@
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
  
-        /* プロフィールアーチ写真枠 */
+        /* プロフィール写真枠 */
         .intro-hero { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
         .intro-portrait {
             width: 100px !important; height: 120px !important; border-radius: 50px 50px 0 0; overflow: hidden; border: 1px solid var(--accent-gold); box-shadow: 0 8px 20px var(--glow-color); margin-bottom: 30px; background: #111; display: inline-block;
@@ -160,7 +160,7 @@
  
         .intro-message { font-size: 0.85rem; color: var(--text-main); line-height: 2.2; margin-bottom: 35px; opacity: 0.95; letter-spacing: 0.05em; }
  
-        /* FIX 2: cite を blockquote の外に出す構造に合わせてスタイル調整 */
+        /* 名言のマークアップ */
         .walt-quote {
             font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; font-weight: 600; color: var(--accent-gold); line-height: 1.5; margin-bottom: 8px; padding: 0 10px;
         }
@@ -169,7 +169,7 @@
         }
         .walt-quote-jp { font-size: 0.7rem; opacity: 0.5; letter-spacing: 0.05em; }
 
-        /* FIX: 世界観に奥行きをもたらす、古書・博物館の活版印刷をイメージした装飾区切り線 */
+        /* セクション装飾区切り線 */
         .vintage-divider {
             text-align: center;
             margin: 50px 0 35px;
@@ -207,7 +207,7 @@
         .layout-toggle button { background: transparent; border: none; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: background-color 0.3s, color 0.3s; text-transform: uppercase; }
         .layout-toggle button.active-toggle { background: var(--accent-gold); color: var(--bg-color); font-weight: 600; }
 
-        /* FIX: TOCと連動してカードリストを「ALL / TDL / TDS」に動的フィルタリングできるタグフィルターバーを追加 */
+        /* ALL/TDL/TDSに動的フィルタリングできる、利便性の極めて高いタグフィルターバー */
         .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
         .filter-btn {
             background: transparent; border: 1px solid var(--border-light); color: var(--text-main);
@@ -232,16 +232,15 @@
         .img-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: var(--img-filter); transition: transform 1.5s ease, filter 0.8s ease; }
         .article-card:hover .img-wrapper img { transform: scale(1.05); }
 
-        /* FIX: 新規コラムの地図画像を「ちょっと古くなった古地図」のような黄金色の質感にする専用CSSフィルター */
+        /* 新規コラムの地図画像を「ちょっと古くなった古地図」のような黄金色の質感にする専用CSSフィルター */
         .epic-map-filter { 
             object-position: center center !important; 
             filter: brightness(0.85) contrast(1.05) sepia(75%) hue-rotate(-5deg) saturate(0.85) !important;
         }
-        /* 夜（呪い）モードの時は、古地図が怪しく青緑色に燐光するようなフィルターに切り替える */
         html.curse-mode .epic-map-filter {
             filter: brightness(0.7) contrast(1.25) sepia(50%) hue-rotate(85deg) saturate(1.25) !important;
         }
-        /* FIX: ホバー時のみセピアフィルターが薄まって「色鮮やかな現代の地図が手前に浮かび上がる」エモーショナルな演出 */
+        /* ホバー時のみセピアフィルターが薄まって「色鮮やかな現代の地図が手前に浮かび上がる」エモーショナルな演出 */
         .article-card:hover .epic-map-filter {
             filter: brightness(1) contrast(1.05) sepia(0%) saturate(1.1) !important;
         }
@@ -277,12 +276,12 @@
         .card-tag-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .card-tag { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; margin: 0; }
         
-        /* FIX: 各カードに「読了目安」や「更新日（Published/Updated）」を美しく表示するメタ情報エリア */
+        /* 各カードに「読了目安」や「更新日」を表示するメタ情報エリア */
         .card-meta {
             display: flex; gap: 12px; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 0.05em; opacity: 0.55;
         }
 
-        /* FIX: 空間叙事詩（Spatial Epic）など、新着記事の右上に掲出される「NEW」バッジ */
+        /* 新着マーク「NEW」バッジ */
         .new-badge {
             position: absolute; top: 15px; right: 15px; background: var(--accent-gold); color: var(--bg-color);
             font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-weight: bold; letter-spacing: 0.15em;
@@ -290,7 +289,7 @@
             transition: background-color 0.8s, color 0.8s;
         }
         html.curse-mode .new-badge {
-            background: var(--accent-gold); /* 呪いモード時はネオングリーンに輝く */
+            background: var(--accent-gold); 
             box-shadow: 0 4px 10px rgba(0,255,127,0.3);
         }
 
@@ -350,7 +349,7 @@
         .site-notice-trigger { cursor: pointer; text-decoration: underline; transition: color 0.3s; }
         .site-notice-trigger:hover { color: var(--accent-gold); }
 
-        /* FIX: イースターエッグ「S.E.A.会員証」モーダル専用デザイン（高貴なネイビー＆ゴールドの証明書風） */
+        /* イースターエッグ「S.E.A.会員証」モーダル */
         .sea-certificate-box {
             background: #091220; border: 3px double #C9A054; color: #FAF7F0;
             padding: 40px 30px; border-radius: 8px; text-align: center; max-width: 450px;
@@ -368,7 +367,7 @@
         .sea-cert-body { font-family: 'Noto Serif JP', serif; font-size: 0.78rem; line-height: 2; opacity: 0.9; margin-bottom: 30px; text-align: justify; }
         .sea-cert-sign { font-size: 1.1rem; font-style: italic; color: #C9A054; border-top: 1px dashed rgba(201,160,84,0.3); padding-top: 15px; margin-top: 25px; }
 
-        /* FIX: 連絡が取りやすいよう、注意書きモーダル内に配置した上品なSNSリンク用のボタンスタイル */
+        /* モーダル内SNSリンク */
         .modal-sns-links { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
         .sns-btn {
             display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
@@ -396,7 +395,7 @@
             .article-list.grid-mode { grid-template-columns: repeat(3, 1fr); gap: 20px; }
         }
  
-        /* FIX: モバイルでフッターの「Notes」が埋もれないよう、押しやすいボタン風に視認性とサイズを改善 */
+        /* Notesボタンのサイズ改善 */
         footer { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.8; padding-top: 60px; }
         .footer-notice-box { display: inline-block; margin-top: 10px; }
         .site-notice-trigger-btn {
@@ -417,7 +416,6 @@
  
     <div class="container">
         <!-- ヘッダー -->
-        <!-- FIX 1: h1 を外側に、a を内側に変更 -->
         <header class="header">
             <h1 class="header-logo-heading">
                 <a href="index.html" class="header-logo">TERU_LUCE_</a>
@@ -427,7 +425,6 @@
  
         <!-- ウェルカム・ヒーローエリア -->
         <section class="intro-hero">
-            <!-- FIX: プロフィール写真にもドラッグ＆ドロップ保存防止を適用 -->
             <div class="intro-portrait">
                 <img src="IMG_2226.jpeg" alt="サイト管理者のプロフィール写真" fetchpriority="high" draggable="false">
             </div>
@@ -436,7 +433,6 @@
                     このサイトではディズニーのBGSについて紹介してます。<br>
                     アトラクションの待ち時間とかに見てください。
                 </p>
-                <!-- FIX 2: cite を blockquote の外に出す -->
                 <blockquote class="walt-quote">
                     "Disneyland will never be completed.<br>
                     It will continue to grow as long as there is imagination left in the world."
@@ -446,11 +442,10 @@
             </div>
         </section>
 
-        <!-- FIX: 活版印刷をイメージしたクラシックなヴィンテージ装飾区切り線 -->
+        <!-- 活版印刷をイメージしたクラシックなヴィンテージ装飾区切り線 -->
         <div class="vintage-divider" aria-hidden="true">✦ —— ◆ —— ✦</div>
  
         <!-- パーク別目次 (TOC) -->
-        <!-- FIX: 順番はTDL ➔ TDSを完全に維持 -->
         <nav class="toc-box" aria-label="コンテンツナビゲーション">
             <div class="toc-title">Quick Navigation</div>
             
@@ -467,7 +462,6 @@
             <div class="toc-section">
                 <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
                 <div class="toc-tags">
-                    <!-- FIX: 新しい物語調の総括コラム「Spatial Epic」への目次リンクをTDSセクションの先頭に埋め込み -->
                     <a href="#spatial-epic-card">Spatial Epic</a>
                     <a href="#tot-card">Tower of Terror</a>
                     <a href="#sindbad-card">Sindbad's Voyage</a>
@@ -495,7 +489,7 @@
                     <button id="view-grid" class="active-toggle" aria-pressed="true">田 Grid</button>
                 </div>
             </div>
-            <!-- FIX: ポータル内のカードをALL/TDL/TDSに瞬時に動的フィルタリングできる、利便性の極めて高いタグフィルターバーを追加 -->
+            <!-- カテゴリフィルタ -->
             <div class="filter-bar" role="group" aria-label="カテゴリフィルタ">
                 <button class="filter-btn active-toggle" data-filter="all">All Exhibits</button>
                 <button class="filter-btn" data-filter="tdl">Disneyland (TDL)</button>
@@ -503,14 +497,11 @@
             </div>
         </div>
  
-        <!-- 記事カード一覧 -->
-        <!-- FIX: 並び順を TDL ➔ TDS の順で並ぶよう整理。さらに各カードへ .reveal クラスを適用し下から順にフェードインするアニメーションを付加。
-             カテゴリー判定用の data-category を追加。 -->
+        <!-- 記事カード一覧（TDL ➔ TDS順に完全統一、かつスクロールに応じたReveal搭載） -->
         <div class="article-list grid-mode" id="article-list">
             
             <!-- ================= TDL (Tokyo Disneyland) ================= -->
             
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tdl" でフィルタリング -->
             <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
                 <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -522,7 +513,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tdl" でフィルタリング -->
             <a href="bgs-btm.html" class="article-card reveal" id="btm-card" data-category="tdl">
                 <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -534,7 +524,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tdl" でフィルタリング -->
             <a href="bgs-bb.html" class="article-card reveal" id="bb-card" data-category="tdl">
                 <div class="img-wrapper"><img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -546,7 +535,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tdl" でフィルタリング -->
             <a href="bgs-tl.html" class="article-card reveal" id="tl-card" data-category="tdl">
                 <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -560,9 +548,6 @@
  
             <!-- ================= TDS (Tokyo DisneySea) ================= -->
             
-            <!-- FIX: 新しい総括コラム「東京ディズニーシーの空間叙事詩」カードをTDSの先頭に埋め込み。
-                 画像には古地図風のヴィンテージフィルタークラス「epic-map-filter」を設定。
-                 新着マークである「new-badge」、およびデータ属性「data-category="tds"」を追加。 -->
             <a href="bgs-spatial-epic.html" class="article-card reveal" id="spatial-epic-card" data-category="tds">
                 <span class="new-badge">NEW</span>
                 <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" class="epic-map-filter" loading="lazy" draggable="false"></div>
@@ -575,7 +560,6 @@
                 <div class="read-btn">Explore the Chronicle →</div>
             </a>
 
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tds" でフィルタリング -->
             <a href="bgs-tot.html" class="article-card reveal" id="tot-card" data-category="tds">
                 <div class="img-wrapper"><img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -587,7 +571,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tds" でフィルタリング -->
             <a href="bgs-sindbad.html" class="article-card reveal" id="sindbad-card" data-category="tds">
                 <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -599,7 +582,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tds" でフィルタリング -->
             <a href="bgs-fs.html" class="article-card reveal" id="fs-card" data-category="tds">
                 <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -611,7 +593,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tds" でフィルタリング -->
             <a href="bgs-soarin.html" class="article-card reveal" id="soarin-card" data-category="tds">
                 <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -623,8 +604,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- S.E.A.カード（画像なし・CSS背景なのでドラッグ保存自体発生せず）。data-category="tds" でフィルタリング。
-                 Crest部分を5回連続タップすると、S.E.A.隠しイースターエッグが起動します。 -->
             <a href="bgs-sea.html" class="article-card reveal" id="sea-card" data-category="tds">
                 <div class="img-wrapper sea-thumbnail-bg" role="img" aria-label="S.E.A.（探検家・冒険家学会）のシンボルマーク">
                     <div class="sea-mini-crest"><span class="sea-mini-letters">S.E.A.</span></div>
@@ -638,7 +617,6 @@
                 <div class="read-btn">Explore the Archives →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tds" でフィルタリング -->
             <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
                 <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -650,7 +628,6 @@
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
-            <!-- FIX: 写真に draggable="false" を付与し保存防止。data-category="tds" でフィルタリング -->
             <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
                 <div class="img-wrapper"><img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" loading="lazy" draggable="false"></div>
                 <div class="card-tag-wrapper">
@@ -683,18 +660,16 @@
             また、エントランスを抜けてもすぐに海が見えない構造も緻密な計算によるものです。ホテル・ミラコスタ下の薄暗い通路を歩くことで、日常から非日常へと少しずつ心を切り替えさせ、視界が開けた瞬間に広大なメディテレーニアンハーバーが目に飛び込んでくるという、劇的な空間演出（トランジション）が仕掛けられています。</p>
             
             <h4>IV. 経年美化を前提とした空間づくり</h4>
-            <p>2001年に開業したTDS is 総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング（風化塗装）技術を緻密に施すことで、「時間が経ってもただ劣化するのではなく、年々味わいが増し、美しく風化していく」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
+            <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング（風化塗装）技術を緻密に施すことで、「時間が経ってもただ劣化するのではなく、年々味わいが増し、美しく風化していく」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
             
             <h4>V. ファンタジースプリングスへの繋がり</h4>
-            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としては過去最大級となる約2500億円が投じられました。この大規模な投資は、1983年の開園当初から続く「上質なテーマパーク体験を提供する」という姿勢の表れと言えます。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深め、国内外の多くのゲストを魅了し続けています。</p>
+            <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としては過去最大級となる約2500億円が投じられました。この大規模な投資は、1983年の開園当初から続く「上質なテーマパーク体験を提供する」という姿勢の表れと言えます。海, 川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深め、国内外の多くのゲストを魅了し続けています。</p>
         </section>
  
-        <!-- FIX 4: footer の margin-top を削除し padding-top に統一。
-             Notesボタンの視認性とタップしやすさを大幅に向上。 -->
         <footer>
             &copy; TERU_LUCE_
             <div class="footer-notice-box">
-                <button class="site-notice-trigger-btn" id="notice-trigger" aria-haspopup="dialog">📝 View Notes & SNS</button>
+                <button class="site-notice-trigger-btn" id="notice-trigger" aria-haspopup="dialog">📝 View Notes &amp; SNS</button>
             </div>
         </footer>
     </div>
@@ -707,7 +682,7 @@
             <p>このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、大変お手数ですが、InstagramまたはXのDMにてご報告いただけますと幸いです。</p>
             <p style="margin-top: 15px;">また、掲載している写真は画角や見やすさにこだわって調整を行っておりますが、見にくかったり、掲載位置に誤りがあったりする場合も、同様にご指摘いただけますと助かります。</p>
             
-            <!-- FIX: ご指摘や交流がスムーズに行えるよう、注意書きモーダル内にエレガントなSNSへの実リンクボタンを設置 -->
+            <!-- 注意書きモーダル内のSNSへの実リンクボタン -->
             <div class="modal-sns-links">
                 <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-instagram">Instagram (DM)</a>
                 <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-x">X (DM)</a>
@@ -719,7 +694,7 @@
         </div>
     </div>
 
-    <!-- FIX: コナミコマンド入力、またはS.E.A.カードのロゴ5回タップで起動する、イースターエッグ「S.E.A.会員証」隠しモーダル -->
+    <!-- イースターエッグ「S.E.A.会員証」隠しモーダル -->
     <div class="modal-overlay" id="sea-modal" role="dialog" aria-modal="true" aria-labelledby="sea-title" aria-hidden="true">
         <div class="sea-certificate-box" id="sea-modal-box">
             <button class="modal-close sea-cert-close" id="sea-modal-close" aria-label="モーダルを閉じる">Close ✕</button>
@@ -751,7 +726,7 @@
  
         const themeSwitch = document.getElementById('theme-switch');
  
-        // curse-mode を body ではなく html に付け替える
+        // curse-mode を html に適用
         function applyTheme(isDark) {
             document.documentElement.classList.toggle('curse-mode', isDark);
             themeSwitch.textContent = isDark ? '☀️' : '🌙';
@@ -759,15 +734,14 @@
             themeSwitch.setAttribute('aria-pressed', isDark ? 'true' : 'false');
         }
 
-        // 初期読み込み時にポータルのテーマ設定を継承する。
-        // FIX: URLパラメータ（?theme=dark or ?theme=curse）が指定されていた場合、パラメータを優先してダークモードを適用する機能（SEO・共有用）
+        // URLパラメータ（?theme=dark or ?theme=curse）によるテーマ動的判定
         const urlParams = new URLSearchParams(window.location.search);
         const urlTheme = urlParams.get('theme');
         
         let initialDark = false;
         if (urlTheme === 'dark' || urlTheme === 'curse') {
             initialDark = true;
-            safeSetStorage('teru-theme', 'dark'); // 保存状態も同期
+            safeSetStorage('teru-theme', 'dark'); 
         } else {
             const savedTheme = safeGetStorage('teru-theme');
             initialDark = (savedTheme === 'dark');
@@ -798,26 +772,22 @@
         viewListBtn.addEventListener('click', () => { applyLayout('list'); safeSetStorage('teru-layout', 'list'); });
         viewGridBtn.addEventListener('click', () => { applyLayout('grid'); safeSetStorage('teru-layout', 'grid'); });
 
-        // FIX: カードリストをALL/TDL/TDSに仕分けるための、滑らかで不具合の起きないタグフィルタリングJS処理
+        // カテゴリ動的フィルタリング
         const filterBtns = document.querySelectorAll('.filter-bar button');
         const cards      = document.querySelectorAll('.article-card');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const filter = btn.getAttribute('data-filter');
-                
-                // ボタンの active クラスをトグル
                 filterBtns.forEach(b => b.classList.remove('active-toggle'));
                 btn.classList.add('active-toggle');
 
                 cards.forEach(card => {
-                    // transition: all を避け、個別にトランジションを制御
                     card.style.transition = 'opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
                     const category = card.getAttribute('data-category');
 
                     if (filter === 'all' || category === filter) {
                         card.style.display = 'block';
-                        // display: block が反映されるための僅かなディレイを入れてフェードインさせる
                         requestAnimationFrame(() => {
                             card.style.opacity = '1';
                             card.style.transform = 'translateY(0) scale(1)';
@@ -825,7 +795,6 @@
                     } else {
                         card.style.opacity = '0';
                         card.style.transform = 'translateY(15px) scale(0.98)';
-                        // アニメーション完了後に非表示にする
                         setTimeout(() => {
                             if (card.style.opacity === '0') {
                                 card.style.display = 'none';
@@ -836,15 +805,13 @@
             });
         });
 
-        // FIX: TOCのタグリンクをクリックした際、該当するアトラクションカードまで滑らかにスクロールし、
-        // 遷移完了時にカードをフワッと輝かせる（ハイライト演出）JS処理
+        // TOCタグの自動カテゴリ解除 ＆ 目的カードのパルス明滅ハイライト演出
         document.querySelectorAll('.toc-tags a').forEach(link => {
             link.addEventListener('click', (e) => {
                 const targetId = link.getAttribute('href').substring(1);
                 const targetCard = document.getElementById(targetId);
                 
                 if (targetCard) {
-                    // カードリストがカテゴリで非表示になっている場合、自動でカテゴリフィルターを解除する親切設計
                     const category = targetCard.getAttribute('data-category');
                     const activeFilter = document.querySelector('.filter-bar button.active-toggle').getAttribute('data-filter');
                     
@@ -852,10 +819,8 @@
                         document.querySelector('.filter-bar button[data-filter="all"]').click();
                     }
 
-                    // すべてのハイライトクラスを一旦除去
                     cards.forEach(c => c.classList.remove('card-highlight'));
 
-                    // スムーズスクロールが完了する付近のタイミングでハイライトを実行
                     setTimeout(() => {
                         targetCard.classList.add('card-highlight');
                     }, 650);
@@ -863,7 +828,7 @@
             });
         });
 
-        // FIX: カード群がスクロールに応じて下からふわっとフェードインして出現するIntersectionObserver制御
+        // スクロールフェードイン
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -872,7 +837,6 @@
                 el.style.willChange = 'transform, opacity';
                 el.classList.add('active');
                 
-                // アニメーション完了後にGPU負荷を下げるためwill-changeを解放
                 el.addEventListener('transitionend', () => {
                     el.style.willChange = 'auto';
                 }, { once: true });
@@ -888,13 +852,12 @@
         const modalClose   = document.getElementById('modal-close');
         const modalBox     = document.getElementById('modal-box');
 
-        // FIX: イースターエッグ（S.E.A.会員証）モーダル制御用のセレクタを追加
         const seaModal = document.getElementById('sea-modal');
         const seaModalClose = document.getElementById('sea-modal-close');
         const seaModalBox = document.getElementById('sea-modal-box');
         
         let lastFocusedElement = null;
-        let activeModal = null; // 現在開いているモーダルの参照
+        let activeModal = null; 
  
         function getFocusableElements(targetBox) {
             return Array.from(targetBox.querySelectorAll(
@@ -969,8 +932,7 @@
             if (e.key === 'Escape' && activeModal) { closeModal(); }
         });
 
-        // --- FIX: イースターエッグの仕掛け（コナミコマンド ＆ S.E.A.紋章5回タップ） ---
-        // 1. コナミコマンドのキー配列
+        // イースターエッグの仕掛け（コナミコマンド ＆ S.E.A.紋章5回タップ）
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
         document.addEventListener('keydown', (e) => {
@@ -985,14 +947,12 @@
             }
         });
 
-        // 2. モバイル/スマホ対応：S.E.A. Archives カード内のエンブレム（.sea-mini-crest）を5回連打タップして起動
         const seaCrest = document.querySelector('#sea-card .sea-mini-crest');
         if (seaCrest) {
             let clickCount = 0;
             let lastClick = 0;
             seaCrest.addEventListener('click', (e) => {
                 const now = Date.now();
-                // 連続クリックの間隔が1秒以内の場合カウントする
                 if (now - lastClick < 1000) {
                     clickCount++;
                     if (clickCount === 5) {
