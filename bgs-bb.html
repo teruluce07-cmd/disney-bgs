@@ -6,29 +6,27 @@
     <title>BGS Deep Report: Beauty and the Beast | teru_luce_</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- 昼夜（フランスの古紙・呪われた紫の魔導書）カラー設定 --- */
         :root {
             --bg-color: #E2D7C5; 
             --text-main: #2D231E; 
-            --accent-gold: #3B5998; /* フランス皇室を思わせるロイヤルブルー */
+            --accent-gold: #3B5998; 
             --border-light: rgba(59, 89, 152, 0.2);
             --img-filter: brightness(0.95) contrast(1.05);
             --glow-color: rgba(59, 89, 152, 0.25);
-            
-            /* シワを表現した、超くしゃくしゃ紙の3Dフィルター */
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
         }
 
         body.curse-mode {
             --bg-color: #100615; 
             --text-main: #E2E8F0; 
-            --accent-gold: #FF1493; /* 妖しく輝く魔法の薔薇のマゼンタピンク */
+            --accent-gold: #FF1493; 
             --border-light: rgba(255, 20, 147, 0.25);
             --img-filter: brightness(0.8) contrast(1.2) saturate(1.2);
             --glow-color: rgba(255, 20, 147, 0.45);
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%2322082b' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
         }
 
+        img { max-width: 100% !important; height: auto; display: block; }
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -46,7 +44,6 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 背景固定レイヤー（GPU高速化） */
         .paper-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
@@ -85,7 +82,6 @@
         h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
         .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
 
-        /* 目次 */
         .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
         .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
         .toc-list { list-style: none; padding: 0; }
@@ -93,17 +89,15 @@
         .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
         .toc-list a:hover { color: var(--accent-gold); }
 
-        /* 本文 */
-        .article-block { margin-bottom: 70px; text-align: justify; }
+        .article-block { margin-bottom: 30px; text-align: justify; }
         h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
         h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
         p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
 
-        /* 写真を背景古紙に「なじませる」ための手帳・ポラロイド風加工 */
         .hero-img-container { 
             margin: 45px auto; 
-            padding: 10px; /* 写真の白フチ */
-            background: #FAF7F0; /* 暖かみのある白 */
+            padding: 10px; 
+            background: #FAF7F0; 
             border-radius: 4px; 
             box-shadow: 0 12px 30px rgba(62, 56, 48, 0.15); 
             border: 1px solid rgba(139, 115, 85, 0.15);
@@ -122,7 +116,6 @@
             filter: var(--img-filter); 
         }
 
-        /* 蹄鉄比較のレトロなテーブル */
         .comparison-table {
             width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.8rem;
             border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
@@ -139,31 +132,11 @@
         .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
 
-        /* Instagramへのオシャレな誘導ボタン */
-        .insta-btn-wrapper {
-            text-align: center;
-            margin: 60px 0;
-        }
+        .insta-btn-wrapper { text-align: center; margin: 60px 0; }
         .insta-link-btn {
-            display: inline-block;
-            text-decoration: none;
-            color: var(--text-main);
-            border: 1px solid var(--border-light);
-            padding: 18px 30px;
-            border-radius: 40px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            transition: all 0.4s ease;
-            background: rgba(255,255,255,0.05);
+            display: inline-block; text-decoration: none; color: var(--text-main); border: 1px solid var(--border-light); padding: 18px 30px; border-radius: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.4s ease; background: rgba(255,255,255,0.05);
         }
-        .insta-link-btn:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            box-shadow: 0 0 20px var(--glow-color);
-            transform: translateY(-3px);
-        }
+        .insta-link-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); box-shadow: 0 0 20px var(--glow-color); transform: translateY(-3px); }
 
         .footer-link { text-align: center; margin-top: 80px; }
         .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
@@ -190,13 +163,13 @@
             <ul class="toc-list">
                 <li><span>I. 呪われた城への空間演出（プロローグ）</span><a href="#prologue">Read →</a></li>
                 <li><span>II. 野獣の城に秘められた歳月と「アダム」の謎</span><a href="#beast-mystery">Read →</a></li>
-                <li><span>III. 環境ストーリーテリング：城内を巡る「6つの部屋」</span><a href="#six-rooms">Read →</a></li>
+                <li><span>III. 城内を巡る「6つの部屋」とBモードの秘密</span><a href="#six-rooms">Read →</a></li>
                 <li><span>IV. ベルの村に隠された「6つの蹄鉄」</span><a href="#village">Read →</a></li>
                 <li><span>V. 日本の所作を宿した技術と、奇跡の復活劇</span><a href="#imagineering">Read →</a></li>
             </ul>
         </nav>
 
-        <!-- 1枚目：昼の美しいお城の外観（bb-castle.jpeg） -->
+        <!-- 1枚目：昼の美しいお城の外観 -->
         <div class="hero-img-container reveal">
             <img src="bb-castle.jpeg" alt="Beast's Castle Exterior" class="hero-img">
         </div>
@@ -205,13 +178,13 @@
         <section class="article-block reveal" id="prologue">
             <h2>I. 呪われた城への空間演出</h2>
             <p>2020年、ファンタジーランドに誕生した『美女と野獣』のエリア。ここは単に映画のセットを美しく再現しただけではなく、エリアに足を踏み入れた瞬間から映画のストーリー順に景色や空気感が変化していく、計算され尽くした**「歩く映画体験」**の仕掛けが施されています。</p>
-            <p>エントランスに佇むベルの父の家「モーリスのコテージ」を抜けると、のどかで活気ある「村の広場」へと出ます。ここでは映画の「朝の風景」が聞こえてきそうな、陽気なフランスの片田舎が広がっていますが、村を抜けて野獣の城へと進むにつれ、景色は一変して薄暗い「深い森」へと変わります。映画でモーリスが狼に襲われ迷い込んだ、あのひんやりとした不気味な森が、予測された植栽と岩組によって見事に演出されているのです。城の前に架かる石橋を渡ることで、ゲストは「人間の世界（日常）」から「魔法の世界（非日常）」へと完全に引き離されます。</p>
-            
-            <!-- 2枚目：不気味な夜の入り口（bb-entrance.jpeg） -->
-            <div class="hero-img-container reveal">
-                <img src="bb-entrance.jpeg" alt="Maurice's Cottage and Forest Path" class="hero-img">
-            </div>
+            <p>エントランスに佇むベルの父の家「モーリスのコテージ」を抜けると、のどかで活気ある「村の広場」へと出ます。ここでは映画の「朝の風景」が聞こえてきそうな、陽気なフランスの片田舎が広がっていますが、村を抜けて野獣の城へと進むにつれ、景色は一変して薄暗い「深い森」へと変わります。映画でモーリスが狼に襲われ迷い込んだ、あのひんやりとした不気味な森が、緻密な植栽と岩組によって見事に演出されているのです。城の前に架かる石橋を渡ることで、ゲストは「人間の世界（日常）」から「魔法の世界（非日常）」へと完全に引き離されます。</p>
         </section>
+
+        <!-- 2枚目：不気味な夜の入り口 -->
+        <div class="hero-img-container reveal">
+            <img src="bb-entrance.jpeg" alt="Maurice's Cottage and Forest Path" class="hero-img">
+        </div>
 
         <!-- II. 野獣の城に秘められた歳月と「アダム」の謎 -->
         <section class="article-block reveal" id="beast-mystery">
@@ -234,17 +207,19 @@
             <h2>III. 城内を巡る「6つの部屋」とBモードの秘密</h2>
             <p>城内に足を踏み入れたゲストは、ただアトラクションを待つのではなく、お城に遺された記憶をめぐる「6つの空間」を通過します。</p>
             <p>
-                <strong>1. 応接室：</strong> 天井の高い不気味なロビー。よく見ると、呪いで家具に変えられたルミエールやコグスワースの気配が、暖炉の彫刻に隠されています。<br>
+                <strong>1. 応接室：</strong> 天井の高い不気味なロビー。よく見ると、呪いで家具に変えられたルミエールやコグスワースの気配が、暖炉の彫刻装飾のなかに隠されています。<br>
                 <strong>2. 朝食部屋：</strong> ベルと野獣が少しずつ心の距離を縮め始めた、温かな光の差し込む小さなプライベートダイニング。<br>
                 <strong>3. 鎧の廊下：</strong> ひとりぼっちの晩餐会の後、コグスワースの案内で通りかかった中世の甲冑が立ち並ぶ通路。<br>
                 <strong>4. 玄関の広間：</strong> 大きな折り返し大階段が印象的な、アトラクション全体の導入部となる巨大な吹き抜けのプレショーエリア。
             </p>
-            
-            <!-- 3枚目：大階段（bb-staircase.jpeg） -->
-            <div class="hero-img-container reveal">
-                <img src="bb-staircase.jpeg" alt="Enchanted Castle Grand Staircase" class="hero-img">
-            </div>
+        </section>
 
+        <!-- 3枚目：大階段（※セクションの外に出してレイアウト崩れを修正） -->
+        <div class="hero-img-container reveal">
+            <img src="bb-staircase.jpeg" alt="Enchanted Castle Grand Staircase" class="hero-img">
+        </div>
+
+        <section class="article-block reveal">
             <p>
                 <strong>5. 洗濯場：</strong> ベルを温かくもてなすために、お城の召使いたちが忙しく立ち働いている作業場。<br>
                 <strong>6. 生活エリア：</strong> 乗り場の直前、野獣のプライベートスペース「西の塔」の入り口へと繋がる不気味な回廊。
@@ -255,6 +230,8 @@
                 <p>プレショーが行われる「玄関の広間」では、バルコニーにベルと野獣のアニマトロニクスが登場しますが、システムメンテナンスの際などには、アニマトロニクスが登場しない**「Bモード」**と呼ばれる特別プログラムが作動します。<br><br>
                    このBモードが始動するとバルコニーのカーテンは閉じたままになりますが、中央のステンドグラスの映像投影システムが自動的に変更。通常時では絶対に上映されない**「2つの追加ステンドグラスシーン」**が美しく映し出され、物語を完璧に補完する特別な演出に切り替わります。もし出会えたら、非常に幸運な瞬間です。</p>
             </div>
+            
+            <p>そしてアトラクション本編の、床にレールのない「トラックレスライド」を採用した魔法のカップ。2000年に同じ東京ディズニーランドの『プーさんのハニーハント』が世界で初めて採用したトラックレスライド（LPSシステム）の技術を20年かけて極限まで進化させ、まるで本当にダンスを踊っているかのような息の合った動きを実現させました。ゲストは食器たちの宴に招かれた「主賓」として、彼らと共に踊る体験をします。</p>
         </section>
 
         <!-- IV. ベルの村と6つの蹄鉄 -->
@@ -264,7 +241,7 @@
 
             <div class="connection-card" style="border-color: #8C6239; background: rgba(140, 98, 57, 0.05);">
                 <h4>🍎 【Curator's Recommend】お気に入りの甘い誘惑</h4>
-                <p>ガストンの酒場やその周辺で販売されている**『ル・フウズ・チュロス（アップルキャラメル味）』**。サクサクの香ばしいデニッシュ風生地から、甘酸っぱいリンゴのフルーティーな香りとキャラメルの上品な甘さがふわっと広がる、私自身インパするたびに必ず買い求める一押しメニューです！待ち時間の小さなお供にぜひ味わってみてください。</p>
+                <p>ガストンの酒場やその周辺で販売されている**『ル・フウズ・チュロス（アップルキャラメル味）』**。サクサクの香ばしい生地から、甘酸っぱいリンゴのフルーティーな香りとキャラメルの上品な甘さがふわっと広がる、私自身インパするたびに必ず買い求める一押しメニューです！待ち時間の小さなお供にぜひ味わってみてください。</p>
             </div>
 
             <p>さらに、地面の泥道（コンクリート）を注意深く見つめると、ディズニー映画に登場する「名馬たち」が残した、それぞれ形の異なる**「6つの蹄鉄（ひづめ）の足跡」**がリアルに刻まれています。これらを踏みしめながら、その先の冒険へ思いを馳せてみてください。</p>
@@ -314,19 +291,20 @@
 
         <!-- V. 日本の所作と、最新イリュージョン技術 -->
         <section class="article-block reveal" id="imagineering">
-            <h2>V. 「日本の所作」を宿したアニマトロニクスと復活劇</h2>
-            <p>乗車する魔法のカップは、2000年に同じ東京ディズニーランドの『プーさんのハニーハント』が世界で初めて採用した「トラックレスライド（レールなしアトラクション）」の技術を20年かけて極限まで進化させたものです。まるでお城の呪いによってすべての調度品が音楽に合わせて踊り出すように、カップ自体がゲストを優雅な舞踏会へといざないます。</p>
-
-            <!-- 4枚目：ボールルームのダンス（bb-dance.jpeg） -->
-            <div class="hero-img-container reveal">
-                <img src="bb-dance.jpeg" alt="Belle and the Beast Dancing" class="hero-img">
-            </div>
-
-            <p>そして最大の見どころである、ベルや野獣たちの「オーディオ・アニマトロニクス」。このアトラクションは日本（東京）向けに開発されたことから、ベルの滑らかな動きには、**日本人の持つ繊細な「所作や身のこなし」**（丁寧なお辞儀や、静かなうつむき方、気品あふれる手の動き）が細部まで取り入れられています。だからこそ、彼女の動きは私たちの目にも信じられないほど自然で、胸を打つようなリアリティを持って心に迫るのです。</p>
-            <p>クライマックスの、瀕死の野獣が魔法の力によって人間に戻る復活の瞬間。プロジェクションマッピング、光学トリック、そして高度なロボット工学が寸分の狂いもなく完全に融合した、目の前で「本物の魔法」が起こる奇跡のイリュージョン。魔法が解け、二人が踊る広間のラストシーンは、私たち自身が魔法の目撃者となったことを確信させてくれます。</p>
+            <h2>V. 「日本の所作」を宿した技術と、奇跡の復活劇</h2>
+            <p>アトラクション最大の見どころは、ウォルト・ディズニー・イマジニアリング（WDI）の最新技術によって作られたベルや野獣たちの「オーディオ・アニマトロニクス（動くロボット）」です。開発初期から東京向けに完全オリジナルとして設計された本施設では、ベルの滑らかな動きに、**日本人の持つ繊細な「所作や身のこなし」**（丁寧なお辞儀や、静かなうつむき方、気品あふれる手の動き）が細部まで取り入れられています。だからこそ、彼女の動きは私たち日本のゲストの目にも信じられないほど自然で、胸を打つようなリアリティを持って心に迫るのです。</p>
         </section>
 
-        <!-- 〇〇さんのインスタのまほもの投稿へのリンク -->
+        <!-- 4枚目：ボールルームのダンス（セクションの外に出してレイアウトを安定化） -->
+        <div class="hero-img-container reveal">
+            <img src="bb-dance.jpeg" alt="Belle and the Beast Dancing" class="hero-img">
+        </div>
+
+        <section class="article-block reveal">
+            <p>そしてクライマックスの、瀕死の野獣が魔法の力によって人間に戻る復活の瞬間。プロジェクションマッピング、光学トリック、そして高度なロボット工学が寸分の狂いもなく完全に融合した、目の前で「本物の魔法」が起こる奇跡のイリュージョン。魔法が解け、二人が踊る広間のラストシーンは、私たち自身が魔法の目撃者となったことを確信させてくれます。</p>
+        </section>
+
+        <!-- 〇〇さんのインスタ投稿へのリンク -->
         <div class="insta-btn-wrapper reveal">
             <a href="https://www.instagram.com/p/DX1XYFcGJi8/?igsh=MWhjMTRycXo0dWh3dg==" class="insta-link-btn" target="_blank">
                 View on Instagram (まほもの投稿) 📸
@@ -352,4 +330,9 @@
                 entry.target.classList.add('active');
                 observer.unobserve(entry.target);
             });
-        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px"
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        reveals.forEach(reveal => revealOnScroll.observe(reveal));
+        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+    </script>
+</body>
+</html>
