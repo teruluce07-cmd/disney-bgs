@@ -19,7 +19,7 @@
     <meta property="og:image" content="https://teruluce07-cmd.github.io/disney-bgs/tds-map.jpg">
     <meta property="og:site_name" content="TDS BGS &amp; Photography">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーションの海の記録">
+    <meta name="twitter:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーション of 海の記録">
     <meta name="twitter:description" content="各アトラクションに秘められた壮大なバックグラウンドストーリーを深掘りします。">
     <meta name="twitter:image" content="https://teruluce07-cmd.github.io/disney-bgs/tds-map.jpg">
     
@@ -41,7 +41,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* --- 昼夜（超・くしゃくしゃ古紙）カラー設定 --- */
+        /* --- 昼（超・くしゃくしゃ古紙）クラシック・カラー設定 --- */
         :root {
             --bg-color: #E2D7C5; 
             --text-main: #2D231E; 
@@ -50,17 +50,6 @@
             --img-filter: brightness(0.9) contrast(1.1) sepia(30%);
             --glow-color: rgba(140, 98, 57, 0.2);
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
-        }
- 
-        /* FIX 3: curse-mode を body ではなく html に適用 */
-        html.curse-mode {
-            --bg-color: #070911; 
-            --text-main: #E2E8F0; 
-            --accent-gold: #00FF7F; 
-            --border-light: rgba(0, 255, 127, 0.2);
-            --img-filter: brightness(0.7) contrast(1.25) hue-rotate(90deg);
-            --glow-color: rgba(0, 255, 127, 0.4);
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23141b2e' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
         }
  
         img { max-width: 100% !important; height: auto; }
@@ -73,15 +62,15 @@
             background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
             background-size: cover;
             color: var(--text-main); line-height: 2.2; overflow-x: hidden;
-            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+            -webkit-font-smoothing: antialiased;
         }
  
         /* サイト内のすべての写真・ロゴ・画像に対して保存防止を適用（aタグのリンク遷移は正常に透過します） */
         img {
-            -webkit-touch-callout: none; 
-            -webkit-user-select: none;   
+            -webkit-touch-callout: none; /* iOS Safariでの長押し保存ポップアップを禁止 */
+            -webkit-user-select: none;   /* 画像の選択を禁止 */
             user-select: none;
-            pointer-events: none;        
+            pointer-events: none;        /* 画像自体へのクリック・長押しイベントの到達を遮断（親要素のaタグへ透過） */
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -110,7 +99,6 @@
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
             transition: background 0.8s ease, max-width 0.5s ease;
         }
-        html.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
  
         /* カードが下からふわっと現れるスクロールアニメーション用のスタイル */
         .reveal { 
@@ -191,7 +179,6 @@
         .toc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
         
         .toc-tags a { background: rgba(45, 35, 30, 0.04); border: 1px solid var(--border-light); padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; color: var(--text-main); text-decoration: none; transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s; }
-        html.curse-mode .toc-tags a { background: rgba(255, 255, 255, 0.02); }
         .toc-tags a:hover { background: var(--text-main); color: var(--bg-color); border-color: var(--text-main); box-shadow: 0 0 10px var(--glow-color); }
         .toc-footer { text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border-light); }
         .toc-footer a { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold); text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
@@ -236,15 +223,9 @@
             object-position: center center !important; 
             filter: brightness(0.85) contrast(1.05) sepia(75%) hue-rotate(-5deg) saturate(0.85) !important;
         }
-        html.curse-mode .epic-map-filter {
-            filter: brightness(0.7) contrast(1.25) sepia(50%) hue-rotate(85deg) saturate(1.25) !important;
-        }
         /* ホバー時のみセピアフィルターが薄まって「色鮮やかな現代の地図が手前に浮かび上がる」エモーショナルな演出 */
         .article-card:hover .epic-map-filter {
             filter: brightness(1) contrast(1.05) sepia(0%) saturate(1.1) !important;
-        }
-        html.curse-mode .article-card:hover .epic-map-filter {
-            filter: brightness(0.85) contrast(1.15) sepia(10%) hue-rotate(0deg) saturate(1.2) !important;
         }
         
         .fs-img-align { object-position: center 15% !important; }
@@ -293,10 +274,6 @@
             padding: 4px 8px; border-radius: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 10;
             transition: background-color 0.8s, color 0.8s;
         }
-        html.curse-mode .new-badge {
-            background: var(--accent-gold); 
-            box-shadow: 0 4px 10px rgba(0,255,127,0.3);
-        }
 
         .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; transition: color 0.8s; }
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: opacity 0.4s ease; }
@@ -319,7 +296,7 @@
         .article-list.grid-mode .indy-img-align { object-position: center 20% !important; }
         .article-list.grid-mode .epic-map-filter { object-position: center center !important; }
         
-        /* FIX: レイジングスピリッツの写真アライメント（グリッド正方形表示用。画角がさらにタイトになるため上部へ絶妙にシフトさせます） */
+        /* FIX: レイジングスピリッツの写真アライメント（グリッド正方形表示用。画画がさらにタイトになるため上部へ絶妙にシフトさせます） */
         .article-list.grid-mode .raging-img-align { object-position: center 25% !important; }
  
         /* --- コラムカード（舞浜の軌跡） --- */
@@ -352,7 +329,6 @@
             letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 10px; margin: -8px -10px;
         }
         .modal-close:focus-visible { outline: 2px solid var(--accent-gold); outline-offset: 2px; border-radius: 4px; }
-        html.curse-mode .modal-box { background: #0B1021; color: #E2E8F0; border-color: var(--accent-gold); }
         
         .site-notice-trigger { cursor: pointer; text-decoration: underline; transition: color 0.3s; }
         .site-notice-trigger:hover { color: var(--accent-gold); }
@@ -387,22 +363,6 @@
         .sns-btn-x { background: rgba(45, 35, 30, 0.1); color: var(--text-main); border: 1px solid var(--border-light); }
         .sns-btn-x:hover { background: var(--text-main); color: var(--bg-color); border-color: var(--text-main); }
  
-        /* 昼夜スイッチ */
-        .theme-switch {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease, background-color 0.8s ease;
-            border: none;
-        }
-        .theme-switch:hover { transform: scale(1.1); }
-        .theme-switch:focus-visible { outline: 2px solid var(--text-main); outline-offset: 3px; }
- 
-        /* 💻 パソコン ＆ iPadレスポンシブ */
-        @media (min-width: 768px) {
-            .container { max-width: 750px; padding: 50px 40px 120px; }
-            .article-list.grid-mode { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        }
- 
         /* Notesボタンのサイズ改善 */
         footer { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.8; padding-top: 60px; }
         .footer-notice-box { display: inline-block; margin-top: 10px; }
@@ -419,8 +379,6 @@
  
     <div class="paper-bg" aria-hidden="true"></div>
     <div class="noise-overlay" aria-hidden="true"></div>
-    
-    <button class="theme-switch" id="theme-switch" aria-label="ダークモードに切り替え" aria-pressed="false">🌙</button>
  
     <div class="container">
         <!-- ヘッダー -->
@@ -528,7 +486,7 @@
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Big Thunder Mountain</h2>
-                <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と、大自然に宿る「精霊の怒り」が招いたタブルウィード崩壊の歴史を辿る。</p>
+                <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と、大自然に宿る「精霊 of 怒り」が招いたタブルウィード崩壊の歴史を辿る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
@@ -575,7 +533,7 @@
                     <span class="card-meta">Read: 5 min</span>
                 </div>
                 <h2>Tower of Terror</h2>
-                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。そしてディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
+                <p>ニューヨーク1912。大富豪ハリソン・ハイタワー三世の失踪劇と、呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。精度とディズニーシー全体を繋ぐ、隠された歴史の糸。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
@@ -669,7 +627,7 @@
             また、エントランスを抜けてもすぐに海が見えない構造も緻密な計算によるものです。ホテル・ミラコスタ下の薄暗い通路を歩くことで、日常から非日常へと少しずつ心を切り替えさせ、視界が開けた瞬間に広大なメディテレーニアンハーバーが目に飛び込んでくるという、劇的な空間演出（トランジション）が仕掛けられています。</p>
             
             <h4>IV. 経年美化を前提とした空間づくり</h4>
-            <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング（風化塗装）技術を緻密に施すことで、「時間が経ってもただ劣化するのではなく、年々味わいが増し、美しく風化していく」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
+            <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石, 木材を使用し、エイジング（風化塗装）技術を緻密に施すことで、「時間が経ってもただ劣化するのではなく、年々味わいが増し、美しく風化していく」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
             
             <h4>V. ファンタジースプリングスへの繋がり</h4>
             <p>2024年に誕生した新テーマポート「ファンタジースプリングス」は、エリア単体の開発としては過去最大級となる約2500億円が投じられました。この大規模な投資は、1983年の開園当初から続く「上質なテーマパーク体験を提供する」という姿勢の表れと言えます。海, 川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深め、国内外の多くのゲストを魅了し続けています。</p>
@@ -693,8 +651,10 @@
             
             <!-- 注意書きモーダル内のSNSへの実リンクボタン -->
             <div class="modal-sns-links">
-                <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-instagram">Instagram (DM)</a>
-                <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-x">X (DM)</a>
+                <!-- FIX: SNSのリンク先をご指定の実際のプロフィールURLに更新 -->
+                <a href="https://www.instagram.com/teru_luce_" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-instagram">Instagram (DM)</a>
+                <!-- FIX: SNSのリンク先をご指定の実際のプロフィールURLに更新 -->
+                <a href="https://x.com/teru_luce" target="_blank" rel="noopener noreferrer" class="sns-btn sns-btn-x">X (DM)</a>
             </div>
 
             <p style="margin-top: 25px; border-top: 1px dashed var(--border-light); padding-top: 15px; font-weight: bold; color: var(--accent-gold); font-size: 0.75rem;">
@@ -706,184 +666,3 @@
     <!-- イースターエッグ「S.E.A.会員証」隠しモーダル -->
     <div class="modal-overlay" id="sea-modal" role="dialog" aria-modal="true" aria-labelledby="sea-title" aria-hidden="true">
         <div class="sea-certificate-box" id="sea-modal-box">
-            <button class="modal-close sea-cert-close" id="sea-modal-close" aria-label="モーダルを閉じる">Close ✕</button>
-            <div class="sea-cert-crest">S.E.A.</div>
-            <h3 class="sea-cert-title" id="sea-title">S.E.A. Explorer</h3>
-            <div class="sea-cert-subtitle">Membership Certificate</div>
-            <div class="sea-cert-body">
-                ここに、イマジネーションと知的好奇心をもって世界の謎に挑み続ける探究者に対し、探検家・冒険家学会（S.E.A.）の特別名誉会員たる資格を授与することを証明します。真の発見とは、新しい景色を探すことではなく、新しい目（想像力）をもつことである。<br><br>
-                想像力の波に乗って、未だ見ぬイマジネーションの海へ再び旅立ちましょう。
-            </div>
-            <div class="sea-cert-sign">Society of Explorers and Adventurers</div>
-        </div>
-    </div>
- 
-    <script>
-        // .container の will-change をアニメーション中だけ有効にし、完了後解除
-        const containerEl = document.querySelector('.container');
-        containerEl.style.willChange = 'transform, opacity';
-        containerEl.addEventListener('animationend', () => {
-            containerEl.style.willChange = 'auto';
-        }, { once: true });
- 
-        function safeGetStorage(key) {
-            try { return localStorage.getItem(key); } catch (e) { return null; }
-        }
-        function safeSetStorage(key, value) {
-            try { localStorage.setItem(key, value); } catch (e) { /* 無視 */ }
-        }
- 
-        const themeSwitch = document.getElementById('theme-switch');
- 
-        // curse-mode を html に適用
-        function applyTheme(isDark) {
-            document.documentElement.classList.toggle('curse-mode', isDark);
-            themeSwitch.textContent = isDark ? '☀️' : '🌙';
-            themeSwitch.setAttribute('aria-label', isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え');
-            themeSwitch.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-        }
-
-        // URLパラメータ（?theme=dark or ?theme=curse）によるテーマ動的判定
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlTheme = urlParams.get('theme');
-        
-        let initialDark = false;
-        if (urlTheme === 'dark' || urlTheme === 'curse') {
-            initialDark = true;
-            safeSetStorage('teru-theme', 'dark'); 
-        } else {
-            const savedTheme = safeGetStorage('teru-theme');
-            initialDark = (savedTheme === 'dark');
-        }
-        applyTheme(initialDark);
-
-        themeSwitch.addEventListener('click', () => {
-            const isDark = !document.documentElement.classList.contains('curse-mode');
-            applyTheme(isDark);
-            safeSetStorage('teru-theme', isDark ? 'dark' : 'light');
-        });
- 
-        const viewListBtn = document.getElementById('view-list');
-        const viewGridBtn = document.getElementById('view-grid');
-        const articleList = document.getElementById('article-list');
- 
-        function applyLayout(mode) {
-            const isGrid = mode === 'grid';
-            articleList.classList.toggle('grid-mode', isGrid);
-            viewGridBtn.classList.toggle('active-toggle', isGrid);
-            viewListBtn.classList.toggle('active-toggle', !isGrid);
-            viewGridBtn.setAttribute('aria-pressed', isGrid ? 'true' : 'false');
-            viewListBtn.setAttribute('aria-pressed', isGrid ? 'false' : 'true');
-        }
-        const savedLayout = safeGetStorage('teru-layout') || 'grid';
-        applyLayout(savedLayout);
- 
-        viewListBtn.addEventListener('click', () => { applyLayout('list'); safeSetStorage('teru-layout', 'list'); });
-        viewGridBtn.addEventListener('click', () => { applyLayout('grid'); safeSetStorage('teru-layout', 'grid'); });
-
-        // カテゴリ動的フィルタリング
-        const filterBtns = document.querySelectorAll('.filter-bar button');
-        const cards      = document.querySelectorAll('.article-card');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const filter = btn.getAttribute('data-filter');
-                filterBtns.forEach(b => b.classList.remove('active-toggle'));
-                btn.classList.add('active-toggle');
-
-                cards.forEach(card => {
-                    card.style.transition = 'opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-                    const category = card.getAttribute('data-category');
-
-                    if (filter === 'all' || category === filter) {
-                        card.style.display = 'block';
-                        requestAnimationFrame(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0) scale(1)';
-                        });
-                    } else {
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(15px) scale(0.98)';
-                        setTimeout(() => {
-                            if (card.style.opacity === '0') {
-                                card.style.display = 'none';
-                            }
-                        }, 400);
-                    }
-                });
-            });
-        });
-
-        // TOCタグの自動カテゴリ解除 ＆ 目的カードのパルス明滅ハイライト演出
-        document.querySelectorAll('.toc-tags a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const targetId = link.getAttribute('href').substring(1);
-                const targetCard = document.getElementById(targetId);
-                
-                if (targetCard) {
-                    const category = targetCard.getAttribute('data-category');
-                    const activeFilter = document.querySelector('.filter-bar button.active-toggle').getAttribute('data-filter');
-                    
-                    if (activeFilter !== 'all' && activeFilter !== category) {
-                        document.querySelector('.filter-bar button[data-filter="all"]').click();
-                    }
-
-                    cards.forEach(c => c.classList.remove('card-highlight'));
-
-                    setTimeout(() => {
-                        targetCard.classList.add('card-highlight');
-                    }, 650);
-                }
-            });
-        });
-
-        // スクロールフェードイン
-        const reveals = document.querySelectorAll('.reveal');
-        const revealOnScroll = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                const el = entry.target;
-                el.style.willChange = 'transform, opacity';
-                el.classList.add('active');
-                
-                el.addEventListener('transitionend', () => {
-                    el.style.willChange = 'auto';
-                }, { once: true });
-                observer.unobserve(el);
-            });
-        }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
-
-        reveals.forEach(reveal => revealOnScroll.observe(reveal));
- 
-        // --- モーダル制御システム（一般メモ & S.E.A.証明書） ---
-        const modalOverlay = document.getElementById('modal-overlay');
-        const noticeTrigger = document.getElementById('notice-trigger');
-        const modalClose   = document.getElementById('modal-close');
-        const modalBox     = document.getElementById('modal-box');
-
-        const seaModal = document.getElementById('sea-modal');
-        const seaModalClose = document.getElementById('sea-modal-close');
-        const seaModalBox = document.getElementById('sea-modal-box');
-        
-        let lastFocusedElement = null;
-        let activeModal = null; 
- 
-        function getFocusableElements(targetBox) {
-            return Array.from(targetBox.querySelectorAll(
-                'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-            ));
-        }
- 
-        function trapFocus(e) {
-            if (e.key !== 'Tab' || !activeModal) return;
-            const focusable = getFocusableElements(activeModal === 'notice' ? modalBox : seaModalBox);
-            const first = focusable[0];
-            const last  = focusable[focusable.length - 1];
-            if (e.shiftKey) {
-                if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-            } else {
-                if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-            }
-        }
- 
-        function openModal(type) {
