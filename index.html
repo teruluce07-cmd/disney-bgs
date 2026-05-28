@@ -38,6 +38,7 @@
             --border-strong: rgba(107,68,35,.55);
             --shadow-deep:   rgba(15,8,3,.45);
             --shadow-soft:   rgba(30,18,8,.2);
+            --bg-stain-size: 100% 2200px;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,7 +60,7 @@
         }
 
         /* ============================================
-           Custom Cursor
+           Custom Cursor & Touch Device optimization
         ============================================ */
         body { cursor: none; }
         #cursor-outer {
@@ -70,8 +71,10 @@
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: transform .12s ease, opacity .3s, border-color .3s;
+            /* opacityとborder-colorに遷移を絞り、表示時のチラつきを防止 */
+            transition: opacity .3s ease, border-color .3s ease, width .2s ease, height .2s ease;
             mix-blend-mode: multiply;
+            opacity: 0; /* 初期非表示。マウス検出時にJSで1にします */
         }
         #cursor-inner {
             position: fixed;
@@ -81,6 +84,8 @@
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
+            transition: opacity .3s ease;
+            opacity: 0; /* 初期非表示 */
         }
         #cursor-outer.hovering {
             width: 52px; height: 52px;
@@ -103,6 +108,12 @@
             width: 6px; height: 1px;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        /* FIX: スマホ・タブレット等のタッチデバイスではカスタムカーソルを強制的に非表示にし、標準のタッチ操作を最速化 */
+        @media (hover: none) {
+            body { cursor: auto !important; }
+            #cursor-outer, #cursor-inner { display: none !important; }
         }
 
         /* ============================================
@@ -221,7 +232,7 @@
                 radial-gradient(circle   at  5% 92%, rgba(90,55,20,.22) 0%, transparent 55%),
                 radial-gradient(ellipse at 50% 50%, transparent 15%, rgba(18,9,3,.42) 100%),
                 url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='6' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23F5EDD8' surfaceScale='9'%3E%3CfeDistantLight azimuth='45' elevation='35'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
-            background-size: 100% 2200px, 100% 2200px, 100% 2200px, 100% 2200px, 100% 2200px, 100% 100%, 500px 500px;
+            background-size: var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), 100% 100%, 500px 500px;
             background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, no-repeat, repeat;
             color: var(--ink);
             line-height: 2.2;
@@ -439,12 +450,14 @@
         .vintage-divider::before,
         .vintage-divider::after {
             content: '';
-            flex: 1; height: 1px;
+            position: absolute; left: 38px; right: 38px; height: 1px;
             background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+            z-index: -1;
         }
         .vintage-divider span {
             font-size: .9rem; color: var(--gold); letter-spacing: .5em;
-            padding: 0 16px; opacity: .75;
+            padding: 0 16px; opacity: .75; background: var(--vellum);
+            margin: 0 auto;
         }
 
         /* ============================================
@@ -458,7 +471,6 @@
             margin-bottom: 65px;
             position: relative;
         }
-        /* TOCの装飾コーナー */
         .toc-box::before, .toc-box::after {
             content: '◆';
             position: absolute;
@@ -542,7 +554,6 @@
             transition: transform .45s cubic-bezier(.25,1,.5,1), border-color .4s, box-shadow .4s;
             overflow: hidden;
         }
-        /* カードの左上コーナー装飾 */
         .article-card::before {
             content: '';
             position: absolute; top: 0; left: 0;
@@ -562,7 +573,6 @@
         .article-card:hover::after { opacity: 1; }
         .article-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 
-        /* スポットライト効果 */
         .article-card .spotlight {
             position: absolute; inset: 0;
             background: radial-gradient(circle 180px at var(--mx,50%) var(--my,50%), rgba(200,155,74,.08), transparent 70%);
@@ -576,7 +586,6 @@
             border-radius: 0; overflow: hidden; margin-bottom: 28px;
             box-shadow: 0 12px 30px var(--shadow-deep);
         }
-        /* 画像上のオーバーレイ (スキャンライン風) */
         .img-wrapper::after {
             content: '';
             position: absolute; inset: 0;
@@ -607,7 +616,6 @@
             display: flex; justify-content: center; align-items: center;
             position: relative; overflow: hidden;
         }
-        /* 星空エフェクト */
         .sea-thumbnail-bg::before {
             content: '';
             position: absolute; inset: 0;
@@ -683,21 +691,37 @@
         .article-list.grid-mode .raging-img-align { object-position: center 25%; }
 
         /* ============================================
-           Chronicle Column
+           Chronicle Column (Accordion style)
         ============================================ */
+        /* ▼ スマホの縦スクロールを劇的に軽くするため、特別コラム全体をアコーディオン開閉（details）に変更 */
         .chronicle-card {
             background: rgba(255,255,255,.02);
             border: 1px solid var(--border);
             border-top: 2px solid rgba(107,68,35,.35);
-            border-radius: 0; padding: 45px 28px;
-            text-align: justify; margin-top: 90px;
+            border-radius: 0; padding: 35px 28px;
+            margin-top: 90px;
             position: relative;
+            transition: background-color .3s ease;
+        }
+        .chronicle-card[open] {
+            background: rgba(255,255,255,.04);
+        }
+        .chronicle-summary {
+            cursor: pointer;
+            outline: none;
+            list-style: none;
+            text-align: center;
+            user-select: none;
+        }
+        .chronicle-summary::-webkit-details-marker {
+            display: none; /* Safari用の三角マーカー消去 */
         }
         .chronicle-card::before {
             content: 'THE MAIHAMA CHRONICLE';
             position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
             font-family: 'Cinzel', serif; font-size: .5rem; letter-spacing: .3em;
             color: var(--gold); background: var(--vellum); padding: 0 14px;
+            z-index: 5;
         }
         .chronicle-card h3 {
             font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 600;
@@ -707,7 +731,33 @@
         .chronicle-subtitle {
             font-family: 'IM Fell English', serif; font-style: italic;
             font-size: .88rem; text-align: center; color: var(--gold);
-            margin-bottom: 32px; opacity: .8;
+            opacity: .8;
+        }
+        .chronicle-expand-indicator {
+            display: inline-block;
+            margin-top: 15px;
+            font-family: 'Cinzel', serif;
+            font-size: .58rem; letter-spacing: .25em;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            transition: color .3s;
+        }
+        .chronicle-card:hover .chronicle-expand-indicator {
+            color: var(--gold);
+        }
+        /* 開いた時は「しおりを閉じる」合図にインジケータを切り替え */
+        .chronicle-card[open] .chronicle-expand-indicator {
+            display: none;
+        }
+        .chronicle-content {
+            margin-top: 25px;
+            border-top: 1px dashed var(--border);
+            padding-top: 25px;
+            animation: chronicleSlideDown 0.4s ease-out forwards;
+        }
+        @keyframes chronicleSlideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
         .chronicle-card h4 {
             font-family: 'Cinzel', serif; font-size: .78rem; font-weight: 600;
@@ -765,7 +815,7 @@
             letter-spacing: .12em; text-transform: uppercase; padding: 8px 12px;
         }
         .modal-close:hover { background: var(--ink-mid); color: var(--parchment); border-color: var(--ink-mid); }
-        .modal-close:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+        .modal-close:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
         .modal-sns-links { display: flex; gap: 10px; margin-top: 22px; justify-content: center; }
         .sns-btn {
             display: inline-flex; align-items: center; justify-content: center;
@@ -774,10 +824,7 @@
             padding: 9px 18px; border-radius: 0; text-transform: uppercase;
             transition: background-color .3s, color .3s;
         }
-        .sns-btn-instagram {
-            background: rgba(107,68,35,.08); color: var(--gold);
-            border: 1px solid var(--border-strong);
-        }
+        .sns-btn-instagram { background: rgba(140,98,57,.08); color: var(--gold); border: 1px solid var(--border-strong); }
         .sns-btn-instagram:hover { background: var(--ink-mid); color: var(--parchment); }
 
         /* ============================================
@@ -837,7 +884,7 @@
         #reading-tip.visible { opacity: 1; transform: translateY(0); }
 
         /* ============================================
-           Ambient Glow (記事数カウンター等)
+           Ambient Glow
         ============================================ */
         .stats-bar {
             display: flex; justify-content: center; gap: 40px;
@@ -969,7 +1016,7 @@
                 </div>
             </div>
             <div class="toc-footer">
-                <a href="profile.html">Curator Profile →</a>
+                <a href="profile.html">Curator Profile ➔</a>
             </div>
         </nav>
 
@@ -1168,22 +1215,32 @@
 
         </div>
 
-        <!-- Chronicle Column -->
-        <section class="chronicle-card reveal" aria-labelledby="chronicle-title">
-            <h3 id="chronicle-title">The Maihama Chronicle</h3>
-            <p class="chronicle-subtitle">「本物」を追求し続ける、舞浜の歴史</p>
-            <p>私たちが訪れる東京ディズニーリゾート（TDR）の背景には、オリエンタルランド（OLC）とウォルト・ディズニー・カンパニーの度重なる対話と、テーマパークづくりへの真摯な取り組みが存在します。</p>
-            <h4>I. アメリカ国外初のディズニーパーク</h4>
-            <p>1983年4月15日、東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、OLCがライセンス契約を結ぶ形で建設されました。開園初年度から1000万人を超えるゲストが訪れ、大きな成功を収めることになりました。</p>
-            <h4>II. 映画スタジオ計画から「海」への方針転換</h4>
-            <p>TDLの成功を受け、当初ディズニー側から提案されていたのは映画スタジオをテーマにしたパークでした。しかしOLC側はこれを見直し、1992年に「海」をテーマにした世界で唯一のパーク『東京ディズニーシー』の開発へと転換することになります。</p>
-            <h4>III. 幻のシンボルと、エントランスに隠された演出</h4>
-            <p>ディズニー側が当初提案した「巨大な灯台」というシンボルは、「日本人の感性において哀愁や寂しさを連想させやすい」として見送られました。議論の末に誕生したのが「アクアスフィア」と「プロメテウス火山」です。ホテル・ミラコスタ下の薄暗い通路を歩くことで日常から非日常へと切り替えさせる空間演出も、緻密な計算によるものです。</p>
-            <h4>IV. 経年美化を前提とした空間づくり</h4>
-            <p>総工費約3350億円のTDSは、本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増す」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
-            <h4>V. ファンタジースプリングスへの繋がり</h4>
-            <p>2024年誕生の「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
-        </section>
+        <!-- 特別コラム：舞浜の軌跡（アコーディオン） -->
+        <details class="chronicle-card reveal">
+            <summary class="chronicle-summary">
+                <h3 id="chronicle-title">The Maihama Chronicle</h3>
+                <p class="chronicle-subtitle">「本物」を追求し続ける、舞浜の歴史</p>
+                <span class="chronicle-expand-indicator">✦ Read the Chronicle ✦</span>
+            </summary>
+            <div class="chronicle-content">
+                <p>私たちが訪れる東京ディズニーリゾート（TDR）の背景には、オリエンタルランド（OLC）とウォルト・ディズニー・カンパニーの度重なる対話と、テーマパークづくりへの真摯な取り組みが存在します。</p>
+                
+                <h4>I. アメリカ国外初のディズニーパーク</h4>
+                <p>1983年4月15日、東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、OLCがライセンス契約を結ぶ形で建設されました。開園初年度から1000万人を超えるゲストが訪れ、大きな成功を収めることになりました。</p>
+                
+                <h4>II. 映画スタジオ計画から「海」への方針転換</h4>
+                <p>TDLの成功を受け、当初ディズニー側から提案されていたのは映画スタジオをテーマにしたパークでした。しかしOLC側はこれを見直し、1992年に「海」をテーマにした世界で唯一のパーク『東京ディズニーシー』の開発へと転換することになります。</p>
+                
+                <h4>III. 幻のシンボルと、エントランスに隠された演出</h4>
+                <p>ディズニー側が当初提案した「巨大な灯台」というシンボルは、「日本人の感性において哀愁や寂しさを連想させやすい」として見送られました。議論の末に誕生したのが「アクアスフィア」と「プロメテウス火山」です。ホテル・ミラコスタ下の薄暗い通路を歩くことで日常から非日常へと切り替えさせる空間演出も、緻密な計算によるものです。</p>
+                
+                <h4>IV. 経年美化を前提とした空間づくり</h4>
+                <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増す」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
+                
+                <h4>V. ファンタジースプリングスへの繋がり</h4>
+                <p>2024年誕生の「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
+            </div>
+        </details>
 
         <footer>
             &copy; TERU_LUCE_
@@ -1241,11 +1298,31 @@
     const cursorInner = document.getElementById('cursor-inner');
     let mouseX = 0, mouseY = 0;
     let outerX = 0, outerY = 0;
+    let mouseActive = false; // マウス移動検知用フラグ
 
+    // マウスが初めて動いた瞬間、およびウィンドウ内に入った時にのみ表示
     document.addEventListener('mousemove', e => {
-        mouseX = e.clientX; mouseY = e.clientY;
+        if (!mouseActive) {
+            mouseActive = true;
+            cursorOuter.style.opacity = '1';
+            cursorInner.style.opacity = '1';
+        }
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         cursorInner.style.left = mouseX + 'px';
         cursorInner.style.top  = mouseY + 'px';
+    });
+
+    // マウスがブラウザ画面外へ出た時にカーソルを消す
+    document.addEventListener('mouseleave', () => {
+        cursorOuter.style.opacity = '0';
+        cursorInner.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        if (mouseActive) {
+            cursorOuter.style.opacity = '1';
+            cursorInner.style.opacity = '1';
+        }
     });
 
     function animateCursor() {
@@ -1275,12 +1352,12 @@
     document.body.style.overflow = 'hidden';
 
     // ============================================
-    // Particle System
+    // Particle System (Optimized & Lightened)
     // ============================================
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    const PARTICLE_COUNT = 38;
+    const PARTICLE_COUNT = 22; // パフォーマンス軽量化のため粒子数を削減
 
     function resizeCanvas() {
         canvas.width  = window.innerWidth;
@@ -1295,12 +1372,12 @@
         return {
             x: randomBetween(0, canvas.width),
             y: randomBetween(0, canvas.height),
-            size: randomBetween(.6, 2.2),
-            speedX: randomBetween(-.3, .3),
-            speedY: randomBetween(-.5, -.1),
-            opacity: randomBetween(.1, .55),
+            size: randomBetween(.6, 2.0),
+            speedX: randomBetween(-.15, .15),
+            speedY: randomBetween(-.4, -.1),
+            opacity: randomBetween(.1, .45),
             pulse: randomBetween(0, Math.PI * 2),
-            pulseSpeed: randomBetween(.005, .018),
+            pulseSpeed: randomBetween(.005, .015),
             color: Math.random() > .5 ? '180,130,60' : '120,80,30'
         };
     }
@@ -1311,7 +1388,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => {
             p.pulse += p.pulseSpeed;
-            const osc = Math.sin(p.pulse) * .25;
+            const osc = Math.sin(p.pulse) * .2;
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${p.color},${p.opacity + osc})`;
@@ -1354,13 +1431,20 @@
     readingTip.style.cursor = 'none';
 
     // ============================================
-    // Spotlight on Cards
+    // Spotlight on Cards (Optimized with cached client rects)
     // ============================================
     document.querySelectorAll('.article-card').forEach(card => {
         const spotlight = card.querySelector('.spotlight');
         if (!spotlight) return;
+        
+        let rect = null;
+        // マウスが乗った時に位置情報を一度だけキャッシュし、超高頻度なスクロール・移動時の再計算(レイアウトスラッシング)を完全防止
+        card.addEventListener('mouseenter', () => {
+            rect = card.getBoundingClientRect();
+        });
+        
         card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
+            if (!rect) rect = card.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%';
             const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
             spotlight.style.setProperty('--mx', x);
@@ -1458,3 +1542,6 @@
     </script>
 </body>
 </html>
+これで表示速度もバッチリ！完璧です。
+
+ありがとうございました！また新しく変更したい時やエラーが出た際は助けてもらえると嬉しいです
