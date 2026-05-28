@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="東京ディズニーリゾートのアトラクションに秘められた歴史と物語、バックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
+    <!-- FIX: ディズニー総合サイトとしての最重要日本語キーワードを配置（Googleの検索に極めて引っかかりやすくなります） -->
     <meta name="keywords" content="ディズニー BGS, ディズニーシー BGS, 舞浜 BGS, バックグラウンドストーリー, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
     <meta name="robots" content="index, follow">
+    
+    <!-- FIX: 新URL「https://teruluce07-cmd.github.io/disney-bgs/」に完全最適化した canonical タグ -->
     <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/index.html">
 
+    <!-- SNSシェア時のOGP設定も新URLに完全に同期 -->
     <meta property="og:title" content="ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーションの海の記録">
     <meta property="og:description" content="東京ディズニーリゾートのバックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
     <meta property="og:type" content="website">
@@ -19,6 +23,7 @@
     <meta name="twitter:description" content="各アトラクションに秘められた壮大なバックグラウンドストーリーを深掘りします。">
     <meta name="twitter:image" content="https://teruluce07-cmd.github.io/disney-bgs/tds-map.jpg">
     
+    <!-- FIX: 検索エンジンにサイトの正しいジャンルと構造を伝えるJSON-LD（新URLへ完全同期） -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -39,7 +44,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- カラー設定 --- */
+        /* --- 昼（超・くしゃくしゃ古紙）クラシック・カラー設定 --- */
         :root {
             --bg-color: #E2D7C5; 
             --text-main: #2D231E; 
@@ -95,6 +100,7 @@
             position: relative; z-index: 1;
             width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
             background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
+            transition: background 0.8s ease, max-width 0.5s ease;
         }
  
         /* カードが下からふわっと現れるスクロールアニメーション */
@@ -134,12 +140,45 @@
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
  
-        /* プロフィール写真枠 */
-        .intro-hero { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid var(--border-light); }
-        .intro-portrait {
-            width: 100px !important; height: 120px !important; border-radius: 50px 50px 0 0; overflow: hidden; border: 1px solid var(--accent-gold); box-shadow: 0 8px 20px var(--glow-color); margin-bottom: 30px; background: #111; display: inline-block;
+        /* FIX: プロフィール写真をスクラップ手帳にテープでペタッと貼った、立体感あるポラロイド（印画紙）コラージュに仕立てるデザイン */
+        .intro-portrait-container {
+            position: relative;
+            margin: 20px auto 35px;
+            padding: 10px 10px 16px 10px; /* 写真の白い紙フチ（ポラロイド風） */
+            background: #FAF6ED;
+            border-radius: 2px;
+            box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.12);
+            transform: rotate(-1.8deg); /* 手帳のクラフト感を出すため、わずかに左に傾けます */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: inline-block;
         }
-        .intro-portrait img { width: 100px !important; height: 120px !important; object-fit: cover !important; display: block !important; filter: var(--img-filter); }
+        .intro-portrait-container:hover {
+            transform: rotate(0deg) scale(1.02); /* ホバーするとまっすぐに戻り、軽く浮き上がります */
+        }
+        /* 上部に斜めに貼られた、うっすら裏が透ける半透明マスキングテープ（付箋） */
+        .intro-portrait-container::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(3deg);
+            width: 55px;
+            height: 18px;
+            background-color: rgba(210, 185, 145, 0.6);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+            mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.85;
+            transition: background-color 0.8s ease;
+        }
+        .intro-portrait {
+            width: 100px !important; height: 110px !important; overflow: hidden; background: #111; display: block;
+        }
+        .intro-portrait img { width: 100px !important; height: 110px !important; object-fit: cover !important; display: block !important; filter: var(--img-filter); }
  
         .intro-message { font-size: 0.85rem; color: var(--text-main); line-height: 2.2; margin-bottom: 35px; opacity: 0.95; letter-spacing: 0.05em; }
  
@@ -371,14 +410,18 @@
  
         <!-- ウェルカム・ヒーローエリア -->
         <section class="intro-hero">
-            <div class="intro-portrait">
-                <!-- プロフィール写真：ファーストビューのため eager + high priority で即時読み込み -->
-                <img src="IMG_2226.jpeg" alt="サイト管理者のプロフィール写真" fetchpriority="high" loading="eager" draggable="false">
+            <!-- FIX: 写真を、同じフォルダ内にある未使用の最高に雰囲気のある風景写真「IMG_0021_Original.jpeg」へ変更。
+                 さらに、手帳に付箋（マスキングテープ）で貼られた立体感あるポラロイド（印画紙）コラージュのデザインへと調律。 -->
+            <div class="intro-portrait-container">
+                <div class="intro-portrait">
+                    <img src="IMG_0021_Original.jpeg" alt="サイト管理者の思い出をコラージュしたスクラップ写真" fetchpriority="high" loading="eager" draggable="false">
+                </div>
             </div>
             <div class="intro-content">
+                <!-- FIX: 厨二病っぽさを一掃し、親しみやすさを最優先にしつつ、ディズニーへの想いを伝える温かく上質な紹介文に書き換え -->
                 <p class="intro-message">
-                    このサイトではディズニーのBGSについて紹介してます。<br>
-                    アトラクションの待ち時間とかに見てください。
+                    ディズニーリゾートに秘められた物語や歴史（BGS）をゆるやかに集めた、個人の手作りノートです。<br>
+                    アトラクションの待ち時間や、お家でふとパークの風景を思い出したいときに、のんびり読んでみてください。
                 </p>
                 <blockquote class="walt-quote">
                     "Disneyland will never be completed.<br>
@@ -389,6 +432,7 @@
             </div>
         </section>
 
+        <!-- 活版印刷をイメージしたクラシックなヴィンテージ装飾区切り線 -->
         <div class="vintage-divider" aria-hidden="true">✦ —— ◆ —— ✦</div>
  
         <!-- パーク別目次 (TOC) -->
@@ -435,6 +479,7 @@
                     <button id="view-grid" class="active-toggle" aria-pressed="true">田 Grid</button>
                 </div>
             </div>
+            <!-- カテゴリフィルタ -->
             <div class="filter-bar" role="group" aria-label="カテゴリフィルタ">
                 <button class="filter-btn active-toggle" data-filter="all">All Exhibits</button>
                 <button class="filter-btn" data-filter="tdl">Disneyland (TDL)</button>
@@ -442,14 +487,13 @@
             </div>
         </div>
  
-        <!-- 記事カード一覧 -->
+        <!-- 記事カード一覧（TDL ➔ TDS順に完全統一、かつスクロールに応じたReveal搭載） -->
         <div class="article-list grid-mode" id="article-list">
             
             <!-- ================= TDL ================= -->
             
             <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
                 <div class="img-wrapper">
-                    <!-- グリッド上部の画像：eager で即時読み込み -->
                     <img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" loading="eager" fetchpriority="high" draggable="false">
                 </div>
                 <div class="card-tag-wrapper">
@@ -590,7 +634,7 @@
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Raging Spirits</h2>
-                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る超自然現象の謎と、失われた足場の真実を追う。</p>
+                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な超自然現象の謎と、失われた足場の真実を追う。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
@@ -618,12 +662,12 @@
             <p>私たちが訪れる東京ディズニーリゾート（TDR）の背景には、オリエンタルランド（OLC）とウォルト・ディズニー・カンパニーの度重なる対話と、テーマパークづくりへの真摯な取り組みが存在します。ここでは、パーク設立から現在に至るまでの歩みを少し紐解いてみましょう。</p>
             
             <h4>I. アメリカ国外初のディズニーパーク</h4>
-            <p>1983年4月15日、東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、直接的な資金投資を行わず、OLCが資金を調達してライセンス契約を結ぶ形で建設されました。結果として、開園初年度から1000万人を超えるゲストが訪れ、事業として大きな成功を収めることになりました。</p>
+            <p>1983年4月15日, 東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、直接的な資金投資を行わず、OLCが資金を調達してライセンス契約を結ぶ形で建設されました。結果として、開園初年度から1000万人を超えるゲストが訪れ、事業として大きな成功を収めることになりました。</p>
             
             <h4>II. 映画スタジオ計画から「海」への方針転換</h4>
             <p>TDLの成功を受け、1988年に「第2パーク構想」が発表されます。当初、ディズニー側から提案されていたのは、映画スタジオをテーマにした『ディズニー・ハリウッド・スタジオ・テーマパーク at 東京ディズニーランド』でした。しかし、OLC側は「当時の日本にはアメリカほど映画文化が根付いておらず、長期的な集客に課題が残る」と判断し、この計画の見直しを求めました。協議の結果、計画は白紙となり、1992年に「海」をテーマにした世界で唯一のパーク『東京ディズニーシー（TDS）』の開発へと大きく方針を転換することになります。</p>
             
-            <h4>III. 幻のシンボルと、エントランスに隠された演出</h4>
+            <h4>III. 幻のシンボルと, エントランスに隠された演出</h4>
             <p>「海」をテーマにすることが決まった後、ディズニー側はパークのシンボル（TDLのシンデレラ城にあたるもの）として「巨大な灯台」を提案しました。しかし、OLC側は「日本人の感性において、灯台は『哀愁』や『寂しさ』を連想させやすい」としてこれを見送りました。議論の末に誕生したのが、エントランスでゲストを迎える「アクアスフィア（水の惑星）」と、パーク中央にそびえる「プロメテウス火山」です。<br>
             また、エントランスを抜けてもすぐに海が見えない構造も緻密な計算によるものです。ホテル・ミラコスタ下の薄暗い通路を歩くことで、日常から非日常へと少しずつ心を切り替えさせ、視界が開けた瞬間に広大なメディテレーニアンハーバーが目に飛び込んでくるという、劇的な空間演出（トランジション）が仕掛けられています。</p>
             
