@@ -3,88 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BGS Chronicles | 冒険とイマジネーションの記録</title>
-    <meta name="description" content="東京ディズニーリゾートのアトラクションに秘められた歴史と物語、バックグラウンドストーリー（BGS）を現地写真とともに記録するプレミアム・アーカイブ。">
+    <title>BGS Chronicles | 舞浜アトラクション背景設定資料集</title>
+    <meta name="description" content="東京ディズニーリゾートのアトラクションに付随する背景設定（BGS）やコンセプト、歴史を現地写真とともに記録する個人アーカイブ。">
     <meta name="keywords" content="ディズニー BGS, ディズニーシー BGS, 舞浜 BGS, バックグラウンドストーリー, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
     <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/index.html">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* ────── Brown Vintage Museum Color Palette ────── */
-            --bg-dark:        #1A1512;        /* 深みのある暖かなビターブラウン */
-            --bg-card:        rgba(36, 29, 24, 0.82); /* キャラメルブラウン調の半透明 */
-            --accent-copper:  #D49B6A;        /* 温もりと気品のあるコッパーゴールド */
-            --accent-copper-muted: rgba(212, 155, 106, 0.12);
-            --text-light:     #F4EFEA;        /* 羊皮紙のような温かみのあるクリームホワイト */
-            --text-muted:     #AFA499;        /* セピア調の落ち着いたソフトブラウン */
-            --border-light:   rgba(244, 239, 234, 0.08);
-            --border-copper:  rgba(212, 155, 106, 0.25);
+            /* ────── Treasure Map & Parchment Color Palette ────── */
+            --bg-abyss:       #130E0A;        /* 地図の背後に広がる深みのある木製デスク/暗色 */
+            --bg-dark:        #E2D5BA;        /* 経年変化した古地図・羊皮紙のベージュ */
+            --bg-card:        rgba(244, 238, 226, 0.75); /* シワの影を透過させる薄い紙色 */
+            --accent-copper:  #7C4E2D;        /* 落ち着いたセピアブロンズ */
+            --accent-copper-muted: rgba(124, 78, 45, 0.08);
+            --text-light:     #2B1E16;        /* 掠れた胡桃インク・古文書の文字色 */
+            --text-muted:     #6E5A4E;        /* 補足解説用のセピアグレー */
+            --border-light:   rgba(80, 50, 30, 0.12);
+            --border-copper:  rgba(124, 78, 45, 0.35);
             
-            --img-filter: brightness(0.82) contrast(1.08) sepia(35%) saturate(0.85);
+            --img-filter: brightness(0.85) contrast(1.05) sepia(50%) saturate(0.75);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Montserrat', 'Noto Serif JP', serif;
-            background-color: var(--bg-dark);
+            font-family: 'Noto Serif JP', serif;
+            background-color: var(--bg-abyss);
             color: var(--text-light);
-            line-height: 1.85;
+            line-height: 1.9;
             letter-spacing: 0.03em;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
         /* ════════════════════════════════
-           くしゃくしゃの古い茶紙（SVGフィルターリアルタイム生成）
-           アンティーク色に調整され、画像を使わないため読み込み瞬時です
+           くしゃくしゃの古い紙（大理石感を消し、柔らかな紙のシワに調整）
         ════════════════════════════════ */
         .paper-wrinkle-bg {
             position: fixed; inset: 0; z-index: -2;
-            background: #1D1814;
-            filter: url(#svg-crumpled-paper);
+            background: var(--bg-dark);
+            filter: url(#svg-crumpled-paper); /* 表面を和らげ、カサカサした質感に変更 */
             will-change: transform;
             transform: translate3d(0,0,0);
         }
 
-        /* セピア調の周辺減光 */
         .ambient-vignette {
             position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 30%, transparent 20%, rgba(18, 12, 8, 0.8) 100%);
+            background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(19, 14, 10, 0.4) 100%);
             pointer-events: none;
         }
-
-        .container {
-            position: relative; z-index: 1; width: 100%; max-width: 800px;
-            margin: 0 auto; padding: 40px 20px 80px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            -webkit-touch-callout: none;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .reveal { 
-            opacity: 0; 
-            transform: translateY(15px); 
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
-        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* ════════════════════════════════
-           ヘッダー（筆記体アクセント）
+           宝の地図（不規則に破れた端っこを再現するメインコンテナ）
+        ════════════════════════════════ */
+        .parchment-sheet {
+            background: transparent;
+            /* SVGのclipPathを参照し、端を不規則にちぎれた形に切り抜きます */
+            clip-path: url(#paper-torn-clip);
+            -webkit-clip-path: url(#paper-torn-clip);
+            
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 860px;
+            margin: 30px auto 80px;
+            /* 破れた端が要素に被らないよう、十分な余白を設定 */
+            padding: 80px 45px 100px;
+            
+            /* 紙端が焦げたような、アンティークなシャドウ効果 */
+            box-shadow: 
+                0 0 1px rgba(80,50,30,0.4) inset,
+                0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* 破れた紙の端に陰影をつけて、机から少し浮き上がった立体感を演出 */
+        .parchment-sheet::before {
+            content: '';
+            position: absolute; inset: 0;
+            z-index: -1;
+            background: rgba(234, 222, 201, 0.95);
+            pointer-events: none;
+            box-shadow: inset 0 0 40px rgba(100, 70, 45, 0.15);
+        }
+
+        /* ════════════════════════════════
+           ヘッダー（読みやすい高級筆記体）
         ════════════════════════════════ */
         .header {
             display: flex; flex-direction: column; align-items: center;
-            gap: 12px; padding: 10px 0 30px; margin-bottom: 30px;
+            gap: 12px; padding: 10px 0 30px; margin-bottom: 35px;
             border-bottom: 1px solid var(--border-light);
             text-align: center;
         }
@@ -99,10 +111,10 @@
             font-weight: 500; text-transform: uppercase;
         }
         .logo-main {
-            font-family: 'Pinyon Script', cursive; font-size: 3.2rem;
+            /* 読みやすさと美しさを両立した筆記体 Alex Brush */
+            font-family: 'Alex Brush', cursive; font-size: 3.4rem;
             font-weight: 400; color: var(--text-light); 
             line-height: 0.95;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .logo-tagline {
             font-family: 'Cormorant Garamond', serif; font-size: .8rem;
@@ -110,15 +122,12 @@
             letter-spacing: 0.05em; margin-top: 4px;
         }
 
-        /* ════════════════════════════════
-           ミニマル・ボタン
-        ════════════════════════════════ */
         .profile-btn {
-            font-family: 'Montserrat', sans-serif;
-            font-size: .65rem; font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .75rem; font-weight: 500;
             letter-spacing: .2em; color: var(--text-light);
             text-transform: uppercase;
-            padding: 12px 28px;
+            padding: 10px 24px;
             border-radius: 0;
             text-decoration: none;
             display: inline-block;
@@ -139,7 +148,9 @@
             position: relative; width: 100%; aspect-ratio: 21/9;
             margin: 30px auto; overflow: hidden;
             border: 1px solid var(--border-light);
-            background: #0f0e0d;
+            outline: 1px solid rgba(80, 50, 30, 0.15);
+            outline-offset: -5px;
+            background: #1C1510;
         }
         .hero-img-wrapper {
             width: 100%; height: 100%;
@@ -152,22 +163,21 @@
         .hero-img-wrapper::after {
             content: '';
             position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(26,21,18,0.95) 0%, rgba(26,21,18,0.1) 60%, transparent 100%),
-                        radial-gradient(circle at 50% 50%, transparent 30%, rgba(26,21,18,0.6) 100%);
+            background: linear-gradient(to top, rgba(234,222,201,0.95) 0%, rgba(234,222,201,0.1) 60%, transparent 100%),
+                        radial-gradient(circle at 50% 50%, transparent 40%, rgba(80,50,30,0.3) 100%);
             pointer-events: none;
         }
         .hero-label {
-            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-            font-family: 'Pinyon Script', cursive; font-size: 1.8rem;
+            position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+            font-family: 'Alex Brush', cursive; font-size: 2.1rem;
             color: var(--accent-copper);
-            padding-bottom: 4px;
             white-space: nowrap;
         }
 
         .intro-message {
             font-family: 'Noto Serif JP', serif;
-            font-size: .85rem; font-weight: 300; line-height: 2.1; 
-            margin: 30px auto; max-width: 640px;
+            font-size: .82rem; font-weight: 300; line-height: 2.1; 
+            margin: 30px auto; max-width: 600px;
             color: var(--text-light); text-align: center;
         }
 
@@ -180,7 +190,7 @@
             background: linear-gradient(to right, transparent, var(--border-light), transparent);
         }
         .vintage-divider span {
-            font-size: .75rem; color: var(--accent-copper);
+            font-size: .8rem; color: var(--accent-copper);
             letter-spacing: .6em; padding: 0 20px; opacity: .7;
         }
 
@@ -190,6 +200,7 @@
         .toc-box {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
+            box-shadow: 0 1px 3px rgba(80, 50, 30, 0.05);
             padding: 24px; margin-bottom: 40px;
         }
         .toc-title {
@@ -210,8 +221,8 @@
             background: transparent;
             border: 1px solid var(--border-light);
             padding: 8px 14px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: .65rem; letter-spacing: 0.05em;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .7rem; letter-spacing: 0.05em;
             color: var(--text-light); text-decoration: none;
             transition: all .25s ease;
         }
@@ -245,9 +256,9 @@
             padding: 1px;
         }
         .layout-toggle button {
-            background: var(--bg-dark); border: none;
-            color: var(--text-muted); font-family: 'Montserrat', sans-serif;
-            font-size: .6rem; padding: 8px 14px;
+            background: #EAE0CB; border: none;
+            color: var(--text-muted); font-family: 'Cormorant Garamond', serif;
+            font-size: .7rem; padding: 8px 14px;
             cursor: pointer; transition: all .2s; text-transform: uppercase;
             letter-spacing: 0.1em;
         }
@@ -263,8 +274,8 @@
             background: transparent;
             border: 1px solid var(--border-light);
             color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-            font-size: .65rem; padding: 8px 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .7rem; padding: 8px 16px;
             cursor: pointer; text-transform: uppercase; transition: all .25s ease;
             letter-spacing: 0.1em;
         }
@@ -278,7 +289,7 @@
         }
 
         /* ════════════════════════════════
-           記事カード（グリッドモード・筆記体タイトル）
+           記事カード & 高速レンダリング設定
         ════════════════════════════════ */
         .article-list { display: flex; flex-direction: column; gap: 30px; }
 
@@ -287,7 +298,8 @@
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             padding: 20px;
-            transition: border-color .3s ease, transform .3s ease;
+            box-shadow: 0 1px 3px rgba(80, 50, 30, 0.05);
+            transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
             position: relative;
             
             content-visibility: auto;
@@ -296,15 +308,19 @@
         .article-card:hover {
             border-color: var(--border-copper);
             transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(80, 50, 30, 0.08);
         }
 
+        /* 画像フレーム */
         .img-wrapper {
             width: 100%; 
             aspect-ratio: 16/9;
             overflow: hidden;
-            margin-bottom: 20px; background: #0F0E0D;
+            margin-bottom: 20px; background: #241D17;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-light);
+            outline: 1px solid rgba(80, 50, 30, 0.15);
+            outline-offset: -5px;
         }
         .img-wrapper img {
             width: 100%; height: 100%; object-fit: cover;
@@ -314,7 +330,7 @@
         .img-wrapper::after {
             content: '';
             position: absolute; inset: 0;
-            background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(18,17,16,0.6) 100%);
+            background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(80,50,30,0.3) 100%);
             pointer-events: none;
             z-index: 1;
         }
@@ -329,21 +345,22 @@
             letter-spacing: .25em; color: var(--accent-copper);
             font-weight: 500; text-transform: uppercase;
         }
-        .card-meta { font-family: 'Montserrat', sans-serif; font-size: .6rem; color: var(--text-muted); }
+        .card-meta { font-family: 'Cormorant Garamond', serif; font-size: .65rem; color: var(--text-muted); font-weight: 500; }
 
         .new-badge {
             position: absolute; top: 12px; right: 12px;
-            background: var(--accent-copper); color: var(--bg-dark);
-            font-family: 'Montserrat', sans-serif;
+            background: var(--accent-copper); color: var(--text-light);
+            border: 1px solid var(--border-light);
+            font-family: 'Cormorant Garamond', serif;
             font-size: .55rem; font-weight: 600;
             letter-spacing: .1em; padding: 2px 8px;
             z-index: 10;
         }
 
-        /* 高級感のある上質な筆記体(Pinyon Script)タイトル */
+        /* 読みやすい筆記体 Alex Brush タイトル */
         .article-card h2 {
-            font-family: 'Pinyon Script', cursive;
-            font-size: 2.1rem; font-weight: 400;
+            font-family: 'Alex Brush', cursive;
+            font-size: 2.2rem; font-weight: 400;
             margin-bottom: 6px; color: var(--text-light);
             line-height: 1.1;
             letter-spacing: 0.02em;
@@ -356,7 +373,7 @@
         }
 
         .read-btn {
-            font-family: 'Montserrat', sans-serif; font-size: .65rem;
+            font-family: 'Cormorant Garamond', serif; font-size: .7rem;
             letter-spacing: .15em; color: var(--accent-copper);
             text-transform: uppercase; font-weight: 500;
             display: inline-block;
@@ -381,18 +398,18 @@
         .haunted-img-align { object-position: center 30%; }
 
         /* ════════════════════════════════
-           グリッドモード（初期状態で有効化・PC/スマホ自動適応）
+           グリッドモード（PC：3列 / スマホ：2列）の極限チューニング
         ════════════════════════════════ */
         .article-list.grid-mode { 
             display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px; 
+            grid-template-columns: repeat(3, 1fr); /* PCでは3列並び */
+            gap: 16px; 
         }
-        .article-list.grid-mode .article-card { padding: 18px; }
-        .article-list.grid-mode .img-wrapper { aspect-ratio: 3/2; margin-bottom: 14px; }
-        .article-list.grid-mode .article-card h2 { font-size: 2rem; margin-bottom: 8px; }
+        .article-list.grid-mode .article-card { padding: 16px; }
+        .article-list.grid-mode .img-wrapper { aspect-ratio: 16/10; margin-bottom: 12px; }
+        .article-list.grid-mode .article-card h2 { font-size: 2rem; margin-bottom: 6px; }
         .article-list.grid-mode .article-card p {
-            font-size: .72rem; line-height: 1.7; margin-bottom: 16px;
+            font-size: .7rem; line-height: 1.6; margin-bottom: 12px;
             display: -webkit-box; -webkit-line-clamp: 3;
             -webkit-box-orient: vertical; overflow: hidden;
         }
@@ -403,6 +420,7 @@
         .chronicle-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
+            box-shadow: 0 1px 3px rgba(80, 50, 30, 0.05);
             padding: 24px; margin-top: 60px;
         }
         .chronicle-summary {
@@ -423,7 +441,7 @@
         }
         .chronicle-expand-indicator {
             display: inline-block; margin-top: 14px;
-            font-family: 'Montserrat', sans-serif; font-size: .6rem;
+            font-family: 'Cormorant Garamond', serif; font-size: .65rem;
             color: var(--text-light); font-weight: 500;
             letter-spacing: 0.15em;
             padding: 8px 20px; 
@@ -459,8 +477,8 @@
            フッター & モーダル
         ════════════════════════════════ */
         footer {
-            text-align: center; font-family: 'Montserrat', sans-serif;
-            font-size: .6rem; letter-spacing: .15em;
+            text-align: center; font-family: 'Cormorant Garamond', serif;
+            font-size: .65rem; letter-spacing: .15em;
             color: var(--text-muted); padding-top: 60px;
         }
 
@@ -469,8 +487,8 @@
             border: 1px solid var(--border-light);
             color: var(--text-muted);
             padding: 10px 24px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: .6rem; font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .65rem; font-weight: 500;
             letter-spacing: 0.15em;
             cursor: pointer; margin-top: 16px;
             transition: all .25s ease;
@@ -482,7 +500,7 @@
 
         .modal-overlay {
             position: fixed; inset: 0;
-            background: rgba(18, 12, 8, 0.88);
+            background: rgba(18, 12, 8, 0.4);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             display: flex; justify-content: center; align-items: center;
@@ -500,8 +518,8 @@
         }
         .modal-close {
             position: absolute; top: 16px; right: 16px;
-            cursor: pointer; font-family: 'Montserrat', sans-serif;
-            font-size: .7rem; font-weight: 300;
+            cursor: pointer; font-family: 'Cormorant Garamond', serif;
+            font-size: .75rem; font-weight: 300;
             color: var(--text-muted); border: none;
             background: transparent;
             padding: 8px;
@@ -515,8 +533,8 @@
         }
         .sns-btn {
             display: inline-block; text-decoration: none;
-            font-family: 'Montserrat', sans-serif;
-            font-size: .65rem; font-weight: 500; letter-spacing: 0.1em;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .75rem; font-weight: 500; letter-spacing: 0.1em;
             padding: 10px 24px;
             background: transparent;
             color: var(--accent-copper);
@@ -529,37 +547,50 @@
         }
 
         /* ════════════════════════════════
-           スマートフォン用メディアクエリ
+           スマホ用レスポンシブ（よこ2列に最適化）
         ════════════════════════════════ */
         @media (max-width: 768px) {
-            .container {
-                padding: 24px 16px 60px;
+            .parchment-sheet {
+                padding: 45px 15px 60px; /* 破れ端の余白を調整 */
+                margin: 10px auto;
             }
             .article-list.grid-mode {
-                grid-template-columns: 1fr; /* スマホ表示時は1列にして画面幅をフル活用 */
-                gap: 20px;
+                grid-template-columns: repeat(2, 1fr); /* スマホでは2列で整列 */
+                gap: 10px; /* 隙間を狭めて情報を収める */
+            }
+            .article-list.grid-mode .article-card {
+                padding: 10px; /* カード余白を削って視認性向上 */
+            }
+            .article-list.grid-mode .article-card h2 {
+                font-size: 1.6rem; /* 筆記体の縮小 */
+                margin-bottom: 2px;
+            }
+            .article-list.grid-mode .article-card p {
+                font-size: .65rem; /* テキストを小さくして破綻を防ぐ */
+                line-height: 1.5;
+                margin-bottom: 10px;
             }
             .cinematic-hero-container {
                 aspect-ratio: 16/9;
             }
             .logo-main {
-                font-size: 2.6rem;
+                font-size: 2.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- くしゃくしゃの古い茶紙を表現するGPU高速背景層 -->
     <div class="paper-wrinkle-bg"></div>
     <div class="ambient-vignette"></div>
 
-    <div class="container">
+    <!-- 古文書の手ちぎり形状にトリミングされたメイン用紙 -->
+    <div class="parchment-sheet">
         <header class="header">
             <h1>
                 <a href="index.html" class="header-logo">
                     <span class="logo-sub">Tokyo Disney Resort</span>
                     <span class="logo-main">BGS Chronicles</span>
-                    <span class="logo-tagline">A private record of imagination &amp; adventure</span>
+                    <span class="logo-tagline">An archival record of theme park history &amp; lore</span>
                 </a>
             </h1>
             <a href="profile.html" class="profile-btn">Curator's Profile</a>
@@ -575,8 +606,8 @@
 
             <div class="intro-content">
                 <p class="intro-message">
-                    ディズニーリゾートに秘められた物語や歴史（BGS）を静かに紐解く、個人の蒐集ノート。<br>
-                    美しく、時に哀愁を帯びた「イマジネーションの海」の深淵へ。
+                    東京ディズニーリゾートのアトラクションに付随する背景設定（BGS）や歴史を客観的にまとめた、個人の資料集です。<br>
+                    待ち時間の読み物や、パークの景観に隠されたディテールを観察する一助としてお使いください。
                 </p>
             </div>
         </section>
@@ -613,10 +644,9 @@
 
         <div class="list-header reveal">
             <div class="list-header-top">
-                <h2 class="section-title">Exhibits</h2>
+                <h2 class="section-title">Archived Records</h2>
                 <div class="layout-toggle">
                     <button id="view-list">List</button>
-                    <!-- デフォルトでGridをアクティブにする -->
                     <button id="view-grid" class="active-toggle">Grid</button>
                 </div>
             </div>
@@ -628,7 +658,7 @@
         </div>
 
         <!-- 
-          初期状態でグリッド表示（grid-mode）をデフォルトに設定
+          初期状態でグリッド表示（grid-mode）に設定
         -->
         <div class="article-list grid-mode" id="article-list">
 
@@ -636,7 +666,7 @@
                 <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                 <h2>Splash Mountain</h2>
-                <p>泥地に根づく知恵と、大洪水の忘れ物。ブレア・ラビットが命をかけて仕掛けた「最後のはったり」まで。</p>
+                <p>小動物たちの暮らす泥地を襲った大洪水と、ブレア・ラビットにまつわる数々の伝承と旅の物語。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -644,7 +674,7 @@
                 <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                 <h2>Big Thunder Mountain</h2>
-                <p>警告を破りし蒸気の咆哮と、黄金の呪い。大自然に宿る「精霊の怒り」が招いたタンブルウィード崩壊の歴史。</p>
+                <p>無人鉱山を暴走する鉱山列車と、開拓者たちの歴史。大自然の精霊の警告を無視したゴールドラッシュの末路。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -652,7 +682,7 @@
                 <div class="img-wrapper"><img src="haunted-exterior.jpg" alt="ホーンテッドマンションの外観" class="haunted-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">5 min</span></div>
                 <h2>Haunted Mansion</h2>
-                <p>999人の亡霊が待つ、美しきゴシックの館。恐怖とユーモアが交差する物語と、ホリデーナイトメアの魔法を紐解く。</p>
+                <p>999人の亡霊が暮らすゴシック様式の館。代々の居住者にまつわるエピソードと、奇妙な仕掛けの数々。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -660,7 +690,7 @@
                 <div class="img-wrapper"><img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                 <h2>Beauty and the Beast</h2>
-                <p>魔法の薔薇が紡ぐ、光と影のフレンチ・ゴシック。日本独自の所作を宿した愛のものがたり。</p>
+                <p>深い森に佇むお城と魔法の薔薇の伝説。フランスの片田舎を再現した美しい造形と建築様式。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -668,7 +698,7 @@
                 <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                 <h2>Tomorrowland</h2>
-                <p>未来都市が背負った「時間」という名の宿命。銀河連邦宇宙法のルールに迫る。</p>
+                <p>近未来の都市デザインと宇宙開発への夢。銀河系を結ぶスペースポートに課せられたルールと条例。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -677,7 +707,7 @@
                 <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Chronicle</span><span class="card-meta">5 min</span></div>
                 <h2>TDS Spatial Epic</h2>
-                <p>「冒険とイマジネーションの海」を巡る、美しき全8テーマポートの物語。</p>
+                <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景の考察。</p>
                 <div class="read-btn">Explore Chronicle →</div>
             </a>
 
@@ -685,7 +715,7 @@
                 <div class="img-wrapper"><img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">5 min</span></div>
                 <h2>Tower of Terror</h2>
-                <p>ニューヨーク1912。呪いの偶像シリキ・ウトゥンドゥが招いた一夜の真実。</p>
+                <p>1912年のニューヨーク。ホテル・ハイタワーで起きたオーナー失踪事件と、謎の偶像を巡る社会的背景。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -693,7 +723,7 @@
                 <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                 <h2>Sindbad's Voyage</h2>
-                <p>かつて「暗黒期」と呼ばれた恐怖のボートライドが、傑作へと生まれ変わるまで。</p>
+                <p>船乗りシンドバッドと相棒チャンドゥの航海記。エリアのリニューアルに伴う、演出と音楽の変遷史。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -701,7 +731,7 @@
                 <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                 <h2>Fantasy Springs</h2>
-                <p>湧き出る精霊 of 記憶と、公爵夫人の招待状。パークの壮大な「水の循環」の答えとは。</p>
+                <p>精霊が宿る魔法の泉の伝承と、それらを発見した公爵夫人の別荘にまつわる土地の記録。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -709,7 +739,7 @@
                 <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                 <h2>Soarin'</h2>
-                <p>19世紀の博物館に秘められた、空を飛ぶ夢の歴史。カメリアとハイタワー三世の因縁に迫る。</p>
+                <p>探検家学会（S.E.A.）初の女性会員カメリアの功績と、飛行への執念を展示するファンタスティック・フライト・ミュージアムの全容。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -717,7 +747,7 @@
                 <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                 <h2>Raging Spirits</h2>
-                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の禁忌を破り、水の上で炎が燃え盛る謎に迫る。</p>
+                <p>中央アメリカの古代遺跡で発見された祭壇。対立する「火」と「水」の神々の偶像と、調査隊の足場の記録。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -725,7 +755,7 @@
                 <div class="img-wrapper"><img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                 <h2>Indiana Jones</h2>
-                <p>若さの泉を守る守護神と、パコが企てた秘密の魔宮ツアー。水上飛行機に隠されたイースターエッグの真相。</p>
+                <p>ロストリバーデルタに隠された「失われた若さの泉」。ジョーンズ博士の調査活動とパコによる神殿ツアーの全貌。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -734,7 +764,7 @@
         <details class="chronicle-card reveal">
             <summary class="chronicle-summary">
                 <h3>The Maihama Chronicle</h3>
-                <p class="chronicle-subtitle">「本物」を追求し続ける、舞浜の歴史</p>
+                <p class="chronicle-subtitle">舞浜におけるパーク開発と空間づくりの変遷</p>
                 <span class="chronicle-expand-indicator">Read Chronicle</span>
             </summary>
             <div class="chronicle-content">
@@ -764,7 +794,7 @@
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-box">
             <button class="modal-close" id="modal-close">✕ Close</button>
-            <h3 style="font-family:'Montserrat',sans-serif;font-size:.85rem;color:var(--accent-copper);margin-bottom:20px;font-weight:500;border-bottom:1px solid var(--border-light);padding-bottom:12px;letter-spacing:0.1em;">Site Notes &amp; Contacts</h3>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--accent-copper);margin-bottom:20px;font-weight:500;border-bottom:1px solid var(--border-light);padding-bottom:12px;letter-spacing:0.1em;">Site Notes &amp; Contacts</h3>
             <p style="font-size:.8rem;line-height:2;color:var(--text-muted);font-weight:300;">このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、InstagramのDMにてご報告いただけますと幸いです。</p>
             <p style="margin-top:16px;font-size:.8rem;line-height:2;color:var(--text-muted);font-weight:300;">掲載している写真の画角や位置に誤りがある場合も、同様にご指摘いただけますと助かります。</p>
             <div class="modal-sns-links">
@@ -777,22 +807,38 @@
     </div>
 
     <!-- 
-      【くしゃくしゃの紙】を生成する超軽量SVGフィルターコード
-       アンティークブラウン調の影を出力するよう、ライティングカラーを「温かみのあるアンティーク羊皮紙色(#EFE6D5)」に変更
+      不規則にちぎれた古文書の端っこを動的に計算する超軽量SVG clipPath
+      画像のダウンロードが不要なため、スマホロードが数ミリ秒に短縮されます。
     -->
     <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-      <filter id="svg-crumpled-paper">
-        <!-- フラクタルノイズ（大きなシワ用の大まかな凹凸を生成） -->
-        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="large-creases" />
+      <defs>
+        <!-- 
+          地図端の「ちぎれた」形状をベジェ曲線で不規則に定義。
+          objectBoundingBoxを使用し、あらゆるアスペクト比でレスポンシブに伸縮します。
+        -->
+        <clipPath id="paper-torn-clip" clipPathUnits="objectBoundingBox">
+          <path d="M 0.015,0.015 
+                   Q 0.25,0.01 0.5,0.018 
+                   T 0.985,0.015 
+                   Q 0.99,0.25 0.982,0.5 
+                   T 0.985,0.985 
+                   Q 0.75,0.99 0.5,0.982 
+                   T 0.015,0.985 
+                   Q 0.008,0.75 0.018,0.5 
+                   T 0.015,0.015 Z" />
+        </clipPath>
         
-        <!-- ノイズに光を当てて立体的なくしゃくしゃ影をリアルタイム計算 -->
-        <feDiffuseLighting in="large-creases" lighting-color="#EFE6D5" surfaceScale="22" result="paper-shadows">
-          <feDistantLight azimuth="60" elevation="50" />
-        </feDiffuseLighting>
-        
-        <!-- 元の背景色と光沢・影データを乗算してなじませる -->
-        <feBlend mode="multiply" in="SourceGraphic" in2="paper-shadows" />
-      </filter>
+        <!-- 大理石っぽさを消し、カサカサした「柔らかい紙の皺」へチューニングしたシワフィルター -->
+        <filter id="svg-crumpled-paper">
+          <!-- 細かい微細な繊維・ノイズのブレンド -->
+          <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="large-creases" />
+          <!-- surfaceScaleを「3」に落とすことで、石のひび割れ感を消し、柔らかな紙の折り目を表現 -->
+          <feDiffuseLighting in="large-creases" lighting-color="#ffffff" surfaceScale="3" result="paper-shadows">
+            <feDistantLight azimuth="55" elevation="65" />
+          </feDiffuseLighting>
+          <feBlend mode="multiply" in="SourceGraphic" in2="paper-shadows" />
+        </filter>
+      </defs>
     </svg>
 
     <script>
