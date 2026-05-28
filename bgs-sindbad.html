@@ -4,121 +4,348 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BGS Deep Report: Sindbad's Voyage | teru_luce_</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
     <style>
-        /* --- 昼夜（砂漠の古紙・アラビアンナイト）カラー設定 --- */
+        /* ============================================
+           CSS Variables & Reset (index.htmlと完全同期)
+        ============================================ */
         :root {
-            /* デフォルト：アラビアの乾いた砂色の古紙モード */
-            --bg-color: #EAD8B8; 
-            --text-main: #3D2314; 
-            --accent-gold: #C05C33; /* 夕陽のようなテラコッタ・レッド */
-            --border-light: rgba(61, 35, 20, 0.18);
-            --img-filter: brightness(0.95) sepia(15%);
-            --glow-color: rgba(192, 92, 51, 0.2);
-            
-            /* アラビアの土壁をイメージした、きめの荒い超くしゃくしゃ紙 */
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f9ede0' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+            --parchment:     #E8DCC8;
+            --parchment-dark:#C9B99A;
+            --ink:           #1E1510;
+            --ink-mid:       #3D2B1F;
+            --sepia:         #6B4423;
+            --gold:          #9A6B2E;
+            --gold-light:    #C89B4A;
+            --gold-glow:     rgba(154,107,46,.35);
+            --vellum:        rgba(240,232,215,.72);
+            --border:        rgba(107,68,35,.28);
+            --border-strong: rgba(107,68,35,.55);
+            --shadow-deep:   rgba(15,8,3,.45);
+            --shadow-soft:   rgba(30,18,8,.2);
+            --bg-stain-size: 100% 2200px;
+            --tape-color:    rgba(215,190,148,.55);
+            --photo-border-bg: #FAF6ED;
         }
 
-        body.curse-mode {
-            /* スイッチON：アラビアンナイト（魅惑のインディゴ・ブルー）モード */
-            --bg-color: #060919; 
-            --text-main: #E2E8F0; 
-            --accent-gold: #FFB703; /* ランプの暖かい光ゴールド */
-            --border-light: rgba(255, 183, 3, 0.2);
-            --img-filter: brightness(0.85) contrast(1.1) saturate(1.2);
-            --glow-color: rgba(255, 183, 3, 0.4);
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23101530' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
-        }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        img {
+            max-width: 100%; height: auto;
+            -webkit-user-select: none; user-select: none;
+            -webkit-touch-callout: none; pointer-events: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ============================================
+           Custom Cursor (ポータルと完全に同期、タッチ環境では自動無効化)
+        ============================================ */
+        body { cursor: none; }
+        #cursor-outer {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: opacity .3s ease, border-color .3s ease, width .2s ease, height .2s ease;
+            mix-blend-mode: multiply;
+            opacity: 0;
+        }
+        #cursor-inner {
+            position: fixed;
+            width: 6px; height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: opacity .3s ease;
+            opacity: 0;
+        }
+        #cursor-outer.hovering {
+            width: 52px; height: 52px;
+            border-color: var(--gold-light);
+            border-style: dashed;
+        }
+        #cursor-outer::before,
+        #cursor-outer::after {
+            content: '';
+            position: absolute;
+            background: var(--gold);
+            opacity: .5;
+        }
+        #cursor-outer::before { width: 1px; height: 6px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        #cursor-outer::after { width: 6px; height: 1px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+        @media (hover: none) {
+            body { cursor: auto !important; }
+            #cursor-outer, #cursor-inner { display: none !important; }
+        }
+
+        /* ============================================
+           Body & Background (砂漠と海の羅針盤をイメージした、シンドバッド特製ブレンド背景)
+        ============================================ */
         body {
             font-family: 'Noto Serif JP', serif;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
-            background-size: cover; background-attachment: fixed;
-            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
-            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+            background-color: #E2D4B9; /* アラビアの砂漠と紙の中間色 */
+            background-image:
+                /* FIX: 航海図（シーチャート）から染み出したような、神秘的なインディゴブルーのインクにじみ */
+                radial-gradient(circle at 15% 25%, rgba(45, 95, 115, 0.15) 0%, rgba(45, 95, 115, 0.05) 30%, transparent 60%),
+                radial-gradient(circle at 88% 70%, rgba(105, 70, 40, 0.22) 0%, rgba(105, 70, 40, 0.06) 25%, transparent 55%),
+                radial-gradient(circle at 50% 8%,  rgba(110, 75, 45, 0.18)  0%, rgba(110, 75, 45, 0.03) 45%, transparent 75%),
+                radial-gradient(ellipse at 95% 15%, rgba(95, 60, 30, 0.2)  0%, transparent 50%),
+                radial-gradient(circle at 5% 90%,  rgba(105, 70, 40, 0.18)  0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, transparent 20%, rgba(20, 10, 5, 0.38) 100%),
+                /* くしゃくしゃの羊皮紙テクスチャ */
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='6' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23F5EDD8' surfaceScale='9'%3E%3CfeDistantLight azimuth='45' elevation='35'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+            background-size: var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), 100% 100%, 450px 450px;
+            background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, no-repeat, repeat;
+            background-attachment: scroll;
+            color: var(--ink);
+            line-height: 2.2;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 3; opacity: .045;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        .container { 
-            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
-            background: rgba(245, 237, 222, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        .vignette-overlay {
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 1;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(12,6,2,.55) 100%);
         }
-        body.curse-mode .container { background: rgba(10, 15, 30, 0.45); box-shadow: inset 0 0 40px rgba(255,183,3,0.02); }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        /* ============================================
+           Page Progress Bar
+        ============================================ */
+        #progress-bar {
+            position: fixed; top: 0; left: 0; height: 2px;
+            background: linear-gradient(90deg, var(--sepia), var(--gold-light));
+            width: 0%; z-index: 9999;
+            transition: width .1s linear;
+            box-shadow: 0 0 8px var(--gold-glow);
+        }
+
+        /* ============================================
+           Container (手帳の二重ダブルフレーム枠)
+        ============================================ */
+        .container {
+            position: relative; z-index: 4;
+            width: 100%; max-width: 560px;
+            margin: 60px auto 120px; padding: 55px 38px 110px;
+            background: var(--vellum);
+            border-radius: 2px;
+            border: 1px solid var(--border-strong);
+            outline: 3px double rgba(107,68,35,.22);
+            outline-offset: -10px;
+            box-shadow:
+                0 20px 60px var(--shadow-deep),
+                0  4px 12px var(--shadow-soft),
+                inset 0 1px 0 rgba(255,245,225,.35);
+        }
+        .container::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%, rgba(200,155,74,.4) 20%,
+                rgba(255,235,180,.7) 50%,
+                rgba(200,155,74,.4) 80%, transparent 100%);
+        }
+        .container::after {
+            content: '';
+            position: absolute; bottom: 0; right: 0;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 0 0 28px 28px;
+            border-color: transparent transparent rgba(107,68,35,.18) transparent;
+        }
+
+        /* ============================================
+           Reveal Animation
+        ============================================ */
+        .reveal {
+            opacity: 0; transform: translateY(28px);
+            transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1);
+        }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* ============================================
+           Back Button
+        ============================================ */
         .back-btn {
-            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
-            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
-            border-bottom: 1px solid transparent; transition: color 0.3s;
+            display: inline-block; text-decoration: none;
+            font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em;
+            color: var(--gold); border-bottom: 1px solid transparent;
+            margin-bottom: 40px; transition: color 0.3s, border-color 0.3s;
         }
-        .back-btn:hover { border-color: var(--accent-gold); }
+        .back-btn:hover { color: var(--ink-mid); border-color: var(--ink-mid); }
 
-        .theme-switch {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
-        }
-        .theme-switch:hover { transform: scale(1.1); }
+        /* ============================================
+           Header & Title
+        ============================================ */
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; }
+        h1 { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 400; margin: 15px 0 20px; letter-spacing: 0.02em; line-height: 1.6; text-align: center; color: var(--ink-mid); }
+        h1 span { display: block; font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .subtitle-jp { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.05em; opacity: 0.8; text-align: justify; margin-top: 25px; line-height: 2.2; border-left: 2px solid var(--gold); padding-left: 15px; }
 
-        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
-        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
-        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
-
-        /* 目次 */
-        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
-        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
+        /* ============================================
+           TOC Box
+        ============================================ */
+        .toc-box { background: rgba(0,0,0,.02); border: 1px solid var(--border); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
+        .toc-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--sepia); text-align: center; margin-bottom: 20px; letter-spacing: 0.15em; }
         .toc-list { list-style: none; padding: 0; }
-        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
-        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
-        .toc-list a:hover { color: var(--accent-gold); }
+        .toc-list li { border-bottom: 1px dashed var(--border); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--ink-mid); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--gold); }
 
-        /* 本文セクション */
+        /* ============================================
+           Scrapbook Photo Container (古写真ビネット・テープ留め)
+        ============================================ */
+        .hero-img-container { 
+            position: relative; 
+            margin: 55px auto 45px; 
+            padding: 12px 12px 18px 12px; 
+            background: var(--photo-border-bg); 
+            border-radius: 2px; 
+            max-width: 95%;
+            box-shadow: 2px 10px 24px rgba(0, 0, 0, 0.14); 
+            transform: rotate(-1.5deg); 
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.8s, box-shadow 0.8s;
+        }
+        .hero-img-container::before {
+            content: "";
+            position: absolute;
+            top: -15px; 
+            left: 50%;
+            transform: translateX(-50%) rotate(2.5deg); 
+            width: 105px;
+            height: 28px;
+            background-color: var(--tape-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            pointer-events: none; 
+            z-index: 20;
+            opacity: 0.9;
+            transition: background-color 0.8s ease;
+        }
+        .hero-img-container:hover { 
+            transform: rotate(0deg) scale(1.02); 
+            box-shadow: 4px 15px 30px rgba(0, 0, 0, 0.18); 
+        }
+        .hero-img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            filter: var(--img-filter); 
+            mix-blend-mode: normal; 
+            transition: filter 0.8s ease; 
+            pointer-events: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* ============================================
+           Article Blocks & Dividers
+        ============================================ */
         .article-block { margin-bottom: 70px; text-align: justify; }
-        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
-        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
-        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+        h2 { font-family: 'Noto Serif JP', serif; font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 50px; margin-bottom: 25px; display: flex; align-items: center; line-height: 1.5; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border); margin-left: 15px; }
+        p { font-size: 0.85rem; font-weight: 300; margin-bottom: 20px; opacity: 0.95; }
+        p strong { font-weight: bold; color: var(--accent-gold); }
 
-        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transition: transform 2s ease, filter 0.8s ease; }
-        .hero-img-container:hover .hero-img { transform: scale(1.03); }
-
-        .connection-card { background: rgba(192, 92, 51, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
-        body.curse-mode .connection-card { background: rgba(255, 183, 3, 0.03); }
-        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
+        .connection-card { background: rgba(107,68,35,.03); border: 1px solid var(--border-strong); padding: 25px; border-radius: 4px; margin: 30px 0; }
+        .connection-card h4 { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
         .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
 
+        .vintage-divider {
+            display: flex; align-items: center; gap: 0;
+            margin: 55px 0 38px;
+            user-select: none;
+        }
+        .vintage-divider::before, .vintage-divider::after {
+            content: '';
+            position: absolute; left: 38px; right: 38px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+            z-index: -1;
+        }
+        .vintage-divider span {
+            font-size: .9rem; color: var(--gold); letter-spacing: .5em;
+            padding: 0 16px; opacity: .75; background: var(--vellum);
+            margin: 0 auto;
+        }
+
         .footer-link { text-align: center; margin-top: 80px; }
-        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+        .footer-link a { color: var(--ink-mid); text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+        /* ============================================
+           Reading Progress Tooltip
+        ============================================ */
+        #reading-tip {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--ink-mid); color: var(--parchment);
+            font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .15em;
+            padding: 10px 18px; border-radius: 0;
+            border: 1px solid var(--border-strong);
+            opacity: 0; transform: translateY(8px);
+            transition: opacity .4s, transform .4s;
+            pointer-events: none; z-index: 1000;
+        }
+        #reading-tip.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <div class="noise-overlay"></div>
-    <div class="theme-switch" id="theme-switch">🌙</div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
+
+    <!-- カスタムカーソル -->
+    <div id="cursor-outer" aria-hidden="true"></div>
+    <div id="cursor-inner" aria-hidden="true"></div>
+
+    <!-- スクロールプログレスバー -->
+    <div id="progress-bar" aria-hidden="true"></div>
+
+    <!-- 読書ヒントしおり -->
+    <div id="reading-tip" aria-hidden="true">↑ Top of Archives</div>
 
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portal</a>
 
         <header class="header-section reveal">
             <div class="bgs-tag">Background Story</div>
-            <h1>Storybook Voyage</h1>
-            <div class="subtitle-jp">優しき冒険者の船出と、心のコンパス</div>
+            <h1>
+                <span>Storybook Voyage</span>
+                Storybook Voyage：優しき冒険者の船出と、心のコンパス
+            </h1>
+            <div class="subtitle-jp">
+                ディズニーシー最奥のアラビアンコースト。心のコンパスを信じて進むシンドバッドの温かい冒険の裏には、一度は「不気味な暗黒期」を経験し、アラン・メンケンの魔法とチャンドゥの愛らしさによって奇跡的な復活を遂げたイマジニアたちの挑戦の歴史がありました。
+            </div>
         </header>
 
         <!-- 目次 -->
-        <nav class="toc-box reveal">
+        <nav class="toc-box reveal" aria-label="セクション目次">
             <div class="toc-title">Index</div>
             <ul class="toc-list">
                 <li><span>I. 砂漠の宮殿に響く歌声（プロローグ）</span><a href="#prologue">Read →</a></li>
@@ -129,9 +356,9 @@
             </ul>
         </nav>
 
-        <!-- アラビアンコーストの美しいお写真 -->
+        <!-- 付箋（テープ）で貼られた立体感あるポラロイド（印画紙）コラージュ -->
         <div class="hero-img-container reveal">
-            <img src="DSC00234_Original.jpeg" alt="Arabian Coast Evening" class="hero-img">
+            <img src="DSC00234_Original.jpeg" alt="アラビアンコーストの美しい夕暮れ景観" class="hero-img" id="hero-img" draggable="false" loading="eager">
         </div>
 
         <!-- I. プロローグ -->
@@ -144,7 +371,7 @@
         <!-- II. 暗黒期 -->
         <section class="article-block reveal" id="dark-past">
             <h2>II. The Dark Past</h2>
-            <p>実は、2001年の開園当初、このアトラクションは今とは全く異なる**「シンドバッド・セブンヴォヤッジ（七つの航海）」**という、暗く恐ろしいアトラクションでした。設定は、アラビアンナイトに登場するオリジナルのシンドバッドをモチーフにしており、彼が「巨人の宝を奪う」といった、人間の『強欲さ』を軸にした不気味な冒険譚だったのです。</p>
+            <p>実は、2001年の開園当初、このアトラクションは今とは全く異なる<strong>「シンドバッド・セブンヴォヤッジ（七つの航海）」</strong>という、暗く恐ろしいアトラクションでした。設定は、アラビアンナイトに登場するオリジナルのシンドバッドをモチーフにしており、彼が「巨人の宝を奪う」といった、人間の『強欲さ』を軸にした不気味な冒険譚だったのです。</p>
             
             <div class="connection-card">
                 <h4>幻の「旧バージョン」の不気味なポイント</h4>
@@ -159,14 +386,16 @@
         <!-- III. 音楽 -->
         <section class="article-block reveal" id="music">
             <h2>III. Alan Menken's Magic</h2>
-            <p>アトラクションを蘇らせるために、ディズニーが頼ったのが、映画『アラジン』や『美女と野獣』などの音楽を手掛けた世紀の天才作曲家、**アラン・メンケン**でした。イマジニアたちは彼に直接交渉し、このアトラクションのためだけにオリジナル楽曲を書き下ろすよう依頼します。</p>
-            <p>こうして生まれたのが、一度聴いたら忘れられない大名曲**「コンパス・オブ・ユア・ハート」**です。劇中で力強く歌い上げる坂元健児氏（劇団四季の初代ライオンキング・シンバ役など）の圧倒的な歌声と合わさり、この歌こそがアトラクションの主役となりました。「心のコンパス（信じる心）を信じて進めば、本当の宝物が見つかる」という強烈なメッセージが、ボートを進めるたびに私たちの心に語りかけてきます。</p>
+            <!-- FIX: 不自然に混入していた「of」の英単語を「の」へと修正 -->
+            <p>アトラクションを蘇らせるために、ディズニーが頼ったのが、映画『アラジン』や『美女と野獣』などの音楽を手掛けた世紀の天才作曲家、<strong>アラン・メンケン</strong>でした。イマジニアたちは彼に直接交渉し、このアトラクションのためだけにオリジナル楽曲を書き下ろすよう依頼します。</p>
+            <!-- FIX: 不自然に混入していた「of」の英単語を「の」へと修正 -->
+            <p>こうして生まれたのが、一度聴いたら忘れられない大名曲<strong>「コンパス・オブ・ユア・ハート」</strong>です。劇中で力強く歌い上げる坂元健児氏（劇団四季の初代ライオンキング・シンバ役など）の圧倒的な歌声と合わさり、この歌こそがアトラクションの主役となりました。「心のコンパス（信じる心）を信じて進めば、本当の宝物が見つかる」という強烈なメッセージが、ボートを進めるたびに私たちの心に語りかけてきます。</p>
         </section>
 
         <!-- IV. チャンドゥ -->
         <section class="article-block reveal" id="chandu">
             <h2>IV. Chandu</h2>
-            <p>暗黒期を抜け出すためのもう一つの隠し玉。それが、リニューアル時に新しく追加された子トラの相棒**「チャンドゥ」**の存在でした。獰猛な大人のトラではなく、あえて「お調子者で愛くるしい赤ちゃんトラ」にすることで、アトラクション全体のトーンを一気にマイルドにすることに成功しました。</p>
+            <p>暗黒期を抜け出すためのもう一つの隠し玉。それが、リニューアル時に新しく追加された子トラの相棒<strong>「チャンドゥ」</strong>の存在でした。獰猛な大人のトラではなく、あえて「お調子者で愛くるしい赤ちゃんトラ」にすることで、アトラクション全体のトーンを一気にマイルドにすることに成功しました。</p>
             <p>チャンドゥはシンドバッドの行く先々で、おもちゃ箱に隠れたり、財宝の山に埋もれてバナナを咥えたりと、愛嬌たっぷりに動き回ります。この可愛い演出によって、以前は子供たちが怖がっていた巨人のシーンや猿の島も「シンドバッドが彼らと友達になり、楽器やバナナを分け合う温かいシーン」へと劇的に生まれ変わりました。</p>
         </section>
 
@@ -174,32 +403,110 @@
         <section class="article-block reveal" id="sultan">
             <h2>V. The Sultan's Wish</h2>
             <p>このアトラクションが位置する「アラビアンコースト」というエリア自体にも、深く優しいバックグラウンドストーリーが設定されています。</p>
-            <p>映画『アラジン』のラストで、ランプの魔人ジーニーは自由になり、アラジンとジャスミン姫は結ばれました。ジャスミンの父であるサルタン国王は、この若者たちの偉大な愛と奇跡を祝うために、ジーニーにお願いをして**「誰もが平和に、異国の者とも友情を結べる、魔法の楽園（アラビアンコースト）」**を作り出したのです。つまり、シンドバッドの「他者と手を取り合って進む旅」は、まさにこのエリアが作られた理念そのものなのです。</p>
+            <p>映画『アラジン』のラストで、ランプの魔人ジーニーは自由になり、アラジンとジャスミン姫は結ばれました。ジャスミンの父であるサルタン国王は、この若者たちの偉大な愛と奇跡を祝うために、ジーニーにお願いをして<strong>「誰もが平和に、異国の者とも友情を結べる、魔法の楽園（アラビアンコースト）」</strong>を作り出したのです。つまり、シンドバッドの「他者と手を取り合って進む旅」は、まさにこのエリアが作られた理念そのものなのです。</p>
+
+            <!-- FIX: ここも同様に、全体コラム「TDS Spatial Epic」へ戻れるしおり（付箋）風マイクロ誘導を追加して、手帳としての繋がりを強固にします -->
+            <a href="bgs-spatial-epic.html" class="micro-nav-card">
+                <span class="micro-nav-card-title">📖 関連ストーリー：</span>
+                <span class="micro-nav-card-desc">全8テーマポートの地政学的な繋がりと、時空を調停するディズニーシーの圧倒的な空間設計に迫る総括コラムはこちら。</span>
+            </a>
         </section>
 
-        <div class="footer-link reveal">
-            <a href="index.html">← HOMEへ戻る</a>
-        </div>
+        <!-- メインポータルへ戻るリンク -->
+        <div class="footer-link reveal"><a href="index.html">← HOMEへ戻る</a></div>
     </div>
 
     <script>
-        /* スイッチ処理（押すと夜空モードへ変わる） */
-        const themeSwitch = document.getElementById('theme-switch');
-        themeSwitch.addEventListener('click', () => {
-            document.body.classList.toggle('curse-mode');
-            themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '🌙';
-        });
+    // ============================================
+    // Custom Cursor (ポータルと完全に同期させ、タッチデバイスでは自動無効化)
+    // ============================================
+    const cursorOuter = document.getElementById('cursor-outer');
+    const cursorInner = document.getElementById('cursor-inner');
+    let mouseX = 0, mouseY = 0;
+    let outerX = 0, outerY = 0;
+    let mouseActive = false;
 
-        const reveals = document.querySelectorAll('.reveal');
-        const revealOnScroll = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
+    document.addEventListener('mousemove', e => {
+        if (!mouseActive) {
+            mouseActive = true;
+            cursorOuter.style.opacity = '1';
+            cursorInner.style.opacity = '1';
+        }
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorInner.style.left = mouseX + 'px';
+        cursorInner.style.top  = mouseY + 'px';
+    });
+
+    document.addEventListener('mouseleave', () => {
+        cursorOuter.style.opacity = '0';
+        cursorInner.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        if (mouseActive) {
+            cursorOuter.style.opacity = '1';
+            cursorInner.style.opacity = '1';
+        }
+    });
+
+    function animateCursor() {
+        outerX += (mouseX - outerX) * 0.14;
+        outerY += (mouseY - outerY) * 0.14;
+        cursorOuter.style.left = outerX + 'px';
+        cursorOuter.style.top  = outerY + 'px';
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    const hoverEls = document.querySelectorAll('a, button, .btn');
+    hoverEls.forEach(el => {
+        el.addEventListener('mouseenter', () => cursorOuter.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursorOuter.classList.remove('hovering'));
+    });
+
+    // ============================================
+    // Scroll Reveal
+    // ============================================
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target);
-            });
-        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-        reveals.forEach(reveal => revealOnScroll.observe(reveal));
-        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // 最初から軽快に動くよう、ヒーロー要素を手動で即時アクティブに
+    const reveals = document.querySelectorAll('.reveal');
+    setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+
+    // ============================================
+    // Progress Bar & Reading Tooltip
+    // ============================================
+    const progressBar = document.getElementById('progress-bar');
+    const readingTip = document.getElementById('reading-tip');
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const total    = document.body.scrollHeight - window.innerHeight;
+        
+        // 1. プログレスバーの更新
+        progressBar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+
+        // 2. 読書しおりヒントの表示判定
+        if (scrolled > 600) {
+            readingTip.classList.add('visible');
+            readingTip.setAttribute('aria-hidden', 'false');
+        } else {
+            readingTip.classList.remove('visible');
+            readingTip.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    readingTip.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    readingTip.style.pointerEvents = 'auto';
+    readingTip.style.cursor = 'none';
     </script>
 </body>
 </html>
