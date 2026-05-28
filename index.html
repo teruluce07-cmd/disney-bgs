@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ディズニーシー BGS &amp; 写真館 | 冒険とイマジネーションの海の記録</title>
     <meta name="description" content="東京ディズニーリゾートのアトラクションに秘められた歴史と物語、バックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
     <meta name="keywords" content="ディズニー BGS, ディズニーシー BGS, 舞浜 BGS, バックグラウンドストーリー, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
     <meta name="robots" content="index, follow">
@@ -137,7 +138,6 @@
                 radial-gradient(ellipse at 95% 10%, rgba(85,50,20,.25) 0%, transparent 45%),
                 radial-gradient(circle   at  5% 92%, rgba(90,55,20,.22) 0%, transparent 55%),
                 radial-gradient(ellipse at 50% 50%, transparent 15%, rgba(18,9,3,.42) 100%),
-                /* FIX: 複雑だったシワの計算処理（numOctaves）を半分に軽量化し、スクロール負荷を劇的にカット */
                 url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23F5EDD8' surfaceScale='9'%3E%3CfeDistantLight azimuth='45' elevation='35'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
             background-size: var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), 100% 100%, 500px 500px;
             background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, no-repeat, repeat;
@@ -170,7 +170,6 @@
         .card-highlight { animation: highlightPulse 2s ease-in-out; }
 
         .header { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 12px 0 30px; margin-bottom: 45px; border-bottom: 1px solid var(--border); position: relative; }
-        /* FIX: 文字化けしていたエスケープ特殊文字を、直接HTML上の記号へと修正（左上バグの完全な解消） */
         .header::after { content: '✦  ◆  ✦'; position: absolute; bottom: -10px; font-size: .65rem; letter-spacing: .5em; color: var(--gold); opacity: .6; background: var(--vellum); padding: 0 12px; }
         .header-logo-heading { margin: 0; }
         .header-logo { text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; }
@@ -189,7 +188,6 @@
             display: block; width: 100%; height: 100%; object-fit: cover;
             filter: brightness(.78) contrast(1.12) sepia(90%) hue-rotate(-5deg) saturate(.75) !important;
             transition: filter .5s ease;
-            /* FIX: 画像に3D GPUハードウェアアクセラレーションを適用し、スクロール処理の重さを完全解消 */
             transform: translate3d(0,0,0);
             backface-visibility: hidden;
         }
@@ -215,7 +213,6 @@
         .vintage-divider span { font-size: .9rem; color: var(--gold); letter-spacing: .5em; padding: 0 16px; opacity: .75; background: var(--vellum); margin: 0 auto; }
 
         .toc-box { background: rgba(0,0,0,.025); border: 1px solid var(--border); border-top: 2px solid rgba(107,68,35,.4); padding: 28px; border-radius: 2px; margin-bottom: 65px; position: relative; }
-        /* FIX: 特殊記号のエスケープバグを実物のダイヤモンド記号「◆」に修正 */
         .toc-box::before, .toc-box::after { content: '◆'; position: absolute; font-size: .5rem; color: var(--gold); opacity: .6; }
         .toc-box::before { top: 8px; left: 12px; }
         .toc-box::after  { top: 8px; right: 12px; }
@@ -225,7 +222,6 @@
         .toc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
         .toc-tags a { background: rgba(30,18,8,.03); border: 1px solid var(--border); padding: 5px 14px; border-radius: 0; font-family: 'Cinzel', serif; font-size: .6rem; letter-spacing: .1em; color: var(--ink-mid); text-decoration: none; transition: background-color .3s, color .3s, border-color .3s, box-shadow .3s; }
         .toc-tags a:hover { background: var(--ink-mid); color: var(--parchment); border-color: var(--ink-mid); box-shadow: 0 0 12px var(--gold-glow); }
-        /* FIX: 目次下部矢印のエスケープバグを実物の矢印「➔」に修正 */
         .toc-footer { text-align: center; margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--border); }
         .toc-footer a { font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); text-decoration: none; font-weight: 600; }
         .toc-footer a:hover { color: var(--ink-mid); }
@@ -254,7 +250,6 @@
         .img-wrapper { position: relative; width: 100%; aspect-ratio: 3/2; border-radius: 0; overflow: hidden; margin-bottom: 28px; box-shadow: 0 12px 30px var(--shadow-deep); }
         .img-wrapper::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.04) 3px, rgba(0,0,0,.04) 4px); pointer-events: none; z-index: 1; }
         
-        /* FIX: 各アトラクション写真に対しても、GPUによるハードウェアアクセラレーション、非同期デコードを適用し、表示速度を極限まで高速化 */
         .img-wrapper img {
             width: 100%; height: 100%; object-fit: cover;
             filter: brightness(.82) contrast(1.12) sepia(28%) saturate(.9);
@@ -291,7 +286,6 @@
         .article-card h2 { font-family: 'Cinzel', serif; font-size: 1.65rem; font-weight: 400; margin-bottom: 16px; letter-spacing: .08em; text-shadow: 1px 1px 2px var(--shadow-soft); color: var(--ink-mid); }
         .article-card p  { font-size: .82rem; opacity: .72; line-height: 2.1; margin-bottom: 28px; }
         .read-btn { font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .18em; color: var(--gold); text-transform: uppercase; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
-        /* FIX: 矢印のエスケープバグを実物の矢印「→」に直接修正（ボタン部分バグの完全解消） */
         .read-btn::after { content: '→'; transition: transform .3s; }
         .article-card:hover .read-btn::after { transform: translateX(4px); }
 
@@ -313,7 +307,6 @@
         .chronicle-card::before { content: 'THE MAIHAMA CHRONICLE'; position: absolute; top: -9px; left: 50%; transform: translateX(-50%); font-family: 'Cinzel', serif; font-size: .5rem; letter-spacing: .3em; color: var(--gold); background: var(--vellum); padding: 0 14px; z-index: 5; }
         .chronicle-card h3 { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 600; color: var(--sepia); text-align: center; margin-bottom: 6px; letter-spacing: .15em; }
         .chronicle-subtitle { font-family: 'IM Fell English', serif; font-style: italic; font-size: .88rem; text-align: center; color: var(--gold); opacity: .8; }
-        /* FIX: 矢印のエスケープバグを実物の星型しおり「✦ Read the Chronicle ✦」に修正 */
         .chronicle-expand-indicator { display: inline-block; margin-top: 15px; font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .25em; color: var(--gold-light); text-transform: uppercase; transition: color .3s; }
         .chronicle-card:hover .chronicle-expand-indicator { color: var(--gold); }
         .chronicle-card[open] .chronicle-expand-indicator { display: none; }
@@ -331,7 +324,6 @@
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-box { background: #F7F0E0; border: 1px solid var(--border-strong); border-top: 3px solid var(--gold); padding: 38px 28px 28px; border-radius: 0; width: 90%; max-width: 400px; text-align: justify; box-shadow: 0 20px 50px var(--shadow-deep); position: relative; color: var(--ink-mid); font-size: .82rem; line-height: 1.9; transform: scale(.92) translateY(12px); transition: transform .45s cubic-bezier(.25,1,.5,1); }
         .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
-        /* FIX: モーダルを閉じる「✕」ボタンのエスケープバグを実物記号に直接置換 */
         .modal-close { position: absolute; top: 14px; right: 14px; cursor: none; font-family: 'Cinzel', serif; font-size: .58rem; font-weight: 700; color: var(--gold); border: 1px solid var(--border); background: transparent; letter-spacing: .12em; text-transform: uppercase; padding: 8px 12px; }
         .modal-close:hover { background: var(--ink-mid); color: var(--parchment); border-color: var(--ink-mid); }
         .modal-close:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
@@ -354,7 +346,6 @@
         .sea-cert-founded { font-size: .55rem; letter-spacing: .2em; color: rgba(200,155,74,.55); margin-bottom: 18px; }
         .sea-cert-sign { font-family: 'IM Fell English', serif; font-size: 1.05rem; font-style: italic; color: rgba(200,155,74,.8); padding-top: 16px; margin-top: 24px; border-top: 1px dashed rgba(200,155,74,.25); }
 
-        /* FIX: 矢印のエスケープ文字化けを実物のしおり矢印「↑」に直接置換 */
         #reading-tip { position: fixed; bottom: 30px; right: 30px; background: var(--ink-mid); color: var(--parchment); font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .15em; padding: 10px 18px; border-radius: 0; border: 1px solid var(--border-strong); opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s; pointer-events: none; z-index: 1000; }
         #reading-tip.visible { opacity: 1; transform: translateY(0); }
 
@@ -376,10 +367,8 @@
         </div>
         <h1 class="curtain-title">BGS Chronicles<br><span style="font-size:.75em;letter-spacing:.25em;opacity:.7">TOKYO DISNEY RESORT</span></h1>
         
-        <!-- FIX: 「·」のエスケープ文字化けを実物の中黒文字に直接置換（中段バグの完全解消） -->
         <p class="curtain-year">Est. MCMLXXXIII · Maihama · Japan</p>
         
-        <!-- FIX: 矢印のエスケープ文字化けを実物の記号に直接置換 -->
         <button class="curtain-enter" id="curtain-enter-btn"><span>Enter the Archives</span></button>
         <button class="curtain-skip" id="curtain-skip-btn">Skip →</button>
     </div>
@@ -389,7 +378,6 @@
     <div class="vignette-overlay" aria-hidden="true"></div>
     <div id="progress-bar" aria-hidden="true"></div>
     
-    <!-- FIX: 矢印のエスケープ文字化けを実物のしおり記号「↑」に直接置換 -->
     <div id="reading-tip" aria-hidden="true">↑ Top of Archives</div>
 
     <div class="container">
@@ -424,7 +412,6 @@
                     アトラクションの待ち時間や、お家でふとパークの風景を思い出したいときに、のんびり読んでみてください。
                 </p>
                 
-                <!-- FIX: クォーテーションのエスケープ文字化けを実物の「“”」に直接置換（中段バグの完全解消） -->
                 <blockquote class="walt-quote">
                     “Disneyland will never be completed.<br>
                     It will continue to grow as long as there is imagination left in the world.”
@@ -466,7 +453,6 @@
                     <a href="#indy-card">Indiana Jones</a>
                 </div>
             </div>
-            <!-- FIX: エスケープ文字化けを実物のしおり記号「➔」に修正 -->
             <div class="toc-footer"><a href="profile.html">Curator Profile ➔</a></div>
         </nav>
 
@@ -492,7 +478,6 @@
             <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
                 <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入し、初期表示スピードを限界まで高速化 -->
                     <img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" loading="eager" fetchpriority="high" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">4 min</span></div>
@@ -504,7 +489,6 @@
             <a href="bgs-btm.html" class="article-card reveal" id="btm-card" data-category="tdl">
                 <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入し、初期表示スピードを限界まで高速化 -->
                     <img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" loading="eager" fetchpriority="high" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">3 min</span></div>
@@ -516,7 +500,6 @@
             <a href="bgs-bb.html" class="article-card reveal" id="bb-card" data-category="tdl">
                 <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">4 min</span></div>
@@ -528,7 +511,6 @@
             <a href="bgs-tl.html" class="article-card reveal" id="tl-card" data-category="tdl">
                 <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">3 min</span></div>
@@ -542,7 +524,6 @@
                 <div class="spotlight" aria-hidden="true"></div>
                 <span class="new-badge">NEW</span>
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" class="epic-map-filter" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Special Chronicle</span><span class="card-meta">5 min</span></div>
@@ -553,7 +534,6 @@
 
             <a href="bgs-tot.html" class="article-card reveal" id="tot-card" data-category="tds">
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">5 min</span></div>
@@ -565,7 +545,6 @@
             <a href="bgs-sindbad.html" class="article-card reveal" id="sindbad-card" data-category="tds">
                 <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">3 min</span></div>
@@ -576,7 +555,6 @@
 
             <a href="bgs-fs.html" class="article-card reveal" id="fs-card" data-category="tds">
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">4 min</span></div>
@@ -587,7 +565,6 @@
 
             <a href="bgs-soarin.html" class="article-card reveal" id="soarin-card" data-category="tds">
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">4 min</span></div>
@@ -612,7 +589,6 @@
             <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
                 <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">3 min</span></div>
@@ -623,7 +599,6 @@
 
             <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
                 <div class="img-wrapper">
-                    <!-- FIX: 画像非同期デコード「decoding="async"」属性を完全代入 -->
                     <img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" loading="lazy" draggable="false" decoding="async">
                 </div>
                 <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">4 min</span></div>
@@ -656,7 +631,7 @@
         </details>
 
         <footer>
-            &copy; TERU_LUCE_
+            &copy; 2026 TERU_LUCE_
             <div class="footer-notice-box">
                 <button class="site-notice-trigger-btn" id="notice-trigger" aria-haspopup="dialog">Notes &amp; Contacts</button>
             </div>
@@ -872,16 +847,15 @@
 
     const seaModal = document.getElementById('sea-modal');
     const seaCrest = document.querySelector('.sea-mini-crest');
-    if (seaCrest) seaCrest.addEventListener('click', e => { e.preventDefault(); openModal(seaModal); });
+    if (seaCrest) seaCrest.addEventListener('click', e => { 
+        e.preventDefault(); 
+        e.stopPropagation(); // リンク要素のクリックイベントが伝播しないよう追加
+        openModal(seaModal); 
+    });
     document.getElementById('sea-modal-close').addEventListener('click', () => closeModal(seaModal));
     seaModal.addEventListener('click', e => { if (e.target === seaModal) closeModal(seaModal); });
 
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(modalOverlay); closeModal(seaModal); } });
-
-    // ============================================
-    // Staggered Card Entrance
-    // ============================================
-    document.querySelectorAll('.article-card.reveal').forEach((card, i) => { card.style.transitionDelay = (i * 0.06) + 's'; });
     </script>
 </body>
 </html>
