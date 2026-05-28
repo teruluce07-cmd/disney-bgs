@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="東京ディズニーリゾートのアトラクションに秘められた歴史と物語、バックグラウンドストーリー（BGS）を現地写真とともに深掘りするファンサイト。">
-    <!-- FIX: ディズニー総合サイトとしての最重要日本語キーワードを配置（Googleの検索に極めて引っかかりやすくなります） -->
     <meta name="keywords" content="ディズニー BGS, ディズニーシー BGS, 舞浜 BGS, バックグラウンドストーリー, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
     <meta name="robots" content="index, follow">
     
@@ -44,27 +43,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 昼（超・くしゃくしゃ古紙）クラシック・カラー設定 --- */
+        /* --- 昼（紅茶をこぼしてぐちゃぐちゃになった羊皮紙）重厚ヴィンテージ・カラー設定 --- */
         :root {
-            --bg-color: #E2D7C5; 
+            --bg-color: #DFD4C0; /* 少し深みと赤みのある羊皮紙色に変更 */
             --text-main: #2D231E; 
-            --accent-gold: #8C6239; 
-            --border-light: rgba(45, 35, 30, 0.2);
+            --accent-gold: #7B5532; /* 真鍮・ブロンズ寄りの深いゴールドに変更 */
+            --border-light: rgba(45, 35, 30, 0.22);
             --img-filter: brightness(0.9) contrast(1.1) sepia(30%);
-            --glow-color: rgba(140, 98, 57, 0.2);
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f5eee0' surfaceScale='5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+            --glow-color: rgba(123, 85, 50, 0.2);
+            
+            /* FIX: ぐちゃぐちゃに折れ曲がった羊皮紙のシワを、よりシャープに、深く表現するSVGフィルタ */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavy-crumple'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23FAF3E0' surfaceScale='7'%3E%3CfeDistantLight azimuth='50' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavy-crumple)'/%3E%3C/svg%3E");
         }
  
         img { max-width: 100% !important; height: auto; }
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
  
+        /* FIX: 背景画像がスクロールと完全に同期して動くようにするため、fixedを廃止し、
+           紅茶のシミ（Spill Stains）と煤け（Vignette）のマルチレイヤーグラデーションを直接bodyに定義 */
         body {
             font-family: 'Noto Serif JP', serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture);
-            background-size: cover;
-            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
+            background-image: 
+                /* 紅茶をこぼしたようなリアルなシミ（液体のにじみ）のレイヤー */
+                radial-gradient(circle at 12% 20%, rgba(105, 70, 40, 0.25) 0%, rgba(105, 70, 40, 0.08) 35%, transparent 60%),
+                radial-gradient(circle at 88% 70%, rgba(90, 55, 25, 0.28) 0%, rgba(90, 55, 25, 0.06) 25%, transparent 55%),
+                radial-gradient(circle at 50% 8%, rgba(110, 75, 45, 0.2) 0%, rgba(110, 75, 45, 0.03) 45%, transparent 75%),
+                radial-gradient(ellipse at 95% 15%, rgba(95, 60, 30, 0.22) 0%, transparent 50%),
+                radial-gradient(circle at 5% 90%, rgba(105, 70, 40, 0.2) 0%, transparent 60%),
+                /* 古書の手帳の端が煤けたような、外側から内側へのビネット影 */
+                radial-gradient(circle at 50% 50%, transparent 20%, rgba(20, 10, 5, 0.38) 100%),
+                /* くしゃくしゃの羊皮紙テクスチャ */
+                var(--paper-texture);
+            background-size: 100% 2000px, 100% 2000px, 100% 2000px, 100% 2000px, 100% 2000px, 100% 100%, 450px 450px;
+            background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, no-repeat, repeat;
+            background-attachment: scroll; /* スクロールすると背景も一緒に動く設定 */
+            color: var(--text-main); 
+            line-height: 2.2; 
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
  
@@ -85,22 +102,23 @@
             }
         }
  
-        .paper-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
-            background-size: cover; transform: translate3d(0, 0, 0); pointer-events: none;
-        }
- 
         .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
  
+        /* FIX: 手帳の表紙や額縁のような「二重のフレーム線」と重厚なシャドウを追加し、高級感あるブック仕様に変更 */
         .container { 
             position: relative; z-index: 1;
-            width: 100%; max-width: 540px; margin: 0 auto; padding: 40px 25px 100px; 
-            background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03);
-            transition: background 0.8s ease, max-width 0.5s ease;
+            width: 100%; max-width: 540px; margin: 50px auto 100px; padding: 45px 30px 100px; 
+            background: rgba(246, 240, 226, 0.68); /* 紙質を高めるために不透明度を調整 */
+            border-radius: 4px; 
+            
+            /* アンティーク調の額縁フレーム線 */
+            border: 1px solid rgba(140, 98, 57, 0.4);
+            outline: 3px double rgba(140, 98, 57, 0.3);
+            outline-offset: -8px;
+            box-shadow: 0 15px 45px rgba(25, 15, 5, 0.18);
         }
  
         /* カードが下からふわっと現れるスクロールアニメーション */
@@ -125,37 +143,71 @@
         }
  
         /* --- ヘッダー --- */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); }
+        /* FIX: 探検協会の機関紙風に、縦積みのマジェスティックなセンター配置ヘッダーに変更 */
+        .header { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 15px;
+            padding: 10px 0 25px; 
+            margin-bottom: 40px; 
+            border-bottom: 1px solid var(--border-light); 
+            outline: 1px dashed rgba(140, 98, 57, 0.18);
+            outline-offset: 4px;
+            text-align: center;
+        }
  
         .header-logo-heading {
-            font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; letter-spacing: 0.1em; margin: 0;
+            margin: 0;
         }
         .header-logo {
-            color: var(--text-main); text-decoration: none;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* サブタイトル：公式紙をイメージした美しい欧文レター */
+        .logo-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.35em;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        /* メインタイトル：TERU_LUCE_から、ディズニーの歴史アーカイブ紙「MAIHAMA CHRONICLE」に変更して脱・個人サイト化 */
+        .logo-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.1rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--text-main);
+            line-height: 1.1;
+            text-shadow: 0.5px 0.5px 1.5px rgba(45, 35, 30, 0.15);
         }
  
         .profile-btn {
             display: inline-block; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em;
-            color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 10px 20px; border-radius: 40px; text-transform: uppercase; transition: background-color 0.4s, color 0.4s, box-shadow 0.4s;
+            color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 8px 22px; border-radius: 40px; text-transform: uppercase; transition: background-color 0.4s, color 0.4s, box-shadow 0.4s;
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
  
-        /* FIX: プロフィール写真をスクラップ手帳にテープでペタッと貼った、立体感あるポラロイド（印画紙）コラージュに仕立てるデザイン */
+        /* プロフィール写真枠：ポラロイド貼り付け風 */
         .intro-portrait-container {
             position: relative;
             margin: 20px auto 35px;
-            padding: 10px 10px 16px 10px; /* 写真の白い紙フチ（ポラロイド風） */
+            padding: 10px 10px 16px 10px; 
             background: #FAF6ED;
             border-radius: 2px;
             box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.12);
-            transform: rotate(-1.8deg); /* 手帳のクラフト感を出すため、わずかに左に傾けます */
+            transform: rotate(-1.8deg); 
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             display: inline-block;
         }
         .intro-portrait-container:hover {
-            transform: rotate(0deg) scale(1.02); /* ホバーするとまっすぐに戻り、軽く浮き上がります */
+            transform: rotate(0deg) scale(1.02); 
         }
-        /* 上部に斜めに貼られた、うっすら裏が透ける半透明マスキングテープ（付箋） */
         .intro-portrait-container::before {
             content: "";
             position: absolute;
@@ -184,6 +236,7 @@
  
         .walt-quote {
             font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; font-weight: 600; color: var(--accent-gold); line-height: 1.5; margin-bottom: 8px; padding: 0 10px;
+            text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05);
         }
         .walt-quote-cite {
             display: block; font-family: 'Montserrat', sans-serif; font-size: 0.55rem; font-style: normal; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 6px; margin-bottom: 12px; opacity: 0.7; text-align: center;
@@ -197,7 +250,8 @@
             font-size: 1.1rem;
             color: var(--accent-gold);
             letter-spacing: 0.4em;
-            opacity: 0.55;
+            opacity: 0.65;
+            text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05);
             user-select: none;
         }
  
@@ -207,6 +261,7 @@
         }
         .toc-title {
             font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em;
+            text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05);
         }
         .toc-section { margin-bottom: 15px; }
         .toc-section-title { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold); display: block; margin-bottom: 8px; font-weight: 600; }
@@ -221,7 +276,7 @@
         /* --- 記事見出し & フィルター --- */
         .list-header { display: flex; flex-direction: column; gap: 15px; margin: 60px 0 30px; border-bottom: 1px solid var(--border-light); padding-bottom: 15px; }
         .list-header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--accent-gold); }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--accent-gold); text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05); }
         .layout-toggle { display: flex; gap: 4px; background: rgba(0, 0, 0, 0.05); padding: 4px; border-radius: 20px; border: 1px solid var(--border-light); }
         
         .layout-toggle button { background: transparent; border: none; color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: background-color 0.3s, color 0.3s; text-transform: uppercase; }
@@ -301,7 +356,7 @@
             padding: 4px 8px; border-radius: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 10;
         }
 
-        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; }
+        .article-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--text-main); margin-bottom: 15px; letter-spacing: 0.05em; text-shadow: 0.5px 0.5px 1px rgba(45,35,30,0.1); }
         .article-card p { font-size: 0.8rem; opacity: 0.7; line-height: 2; margin-bottom: 25px; transition: opacity 0.4s ease; }
         .read-btn { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--accent-gold); text-transform: uppercase; font-weight: 500; }
  
@@ -396,14 +451,17 @@
 </head>
 <body>
  
-    <div class="paper-bg" aria-hidden="true"></div>
     <div class="noise-overlay" aria-hidden="true"></div>
  
     <div class="container">
         <!-- ヘッダー -->
+        <!-- FIX: ヘッダー全体をセンター配置の重厚なオフィシャル紙風ヘッダー「MAIHAMA CHRONICLE」へと調律（脱・個人ブログ化） -->
         <header class="header">
             <h1 class="header-logo-heading">
-                <a href="index.html" class="header-logo">TERU_LUCE_</a>
+                <a href="index.html" class="header-logo">
+                    <span class="logo-sub">Tokyo Disney Resort</span>
+                    <span class="logo-main">Maihama Chronicle</span>
+                </a>
             </h1>
             <a href="profile.html" class="profile-btn">Profile</a>
         </header>
@@ -514,7 +572,7 @@
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Big Thunder Mountain</h2>
-                <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と、大自然に宿る「精霊の怒り」が招いたタンブルウィード崩壊の歴史を辿る。</p>
+                <p>警告を破りし蒸気の咆哮と、黄金の呪い。ゴールドラッシュに沸いた一人の男の野望と, 大自然に宿る「精霊の怒り」が招いたタンブルウィード崩壊の歴史を辿る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
@@ -540,7 +598,7 @@
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Tomorrowland</h2>
-                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテンの初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
+                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテン of 初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
