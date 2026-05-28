@@ -6,431 +6,92 @@
     <title>BGS Chronicle: TDS Spatial Epic | teru_luce_</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ============================================
-           CSS Variables & Reset (index.htmlと完全同期)
-        ============================================ */
         :root {
-            --parchment:     #E8DCC8;
-            --parchment-dark:#C9B99A;
-            --ink:           #1E1510;
-            --ink-mid:       #3D2B1F;
-            --sepia:         #6B4423;
-            --gold:          #9A6B2E;
-            --gold-light:    #C89B4A;
-            --gold-glow:     rgba(154,107,46,.35);
-            --vellum:        rgba(240,232,215,.72);
-            --border:        rgba(107,68,35,.28);
-            --border-strong: rgba(107,68,35,.55);
-            --shadow-deep:   rgba(15,8,3,.45);
-            --shadow-soft:   rgba(30,18,8,.2);
-            --bg-stain-size: 100% 2200px;
-            --tape-color:    rgba(215,190,148,.55);
-            --photo-border-bg: #FAF6ED;
+            --bg-color: #D6C7AE;
+            --text-main: #362A22;
+            --accent-gold: #9E6B3A;
+            --border-light: rgba(158, 107, 58, 0.3);
+            --img-filter: brightness(0.92) contrast(1.08) sepia(25%);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23E0D2BA' surfaceScale='3'%3E%3CfeDistantLight azimuth='45' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
-        img {
-            max-width: 100%; height: auto;
-            -webkit-user-select: none; user-select: none;
-            -webkit-touch-callout: none; pointer-events: none;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
-        /* ============================================
-           Custom Cursor (ポータルと完全に同期させ、遷移時の違和感をゼロに)
-        ============================================ */
-        body { cursor: none; }
-        #cursor-outer {
-            position: fixed;
-            width: 36px; height: 36px;
-            border: 1.5px solid var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: opacity .3s ease, border-color .3s ease, width .2s ease, height .2s ease;
-            mix-blend-mode: multiply;
-            opacity: 0;
-        }
-        #cursor-inner {
-            position: fixed;
-            width: 6px; height: 6px;
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: opacity .3s ease;
-            opacity: 0;
-        }
-        #cursor-outer.hovering {
-            width: 52px; height: 52px;
-            border-color: var(--gold-light);
-            border-style: dashed;
-        }
-        #cursor-outer::before,
-        #cursor-outer::after {
-            content: '';
-            position: absolute;
-            background: var(--gold);
-            opacity: .5;
-        }
-        #cursor-outer::before { width: 1px; height: 6px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        #cursor-outer::after { width: 6px; height: 1px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-
-        @media (hover: none) {
-            body { cursor: auto !important; }
-            #cursor-outer, #cursor-inner { display: none !important; }
-        }
-
-        /* ============================================
-           Body & Background (紅茶をこぼしたぐちゃぐちゃ羊皮紙スクロール)
-        ============================================ */
         body {
             font-family: 'Noto Serif JP', serif;
-            background-color: #D6C9AE;
-            background-image:
-                radial-gradient(ellipse at 10% 15%, rgba(90,55,20,.3)  0%, transparent 55%),
-                radial-gradient(ellipse at 90% 75%, rgba(80,45,15,.32) 0%, transparent 50%),
-                radial-gradient(circle   at 50%  5%, rgba(100,65,30,.22) 0%, transparent 65%),
-                radial-gradient(ellipse at 95% 10%, rgba(85,50,20,.25) 0%, transparent 45%),
-                radial-gradient(circle   at  5% 92%, rgba(90,55,20,.22) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 50%, transparent 15%, rgba(18,9,3,.42) 100%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='6' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23F5EDD8' surfaceScale='9'%3E%3CfeDistantLight azimuth='45' elevation='35'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
-            background-size: var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), 100% 100%, 500px 500px;
-            background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, no-repeat, repeat;
-            color: var(--ink);
-            line-height: 2.2;
-            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 2; overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        .noise-overlay {
-            position: fixed; inset: 0;
-            pointer-events: none; z-index: 3; opacity: .045;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
+        .paper-bg { position: fixed; inset: 0; z-index: -2; background-image: var(--paper-texture); background-size: 300px 300px; opacity: 0.9; pointer-events: none; }
+        .noise-overlay { position: fixed; inset: 0; z-index: -1; background-image: radial-gradient(circle at 50% 50%, transparent 20%, rgba(20, 40, 50, 0.08) 100%); pointer-events: none; }
 
-        .vignette-overlay {
-            position: fixed; inset: 0;
-            pointer-events: none; z-index: 1;
-            background: radial-gradient(ellipse at center, transparent 40%, rgba(12,6,2,.55) 100%);
-        }
-
-        /* ============================================
-           Page Progress Bar (長い論考をどこまで読んだか示すバー)
-        ============================================ */
-        #progress-bar {
-            position: fixed; top: 0; left: 0; height: 2px;
-            background: linear-gradient(90deg, var(--sepia), var(--gold-light));
-            width: 0%; z-index: 9999;
-            transition: width .1s linear;
-            box-shadow: 0 0 8px var(--gold-glow);
-        }
-
-        /* ============================================
-           Container (手帳の二重ダブルフレーム枠)
-        ============================================ */
         .container {
-            position: relative; z-index: 4;
-            width: 100%; max-width: 560px;
-            margin: 60px auto 120px; padding: 55px 38px 110px;
-            background: var(--vellum);
-            border-radius: 2px;
-            border: 1px solid var(--border-strong);
-            outline: 3px double rgba(107,68,35,.22);
-            outline-offset: -10px;
-            box-shadow:
-                0 20px 60px var(--shadow-deep),
-                0  4px 12px var(--shadow-soft),
-                inset 0 1px 0 rgba(255,245,225,.35);
-        }
-        .container::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg,
-                transparent 0%, rgba(200,155,74,.4) 20%,
-                rgba(255,235,180,.7) 50%,
-                rgba(200,155,74,.4) 80%, transparent 100%);
-        }
-        .container::after {
-            content: '';
-            position: absolute; bottom: 0; right: 0;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 0 0 28px 28px;
-            border-color: transparent transparent rgba(107,68,35,.18) transparent;
+            position: relative; z-index: 1; width: 100%; max-width: 560px;
+            margin: 40px auto 80px; padding: 45px 30px 80px;
+            background: rgba(250, 246, 238, 0.85);
+            border-radius: 4px; border: 1px solid var(--border-light);
+            outline: 2px double rgba(158, 106, 56, 0.25); outline-offset: -8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
         }
 
-        /* ============================================
-           Reveal Animation
-        ============================================ */
-        .reveal {
-            opacity: 0; transform: translateY(28px);
-            transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1);
-        }
+        img { max-width: 100%; height: auto; -webkit-touch-callout: none; user-select: none; pointer-events: none; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* ============================================
-           Back Button
-        ============================================ */
-        .back-btn {
-            display: inline-block; text-decoration: none;
-            font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em;
-            color: var(--gold); border-bottom: 1px solid transparent;
-            margin-bottom: 40px; transition: color 0.3s, border-color 0.3s;
-        }
-        .back-btn:hover { color: var(--ink-mid); border-color: var(--ink-mid); }
+        .back-btn { display: inline-block; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent-gold); border-bottom: 1px solid transparent; margin-bottom: 40px; transition: color 0.3s; }
+        .back-btn:hover { color: var(--text-main); }
 
-        /* ============================================
-           Header & Title
-        ============================================ */
-        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 40px; }
-        .bgs-tag { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; }
-        h1 { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 400; margin: 15px 0 20px; letter-spacing: 0.02em; line-height: 1.6; text-align: center; color: var(--ink-mid); }
-        h1 span { display: block; font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
-        .subtitle-jp { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.05em; opacity: 0.8; text-align: justify; margin-top: 25px; line-height: 2.2; border-left: 2px solid var(--gold); padding-left: 15px; }
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 600; margin: 15px 0 20px; line-height: 1.6; text-align: center; }
+        h1 span { display: block; font-family: 'Cinzel', serif; font-size: 1rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 10px; }
+        .subtitle-jp { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.05em; opacity: 0.9; text-align: justify; margin-top: 25px; line-height: 2.2; border-left: 2px solid var(--accent-gold); padding-left: 15px; }
 
-        /* ============================================
-           TOC Box
-        ============================================ */
-        .toc-box { background: rgba(0,0,0,.02); border: 1px solid var(--border); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
-        .toc-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--sepia); text-align: center; margin-bottom: 20px; letter-spacing: 0.15em; }
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transform: translate3d(0,0,0); backface-visibility: hidden; }
+
+        .toc-box { background: rgba(255,255,255,.4); border: 1px solid var(--border-light); padding: 25px; border-radius: 6px; margin-bottom: 50px; }
+        .toc-title { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text-main); text-align: center; margin-bottom: 20px; letter-spacing: .15em; font-weight: 600; }
         .toc-list { list-style: none; padding: 0; }
-        .toc-list li { border-bottom: 1px dashed var(--border); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
-        .toc-list a { color: var(--ink-mid); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
-        .toc-list a:hover { color: var(--gold); }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
 
-        /* ============================================
-           Scrapbook Photo Container (古写真ビネット・テープ留め)
-        ============================================ */
-        .hero-img-container { 
-            position: relative; 
-            margin: 55px auto 45px; 
-            padding: 12px 12px 18px 12px; 
-            background: var(--photo-border-bg); 
-            border-radius: 2px; 
-            max-width: 95%;
-            box-shadow: 2px 10px 24px rgba(0, 0, 0, 0.14); 
-            transform: rotate(-1.5deg); 
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.8s, box-shadow 0.8s;
-        }
-        .hero-img-container::before {
-            content: "";
-            position: absolute;
-            top: -15px; 
-            left: 50%;
-            transform: translateX(-50%) rotate(2.5deg); 
-            width: 105px;
-            height: 28px;
-            background-color: var(--tape-color);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
-            pointer-events: none; 
-            z-index: 20;
-            opacity: 0.9;
-            transition: background-color 0.8s ease;
-        }
-        .hero-img-container:hover { 
-            transform: rotate(0deg) scale(1.02); 
-            box-shadow: 4px 15px 30px rgba(0, 0, 0, 0.18); 
-        }
-        /* 古地図セピアフィルター効果 */
-        .hero-img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            filter: brightness(0.85) contrast(1.05) sepia(75%) hue-rotate(-5deg) saturate(0.85); 
-            mix-blend-mode: normal; 
-            transition: filter 0.8s ease; 
-            pointer-events: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        /* ============================================
-           Port Accordion Cards (開閉アコーディオン)
-        ============================================ */
-        .port-accordion {
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin-bottom: 12px;
-            background: rgba(0, 0, 0, 0.015);
-            overflow: hidden;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .port-accordion[open] {
-            background: rgba(0, 0, 0, 0.035);
-            border-color: var(--gold);
-        }
-        .port-summary {
-            padding: 14px 18px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            list-style: none; 
-            user-select: none;
-            outline: none;
-        }
-        .port-summary::-webkit-details-marker {
-            display: none; 
-        }
-        .port-summary::after {
-            content: "+";
-            font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
-            color: var(--gold);
-            transition: transform 0.3s ease;
-        }
-        .port-accordion[open] .port-summary::after {
-            content: "−";
-        }
-        .port-name {
-            font-family: 'Noto Serif JP', serif;
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: var(--ink-mid);
-        }
-        .port-meta {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.65rem;
-            opacity: 0.6;
-            margin-left: auto;
-            margin-right: 15px;
-            letter-spacing: 0.05em;
-        }
-        .port-content {
-            padding: 0 18px 18px 18px;
-            font-size: 0.8rem;
-            line-height: 1.8;
-            border-top: 1px dashed var(--border);
-            padding-top: 15px;
-            animation: accordionSlideDown 0.3s ease-out forwards; 
-        }
-        .port-content p {
-            margin-bottom: 12px;
-            opacity: 0.95;
-            font-weight: 300;
-        }
-        .port-content p:last-child {
-            margin-bottom: 0;
-        }
-        @keyframes accordionSlideDown {
-            from { opacity: 0; transform: translateY(-8px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ============================================
-           Micro Navigation Cards (相互誘導しおり)
-        ============================================ */
-        .micro-nav-card {
-            display: block;
-            text-decoration: none;
-            background: rgba(122, 83, 48, 0.04);
-            border-left: 2px solid var(--accent-gold);
-            padding: 10px 15px;
-            margin: 15px 0 15px 12px;
-            font-size: 0.72rem;
-            line-height: 1.6;
-            color: var(--ink-mid);
-            border-radius: 0 4px 4px 0;
-            transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .micro-nav-card:hover {
-            background: rgba(122, 83, 48, 0.08);
-            transform: translateX(3px);
-        }
-        .micro-nav-card-title {
-            font-family: 'Noto Serif JP', serif;
-            font-weight: bold;
-            color: var(--accent-gold);
-            display: inline-block;
-            margin-right: 5px;
-        }
-        .micro-nav-card-desc {
-            opacity: 0.85;
-        }
-
-        /* ============================================
-           Article Blocks & Dividers
-        ============================================ */
         .article-block { margin-bottom: 70px; text-align: justify; }
-        h2 { font-family: 'Noto Serif JP', serif; font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 50px; margin-bottom: 25px; display: flex; align-items: center; line-height: 1.5; }
-        h2::after { content: ""; flex: 1; height: 1px; background: var(--border); margin-left: 15px; }
-        p { font-size: 0.85rem; font-weight: 300; margin-bottom: 20px; opacity: 0.95; }
-        p strong { font-weight: bold; color: var(--accent-gold); }
+        h2 { font-family: 'Noto Serif JP', serif; font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 50px; margin-bottom: 25px; display: flex; align-items: center; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.85rem; margin-bottom: 20px; opacity: 0.9; }
 
-        .vintage-divider {
-            display: flex; align-items: center; gap: 0;
-            margin: 55px 0 38px;
-            user-select: none;
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 30px 0; border: 1px solid var(--border-light); border-radius: 4px; }
+        .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; min-width: 550px; }
+        .timeline-table th, .timeline-table td { padding: 12px 14px; text-align: left; border-bottom: 1px dashed var(--border-light); line-height: 1.8; }
+        .timeline-table th { font-weight: bold; color: var(--accent-gold); background: rgba(255,255,255,.5); }
+
+        .micro-nav-card {
+            display: block; text-decoration: none; background: #fff;
+            border-left: 3px solid var(--accent-gold); padding: 15px;
+            margin: 15px 0; font-size: 0.75rem; line-height: 1.6; color: var(--text-main);
+            border-radius: 0 4px 4px 0; transition: transform 0.3s; border: 1px solid var(--border-light); border-left: 3px solid var(--accent-gold);
         }
-        .vintage-divider::before, .vintage-divider::after {
-            content: '';
-            position: absolute; left: 38px; right: 38px; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
-            z-index: -1;
-        }
-        .vintage-divider span {
-            font-size: .9rem; color: var(--gold); letter-spacing: .5em;
-            padding: 0 16px; opacity: .75; background: var(--vellum);
-            margin: 0 auto;
-        }
+        .micro-nav-card:hover { transform: translateX(3px); }
+        .micro-nav-card-title { font-weight: bold; color: var(--accent-gold); display: inline-block; margin-right: 5px; }
 
         .footer-link { text-align: center; margin-top: 80px; }
-        .footer-link a { color: var(--ink-mid); text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-
-        /* ============================================
-           Reading Progress Tooltip
-        ============================================ */
-        #reading-tip {
-            position: fixed; bottom: 30px; right: 30px;
-            background: var(--ink-mid); color: var(--parchment);
-            font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .15em;
-            padding: 10px 18px; border-radius: 0;
-            border: 1px solid var(--border-strong);
-            opacity: 0; transform: translateY(8px);
-            transition: opacity .4s, transform .4s;
-            pointer-events: none; z-index: 1000;
-        }
-        #reading-tip.visible { opacity: 1; transform: translateY(0); }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
     </style>
 </head>
 <body>
-
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <div class="vignette-overlay" aria-hidden="true"></div>
-
-    <!-- カスタムカーソル -->
-    <div id="cursor-outer" aria-hidden="true"></div>
-    <div id="cursor-inner" aria-hidden="true"></div>
-
-    <!-- スクロールプログレスバー -->
-    <div id="progress-bar" aria-hidden="true"></div>
-
-    <!-- 読書ヒントしおり -->
-    <div id="reading-tip" aria-hidden="true">↑ Top of Archives</div>
+    <div class="paper-bg"></div>
+    <div class="noise-overlay"></div>
 
     <div class="container">
-        <!-- メインポータルへ戻るリンク（作りを踏襲） -->
         <a href="index.html" class="back-btn">← Back to Portal</a>
         
         <header class="header-section reveal">
@@ -440,11 +101,11 @@
                 TDS Spatial Epic：冒険とイマジネーションの海を巡る物語
             </h1>
             <div class="subtitle-jp">
-                世界で唯一「海」をコンセプトとし、訪れる者を遥かなる航海へと誘う東京ディズニーシー。ここは単なる遊び場ではなく、8つの固有の「港（テーマポート）」が、歴史や人々の祈り、空間の境界、そして魔法によって結ばれた壮大な冒険の舞台です。さあ、手元に古びた地図を広げ、それぞれの港に隠されたロマンに満ちたバックグラウンドストーリーを辿る、時空を超えた旅に出発しましょう。
+                世界で唯一「海」をコンセプトとし、訪れる者を遥かなる航海へと誘う東京ディズニーシー。ここは単なる遊び場ではなく、8つの固有の「港（テーマポート）」が、歴史や人々の祈り、空間の境界、そして魔法によって結ばれた壮大な冒険の舞台です。
             </div>
         </header>
         
-        <nav class="toc-box reveal" aria-label="セクション目次">
+        <nav class="toc-box reveal">
             <div class="toc-title">Index</div>
             <ul class="toc-list">
                 <li><span>I. 時空を超える8つの港（プロローグ）</span><a href="#prologue">Read →</a></li>
@@ -456,293 +117,142 @@
             </ul>
         </nav>
         
-        <!-- ドラッグでの保存行為を完全に防ぐため draggable="false" を画像に付与 -->
         <div class="hero-img-container reveal">
-            <img src="tds-map.jpg" alt="Tokyo DisneySea Vintage Map" class="hero-img" id="hero-img" draggable="false" loading="eager">
+            <img src="tds-map.jpg" alt="Tokyo DisneySea Map" class="hero-img" draggable="false" decoding="async" loading="eager" fetchpriority="high">
         </div>
 
         <section class="article-block reveal" id="prologue">
             <h2>I. 時空を超える8つの港</h2>
             <p>東京ディズニーシーのエリアは、すべて「テーマランド」ではなく「テーマポート（港）」と呼ばれています。この呼び名こそが、私たちの冒険の旅の出発点です。すべての港は、独自の時代設定と国を持ちながらも、お互いに歴史的・物理的、順序、とくに精神的な深い繋がりを持っています。何気なく通り過ぎる建物、ふと耳にする波の音、それらすべてが、大きな一本の物語（大河神話）へと収束していくのです。</p>
-            <p>ディズニーシーの景観は、細部に至るまで徹底的な「意味のある痕跡」に満ちています。そこに誰が住み、どんな風に過ごしていたのか、想像力を少し働かせるだけで、ただのレンガや古びた看板が、瑞々しい物語として語りかけてくるでしょう。これから、その隠された航海図を一枚ずつめくっていきます。</p>
         </section>
 
-        <!-- タップすると各ポートの詳細ストーリーがスッと展開されるアコーディオンカード（details / summary） -->
         <section class="article-block reveal" id="mapping">
             <h2>II. 全8テーマポート・ストーリーマッピング</h2>
-            <p>ディズニーシーに存在する8つの魅力的な港は、それぞれが夢のような時代と美しい文化的背景を宿しています。以下のタブ（インデックス）をタップすると、それぞれの港が紡ぐ詳しい物語と役割をご覧いただけます。</p>
-            
-            <!-- メディテレーニアンハーバー -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">メディテレーニアンハーバー</span>
-                    <span class="port-meta">1901年 / 南欧</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>ポルトフィーノやヴェネツィアなどの南欧諸国</p>
-                    <p><strong>物語の核心：</strong>大航海時代へのロマンと、偉大な人間讃歌であるルネサンスの賛美。美しい運河が煌めく「パラッツォ・カナル」、活気あるのどかな漁村「ポルト・パラディーゾ」、天文学や航海術の結晶である「エクスプローラーズ・ランディング」の3エリアから成ります。</p>
-                    <p><strong>この海での役割：</strong>東京ディズニーシーの玄関口。すべての冒険者たちの輝かしい出港地です。</p>
-                </div>
-            </details>
-
-            <!-- アメリカンウォーターフロント -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">アメリカンウォーターフロント</span>
-                    <span class="port-meta">1912年 / 東海岸</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>アメリカ東海岸の大都市ニューヨーク、および郊外のケープコッド</p>
-                    <p><strong>物語の核心：</strong>20世紀初頭の高度経済成長に沸き立つ大都市ニューヨーク。そのすぐ隣には、自然の脅威に立ち向かい、海への感謝を忘れない、素朴な漁村ケープコッドという美しい二面性が同居しています。</p>
-                    <p><strong>この海での役割：</strong>産業革命期における富とエネルギー、および市民たちが抱く自由と独立精神の象徴です。</p>
-                </div>
-            </details>
-
-            <!-- ポートディスカバリー -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">ポートディスカバリー</span>
-                    <span class="port-meta">時空を超えた未来</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>科学技術と大自然が完璧なまでに調和した近未来のマリーナ</p>
-                    <p><strong>物語の核心：</strong>常に嵐や気象に生活を脅かされていたケープコッドの市民たちが、「いつか科学の力でハリケーンを完全に克服したい」と祈って思い描いた空想が、時空を超えて現実の港となりました。</p>
-                    <p><strong>この海での役割：</strong>過去の人々が胸に抱いた、温かく前向きな「未来へのイマジネーション」の結実です。</p>
-                </div>
-            </details>
-
-            <!-- ロストリバーデルタ -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">ロストリバーデルタ</span>
-                    <span class="port-meta">1930年代 / 中米</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>中央アメリカ、カリブ海沿岸に広がる未開の密林</p>
-                    <p><strong>物語の核心：</strong>1880年代を襲った猛烈な大ハリケーンが、ジャングルの最奥に隠されていた河「エル・リオ・ペルディード（失われた河）」と古代遺跡を出現させました。一獲千金を夢見る冒険家や考古学者たちが一斉に大挙した、ワイルドな居留地です。</p>
-                    <p><strong>この海での役割：</strong>「未開のフロンティア」に挑む人間の情熱と、フロンティア・スピリットの象徴です。</p>
-                </div>
-            </details>
-
-            <!-- ファンタジースプリングス -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">ファンタジースプリングス</span>
-                    <span class="port-meta">伝説の時代 / 魔法</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>魔法の泉が導くディズニーファンタジーの伝説的な世界</p>
-                    <p><strong>物語の核心：</strong>好奇心あふれる水の精霊が、水の旅の中で出会った『ピーター・パン』『アナと雪の女王』『塔の上のラプンツェル』といったファンタジー物語に深く感動し、その記憶を魔法の泉の周囲に刻み込みました。冒険家「ダッチェス」によって発見された地です。</p>
-                    <p><strong>この海での役割：</strong>現実世界から、人々を物語へのファンタジー世界へと深く没入させる源泉です。</p>
-                </div>
-            </details>
-
-            <!-- アラビアンコースト -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">アラビアンコースト</span>
-                    <span class="port-meta">13世紀 / 中東</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>『アラビアンナイト』に描かれたエキゾティックな中東</p>
-                    <p><strong>物語の核心：</strong>魔法のランプの魔人ジーニーと、優しく正義感に満ちたアラジンたちの願いによって作られたオアシスと宮殿、および活気に満ちた港町。魔法と神秘が日常に溶け込んでいるエキゾティックな空間です。</p>
-                    <p><strong>この海での役割：</strong>天文学や羅針盤（コンパス）の技術をヨーロッパに伝播させた、偉大なる大航海時代前史の役割を担います。</p>
-                </div>
-            </details>
-
-            <!-- マーメイドラグーン -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">マーメイドラグーン</span>
-                    <span class="port-meta">現代 / 海底王国</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>映画『リトル・マーメイド』のロマンあふれる海底王国</p>
-                    <p><strong>物語の核心：</strong>人間を大好きになったアリエルが、海の上と下の住人たちが種族の壁を超えて共に歌い遊べるようにと、父トリトン王に願って築いた、カラフルな「アンダー・ザ・シー」の世界です。</p>
-                    <p><strong>この海での役割：</strong>異なる世界に暮らす者同士が手を取り合い、偏見なく集う、平和と協調のドメインです。</p>
-                </div>
-            </details>
-
-            <!-- ミステリアスアイランド -->
-            <details class="port-accordion">
-                <summary class="port-summary">
-                    <span class="port-name">ミステリアスアイランド</span>
-                    <span class="port-meta">1870年代 / 火山島</span>
-                </summary>
-                <div class="port-content">
-                    <p><strong>モデル：</strong>ジュール・ヴェルヌが描いたSF世界、南太平洋の火山島</p>
-                    <p><strong>物語の核心：</strong>科学が急速に発展する中、戦争を嫌った天才科学者「ネモ船長」が、プロメテウス火山のカルデラ内部に設立した秘密基地。地底や深海の極限への探究を極秘裏に進めています。</p>
-                    <p><strong>この海での役割：</strong>科学的理性と豊かなイマジネーションによって人類の極限の謎に挑む探究の地です。</p>
-                </div>
-            </details>
+            <div class="table-wrapper">
+                <table class="timeline-table">
+                    <thead>
+                        <tr>
+                            <th>テーマポート</th>
+                            <th>設定年代</th>
+                            <th>モデルとなった場所</th>
+                            <th>語り継がれる物語の核心</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>メディテレーニアンハーバー</strong></td>
+                            <td>1901年</td>
+                            <td>ポルトフィーノやヴェネツィアなどの南欧</td>
+                            <td>大航海時代へのロマンとルネサンスの賛美。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>アメリカンウォーターフロント</strong></td>
+                            <td>1912年</td>
+                            <td>アメリカ東海岸（ニューヨークとケープコッド）</td>
+                            <td>活気に満ちた大都市ニューヨークの光と、自然を敬う素朴な漁村ケープコッド。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ポートディスカバリー</strong></td>
+                            <td>未来</td>
+                            <td>近未来のマリーナ</td>
+                            <td>嵐を克服することを夢見た人々が空想した、明るいイマジネーションの結実。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ロストリバーデルタ</strong></td>
+                            <td>1930年代</td>
+                            <td>中央アメリカの未開の密林</td>
+                            <td>大ハリケーンが突如呼び覚ました「失われた河」と古代文明の遺跡。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ファンタジースプリングス</strong></td>
+                            <td>伝説の時代</td>
+                            <td>魔法の泉</td>
+                            <td>水の精霊が、出会ったファンタジー物語を魔法で岩や木に刻み込んだ伝説の地。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>アラビアンコースト</strong></td>
+                            <td>13世紀</td>
+                            <td>アラビアンナイトの中東</td>
+                            <td>ジーニーの魔法によって作られた、エキゾティックな宮殿と港町。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>マーメイドラグーン</strong></td>
+                            <td>現代</td>
+                            <td>『リトル・マーメイド』の海底王国</td>
+                            <td>人間と人魚が共存する、歌声に満ちたカラフルな海底世界。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ミステリアスアイランド</strong></td>
+                            <td>1870年代</td>
+                            <td>ジュール・ヴェルヌのSF世界</td>
+                            <td>ネモ船長が拓いた、プロメテウス火山のカルデラ内部にひっそりと佇む秘密基地。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section class="article-block reveal" id="interpret">
             <h2>III. 航海の羅針盤：港たちが秘めた物語</h2>
             <p><strong>メディテレーニアンハーバー</strong><br>
-            ここは1901年の南欧。ルネサンス（文芸復興）と未知の海へ乗り出した大航海時代の賛美が、街のいたる所に息づいています。要塞「エクスプローラーズ・ランディング」には天文学や航海術の貴重な機器が置かれ、パラッツォ・カナル（運河沿い）の美しい建物には、繰り返される高潮によって残された「白い水の跡（acqua alta）」など、過酷な自然とともに生きてきたヴェネツィアのリアルな生活の痕跡が、そっと刻まれています。</p>
+            ここは1901年の南欧。ルネサンスと未知の海へ乗り出した大航海時代の賛美が息づいています。パラッツォ・カナル（運河沿い）の美しい建物には、繰り返される高潮によって残された「白い水の跡」など、過酷な自然とともに生きてきたヴェネツィアのリアルな生活の痕跡が刻まれています。</p>
             
             <p><strong>アメリカンウォーターフロント</strong><br>
-            1912年のアメリカ。近代化に沸く大都市ニューヨークと、静かな漁村ケープコッドという二つの姿を持ちます。ニューヨークの華やかな看板や最新の自動車たちの裏では、日々を懸命に生きる市民たちの足跡があります。一方で、常にハリケーンの脅威と闘うケープコッドの静けさは、素朴で敬虔な海の生活を無言で教えてくれます。</p>
+            1912年のアメリカ。近代化に沸く大都市ニューヨークの華やかな看板の裏では、日々を懸命に生きる市民たちの足跡があります。一方で、常にハリケーンの脅威と闘うケープコッドの静けさは、素朴で敬虔な海の生活を無言で教えてくれます。</p>
             
             <a href="bgs-tot.html" class="micro-nav-card">
                 <span class="micro-nav-card-title">📖 関連ストーリー：</span>
-                <span class="micro-nav-card-desc">ニューヨークに聳える、大富豪ハリソン・ハイタワー三世の呪われたホテル「タワー・オブ・テラー」の詳細を紐解く。</span>
+                <span class="micro-nav-card-desc">大富豪ハリソン・ハイタワー三世の呪われたホテル「タワー・オブ・テラー」の詳細を紐解く。</span>
             </a>
             
-            <p><strong>ポートディスカバリー</strong><br>
-            実はこのマリーナ、隣の「ケープコッド」の住民たちが「いつか科学の力で恐ろしいハリケーンを完全に克服したい」と夢見て描いた、切実なイマジネーションやヴィジョンが形になった未来の港です。過去の人々が胸に抱いた切実な祈りが、時空を超えて輝く近未来のマリーナとして結実したのです。</p>
-            
             <p><strong>ロストリバーデルタ</strong><br>
-            1930年代、かつて密林に覆われていた中央アメリカの奥地。1880年代に大ハリケーンがこの地を襲ったことで、隠されていた河「エル・リオ・ペルディード（失われた河）」と、古代遺跡が突由姿を現しました。そのニュースを聞きつけ、一獲千金を狙う冒険家や考古学者たちが一斉に押し寄せ、このワイルドな居留地が完成したのです。</p>
+            1930年代。大ハリケーンがこの地を襲ったことで、隠されていた河「エル・リオ・ペルディード」と、古代遺跡が突如姿を現しました。そのニュースを聞きつけ、一獲千金を狙う冒険家や考古学者たちが一斉に押し寄せました。</p>
             
             <a href="bgs-raging.html" class="micro-nav-card">
                 <span class="micro-nav-card-title">📖 関連ストーリー：</span>
-                <span class="micro-nav-card-desc">古代の神々の怒りに触れ、水の上で炎が燃え盛る古代遺跡「レイジング・スピリッツ」の歴史調査書はこちら。</span>
+                <span class="micro-nav-card-desc">水の上で炎が燃え盛る古代遺跡「レイジング・スピリッツ」の歴史調査書はこちら。</span>
             </a>
-
             <a href="bgs-indy.html" class="micro-nav-card">
                 <span class="micro-nav-card-title">📖 関連ストーリー：</span>
-                <span class="micro-nav-card-desc">若さの泉を守る守護神の怒りと、謎の魔宮。パコが密かに企画した考古学ツアー「インディ・ジョーンズ・アドベンチャー」の調査書はこちら。</span>
+                <span class="micro-nav-card-desc">若さの泉を守る守護神の怒りと、謎の魔宮。「インディ・ジョーンズ・アドベンチャー」の調査書はこちら。</span>
             </a>
-            
-            <p><strong>ファンタジースプリングス</strong><br>
-            はるか遠い場所に住む水の精霊が、好奇心の赴くまま水の流れに乗って旅をし、出会ったディズニーファンタジーの物語（『ピーター・パン』や『アナと雪の女王』など）に深く感銘を受け、その物語を泉の周囲の岩や木に魔法で刻み込んだ伝説の地です。トンボに導かれてこの美しい泉を発見した「ダッチェス」という心優しい女性が、泉の傍らに建てた美しいホテルが、ゲストの没入体験の扉を開きます。</p>
-            
-            <p><strong>アラビアンコースト</strong><br>
-            13世紀、ジーニーの魔法が作った神秘に満ちた宮殿と港町。実はこの港は、天文学や造船技術、コンパス（羅針盤）などの画期的な発見をのちのヨーロッパに伝えるという、歴史的な「大航海時代の夜明け」としての重要な役割を密かに担っています。ここから、メディテレーニアンハーバーの大航海へと歴史が繋がっていくのです。</p>
-            
-            <p><strong>マーメイドラグーン</strong><br>
-            人間を大好きになったアリエルが、海と大地の住人が手を取り合って共に楽しむために、父トリトン王の許しを得て築いた海底王国です。人間と人魚が共存するその温かい景観は、水滴やカラフルなサンゴの意匠を交えて、種族を超えた協和のメロディを歌っています。</p>
-            
-            <p><strong>ミステリアスアイランド</strong><br>
-            1870年代。産業革命によって科学が急速に発展する中、戦争や国家による争いを嫌った天才科学者「ネモ船長」が、プロメテウス火山の巨大カルデラ内部に設立した完全なる秘密基地です。彼はここで、国家の干渉を受けずに、人類の未来のための地底探究や深海研究を今も極秘裏に進めています。</p>
         </section>
 
         <section class="article-block reveal" id="sea-connection">
             <h2>IV. 秘密結社「S.E.A.」が繋ぐ航海史</h2>
-            <p>時代も、世界観も、まったく異なるこれら8つの美しい港たち。それらを裏側から一本の壮大な縦糸で繋いでいるのが、秘密結社「S.E.A. (Society of Explorers and Adventurers)」の存在です。1538年にメディテレーニアンハーバーの「フォートレス・エクスプロレーション」を原点（組織の誕生）として設立されたこの探検家・冒険家学会は、異なる時代に生きたメンバーたちのイマジネーションを繋ぎ続けています。</p>
-            <p>ホテル・ハイタワーのオーナーである「ハリソン・ハイタワー三世」、ソアリンのフライトに命を懸けた「カメリア・ファルコ」や、火山を秘密基地とした「ネモ船長」など、シーの各所で活躍する著名な人物たちは、すべてこのS.E.A.のメンバー、あるいは彼らに深く関係した人々です。彼らの探求への「憧れ」と「冒険の軌跡」が、お互いの港をより深く魅力的なものに繋いでいるのです。</p>
+            <p>時代も、世界観も、まったく異なるこれら8つの美しい港たち。それらを裏側から一本の壮大な縦糸で繋いでいるのが、秘密結社「S.E.A. (Society of Explorers and Adventurers)」の存在です。1538年にメディテレーニアンハーバーの「フォートレス・エクスプロレーション」を原点として設立されたこの探検家・冒険家学会は、異なる時代に生きたメンバーたちのイマジネーションを繋ぎ続けています。</p>
             
             <a href="bgs-sea.html" class="micro-nav-card">
                 <span class="micro-nav-card-title">📖 関連ストーリー：</span>
-                <span class="micro-nav-card-desc">1538年創設。世界中のディズニーパークとアトラクションを結ぶ巨大な冒険家ギルド「S.E.A. Archives」の完全解剖。</span>
+                <span class="micro-nav-card-desc">世界中のパークを結ぶ巨大な冒険家ギルド「S.E.A. Archives」の完全解剖。</span>
             </a>
-
             <a href="bgs-soarin.html" class="micro-nav-card">
                 <span class="micro-nav-card-title">📖 関連ストーリー：</span>
-                <span class="micro-nav-card-desc">空を飛ぶ夢を追い求めたカメリア・ファルコの情熱。ファンタスティック・フライト「ソアリン」の冒険譚。</span>
+                <span class="micro-nav-card-desc">空を飛ぶ夢を追い求めたカメリア・ファルコの情熱。「ソアリン」の冒険譚。</span>
             </a>
         </section>
 
         <section class="article-block reveal" id="transit">
             <h2>V. 時空を調停する、水と大地のトランジション</h2>
-            <p>本来ならばと同じ時間・同じ場所に存在しないはずの港たち。それらをゲストに違和感なく体験させるため、ディズニーシーには高度な「物語の工夫」が仕込まれています。例えば、19世紀の蒸気船（トランジットスチーマーライン）は、異なる時代の水の上を運航しながらも、各港の「標識ルール（側方標識）」に厳格に従うことで、一つの海のルールを共有しています。また、エレクトリックレールウェイは、1912年のニューヨークから一気に近未来のポートディスカバリーへと時空を超えますが、これも「最新の科学を体験するための特別臨時列車」という設定により、時代のギャップをロマンへと変化させています。</p>
-            <p>さらに、感覚的な境界線（リミナル・スペース）にも見事な技術が隠されています。「火山（ミステリアスアイランド）」と「海底（マーメイドラグーン）」の境界にある巨大な滝は、双方の異なるBGMを自然な音で遮る「水の防音壁」です。これによって、私たちは一つの港から別の港へと歩みを進める際、心の中で少しずつ「物語の切り替え（トランジション）」を丁寧に行うことができるのです。</p>
+            <p>本来ならば同じ時間・同じ場所に存在しないはずの港たち。それらをゲストに違和感なく体験させるため、ディズニーシーには高度な「物語の工夫」が仕込まれています。例えば、19世紀の蒸気船（トランジットスチーマーライン）は、異なる時代の水の上を運航しながらも、各港の「標識ルール（側方標識）」に厳格に従うことで、一つの海のルールを共有しています。</p>
+            <p>感覚的な境界線にも見事な技術が隠されています。「ミステリアスアイランド」と「マーメイドラグーン」の境界にある巨大な滝は、双方の異なるBGMを自然な音で遮る「水の防音壁」です。これによって、私たちは一つの港から別の港へと歩みを進める際、心の中で少しずつ「物語の切り替え」を行うことができるのです。</p>
         </section>
 
         <section class="article-block reveal" id="conclusion">
-            <h2>結論：想像力の数だけ広がる海</h2>
-            <p>東京ディズニーシーが描く「冒険とイマジネーションの海」とは、ただ散らばった8つの港を適当に繋いだものではありません。それは、人類の歴史における「未知への憧れ（大航海時代）」から「高度な科学技術への夢（近未来・SF）」、そして「心の内奥における物語への愛（ファンタジー）」に至るまでの、壮大な人類の精神史・探求史を統合する美しいキャンバスなのです。</p>
-            <p>「世界に想像力がある限り、この場所は永遠に完成しない」というウォルト・ディズニーの言葉の通り、この広大な海は、ゲストであるあなた自身の「想像力」という最後の鍵が差し込まれることで、初めて本物の冒険の海へと完成します。今日もまた、魔法の泉に新たな物語が刻まれながら、イマジネーションの海はどこまでも広がっていくのです。</p>
+            <h2>VI. エピローグ：想像力の数だけ広がる海</h2>
+            <p>東京ディズニーシーが描く「冒険とイマジネーションの海」とは、人類の歴史における「未知への憧れ」から「高度な科学技術への夢」、そして「心の内奥における物語への愛」に至るまでの、壮大な人類の探求史を統合する美しいキャンバスなのです。</p>
+            <p>「世界に想像力がある限り、この場所は永遠に完成しない」というウォルト・ディズニーの言葉の通り、この広大な海は、あなた自身の「想像力」という最後の鍵が差し込まれることで、初めて本物の冒険の海へと完成します。</p>
         </section>
 
-        <!-- メインポータル（index.html）へ戻るリンク -->
         <div class="footer-link reveal"><a href="index.html">← HOMEへ戻る</a></div>
     </div>
     
     <script>
-        // ============================================
-        // Custom Cursor (ポータルと完全に同期させ、タッチデバイスでは自動無効化)
-        // ============================================
-        const cursorOuter = document.getElementById('cursor-outer');
-        const cursorInner = document.getElementById('cursor-inner');
-        let mouseX = 0, mouseY = 0;
-        let outerX = 0, outerY = 0;
-        let mouseActive = false;
-
-        document.addEventListener('mousemove', e => {
-            if (!mouseActive) {
-                mouseActive = true;
-                cursorOuter.style.opacity = '1';
-                cursorInner.style.opacity = '1';
-            }
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorInner.style.left = mouseX + 'px';
-            cursorInner.style.top  = mouseY + 'px';
-        });
-
-        document.addEventListener('mouseleave', () => {
-            cursorOuter.style.opacity = '0';
-            cursorInner.style.opacity = '0';
-        });
-        document.addEventListener('mouseenter', () => {
-            if (mouseActive) {
-                cursorOuter.style.opacity = '1';
-                cursorInner.style.opacity = '1';
-            }
-        });
-
-        function animateCursor() {
-            outerX += (mouseX - outerX) * 0.14;
-            outerY += (mouseY - outerY) * 0.14;
-            cursorOuter.style.left = outerX + 'px';
-            cursorOuter.style.top  = outerY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        const hoverEls = document.querySelectorAll('a, button, .btn');
-        hoverEls.forEach(el => {
-            el.addEventListener('mouseenter', () => cursorOuter.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => cursorOuter.classList.remove('hovering'));
-        });
-
-        // ============================================
-        // Scroll Reveal
-        // ============================================
-        const revealObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.08 });
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-        // 最初から軽快に動くよう、ヒーロー要素を手動で即時アクティブに
         const reveals = document.querySelectorAll('.reveal');
-        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
-
-        // ============================================
-        // Progress Bar & Reading Tooltip
-        // ============================================
-        const progressBar = document.getElementById('progress-bar');
-        const readingTip = document.getElementById('reading-tip');
-
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            const total    = document.body.scrollHeight - window.innerHeight;
-            
-            // 1. プログレスバーの更新
-            progressBar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
-
-            // 2. 読書しおりヒントの表示判定
-            if (scrolled > 600) {
-                readingTip.classList.add('visible');
-                readingTip.setAttribute('aria-hidden', 'false');
-            } else {
-                readingTip.classList.remove('visible');
-                readingTip.setAttribute('aria-hidden', 'true');
-            }
-        });
-
-        readingTip.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        readingTip.style.pointerEvents = 'auto';
-        readingTip.style.cursor = 'none';
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); revealObserver.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>
-これが今の空間叙事詩のコードなんだけど。これも呪いモード消して軽量化おねがい。あと誤字も修正されているかチェックしてほしい。
