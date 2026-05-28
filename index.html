@@ -42,12 +42,12 @@
         }
 
         /* ════════════════════════════════
-           くしゃくしゃの古い紙（大理石感を消し、柔らかな紙のシワに調整）
+           くしゃくしゃの古い紙（柔らかい紙のシワに調整）
         ════════════════════════════════ */
         .paper-wrinkle-bg {
             position: fixed; inset: 0; z-index: -2;
             background: var(--bg-dark);
-            filter: url(#svg-crumpled-paper); /* 表面を和らげ、カサカサした質感に変更 */
+            filter: url(#svg-crumpled-paper);
             will-change: transform;
             transform: translate3d(0,0,0);
         }
@@ -63,7 +63,6 @@
         ════════════════════════════════ */
         .parchment-sheet {
             background: transparent;
-            /* SVGのclipPathを参照し、端を不規則にちぎれた形に切り抜きます */
             clip-path: url(#paper-torn-clip);
             -webkit-clip-path: url(#paper-torn-clip);
             
@@ -72,16 +71,13 @@
             width: 100%;
             max-width: 860px;
             margin: 30px auto 80px;
-            /* 破れた端が要素に被らないよう、十分な余白を設定 */
             padding: 80px 45px 100px;
             
-            /* 紙端が焦げたような、アンティークなシャドウ効果 */
             box-shadow: 
                 0 0 1px rgba(80,50,30,0.4) inset,
                 0 15px 40px rgba(0,0,0,0.4);
         }
 
-        /* 破れた紙の端に陰影をつけて、机から少し浮き上がった立体感を演出 */
         .parchment-sheet::before {
             content: '';
             position: absolute; inset: 0;
@@ -111,7 +107,6 @@
             font-weight: 500; text-transform: uppercase;
         }
         .logo-main {
-            /* 読みやすさと美しさを両立した筆記体 Alex Brush */
             font-family: 'Alex Brush', cursive; font-size: 3.4rem;
             font-weight: 400; color: var(--text-light); 
             line-height: 0.95;
@@ -159,19 +154,27 @@
         .hero-img-wrapper img {
             width: 100%; height: 100%; object-fit: cover;
             filter: var(--img-filter);
+            
+            /* 保存禁止用CSSプロパティ */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            pointer-events: none;
         }
+        /* 画像前面シールド（pointer-events: noneを外し、タッチ・クリックを画像へ到達させないようにします） */
         .hero-img-wrapper::after {
             content: '';
             position: absolute; inset: 0;
             background: linear-gradient(to top, rgba(234,222,201,0.95) 0%, rgba(234,222,201,0.1) 60%, transparent 100%),
                         radial-gradient(circle at 50% 50%, transparent 40%, rgba(80,50,30,0.3) 100%);
-            pointer-events: none;
+            z-index: 1;
         }
         .hero-label {
             position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
             font-family: 'Alex Brush', cursive; font-size: 2.1rem;
             color: var(--accent-copper);
             white-space: nowrap;
+            z-index: 2;
         }
 
         .intro-message {
@@ -326,12 +329,18 @@
             width: 100%; height: 100%; object-fit: cover;
             filter: var(--img-filter);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* 保存禁止用CSSプロパティ */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            pointer-events: none;
         }
+        /* 画像前面シールド（pointer-events: noneを外すことで、ユーザーのタップがこの透明グラデーションに吸い込まれ、画像の長押し・保存を防ぎます） */
         .img-wrapper::after {
             content: '';
             position: absolute; inset: 0;
             background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(80,50,30,0.3) 100%);
-            pointer-events: none;
             z-index: 1;
         }
         .article-card:hover .img-wrapper img { transform: scale(1.03); }
@@ -386,16 +395,18 @@
             border-color: var(--text-light);
         }
 
-        /* 画像ポジション */
+        /* ════════════════════════════════
+           画像位置微調整（歴史ある構図の最適化）
+        ════════════════════════════════ */
         .fs-img-align      { object-position: center 15%; }
         .btm-img-align     { object-position: center 90%; }
-        .bb-img-align      { object-position: center 10%; }
+        .bb-img-align      { object-position: center 55%; } /* 下の方を多く写す（10%から55%に修正） */
         .sm-img-align      { object-position: center 45%; }
-        .soarin-img-align  { object-position: center 25%; }
+        .soarin-img-align  { object-position: center 65%; } /* 下の方を多く写す（25%から65%に修正） */
         .tl-img-align      { object-position: center 50%; }
         .indy-img-align    { object-position: center 30%; }
-        .raging-img-align  { object-position: center 30%; }
-        .haunted-img-align { object-position: center 30%; }
+        .raging-img-align  { object-position: center 10%; } /* 上の方を多く写す（30%から10%に修正） */
+        .haunted-img-align { object-position: center 65%; } /* 下の方を多く写す（30%から65%に修正） */
 
         /* ════════════════════════════════
            グリッドモード（PC：3列 / スマホ：2列）の極限チューニング
@@ -551,22 +562,22 @@
         ════════════════════════════════ */
         @media (max-width: 768px) {
             .parchment-sheet {
-                padding: 45px 15px 60px; /* 破れ端の余白を調整 */
+                padding: 45px 15px 60px;
                 margin: 10px auto;
             }
             .article-list.grid-mode {
-                grid-template-columns: repeat(2, 1fr); /* スマホでは2列で整列 */
-                gap: 10px; /* 隙間を狭めて情報を収める */
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
             .article-list.grid-mode .article-card {
-                padding: 10px; /* カード余白を削って視認性向上 */
+                padding: 10px;
             }
             .article-list.grid-mode .article-card h2 {
-                font-size: 1.6rem; /* 筆記体の縮小 */
+                font-size: 1.6rem;
                 margin-bottom: 2px;
             }
             .article-list.grid-mode .article-card p {
-                font-size: .65rem; /* テキストを小さくして破綻を防ぐ */
+                font-size: .65rem;
                 line-height: 1.5;
                 margin-bottom: 10px;
             }
@@ -583,7 +594,6 @@
     <div class="paper-wrinkle-bg"></div>
     <div class="ambient-vignette"></div>
 
-    <!-- 古文書の手ちぎり形状にトリミングされたメイン用紙 -->
     <div class="parchment-sheet">
         <header class="header">
             <h1>
@@ -657,9 +667,6 @@
             </div>
         </div>
 
-        <!-- 
-          初期状態でグリッド表示（grid-mode）に設定
-        -->
         <div class="article-list grid-mode" id="article-list">
 
             <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
@@ -778,7 +785,7 @@
                 <h4>IV. 経年美化を前提とした空間づくり</h4>
                 <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増す」空間を実現しています。</p>
                 <h4>V. ファンタジースプリングスへの繋がり</h4>
-                <p>2024年誕生の「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
+                <p>2024年誕生 of 「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
             </div>
         </details>
 
@@ -806,16 +813,8 @@
         </div>
     </div>
 
-    <!-- 
-      不規則にちぎれた古文書の端っこを動的に計算する超軽量SVG clipPath
-      画像のダウンロードが不要なため、スマホロードが数ミリ秒に短縮されます。
-    -->
     <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- 
-          地図端の「ちぎれた」形状をベジェ曲線で不規則に定義。
-          objectBoundingBoxを使用し、あらゆるアスペクト比でレスポンシブに伸縮します。
-        -->
         <clipPath id="paper-torn-clip" clipPathUnits="objectBoundingBox">
           <path d="M 0.015,0.015 
                    Q 0.25,0.01 0.5,0.018 
@@ -828,11 +827,8 @@
                    T 0.015,0.015 Z" />
         </clipPath>
         
-        <!-- 大理石っぽさを消し、カサカサした「柔らかい紙の皺」へチューニングしたシワフィルター -->
         <filter id="svg-crumpled-paper">
-          <!-- 細かい微細な繊維・ノイズのブレンド -->
-          <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="large-creases" />
-          <!-- surfaceScaleを「3」に落とすことで、石のひび割れ感を消し、柔らかな紙の折り目を表現 -->
+          <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="large-creases" />
           <feDiffuseLighting in="large-creases" lighting-color="#ffffff" surfaceScale="3" result="paper-shadows">
             <feDistantLight azimuth="55" elevation="65" />
           </feDiffuseLighting>
@@ -890,6 +886,14 @@
     document.getElementById('modal-close').addEventListener('click',   () => modalOverlay.classList.remove('active'));
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') modalOverlay.classList.remove('active'); });
+
+    // ════════════════════════════════
+    // 画像ダウンロード・ドラッグ保存禁止の二重制御
+    // ════════════════════════════════
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('contextmenu', e => e.preventDefault());
+        img.addEventListener('dragstart', e => e.preventDefault());
+    });
     </script>
 </body>
 </html>
