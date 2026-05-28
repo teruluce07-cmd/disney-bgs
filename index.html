@@ -20,19 +20,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ディズニーシー BGS & 写真館",
+      "alternateName": "TERU_LUCE_",
+      "url": "https://teruluce07-cmd.github.io/disney-bgs/index.html",
+      "description": "東京ディズニーリゾートのバックグラウンドストーリー（BGS）と現地写真を紹介するサイト。各アトラクションに秘められた物語を深掘りします。",
+      "publisher": {
+        "@type": "Person",
+        "name": "TERU_LUCE_"
+      }
+    }
+    </script>
+
     <style>
         /* ============================================
-           明るく見やすい、優しい手帳カラー設定
+           絶妙なアンティークノート・カラー設定
         ============================================ */
         :root {
-            --bg-color: #F4EFE6;
+            /* ほんのり日焼けした、明るく上質な羊皮紙色 */
+            --bg-color: #E8DECC; 
             --text-main: #3D2F27;
             --accent-gold: #A67341;
-            --border-light: rgba(166, 115, 65, 0.2);
-            --img-filter: brightness(0.95) contrast(1.05) sepia(15%);
+            --border-light: rgba(166, 115, 65, 0.3);
+            --img-filter: brightness(0.95) contrast(1.05) sepia(20%);
             --glow-color: rgba(166, 115, 65, 0.15);
-            /* ガビガビしない、滑らかで綺麗な紙のテクスチャ */
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23FFFDF9' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+            /* ガビガビしないよう繊維を滑らかにしつつ、確かな紙の陰影を出すSVGフィルタ */
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='4' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23F2E8D5' surfaceScale='4'%3E%3CfeDistantLight azimuth='45' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -62,30 +78,30 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 背景レイヤー（軽量化のため fixed で配置） */
+        /* 超軽量な固定背景レイヤー */
         .paper-bg {
             position: fixed; inset: 0; z-index: -2;
-            background-image: var(--paper-texture);
-            background-size: 300px 300px;
-            opacity: 0.8;
-            pointer-events: none;
-        }
-        .noise-overlay {
-            position: fixed; inset: 0; z-index: -1;
-            background-image: radial-gradient(circle at 50% 50%, transparent 20%, rgba(30, 20, 10, 0.05) 100%);
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 50%, transparent 40%, rgba(107, 68, 35, 0.08) 100%),
+                var(--paper-texture);
+            background-size: 100% 100%, 400px 400px;
             pointer-events: none;
         }
 
         /* ============================================
-           コンテナ（明るくシンプルな枠に）
+           コンテナ（手帳のようなクラシック・ステッチ枠）
         ============================================ */
         .container {
             position: relative; z-index: 1; width: 100%; max-width: 560px;
             margin: 40px auto 80px; padding: 45px 30px 80px;
-            background: rgba(255, 252, 248, 0.85); /* 明るく透け感を抑える */
-            border-radius: 6px;
+            background: rgba(253, 250, 245, 0.88); /* 文字が読みやすい明るさ */
+            border-radius: 4px;
             border: 1px solid var(--border-light);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* 影を柔らかく */
+            /* ブログ感を消し去る、アンティーク手帳の極細二重ライン */
+            outline: 2px double rgba(166, 115, 65, 0.25);
+            outline-offset: -8px;
+            box-shadow: 0 15px 40px rgba(45, 30, 15, 0.08); 
         }
 
         .reveal {
@@ -197,7 +213,7 @@
             padding: 6px 12px; border-radius: 15px; cursor: pointer; transition: all .3s; text-transform: uppercase;
         }
         .layout-toggle button.active-toggle { background: var(--accent-gold); color: #fff; font-weight: 600; }
-        .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
+        .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
         .filter-btn {
             background: #fff; border: 1px solid var(--border-light); color: var(--text-main);
             font-family: 'Montserrat', sans-serif; font-size: .6rem; letter-spacing: .1em;
@@ -216,7 +232,9 @@
             transition: transform .3s ease, box-shadow .3s ease;
         }
         .article-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.06); }
-        .img-wrapper { width: 100%; aspect-ratio: 3/2; border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
+        .article-card:focus-visible { outline: 2px solid var(--accent-gold); outline-offset: 4px; border-radius: 6px; }
+        
+        .img-wrapper { width: 100%; aspect-ratio: 3/2; border-radius: 4px; overflow: hidden; margin-bottom: 20px; background: #EFE8D8; }
         .img-wrapper img {
             width: 100%; height: 100%; object-fit: cover;
             filter: var(--img-filter); transition: transform 0.8s ease, filter 0.5s ease;
@@ -343,6 +361,8 @@
                 <div class="toc-tags">
                     <a href="#sm-card">Splash Mt.</a>
                     <a href="#btm-card">Big Thunder</a>
+                    <!-- FIX: ホーンテッドマンションのカードへのリンクを追加 -->
+                    <a href="#haunted-card">Haunted Mansion</a>
                     <a href="#bb-card">Beauty &amp; Beast</a>
                     <a href="#tl-card">Tomorrowland</a>
                 </div>
@@ -381,7 +401,7 @@
 
         <div class="article-list grid-mode" id="article-list">
 
-            <!-- TDL -->
+            <!-- ================= TDL ================= -->
             <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
                 <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" loading="eager" fetchpriority="high" draggable="false" decoding="async"></div>
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
@@ -395,6 +415,15 @@
                 <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                 <h2>Big Thunder Mountain</h2>
                 <p>警告を破りし蒸気の咆哮と、黄金の呪い。大自然に宿る「精霊の怒り」が招いたタンブルウィード崩壊の歴史。</p>
+                <div class="read-btn">Explore Story →</div>
+            </a>
+
+            <!-- FIX: ホーンテッドマンションのカードをTDLエリアに追加 -->
+            <a href="bgs-haunted.html" class="article-card reveal" id="haunted-card" data-category="tdl">
+                <div class="img-wrapper"><img src="haunted-exterior.jpeg" alt="ホーンテッドマンションの外観" class="haunted-img-align" loading="lazy" draggable="false" decoding="async"></div>
+                <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">5 min</span></div>
+                <h2>Haunted Mansion</h2>
+                <p>999人の亡霊が待つ、美しきゴシックの館。恐怖とユーモアが交差する知られざる物語と、ホリデーナイトメアの魔法を紐解く。</p>
                 <div class="read-btn">Explore Story →</div>
             </a>
 
@@ -414,7 +443,7 @@
                 <div class="read-btn">Explore Story →</div>
             </a>
 
-            <!-- TDS -->
+            <!-- ================= TDS ================= -->
             <a href="bgs-spatial-epic.html" class="article-card reveal" id="spatial-epic-card" data-category="tds">
                 <span class="new-badge">NEW</span>
                 <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" class="epic-map-filter" loading="lazy" draggable="false" decoding="async"></div>
