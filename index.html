@@ -45,14 +45,14 @@
     <style>
         /* --- 昼（紅茶をこぼしてぐちゃぐちゃになった羊皮紙）重厚ヴィンテージ・カラー設定 --- */
         :root {
-            --bg-color: #DFD4C0; /* 少し深みと赤みのある羊皮紙色に変更 */
+            --bg-color: #DFD4C0; /* 少し深みと赤みのある羊皮紙色 */
             --text-main: #2D231E; 
-            --accent-gold: #7B5532; /* 真鍮・ブロンズ寄りの深いゴールドに変更 */
+            --accent-gold: #7B5532; /* 真鍮・ブロンズ寄りの深いゴールド */
             --border-light: rgba(45, 35, 30, 0.22);
             --img-filter: brightness(0.9) contrast(1.1) sepia(30%);
             --glow-color: rgba(123, 85, 50, 0.2);
             
-            /* FIX: ぐちゃぐちゃに折れ曲がった羊皮紙のシワを、よりシャープに、深く表現するSVGフィルタ */
+            /* ぐちゃぐちゃに折れ曲がった羊皮紙のシワを、よりシャープに、深く表現するSVGフィルタ */
             --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavy-crumple'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23FAF3E0' surfaceScale='7'%3E%3CfeDistantLight azimuth='50' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavy-crumple)'/%3E%3C/svg%3E");
         }
  
@@ -60,7 +60,7 @@
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
  
-        /* FIX: 背景画像がスクロールと完全に同期して動くようにするため、fixedを廃止し、
+        /* 背景画像がスクロールと完全に同期して動くようにするため、fixedを廃止し、
            紅茶のシミ（Spill Stains）と煤け（Vignette）のマルチレイヤーグラデーションを直接bodyに定義 */
         body {
             font-family: 'Noto Serif JP', serif;
@@ -107,7 +107,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
  
-        /* FIX: 手帳の表紙や額縁のような「二重のフレーム線」と重厚なシャドウを追加し、高級感あるブック仕様に変更 */
+        /* 手帳の表紙や額縁のような「二重のフレーム線」と重厚なシャドウを追加し、高級感あるブック仕様に変更 */
         .container { 
             position: relative; z-index: 1;
             width: 100%; max-width: 540px; margin: 50px auto 100px; padding: 45px 30px 100px; 
@@ -176,7 +176,7 @@
             margin-bottom: 6px;
             text-transform: uppercase;
         }
-        /* メインタイトル：TERU_LUCE_から、ディズニーの歴史アーカイブ紙「MAIHAMA CHRONICLE」に変更して脱・個人サイト化 */
+        /* メインタイトル：脱・個人サイト化！BGS詳細ページ（Deep Report）とシンクロする「BGS CHRONICLES（BGS年代記）」にリブランディング */
         .logo-main {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.1rem;
@@ -193,44 +193,113 @@
         }
         .profile-btn:hover { background-color: var(--accent-gold); color: var(--bg-color); box-shadow: 0 0 15px var(--glow-color); }
  
-        /* プロフィール写真枠：ポラロイド貼り付け風 */
-        .intro-portrait-container {
+        /* FIX: プロフィール写真を廃止し、アトラクション（タワテラ、レイジング、インディ）の写真を古写真風に加工した、
+           手帳コラージュ調の「3Dオーバーラップヘッダーコラージュ」を構築 */
+        .vintage-collage-container {
             position: relative;
-            margin: 20px auto 35px;
-            padding: 10px 10px 16px 10px; 
-            background: #FAF6ED;
-            border-radius: 2px;
-            box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.12);
-            transform: rotate(-1.8deg); 
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            display: inline-block;
+            width: 100%;
+            height: 180px; /* スマートフォンでも綺麗に収まる高さ */
+            margin: 15px auto 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
         }
-        .intro-portrait-container:hover {
-            transform: rotate(0deg) scale(1.02); 
-        }
-        .intro-portrait-container::before {
-            content: "";
+        
+        .collage-item {
             position: absolute;
-            top: -12px;
+            background: #FAF6ED;
+            padding: 6px 6px 12px 6px; /* 写真の白いフチ（印画紙風） */
+            border-radius: 1px;
+            box-shadow: 2px 8px 20px rgba(25, 15, 5, 0.25);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), z-index 0.4s;
+        }
+
+        .collage-item img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 写真を19世紀の古写真風にセピア・暗めに加工するフィルター */
+            filter: brightness(0.8) contrast(1.1) sepia(85%) hue-rotate(-5deg) saturate(0.8) !important;
+            pointer-events: none;
+            transition: filter 0.4s ease;
+        }
+
+        /* 3枚の古写真の立体的な配置・傾き・重なりの個別チューニング */
+        /* 1. 左奥：タワー・オブ・テラー（横型） */
+        .collage-tot {
+            width: 120px;
+            height: 95px;
+            left: 8%;
+            top: 25px;
+            transform: rotate(-8deg);
+            z-index: 1;
+        }
+        /* 2. 右奥：インディ・ジョーンズ（横型） */
+        .collage-indy {
+            width: 130px;
+            height: 100px;
+            right: 6%;
+            top: 20px;
+            transform: rotate(6deg);
+            z-index: 2;
+        }
+        /* 3. 中央手前：レイジングスピリッツ（縦型。ご提示いただいた美しい縦構図をフル活用） */
+        .collage-raging {
+            width: 105px;
+            height: 135px;
             left: 50%;
-            transform: translateX(-50%) rotate(3deg);
-            width: 55px;
-            height: 18px;
-            background-color: rgba(210, 185, 145, 0.6);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            top: 10px;
+            transform: translateX(-50%) rotate(-2deg);
+            z-index: 3; /* 中央を手前に重ねる */
+        }
+
+        /* ホバーした写真を最前面に引き上げ、セピアフィルターを解除して「色鮮やかな現代の姿が浮かび上がる」美しい演出 */
+        .collage-item:hover {
+            transform: scale(1.12) rotate(0deg);
+            z-index: 10;
+            box-shadow: 4px 15px 30px rgba(25, 15, 5, 0.35);
+        }
+        .collage-item:hover img {
+            filter: brightness(0.95) contrast(1.05) sepia(5%) saturate(1.1) !important;
+        }
+        /* 中央写真のホバー位置補正（translateXを維持） */
+        .collage-raging:hover {
+            transform: translateX(-50%) scale(1.12) rotate(0deg);
+        }
+
+        /* コラージュ写真を留める手作りのマスキングテープ（付箋） */
+        .collage-tape-left {
+            position: absolute;
+            top: 12px;
+            left: 24%;
+            width: 50px;
+            height: 15px;
+            background: rgba(210, 185, 145, 0.5);
+            transform: rotate(-15deg);
             backdrop-filter: blur(1px);
             -webkit-backdrop-filter: blur(1px);
             mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
             -webkit-mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            z-index: 5;
             pointer-events: none;
-            z-index: 10;
-            opacity: 0.85;
-            transition: background-color 0.8s ease;
         }
-        .intro-portrait {
-            width: 100px !important; height: 110px !important; overflow: hidden; background: #111; display: block;
+        .collage-tape-right {
+            position: absolute;
+            top: 10px;
+            right: 25%;
+            width: 45px;
+            height: 15px;
+            background: rgba(210, 185, 145, 0.5);
+            transform: rotate(25deg);
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+            mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
+            z-index: 5;
+            pointer-events: none;
         }
-        .intro-portrait img { width: 100px !important; height: 110px !important; object-fit: cover !important; display: block !important; filter: var(--img-filter); }
  
         .intro-message { font-size: 0.85rem; color: var(--text-main); line-height: 2.2; margin-bottom: 35px; opacity: 0.95; letter-spacing: 0.05em; }
  
@@ -455,12 +524,12 @@
  
     <div class="container">
         <!-- ヘッダー -->
-        <!-- FIX: ヘッダー全体をセンター配置の重厚なオフィシャル紙風ヘッダー「MAIHAMA CHRONICLE」へと調律（脱・個人ブログ化） -->
+        <!-- FIX: ヘッダー全体をセンター配置の重厚なオフィシャル紙風ヘッダー「BGS CHRONICLES」へと調律（脱・個人ブログ化） -->
         <header class="header">
             <h1 class="header-logo-heading">
                 <a href="index.html" class="header-logo">
                     <span class="logo-sub">Tokyo Disney Resort</span>
-                    <span class="logo-main">Maihama Chronicle</span>
+                    <span class="logo-main">BGS Chronicles</span>
                 </a>
             </h1>
             <a href="profile.html" class="profile-btn">Profile</a>
@@ -468,13 +537,26 @@
  
         <!-- ウェルカム・ヒーローエリア -->
         <section class="intro-hero">
-            <!-- FIX: 写真を、同じフォルダ内にある未使用の最高に雰囲気のある風景写真「IMG_0021_Original.jpeg」へ変更。
-                 さらに、手帳に付箋（マスキングテープ）で貼られた立体感あるポラロイド（印画紙）コラージュのデザインへと調律。 -->
-            <div class="intro-portrait-container">
-                <div class="intro-portrait">
-                    <img src="IMG_0021_Original.jpeg" alt="サイト管理者の思い出をコラージュしたスクラップ写真" fetchpriority="high" loading="eager" draggable="false">
+            <!-- FIX: プロフィール写真を完全に廃止。アトラクション（タワテラ・インディ・レイジング）の写真を古い質感に加工した、手帳コラージュ調の「3Dオーバーラップヘッダーコラージュ」を構築。 -->
+            <div class="vintage-collage-container">
+                <!-- マスキングテープ（付箋） -->
+                <div class="collage-tape-left" aria-hidden="true"></div>
+                <div class="collage-tape-right" aria-hidden="true"></div>
+
+                <!-- 1. 左奥：タワー・オブ・テラー -->
+                <div class="collage-item collage-tot">
+                    <img src="tot-exterior.jpg" alt="タワー・オブ・テラー外観（古写真風）" draggable="false">
+                </div>
+                <!-- 2. 右奥：インディ・ジョーンズ -->
+                <div class="collage-item collage-indy">
+                    <img src="indy-temple.jpeg" alt="インディ・ジョーンズ魔宮神殿（古写真風）" draggable="false">
+                </div>
+                <!-- 3. 中央手前：レイジングスピリッツ（縦長写真を美しくコラージュ） -->
+                <div class="collage-item collage-raging">
+                    <img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇（古写真風）" class="raging-img-align" draggable="false">
                 </div>
             </div>
+            
             <div class="intro-content">
                 <!-- FIX: 厨二病っぽさを一掃し、親しみやすさを最優先にしつつ、ディズニーへの想いを伝える温かく上質な紹介文に書き換え -->
                 <p class="intro-message">
@@ -598,7 +680,7 @@
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Tomorrowland</h2>
-                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテン of 初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
+                <p>未来都市が背負った「時間」という名の宿命。スペースマウンテンの初代ロケットの終焉と、スターツアーズに潜む銀河連邦宇宙法のルールに迫る。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
@@ -614,7 +696,7 @@
                     <span class="card-meta">Read: 5 min</span>
                 </div>
                 <h2>TDS Spatial Epic</h2>
-                <p>「冒険とイマジネーションの海」を巡る、美しき全8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、精霊と魔法の泉へと紡がれる時空を超えた旅路へ。</p>
+                <p>「冒険とイマジネーションの海」を巡る、美しき全8テーマポートの物語。大航海時代の風、秘密結社S.E.A.の夢、精度と魔法の泉へと紡がれる時空を超えた旅路へ。</p>
                 <div class="read-btn">Explore the Chronicle →</div>
             </a>
 
@@ -692,7 +774,7 @@
                     <span class="card-meta">Read: 3 min</span>
                 </div>
                 <h2>Raging Spirits</h2>
-                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な超自然現象の謎と、失われた足場の真実を追う。</p>
+                <p>激怒せし火と水の神々と、崩壊の仮設足場。古代の神々の禁忌を破り、水の上で炎が燃え盛る不可思議な超自然現象 of 謎と、失われた足場の真実を追う。</p>
                 <div class="read-btn">Explore the Story →</div>
             </a>
  
