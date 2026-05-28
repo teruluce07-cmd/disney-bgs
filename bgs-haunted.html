@@ -6,358 +6,134 @@
     <title>BGS Deep Report: Haunted Mansion | teru_luce_</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ============================================
-           CSS Variables & Reset (ポータルと完全同期)
-        ============================================ */
         :root {
-            --parchment:     #E8DCC8;
-            --parchment-dark:#C9B99A;
-            --ink:           #1E1510;
-            --ink-mid:       #3D2B1F;
-            --sepia:         #6B4423;
-            --gold:          #9A6B2E;
-            --gold-light:    #C89B4A;
-            --gold-glow:     rgba(154,107,46,.35);
-            --vellum:        rgba(240,232,215,.72);
-            --border:        rgba(107,68,35,.28);
-            --border-strong: rgba(107,68,35,.55);
-            --shadow-deep:   rgba(15,8,3,.45);
-            --shadow-soft:   rgba(30,18,8,.2);
-            --bg-stain-size: 100% 2200px;
-            --tape-color:    rgba(215,190,148,.55);
+            --bg-color: #D6C7AE;
+            --text-main: #362A22;
+            --accent-gold: #9E6B3A;
+            --border-light: rgba(158, 107, 58, 0.3);
+            --img-filter: brightness(0.92) contrast(1.08) sepia(25%);
+            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23E0D2BA' surfaceScale='3'%3E%3CfeDistantLight azimuth='45' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
-        img {
-            max-width: 100%; height: auto;
-            -webkit-user-select: none; user-select: none;
-            -webkit-touch-callout: none; pointer-events: none;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
-        /* ============================================
-           Custom Cursor (タッチデバイスでは自動無効化)
-        ============================================ */
-        body { cursor: none; }
-        #cursor-outer {
-            position: fixed;
-            width: 36px; height: 36px;
-            border: 1.5px solid var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: opacity .3s ease, border-color .3s ease, width .2s ease, height .2s ease;
-            mix-blend-mode: multiply;
-            opacity: 0;
-        }
-        #cursor-inner {
-            position: fixed;
-            width: 6px; height: 6px;
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: opacity .3s ease;
-            opacity: 0;
-        }
-        #cursor-outer.hovering {
-            width: 52px; height: 52px;
-            border-color: var(--gold-light);
-            border-style: dashed;
-        }
-        #cursor-outer::before,
-        #cursor-outer::after {
-            content: '';
-            position: absolute;
-            background: var(--gold);
-            opacity: .5;
-        }
-        #cursor-outer::before { width: 1px; height: 6px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        #cursor-outer::after { width: 6px; height: 1px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-
-        @media (hover: none) {
-            body { cursor: auto !important; }
-            #cursor-outer, #cursor-inner { display: none !important; }
-        }
-
-        /* ============================================
-           Body & Background (ホーンテッドマンション特製ブレンド背景)
-        ============================================ */
         body {
             font-family: 'Noto Serif JP', serif;
-            background-color: #D6C9AE; 
-            background-image:
-                /* 亡霊たちの館を思わせる、冷たいミッドナイトブルーと紫の薄いシミ */
-                radial-gradient(ellipse at 15% 20%, rgba(45, 30, 60, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 85% 75%, rgba(20, 40, 55, 0.12) 0%, transparent 55%),
-                radial-gradient(circle at 50% 8%,  rgba(110, 75, 45, 0.15)  0%, transparent 75%),
-                radial-gradient(ellipse at 95% 15%, rgba(95, 60, 30, 0.18)  0%, transparent 50%),
-                radial-gradient(circle at 5% 90%,  rgba(105, 70, 40, 0.15)  0%, transparent 60%),
-                radial-gradient(circle at 50% 50%, transparent 20%, rgba(20, 10, 5, 0.38) 100%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23F5EDD8' surfaceScale='9'%3E%3CfeDistantLight azimuth='45' elevation='35'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
-            background-size: var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), var(--bg-stain-size), 100% 100%, 500px 500px;
-            background-repeat: repeat-y, repeat-y, repeat-y, repeat-y, repeat-y, no-repeat, repeat;
-            background-attachment: scroll;
-            color: var(--ink);
-            line-height: 2.2;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg-color); color: var(--text-main); line-height: 2; overflow-x: hidden; -webkit-font-smoothing: antialiased;
         }
 
-        .noise-overlay {
-            position: fixed; inset: 0;
-            pointer-events: none; z-index: 3; opacity: .045;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
+        .paper-bg { position: fixed; inset: 0; z-index: -2; background-image: var(--paper-texture); background-size: 300px 300px; opacity: 0.9; pointer-events: none; }
+        /* ホーンテッドマンション用の幽霊屋敷を感じる微かなパープル */
+        .noise-overlay { position: fixed; inset: 0; z-index: -1; background-image: radial-gradient(circle at 50% 50%, transparent 20%, rgba(40, 20, 50, 0.08) 100%); pointer-events: none; }
 
-        .vignette-overlay {
-            position: fixed; inset: 0;
-            pointer-events: none; z-index: 1;
-            background: radial-gradient(ellipse at center, transparent 40%, rgba(12,6,2,.55) 100%);
-        }
-
-        /* ============================================
-           Page Progress Bar
-        ============================================ */
-        #progress-bar {
-            position: fixed; top: 0; left: 0; height: 2px;
-            background: linear-gradient(90deg, var(--sepia), var(--gold-light));
-            width: 0%; z-index: 9999;
-            transition: width .1s linear;
-            box-shadow: 0 0 8px var(--gold-glow);
-        }
-
-        /* ============================================
-           Container
-        ============================================ */
         .container {
-            position: relative; z-index: 4;
-            width: 100%; max-width: 560px;
-            margin: 60px auto 120px; padding: 55px 38px 110px;
-            background: var(--vellum);
-            border-radius: 2px;
-            border: 1px solid var(--border-strong);
-            outline: 3px double rgba(107,68,35,.22);
-            outline-offset: -10px;
-            box-shadow:
-                0 20px 60px var(--shadow-deep),
-                0  4px 12px var(--shadow-soft),
-                inset 0 1px 0 rgba(255,245,225,.35);
-        }
-        .container::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg,
-                transparent 0%, rgba(200,155,74,.4) 20%,
-                rgba(255,235,180,.7) 50%,
-                rgba(200,155,74,.4) 80%, transparent 100%);
-        }
-        .container::after {
-            content: '';
-            position: absolute; bottom: 0; right: 0;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 0 0 28px 28px;
-            border-color: transparent transparent rgba(107,68,35,.18) transparent;
+            position: relative; z-index: 1; width: 100%; max-width: 560px;
+            margin: 40px auto 80px; padding: 45px 30px 80px;
+            background: rgba(250, 246, 238, 0.85); border-radius: 4px; border: 1px solid var(--border-light);
+            outline: 2px double rgba(158, 106, 56, 0.25); outline-offset: -8px; box-shadow: 0 10px 30px rgba(0,0,0,0.06);
         }
 
-        /* ============================================
-           Reveal Animation
-        ============================================ */
-        .reveal {
-            opacity: 0; transform: translateY(28px);
-            transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1);
-        }
+        img { max-width: 100%; height: auto; -webkit-touch-callout: none; user-select: none; pointer-events: none; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* ============================================
-           Back Button
-        ============================================ */
-        .back-btn {
-            display: inline-block; text-decoration: none;
-            font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em;
-            color: var(--gold); border-bottom: 1px solid transparent;
-            margin-bottom: 40px; transition: color 0.3s, border-color 0.3s;
-        }
-        .back-btn:hover { color: var(--ink-mid); border-color: var(--ink-mid); }
+        .back-btn { display: inline-block; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent-gold); border-bottom: 1px solid transparent; margin-bottom: 40px; transition: color 0.3s; }
+        .back-btn:hover { color: var(--text-main); }
 
-        /* ============================================
-           Header & Title
-        ============================================ */
-        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 40px; }
-        .bgs-tag { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; }
-        h1 { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 400; margin: 15px 0 20px; letter-spacing: 0.02em; line-height: 1.6; text-align: center; color: var(--ink-mid); }
-        h1 span { display: block; font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
-        
-        /* 写真の代わりに見栄えを良くする、インク文字の装飾 */
-        .no-photo-spacer {
-            margin: 30px auto;
-            width: 50px;
-            height: 2px;
-            background: var(--gold);
-            opacity: 0.5;
-        }
-        
-        .subtitle-jp { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.05em; opacity: 0.8; text-align: justify; margin-top: 25px; line-height: 2.2; border-left: 2px solid var(--gold); padding-left: 15px; }
+        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
+        .bgs-tag { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; }
+        h1 { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 600; margin: 15px 0 20px; line-height: 1.6; text-align: center; }
+        h1 span { display: block; font-family: 'Cinzel', serif; font-size: 1rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 10px; }
+        .subtitle-jp { font-size: 0.8rem; font-weight: 300; letter-spacing: 0.05em; opacity: 0.9; text-align: justify; margin-top: 25px; line-height: 2.2; border-left: 2px solid var(--accent-gold); padding-left: 15px; }
 
-        /* ============================================
-           TOC Box
-        ============================================ */
-        .toc-box { background: rgba(0,0,0,.02); border: 1px solid var(--border); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
-        .toc-title { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--sepia); text-align: center; margin-bottom: 20px; letter-spacing: 0.15em; }
+        .hero-img-container { margin: 40px 0; border-radius: 4px; overflow: hidden; }
+        .hero-img { width: 100%; height: auto; display: block; filter: var(--img-filter); transform: translate3d(0,0,0); backface-visibility: hidden; }
+
+        .toc-box { background: rgba(255,255,255,.4); border: 1px solid var(--border-light); padding: 25px; border-radius: 6px; margin-bottom: 50px; }
+        .toc-title { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text-main); text-align: center; margin-bottom: 20px; letter-spacing: .15em; font-weight: 600; }
         .toc-list { list-style: none; padding: 0; }
-        .toc-list li { border-bottom: 1px dashed var(--border); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
-        .toc-list a { color: var(--ink-mid); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
-        .toc-list a:hover { color: var(--gold); }
+        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
+        .toc-list a:hover { color: var(--accent-gold); }
 
-        /* ============================================
-           Article Blocks
-        ============================================ */
         .article-block { margin-bottom: 70px; text-align: justify; }
-        h2 { font-family: 'Noto Serif JP', serif; font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 50px; margin-bottom: 25px; display: flex; align-items: center; line-height: 1.5; }
-        h2::after { content: ""; flex: 1; height: 1px; background: var(--border); margin-left: 15px; }
-        p { font-size: 0.85rem; font-weight: 300; margin-bottom: 20px; opacity: 0.95; }
-        p strong { font-weight: bold; color: var(--accent-gold); }
+        h2 { font-family: 'Noto Serif JP', serif; font-size: 1.15rem; font-weight: bold; color: var(--accent-gold); margin-top: 50px; margin-bottom: 25px; display: flex; align-items: center; }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
+        p { font-size: 0.85rem; margin-bottom: 20px; opacity: 0.95; }
 
-        /* ゴースト録（カードデザイン） */
-        .ghost-card { background: rgba(107, 68, 35, 0.04); border: 1px solid var(--border-strong); padding: 25px; border-radius: 4px; margin: 25px 0; box-shadow: 2px 5px 15px rgba(0,0,0,0.05); }
+        .ghost-card { background: rgba(158, 107, 58, 0.04); border: 1px solid var(--border-light); padding: 25px; border-radius: 4px; margin: 25px 0; }
         .ghost-card h3 { font-family: 'Noto Serif JP', serif; font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); margin-bottom: 5px; }
-        .ghost-location { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: var(--sepia); opacity: 0.7; margin-bottom: 12px; letter-spacing: 0.1em; display: block; border-bottom: 1px dashed var(--border); padding-bottom: 8px;}
-        .ghost-card p { font-size: 0.8rem; line-height: 1.9; margin-bottom: 0; }
+        .ghost-location { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: var(--text-main); opacity: 0.7; margin-bottom: 12px; display: block; border-bottom: 1px dashed var(--border-light); padding-bottom: 8px;}
 
-        .connection-card { background: rgba(107, 68, 35, 0.03); border: 1px solid var(--border-strong); padding: 25px; border-radius: 4px; margin: 30px 0; }
-        .connection-card h4 { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
-        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
-
-        /* ============================================
-           Micro Navigation Cards (相互誘導しおり)
-        ============================================ */
         .micro-nav-card {
-            display: block;
-            text-decoration: none;
-            background: rgba(122, 83, 48, 0.04);
-            border-left: 2px solid var(--accent-gold);
-            padding: 10px 15px;
-            margin: 15px 0 15px 12px;
-            font-size: 0.72rem;
-            line-height: 1.6;
-            color: var(--ink-mid);
-            border-radius: 0 4px 4px 0;
-            transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            display: block; text-decoration: none; background: #fff;
+            border-left: 3px solid var(--accent-gold); padding: 15px;
+            margin: 15px 0; font-size: 0.75rem; line-height: 1.6; color: var(--text-main);
+            border-radius: 0 4px 4px 0; transition: transform 0.3s; border: 1px solid var(--border-light); border-left: 3px solid var(--accent-gold);
         }
-        .micro-nav-card:hover { background: rgba(122, 83, 48, 0.08); transform: translateX(3px); }
-        .micro-nav-card-title { font-family: 'Noto Serif JP', serif; font-weight: bold; color: var(--accent-gold); display: inline-block; margin-right: 5px; }
-        .micro-nav-card-desc { opacity: 0.85; }
+        .micro-nav-card:hover { transform: translateX(3px); }
+        .micro-nav-card-title { font-weight: bold; color: var(--accent-gold); display: inline-block; margin-right: 5px; }
 
         .footer-link { text-align: center; margin-top: 80px; }
-        .footer-link a { color: var(--ink-mid); text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-
-        /* ============================================
-           Reading Progress Tooltip
-        ============================================ */
-        #reading-tip {
-            position: fixed; bottom: 30px; right: 30px;
-            background: var(--ink-mid); color: var(--parchment);
-            font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .15em;
-            padding: 10px 18px; border-radius: 0;
-            border: 1px solid var(--border-strong);
-            opacity: 0; transform: translateY(8px);
-            transition: opacity .4s, transform .4s;
-            pointer-events: none; z-index: 1000;
-        }
-        #reading-tip.visible { opacity: 1; transform: translateY(0); }
+        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
     </style>
 </head>
 <body>
-
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <div class="vignette-overlay" aria-hidden="true"></div>
-
-    <div id="cursor-outer" aria-hidden="true"></div>
-    <div id="cursor-inner" aria-hidden="true"></div>
-
-    <div id="progress-bar" aria-hidden="true"></div>
-    <div id="reading-tip" aria-hidden="true">↑ Top of Archives</div>
+    <div class="paper-bg"></div>
+    <div class="noise-overlay"></div>
 
     <div class="container">
         <a href="index.html" class="back-btn">← Back to Portal</a>
-
+        
         <header class="header-section reveal">
             <div class="bgs-tag">Featured Story</div>
             <h1>
                 <span>Haunted Mansion</span>
                 Haunted Mansion：999人の亡霊が待つ、美しきゴシックの館
             </h1>
-            <!-- 写真がない代わりにアンティークな仕切り線で美しく空間を持たせる -->
-            <div class="no-photo-spacer" aria-hidden="true"></div>
-            
             <div class="subtitle-jp">
-                ファンタジーランドの片隅にそびえ立つ、重厚な赤レンガの洋館。そこには、世界中から集まった999人の幽霊たちが、1000人目の仲間を待ちわびて暮らしています。恐怖とユーモアが交差するこの館の知られざる物語と、季節限定の不思議な魔法、そして世界へと繋がる館の秘密を紐解きましょう。
+                ファンタジーランドの片隅にそびえ立つ、重厚な赤レンガの洋館。そこには、世界中から集まった999人の幽霊たちが、1000人目の仲間を待ちわびて暮らしています。恐怖とユーモアが交差するこの館の知られざる物語を紐解きましょう。
             </div>
         </header>
 
-        <nav class="toc-box reveal" aria-label="セクション目次">
+        <nav class="toc-box reveal">
             <div class="toc-title">Index</div>
             <ul class="toc-list">
                 <li><span>I. ファンタジーランドに佇む館</span><a href="#prologue">Read →</a></li>
                 <li><span>II. 恐怖と笑いが交差する魔法</span><a href="#magic">Read →</a></li>
-                <li><span>III. ゴーストレジストリー（館に住まう者たちの記録）</span><a href="#ghosts">Read →</a></li>
+                <li><span>III. ゴーストレジストリー（記録）</span><a href="#ghosts">Read →</a></li>
                 <li><span>IV. ハロウィーン・タウンからの客人</span><a href="#holiday">Read →</a></li>
-                <li><span>V. 世界に広がる幽霊屋敷とS.E.A.の影</span><a href="#world">Read →</a></li>
+                <li><span>V. 世界に広がる幽霊屋敷</span><a href="#world">Read →</a></li>
             </ul>
         </nav>
 
-        <!-- I. プロローグ -->
+        <div class="hero-img-container reveal">
+            <img src="haunted-exterior.jpg" alt="ホーンテッドマンションの外観" class="hero-img" draggable="false" decoding="async" loading="eager" fetchpriority="high">
+        </div>
+
         <section class="article-block reveal" id="prologue">
             <h2>I. ファンタジーランドに佇む館</h2>
-            <p>1983年に開園した東京ディズニーランドにおいて、ホーンテッドマンションは中世ヨーロッパの童話世界を模した**「ファンタジーランド」**にひっそりと配置されています。アメリカのパークでは「ニューオーリンズ」などの歴史的エリアにあるこの館が、なぜ日本では童話の世界にあるのでしょうか。</p>
-            <p>それは、日本独自の豊かな文化に理由がありました。日本では古くから、幽霊や妖怪が登場する「怪談」を、恐れながらも一つのエンターテインメント（おとぎ話）として楽しむ文化が根付いていたのです。ディズニーのクリエイターたちはこの文化を鋭く見抜き、ホーンテッドマンションを単なるリアルな廃墟ではなく、**「ゴシックロマンを内包したダークファンタジー」**として、あえてファンタジーランドに配置しました。</p>
-            <p>オランダ・ゴシック風の重厚なレンガ造り、鋭角にそびえる尖塔、そして緻密に施されたエイジング（風化加工）は、メルヘンな世界の中に一種の異界としての厳かな緊張感をもたらしています。</p>
+            <p>東京ディズニーランドにおいて、ホーンテッドマンションは中世ヨーロッパの童話世界を模した「ファンタジーランド」にひっそりと配置されています。アメリカのパークでは歴史的エリアにあるこの館が、なぜ日本では童話の世界にあるのでしょうか。</p>
+            <p>日本では古くから、幽霊や妖怪が登場する「怪談」を、恐れながらも一つのエンターテインメント（おとぎ話）として楽しむ文化が根付いていたからです。ディズニーのクリエイターたちはこの文化を鋭く見抜き、ホーンテッドマンションを「ゴシックロマンを内包したダークファンタジー」として、あえてファンタジーランドに配置しました。</p>
         </section>
 
-        <!-- II. 恐怖と笑いの魔法 -->
         <section class="article-block reveal" id="magic">
             <h2>II. 恐怖と笑いが交差する魔法</h2>
-            <p>このアトラクションの最大の魅力は、「決して誰も傷つかない、安全で楽しい死後の世界」であることです。その根底には、開発初期のイマジニアたちがかけた**二つの相反する魔法**が存在しています。</p>
-            <p>ゲストが黒いソリ（ドゥームバギー）に乗り込み、館の奥へと進む前半部分は、誰もいない薄暗い廊下や不穏なライティングが続く**「心理的な恐怖（ゴシックホラー）」**の領域です。しかし、水晶玉の中の霊媒師マダム・レオタが死者たちを呼び覚ますセアンス（降霊術）のシーンを境に、館の空気は一変します。</p>
-            <p>後半は、名曲「グリム・グリニング・ゴースト」とともに亡霊たちが墓地で陽気に歌い踊る**「ユーモアと笑い」**の領域へと移行するのです。この見事な感情のコントラストこそが、ホーンテッドマンションを不朽の名作たらしめている黄金比です。</p>
-            
-            <div class="connection-card">
-                <h4>🎙️ 案内人「ゴーストホスト」の奇跡の声</h4>
-                <p>アトラクション全体を通して私たちに語りかけてくる、低く響く魅力的な声の主「ゴーストホスト」。実は日本のパークにおいてこの声を担当したのは、プロの声優ではなく、東京ディズニーランド誘致の立役者であった**堀貞一郎氏**ご本人でした。<br>
-                彼がテストで録音した声の気品と響きが、アメリカ側のプロデューサーに「完璧だ」と大絶賛され、そのまま本採用となったのです。日本のディズニーの歴史は、誘致の当事者自身の声によって今も永遠に語り継がれています。</p>
-            </div>
+            <p>このアトラクションの最大の魅力は、「決して誰も傷つかない、安全で楽しい死後の世界」であることです。前半部分は、誰もいない薄暗い廊下や不穏なライティングが続く「心理的な恐怖」の領域です。しかし、霊媒師マダム・レオタの降霊術のシーンを境に、館の空気は一変します。</p>
+            <p>後半は、名曲「グリム・グリニング・ゴースト」とともに亡霊たちが墓地で陽気に歌い踊る「ユーモアと笑い」の領域へと移行します。この見事な感情のコントラストこそが、ホーンテッドマンションの黄金比です。</p>
         </section>
 
-        <!-- III. ゴーストレジストリー -->
         <section class="article-block reveal" id="ghosts">
-            <h2>III. ゴーストレジストリー（館に住まう者たちの記録）</h2>
+            <h2>III. ゴーストレジストリー（記録）</h2>
             <p>館には「ゴーストレジストリー（幽霊籍）」と呼ばれる古い記録が残されており、登場する亡霊たちにはそれぞれ細かな人生のドラマが秘められています。</p>
-
-            <div class="ghost-card">
-                <h3>枯れゆく紳士（Withered Gentleman）</h3>
-                <span class="ghost-location">出現場所：入口すぐの肖像画</span>
-                <p>ゲストの目の前で、若者から白骨化した老人へとみるみるうちに変貌を遂げる謎の紳士。名前も過去も一切が謎に包まれており、館の記録にも単なる噂レベルしか残されていません。</p>
-            </div>
 
             <div class="ghost-card">
                 <h3>サリー・スレーター（Sally Slater）</h3>
                 <span class="ghost-location">出現場所：ストレッチングルーム（伸びる部屋）の肖像画</span>
-                <p>生前は果敢で人当たりの良い綱渡りパフォーマーでした。バレエシューズを履き、ワニが潜む川の上で綱渡りを披露している最中にバランスを崩し、命を落としてしまいました。</p>
+                <p>生前は果敢で人当たりの良い綱渡りパフォーマーでした。ワニが潜む川の上で綱渡りを披露している最中にバランスを崩し、命を落としてしまいました。</p>
             </div>
 
             <div class="ghost-card">
@@ -369,27 +145,20 @@
             <div class="ghost-card">
                 <h3>ヒッチハイクゴースト（フィニアス、エズラ、ガス）</h3>
                 <span class="ghost-location">出現場所：アトラクション終盤</span>
-                <p>詐欺師のフィニアス、放浪者のエズラ、そして無実の罪で投獄された陽気なガス。出自の違う3人が意気投合し、あなたのバギーに同乗して館の外へとヒッチハイクを企てます。</p>
+                <p>詐欺師のフィニアス、放浪者のエズラ、無実の罪で投獄された陽気なガス。出自の違う3人が意気投合し、あなたのバギーに同乗して館の外へとヒッチハイクを企てます。</p>
             </div>
         </section>
 
-        <!-- IV. ホリデーナイトメア -->
         <section class="article-block reveal" id="holiday">
             <h2>IV. ハロウィーン・タウンからの客人</h2>
-            <p>毎年秋から冬にかけて、ホーンテッドマンションは特別な魔法に包まれます。ティム・バートン監督の映画『ナイトメアー・ビフォア・クリスマス』をモチーフにしたスペシャルプログラム**「ホリデーナイトメア」**です。</p>
-            <p>ハロウィーン・タウンの王であるジャック・スケリントンが、「サンディ・クローズ（サンタクロース）」に扮して館を訪れ、999人の幽霊たちのために不気味で楽しいクリスマスの飾り付けを施します。カボチャのツリー、人食いリース、そして雪景色の墓地。ホラーとクリスマスの温かさが同居するこの季節限定の館は、私たちに全く新しいイマジネーションを与えてくれます。</p>
+            <p>毎年秋から冬にかけて、ホーンテッドマンションは特別な魔法に包まれます。ティム・バートン監督の映画『ナイトメアー・ビフォア・クリスマス』をモチーフにしたスペシャルプログラム「ホリデーナイトメア」です。</p>
+            <p>ハロウィーン・タウンの王であるジャック・スケリントンがサンタクロースに扮して館を訪れ、999人の幽霊たちのために不気味で楽しいクリスマスの飾り付けを施します。ホラーとクリスマスの温かさが同居する季節限定の魔法です。</p>
         </section>
 
-        <!-- V. 世界の館とS.E.A. -->
         <section class="article-block reveal" id="world">
-            <h2>V. 世界に広がる幽霊屋敷とS.E.A.の影</h2>
+            <h2>V. 世界に広がる幽霊屋敷</h2>
             <p>ホーンテッドマンションは、各国の文化的土壌に合わせて姿を変え、世界中のディズニーパークに存在しています。パリの「ファントム・マナー」では、花嫁メラニーを巡る凄惨な殺人事件という、ヨーロッパ向けのダークな心理ホラーへと深化しています。</p>
-            <p>そして香港ディズニーランドでは、中国伝統の死生観に配慮し、幽霊要素を完全に排除した**「ミスティック・マナー」**として存在しています。この館の主であるヘンリー・ミスティック卿は、ディズニーシーとも深い関わりを持つ秘密結社「S.E.A.」の著名なメンバーです。</p>
-
-            <a href="bgs-spatial-epic.html" class="micro-nav-card">
-                <span class="micro-nav-card-title">📖 関連ストーリー：</span>
-                <span class="micro-nav-card-desc">ディズニーシーの全8テーマポートを巡る、地理と空間の壮大な総括コラムはこちら。</span>
-            </a>
+            <p>香港ディズニーランドでは、中国の死生観に配慮し、幽霊要素を完全に排除した「ミスティック・マナー」として存在しています。この館の主であるヘンリー・ミスティック卿は、ディズニーシーとも深い関わりを持つ秘密結社「S.E.A.」の著名なメンバーです。</p>
             
             <a href="bgs-sea.html" class="micro-nav-card">
                 <span class="micro-nav-card-title">📖 関連ストーリー：</span>
@@ -397,79 +166,15 @@
             </a>
         </section>
 
-        <div class="footer-link reveal">
-            <a href="index.html">← HOMEへ戻る</a>
-        </div>
+        <div class="footer-link reveal"><a href="index.html">← HOMEへ戻る</a></div>
     </div>
-
+    
     <script>
-    // ============================================
-    // Custom Cursor
-    // ============================================
-    const cursorOuter = document.getElementById('cursor-outer');
-    const cursorInner = document.getElementById('cursor-inner');
-    let mouseX = 0, mouseY = 0, outerX = 0, outerY = 0, mouseActive = false;
-
-    document.addEventListener('mousemove', e => {
-        if (!mouseActive) { mouseActive = true; cursorOuter.style.opacity = '1'; cursorInner.style.opacity = '1'; }
-        mouseX = e.clientX; mouseY = e.clientY;
-        cursorInner.style.left = mouseX + 'px'; cursorInner.style.top = mouseY + 'px';
-    });
-    document.addEventListener('mouseleave', () => { cursorOuter.style.opacity = '0'; cursorInner.style.opacity = '0'; });
-    document.addEventListener('mouseenter', () => { if (mouseActive) { cursorOuter.style.opacity = '1'; cursorInner.style.opacity = '1'; } });
-
-    (function animateCursor() {
-        outerX += (mouseX - outerX) * 0.14; outerY += (mouseY - outerY) * 0.14;
-        cursorOuter.style.left = outerX + 'px'; cursorOuter.style.top = outerY + 'px';
-        requestAnimationFrame(animateCursor);
-    })();
-
-    document.querySelectorAll('a, button, .sea-mini-crest').forEach(el => {
-        el.addEventListener('mouseenter', () => cursorOuter.classList.add('hovering'));
-        el.addEventListener('mouseleave', () => cursorOuter.classList.remove('hovering'));
-    });
-
-    // ============================================
-    // Scroll Reveal
-    // ============================================
-    const revealObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // 最初から軽快に動くよう、ヒーロー要素を手動で即時アクティブに
-    const reveals = document.querySelectorAll('.reveal');
-    setTimeout(() => { reveals[0].classList.add('active'); }, 100);
-
-    // ============================================
-    // Progress Bar & Reading Tooltip
-    // ============================================
-    const progressBar = document.getElementById('progress-bar');
-    const readingTip = document.getElementById('reading-tip');
-
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        const total    = document.body.scrollHeight - window.innerHeight;
-        
-        progressBar.style.width = Math.min(100, (scrolled / total) * 100) + '%';
-
-        if (scrolled > 600) {
-            readingTip.classList.add('visible');
-            readingTip.setAttribute('aria-hidden', 'false');
-        } else {
-            readingTip.classList.remove('visible');
-            readingTip.setAttribute('aria-hidden', 'true');
-        }
-    });
-
-    readingTip.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    readingTip.style.pointerEvents = 'auto';
-    readingTip.style.cursor = 'none';
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); revealObserver.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>
