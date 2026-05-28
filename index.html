@@ -14,35 +14,38 @@
 
     <style>
         :root {
-            /* ────── Treasure Map & Parchment Color Palette ────── */
-            --bg-abyss:       #130E0A;        /* 地図の背後に広がる深みのある木製デスク/暗色 */
-            --bg-dark:        #E2D5BA;        /* 経年変化した古地図・羊皮紙のベージュ */
-            --bg-card:        rgba(244, 238, 226, 0.75); /* シワの影を透過させる薄い紙色 */
-            --accent-copper:  #7C4E2D;        /* 落ち着いたセピアブロンズ */
+            --bg-abyss:       #130E0A;
+            --bg-dark:        #E2D5BA;
+            --bg-card:        rgba(244, 238, 226, 0.75);
+            --accent-copper:  #7C4E2D;
             --accent-copper-muted: rgba(124, 78, 45, 0.08);
-            --text-light:     #2B1E16;        /* 掠れた胡桃インク・古文書の文字色 */
-            --text-muted:     #6E5A4E;        /* 補足解説用のセピアグレー */
+            --text-light:     #2B1E16;
+            --text-muted:     #6E5A4E;
             --border-light:   rgba(80, 50, 30, 0.12);
             --border-copper:  rgba(124, 78, 45, 0.35);
-            
             --img-filter: brightness(0.85) contrast(1.05) sepia(50%) saturate(0.75);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Noto Serif JP', serif;
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
             background-color: var(--bg-abyss);
             color: var(--text-light);
             line-height: 1.9;
             letter-spacing: 0.03em;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+
+        body {
+            font-family: 'Noto Serif JP', serif;
         }
 
         /* ════════════════════════════════
-           くしゃくしゃの古い紙（柔らかい紙のシワに調整）
+           背景テクスチャ
         ════════════════════════════════ */
         .paper-wrinkle-bg {
             position: fixed; inset: 0; z-index: -2;
@@ -59,36 +62,53 @@
         }
 
         /* ════════════════════════════════
-           宝の地図（不規則に破れた端っこを再現するメインコンテナ）
+           パッチメントコンテナ
         ════════════════════════════════ */
-        .parchment-sheet {
-            background: transparent;
-            clip-path: url(#paper-torn-clip);
-            -webkit-clip-path: url(#paper-torn-clip);
-            
+        .parchment-container {
             position: relative;
             z-index: 1;
             width: 100%;
             max-width: 860px;
             margin: 30px auto 80px;
-            padding: 80px 45px 100px;
-            
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .parchment-paper-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: rgba(234, 222, 201, 0.95);
+            clip-path: url(#paper-torn-clip);
+            -webkit-clip-path: url(#paper-torn-clip);
             box-shadow: 
                 0 0 1px rgba(80,50,30,0.4) inset,
+                inset 0 0 40px rgba(100, 70, 45, 0.15),
                 0 15px 40px rgba(0,0,0,0.4);
         }
 
-        .parchment-sheet::before {
-            content: '';
-            position: absolute; inset: 0;
-            z-index: -1;
-            background: rgba(234, 222, 201, 0.95);
-            pointer-events: none;
-            box-shadow: inset 0 0 40px rgba(100, 70, 45, 0.15);
+        .parchment-content {
+            width: 100%;
+            padding: 80px 45px 100px;
+            box-sizing: border-box;
         }
 
         /* ════════════════════════════════
-           ヘッダー（読みやすい高級筆記体）
+           【修正①】reveal アニメーション定義追加
+           （未定義のため要素が非表示になるバグを修正）
+        ════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ════════════════════════════════
+           ヘッダー
         ════════════════════════════════ */
         .header {
             display: flex; flex-direction: column; align-items: center;
@@ -137,14 +157,14 @@
         }
 
         /* ════════════════════════════════
-           シネマティック・ヒーロー
+           ヒーロー
         ════════════════════════════════ */
         .cinematic-hero-container {
             position: relative; width: 100%; aspect-ratio: 21/9;
             margin: 30px auto; overflow: hidden;
             border: 1px solid var(--border-light);
-            outline: 1px solid rgba(80, 50, 30, 0.15);
-            outline-offset: -5px;
+            /* 【修正②】outline-offset 負値をサポート外ブラウザ向けに box-shadow で代替 */
+            box-shadow: inset 0 0 0 5px rgba(80, 50, 30, 0.15);
             background: #1C1510;
         }
         .hero-img-wrapper {
@@ -154,14 +174,11 @@
         .hero-img-wrapper img {
             width: 100%; height: 100%; object-fit: cover;
             filter: var(--img-filter);
-            
-            /* 保存禁止用CSSプロパティ */
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             user-select: none;
             pointer-events: none;
         }
-        /* 画像前面シールド（pointer-events: noneを外し、タッチ・クリックを画像へ到達させないようにします） */
         .hero-img-wrapper::after {
             content: '';
             position: absolute; inset: 0;
@@ -198,7 +215,7 @@
         }
 
         /* ════════════════════════════════
-           インデックス（目次）
+           インデックス
         ════════════════════════════════ */
         .toc-box {
             background: var(--bg-card);
@@ -292,7 +309,9 @@
         }
 
         /* ════════════════════════════════
-           記事カード & 高速レンダリング設定
+           記事カード
+           【修正③】content-visibility / contain-intrinsic-size
+           Safari 旧版で非表示になるバグを @supports ガードで防止
         ════════════════════════════════ */
         .article-list { display: flex; flex-direction: column; gap: 30px; }
 
@@ -304,9 +323,12 @@
             box-shadow: 0 1px 3px rgba(80, 50, 30, 0.05);
             transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
             position: relative;
-            
-            content-visibility: auto;
-            contain-intrinsic-size: auto 400px;
+        }
+        @supports (content-visibility: auto) {
+            .article-card {
+                content-visibility: auto;
+                contain-intrinsic-size: auto 400px;
+            }
         }
         .article-card:hover {
             border-color: var(--border-copper);
@@ -322,21 +344,18 @@
             margin-bottom: 20px; background: #241D17;
             position: relative;
             border: 1px solid var(--border-light);
-            outline: 1px solid rgba(80, 50, 30, 0.15);
-            outline-offset: -5px;
+            /* 【修正②と同様】outline-offset 負値 → box-shadow で代替 */
+            box-shadow: inset 0 0 0 5px rgba(80, 50, 30, 0.15);
         }
         .img-wrapper img {
             width: 100%; height: 100%; object-fit: cover;
             filter: var(--img-filter);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            
-            /* 保存禁止用CSSプロパティ */
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             user-select: none;
             pointer-events: none;
         }
-        /* 画像前面シールド（pointer-events: noneを外すことで、ユーザーのタップがこの透明グラデーションに吸い込まれ、画像の長押し・保存を防ぎます） */
         .img-wrapper::after {
             content: '';
             position: absolute; inset: 0;
@@ -366,13 +385,15 @@
             z-index: 10;
         }
 
-        /* 読みやすい筆記体 Alex Brush タイトル */
         .article-card h2 {
             font-family: 'Alex Brush', cursive;
             font-size: 2.2rem; font-weight: 400;
             margin-bottom: 6px; color: var(--text-light);
             line-height: 1.1;
             letter-spacing: 0.02em;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         .article-card p {
             font-family: 'Noto Serif JP', serif;
@@ -396,31 +417,31 @@
         }
 
         /* ════════════════════════════════
-           画像位置微調整（歴史ある構図の最適化）
+           画像位置微調整
         ════════════════════════════════ */
         .fs-img-align      { object-position: center 15%; }
         .btm-img-align     { object-position: center 90%; }
-        .bb-img-align      { object-position: center 55%; } /* 下の方を多く写す（10%から55%に修正） */
+        .bb-img-align      { object-position: center 55%; } 
         .sm-img-align      { object-position: center 45%; }
-        .soarin-img-align  { object-position: center 65%; } /* 下の方を多く写す（25%から65%に修正） */
+        .soarin-img-align  { object-position: center 65%; } 
         .tl-img-align      { object-position: center 50%; }
         .indy-img-align    { object-position: center 30%; }
-        .raging-img-align  { object-position: center 10%; } /* 上の方を多く写す（30%から10%に修正） */
-        .haunted-img-align { object-position: center 65%; } /* 下の方を多く写す（30%から65%に修正） */
+        .raging-img-align  { object-position: center 10%; } 
+        .haunted-img-align { object-position: center 65%; } 
 
         /* ════════════════════════════════
-           グリッドモード（PC：3列 / スマホ：2列）の極限チューニング
+           グリッドモード
         ════════════════════════════════ */
         .article-list.grid-mode { 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* PCでは3列並び */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 16px; 
         }
         .article-list.grid-mode .article-card { padding: 16px; }
         .article-list.grid-mode .img-wrapper { aspect-ratio: 16/10; margin-bottom: 12px; }
-        .article-list.grid-mode .article-card h2 { font-size: 2rem; margin-bottom: 6px; }
+        .article-list.grid-mode .article-card h2 { font-size: 2.1rem; margin-bottom: 6px; }
         .article-list.grid-mode .article-card p {
-            font-size: .7rem; line-height: 1.6; margin-bottom: 12px;
+            font-size: .72rem; line-height: 1.7; margin-bottom: 16px;
             display: -webkit-box; -webkit-line-clamp: 3;
             -webkit-box-orient: vertical; overflow: hidden;
         }
@@ -463,7 +484,10 @@
             border-color: var(--accent-copper);
             color: var(--accent-copper);
         }
-        .chronicle-card[open] .chronicle-expand-indicator { display: none; }
+        /* 【修正④】<details>[open] 時に chronicle-expand-indicator を非表示にする
+           元コードは .chronicle-card[open] だったが、<details> 要素なので
+           details[open] に修正 */
+        details.chronicle-card[open] .chronicle-expand-indicator { display: none; }
         
         .chronicle-content {
             margin-top: 24px; border-top: 1px solid var(--border-light);
@@ -485,7 +509,7 @@
         }
 
         /* ════════════════════════════════
-           フッター & モーダル
+           フッター
         ════════════════════════════════ */
         footer {
             text-align: center; font-family: 'Cormorant Garamond', serif;
@@ -509,14 +533,23 @@
             color: var(--accent-copper);
         }
 
+        /* ════════════════════════════════
+           モーダル
+           【修正⑤】backdrop-filter を @supports でガード
+        ════════════════════════════════ */
         .modal-overlay {
             position: fixed; inset: 0;
-            background: rgba(18, 12, 8, 0.4);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: rgba(18, 12, 8, 0.6); /* 非対応時は不透明度高めで代替 */
             display: flex; justify-content: center; align-items: center;
             z-index: 10000; opacity: 0; visibility: hidden;
             transition: opacity .3s, visibility .3s;
+        }
+        @supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
+            .modal-overlay {
+                background: rgba(18, 12, 8, 0.4);
+                -webkit-backdrop-filter: blur(4px);
+                backdrop-filter: blur(4px);
+            }
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
 
@@ -537,7 +570,24 @@
             transition: color .2s;
         }
         .modal-close:hover { color: var(--accent-copper); }
-        
+
+        /* ════════════════════════════════
+           【修正⑥】モーダル内インラインスタイルを外部化
+        ════════════════════════════════ */
+        .modal-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .9rem; color: var(--accent-copper);
+            margin-bottom: 20px; font-weight: 500;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 12px; letter-spacing: 0.1em;
+        }
+        .modal-body-text {
+            font-size: .8rem; line-height: 2;
+            color: var(--text-muted); font-weight: 300;
+        }
+        .modal-body-text + .modal-body-text {
+            margin-top: 16px;
+        }
         .modal-sns-links {
             display: flex; gap: 10px;
             margin-top: 24px; justify-content: center;
@@ -556,14 +606,27 @@
             background: var(--accent-copper-muted);
             color: var(--text-light);
         }
+        .modal-copyright {
+            margin-top: 24px;
+            border-top: 1px dashed var(--border-light);
+            padding-top: 16px;
+            color: var(--text-muted);
+            font-size: .65rem;
+            opacity: 0.75;
+            text-align: center;
+            font-family: 'Noto Serif JP', serif;
+        }
 
         /* ════════════════════════════════
-           スマホ用レスポンシブ（よこ2列に最適化）
+           レスポンシブ
         ════════════════════════════════ */
         @media (max-width: 768px) {
-            .parchment-sheet {
-                padding: 45px 15px 60px;
-                margin: 10px auto;
+            .parchment-container {
+                width: calc(100% - 16px);
+                margin: 10px auto 40px;
+            }
+            .parchment-content {
+                padding: 40px 16px 50px;
             }
             .article-list.grid-mode {
                 grid-template-columns: repeat(2, 1fr);
@@ -588,226 +651,236 @@
                 font-size: 2.8rem;
             }
         }
+
+        @media (max-width: 360px) {
+            .article-list.grid-mode .article-card h2 {
+                font-size: 1.35rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="paper-wrinkle-bg"></div>
     <div class="ambient-vignette"></div>
 
-    <div class="parchment-sheet">
-        <header class="header">
-            <h1>
-                <a href="index.html" class="header-logo">
-                    <span class="logo-sub">Tokyo Disney Resort</span>
-                    <span class="logo-main">BGS Chronicles</span>
-                    <span class="logo-tagline">An archival record of theme park history &amp; lore</span>
+    <div class="parchment-container">
+        <div class="parchment-paper-bg"></div>
+
+        <div class="parchment-content">
+            <header class="header">
+                <h1>
+                    <a href="index.html" class="header-logo">
+                        <span class="logo-sub">Tokyo Disney Resort</span>
+                        <span class="logo-main">BGS Chronicles</span>
+                        <span class="logo-tagline">An archival record of theme park history &amp; lore</span>
+                    </a>
+                </h1>
+                <a href="profile.html" class="profile-btn">Curator's Profile</a>
+            </header>
+
+            <section class="intro-hero">
+                <div class="cinematic-hero-container">
+                    <div class="hero-img-wrapper">
+                        <img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" width="800" height="343" decoding="async" loading="eager" fetchpriority="high">
+                    </div>
+                    <div class="hero-label">The Archive Entry</div>
+                </div>
+
+                <div class="intro-content">
+                    <p class="intro-message">
+                        東京ディズニーリゾートのアトラクションに付随する背景設定（BGS）や歴史を客観的にまとめた、個人の資料集です。<br>
+                        待ち時間の読み物や、パークの景観に隠されたディテールを観察する一助としてお使いください。
+                    </p>
+                </div>
+            </section>
+
+            <div class="vintage-divider reveal"><span>✦</span></div>
+
+            <nav class="toc-box reveal">
+                <div class="toc-title">Quick Navigation</div>
+                <div class="toc-section">
+                    <span class="toc-section-title">Tokyo Disneyland (TDL)</span>
+                    <div class="toc-tags">
+                        <a href="#sm-card">Splash Mt.</a>
+                        <a href="#btm-card">Big Thunder</a>
+                        <a href="#haunted-card">Haunted Mansion</a>
+                        <a href="#bb-card">Beauty &amp; Beast</a>
+                        <a href="#tl-card">Tomorrowland</a>
+                    </div>
+                </div>
+                <div class="toc-section">
+                    <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
+                    <div class="toc-tags">
+                        <a href="#spatial-epic-card">Spatial Epic</a>
+                        <a href="#tot-card">Tower of Terror</a>
+                        <a href="#sindbad-card">Sindbad's Voyage</a>
+                        <a href="#fs-card">Fantasy Springs</a>
+                        <a href="#soarin-card">Soarin'</a>
+                        <a href="#raging-card">Raging Spirits</a>
+                        <a href="#indy-card">Indiana Jones</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="vintage-divider reveal"><span>✦</span></div>
+
+            <div class="list-header reveal">
+                <div class="list-header-top">
+                    <h2 class="section-title">Archived Records</h2>
+                    <div class="layout-toggle">
+                        <button id="view-list">List</button>
+                        <button id="view-grid" class="active-toggle">Grid</button>
+                    </div>
+                </div>
+                <div class="filter-bar">
+                    <button class="filter-btn active-toggle" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="tdl">Disneyland</button>
+                    <button class="filter-btn" data-filter="tds">DisneySea</button>
+                </div>
+            </div>
+
+            <div class="article-list grid-mode" id="article-list">
+
+                <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
+                    <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
+                    <h2>Splash Mountain</h2>
+                    <p>小動物たちの暮らす泥地を襲った大洪水と、ブレア・ラビットにまつわる数々の伝承と旅の物語。</p>
+                    <div class="read-btn">Explore Story →</div>
                 </a>
-            </h1>
-            <a href="profile.html" class="profile-btn">Curator's Profile</a>
-        </header>
 
-        <section class="intro-hero">
-            <div class="cinematic-hero-container">
-                <div class="hero-img-wrapper">
-                    <img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" width="800" height="343" decoding="async" loading="eager" fetchpriority="high">
+                <a href="bgs-btm.html" class="article-card reveal" id="btm-card" data-category="tdl">
+                    <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
+                    <h2>Big Thunder Mountain</h2>
+                    <p>無人鉱山を暴走する鉱山列車と、開拓者たちの歴史。大自然の精霊の警告を無視したゴールドラッシュの末路。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-haunted.html" class="article-card reveal" id="haunted-card" data-category="tdl">
+                    <div class="img-wrapper"><img src="haunted-exterior.jpg" alt="ホーンテッドマンションの外観" class="haunted-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">5 min</span></div>
+                    <h2>Haunted Mansion</h2>
+                    <p>999人の亡霊が暮らすゴシック様式の館。代々の居住者にまつわるエピソードと、奇妙な仕掛けの数々。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-bb.html" class="article-card reveal" id="bb-card" data-category="tdl">
+                    <div class="img-wrapper"><img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
+                    <h2>Beauty and the Beast</h2>
+                    <p>深い森に佇むお城と魔法の薔薇の伝説。フランスの片田舎を再現した美しい造形と建築様式。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-tl.html" class="article-card reveal" id="tl-card" data-category="tdl">
+                    <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
+                    <h2>Tomorrowland</h2>
+                    <p>近未来の都市デザインと宇宙開発への夢。銀河系を結ぶスペースポートに課せられたルールと条例。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-spatial-epic.html" class="article-card reveal" id="spatial-epic-card" data-category="tds">
+                    <span class="new-badge">NEW</span>
+                    <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Chronicle</span><span class="card-meta">5 min</span></div>
+                    <h2>TDS Spatial Epic</h2>
+                    <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景の考察。</p>
+                    <div class="read-btn">Explore Chronicle →</div>
+                </a>
+
+                <a href="bgs-tot.html" class="article-card reveal" id="tot-card" data-category="tds">
+                    <div class="img-wrapper"><img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">5 min</span></div>
+                    <h2>Tower of Terror</h2>
+                    <p>1912年のニューヨーク。ホテル・ハイタワーで起きたオーナー失踪事件と、謎の偶像を巡る社会的背景。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-sindbad.html" class="article-card reveal" id="sindbad-card" data-category="tds">
+                    <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
+                    <h2>Sindbad's Voyage</h2>
+                    <p>船乗りシンドバッドと相棒チャンドゥの航海記。エリアのリニューアルに伴う、演出と音楽の変遷史。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-fs.html" class="article-card reveal" id="fs-card" data-category="tds">
+                    <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
+                    <h2>Fantasy Springs</h2>
+                    <p>精霊が宿る魔法の泉の伝承と、それらを発見した公爵夫人の別荘にまつわる土地の記録。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-soarin.html" class="article-card reveal" id="soarin-card" data-category="tds">
+                    <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
+                    <h2>Soarin'</h2>
+                    <p>探検家学会（S.E.A.）初の女性会員カメリアの功績と、飛行への執念を展示するファンタスティック・フライト・ミュージアムの全容。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
+                    <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
+                    <h2>Raging Spirits</h2>
+                    <p>中央アメリカの古代遺跡で発見された祭壇。対立する「火」と「水」の神々の偶像と、調査隊の足場の記録。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+                <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
+                    <div class="img-wrapper"><img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
+                    <h2>Indiana Jones</h2>
+                    <p>ロストリバーデルタに隠された「失われた若さの泉」。ジョーンズ博士の調査活動とパコによる神殿ツアーの全貌。</p>
+                    <div class="read-btn">Explore Story →</div>
+                </a>
+
+            </div>
+
+            <details class="chronicle-card reveal">
+                <summary class="chronicle-summary">
+                    <h3>The Maihama Chronicle</h3>
+                    <p class="chronicle-subtitle">舞浜におけるパーク開発と空間づくりの変遷</p>
+                    <span class="chronicle-expand-indicator">Read Chronicle</span>
+                </summary>
+                <div class="chronicle-content">
+                    <p>私たちが訪れる東京ディズニーリゾート（TDR）の背景には、オリエンタルランド（OLC）とウォルト・ディズニー・カンパニーの度重なる対話と、テーマパークづくりへの真摯な取り組みが存在します。</p>
+                    <h4>I. アメリカ国外初のディズニーパーク</h4>
+                    <p>1983年4月15日、東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、OLCがライセンス契約を結ぶ形で建設されました。開園初年度から1000万人を超えるゲストが訪れ、大きな成功を収めることになりました。</p>
+                    <h4>II. 映画スタジオ計画から「海」への方針転換</h4>
+                    <p>TDLの成功を受け、当初ディズニー側から提案されていたのは映画スタジオをテーマにしたパークでした。しかしOLC側はこれを見直し、1992年に「海」をテーマにした世界で唯一のパーク『東京ディズニーシー』の開発へと転換することになります。</p>
+                    <h4>III. 幻のシンボルと、エントランスに隠された演出</h4>
+                    <p>ディズニー側が当初提案した「巨大な灯台」というシンボルは、「日本人の感性において哀愁や寂しさを連想させやすい」として見送られました。議論の末に誕生したのが「アクアスフィア」と「プロメテウス火山」です。ホテル・ミラコスタ下の薄暗い通路を歩くことで日常から非日常へと切り替えさせる空間演出も、緻密な計算によるものです。</p>
+                    <h4>IV. 経年美化を前提とした空間づくり</h4>
+                    <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増す」空間を実現しています。</p>
+                    <h4>V. ファンタジースプリングスへの繋がり</h4>
+                    <p>2024年誕生の「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
                 </div>
-                <div class="hero-label">The Archive Entry</div>
-            </div>
+            </details>
 
-            <div class="intro-content">
-                <p class="intro-message">
-                    東京ディズニーリゾートのアトラクションに付随する背景設定（BGS）や歴史を客観的にまとめた、個人の資料集です。<br>
-                    待ち時間の読み物や、パークの景観に隠されたディテールを観察する一助としてお使いください。
-                </p>
-            </div>
-        </section>
-
-        <div class="vintage-divider reveal"><span>✦</span></div>
-
-        <nav class="toc-box reveal">
-            <div class="toc-title">Quick Navigation</div>
-            <div class="toc-section">
-                <span class="toc-section-title">Tokyo Disneyland (TDL)</span>
-                <div class="toc-tags">
-                    <a href="#sm-card">Splash Mt.</a>
-                    <a href="#btm-card">Big Thunder</a>
-                    <a href="#haunted-card">Haunted Mansion</a>
-                    <a href="#bb-card">Beauty &amp; Beast</a>
-                    <a href="#tl-card">Tomorrowland</a>
+            <footer>
+                &copy; 2026 TERU_LUCE_
+                <div class="footer-notice-box">
+                    <button class="site-notice-trigger-btn" id="notice-trigger">Notes &amp; Contacts</button>
                 </div>
-            </div>
-            <div class="toc-section">
-                <span class="toc-section-title">Tokyo DisneySea (TDS)</span>
-                <div class="toc-tags">
-                    <a href="#spatial-epic-card">Spatial Epic</a>
-                    <a href="#tot-card">Tower of Terror</a>
-                    <a href="#sindbad-card">Sindbad's Voyage</a>
-                    <a href="#fs-card">Fantasy Springs</a>
-                    <a href="#soarin-card">Soarin'</a>
-                    <a href="#raging-card">Raging Spirits</a>
-                    <a href="#indy-card">Indiana Jones</a>
-                </div>
-            </div>
-        </nav>
-
-        <div class="vintage-divider reveal"><span>✦</span></div>
-
-        <div class="list-header reveal">
-            <div class="list-header-top">
-                <h2 class="section-title">Archived Records</h2>
-                <div class="layout-toggle">
-                    <button id="view-list">List</button>
-                    <button id="view-grid" class="active-toggle">Grid</button>
-                </div>
-            </div>
-            <div class="filter-bar">
-                <button class="filter-btn active-toggle" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="tdl">Disneyland</button>
-                <button class="filter-btn" data-filter="tds">DisneySea</button>
-            </div>
+            </footer>
         </div>
-
-        <div class="article-list grid-mode" id="article-list">
-
-            <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
-                <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
-                <h2>Splash Mountain</h2>
-                <p>小動物たちの暮らす泥地を襲った大洪水と、ブレア・ラビットにまつわる数々の伝承と旅の物語。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-btm.html" class="article-card reveal" id="btm-card" data-category="tdl">
-                <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
-                <h2>Big Thunder Mountain</h2>
-                <p>無人鉱山を暴走する鉱山列車と、開拓者たちの歴史。大自然の精霊の警告を無視したゴールドラッシュの末路。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-haunted.html" class="article-card reveal" id="haunted-card" data-category="tdl">
-                <div class="img-wrapper"><img src="haunted-exterior.jpg" alt="ホーンテッドマンションの外観" class="haunted-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">5 min</span></div>
-                <h2>Haunted Mansion</h2>
-                <p>999人の亡霊が暮らすゴシック様式の館。代々の居住者にまつわるエピソードと、奇妙な仕掛けの数々。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-bb.html" class="article-card reveal" id="bb-card" data-category="tdl">
-                <div class="img-wrapper"><img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
-                <h2>Beauty and the Beast</h2>
-                <p>深い森に佇むお城と魔法の薔薇の伝説。フランスの片田舎を再現した美しい造形と建築様式。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-tl.html" class="article-card reveal" id="tl-card" data-category="tdl">
-                <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
-                <h2>Tomorrowland</h2>
-                <p>近未来の都市デザインと宇宙開発への夢。銀河系を結ぶスペースポートに課せられたルールと条例。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-spatial-epic.html" class="article-card reveal" id="spatial-epic-card" data-category="tds">
-                <span class="new-badge">NEW</span>
-                <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Chronicle</span><span class="card-meta">5 min</span></div>
-                <h2>TDS Spatial Epic</h2>
-                <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景の考察。</p>
-                <div class="read-btn">Explore Chronicle →</div>
-            </a>
-
-            <a href="bgs-tot.html" class="article-card reveal" id="tot-card" data-category="tds">
-                <div class="img-wrapper"><img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">5 min</span></div>
-                <h2>Tower of Terror</h2>
-                <p>1912年のニューヨーク。ホテル・ハイタワーで起きたオーナー失踪事件と、謎の偶像を巡る社会的背景。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-sindbad.html" class="article-card reveal" id="sindbad-card" data-category="tds">
-                <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
-                <h2>Sindbad's Voyage</h2>
-                <p>船乗りシンドバッドと相棒チャンドゥの航海記。エリアのリニューアルに伴う、演出と音楽の変遷史。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-fs.html" class="article-card reveal" id="fs-card" data-category="tds">
-                <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
-                <h2>Fantasy Springs</h2>
-                <p>精霊が宿る魔法の泉の伝承と、それらを発見した公爵夫人の別荘にまつわる土地の記録。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-soarin.html" class="article-card reveal" id="soarin-card" data-category="tds">
-                <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
-                <h2>Soarin'</h2>
-                <p>探検家学会（S.E.A.）初の女性会員カメリアの功績と、飛行への執念を展示するファンタスティック・フライト・ミュージアムの全容。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
-                <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
-                <h2>Raging Spirits</h2>
-                <p>中央アメリカの古代遺跡で発見された祭壇。対立する「火」と「水」の神々の偶像と、調査隊の足場の記録。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-            <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
-                <div class="img-wrapper"><img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
-                <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
-                <h2>Indiana Jones</h2>
-                <p>ロストリバーデルタに隠された「失われた若さの泉」。ジョーンズ博士の調査活動とパコによる神殿ツアーの全貌。</p>
-                <div class="read-btn">Explore Story →</div>
-            </a>
-
-        </div>
-
-        <details class="chronicle-card reveal">
-            <summary class="chronicle-summary">
-                <h3>The Maihama Chronicle</h3>
-                <p class="chronicle-subtitle">舞浜におけるパーク開発と空間づくりの変遷</p>
-                <span class="chronicle-expand-indicator">Read Chronicle</span>
-            </summary>
-            <div class="chronicle-content">
-                <p>私たちが訪れる東京ディズニーリゾート（TDR）の背景には、オリエンタルランド（OLC）とウォルト・ディズニー・カンパニーの度重なる対話と、テーマパークづくりへの真摯な取り組みが存在します。</p>
-                <h4>I. アメリカ国外初のディズニーパーク</h4>
-                <p>1983年4月15日、東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、OLCがライセンス契約を結ぶ形で建設されました。開園初年度から1000万人を超えるゲストが訪れ、大きな成功を収めることになりました。</p>
-                <h4>II. 映画スタジオ計画から「海」への方針転換</h4>
-                <p>TDLの成功を受け、当初ディズニー側から提案されていたのは映画スタジオをテーマにしたパークでした。しかしOLC側はこれを見直し、1992年に「海」をテーマにした世界で唯一のパーク『東京ディズニーシー』の開発へと転換することになります。</p>
-                <h4>III. 幻のシンボルと、エントランスに隠された演出</h4>
-                <p>ディズニー側が当初提案した「巨大な灯台」というシンボルは、「日本人の感性において哀愁や寂しさを連想させやすい」として見送られました。議論の末に誕生したのが「アクアスフィア」と「プロメテウス火山」です。ホテル・ミラコスタ下の薄暗い通路を歩くことで日常から非紹介へと切り替えさせる空間演出も、緻密な計算によるものです。</p>
-                <h4>IV. 経年美化を前提とした空間づくり</h4>
-                <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増す」空間を実現しています。</p>
-                <h4>V. ファンタジースプリングスへの繋がり</h4>
-                <p>2024年誕生 of 「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
-            </div>
-        </details>
-
-        <footer>
-            &copy; 2026 TERU_LUCE_
-            <div class="footer-notice-box">
-                <button class="site-notice-trigger-btn" id="notice-trigger">Notes &amp; Contacts</button>
-            </div>
-        </footer>
     </div>
 
     <!-- 注意書きモーダル -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-box">
             <button class="modal-close" id="modal-close">✕ Close</button>
-            <h3 style="font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--accent-copper);margin-bottom:20px;font-weight:500;border-bottom:1px solid var(--border-light);padding-bottom:12px;letter-spacing:0.1em;">Site Notes &amp; Contacts</h3>
-            <p style="font-size:.8rem;line-height:2;color:var(--text-muted);font-weight:300;">このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、InstagramのDMにてご報告いただけますと幸いです。</p>
-            <p style="margin-top:16px;font-size:.8rem;line-height:2;color:var(--text-muted);font-weight:300;">掲載している写真の画角や位置に誤りがある場合も、同様にご指摘いただけますと助かります。</p>
+            <h3 class="modal-heading">Site Notes &amp; Contacts</h3>
+            <p class="modal-body-text">このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、InstagramのDMにてご報告いただけますと幸いです。</p>
+            <p class="modal-body-text">掲載している写真の画角や位置に誤りがある場合も、同様にご指摘いただけますと助かります。</p>
             <div class="modal-sns-links">
                 <a href="https://www.instagram.com/teru_luce_" target="_blank" rel="noopener noreferrer" class="sns-btn">Instagram (DM)</a>
             </div>
-            <p style="margin-top:24px;border-top:1px dashed var(--border-light);padding-top:16px;color:var(--text-muted);font-size:.65rem;opacity:0.75;text-align:center;">
+            <p class="modal-copyright">
                 ＊ 掲載写真データの著作権は管理者に帰属します。無断転載・複製はご遠慮ください。
             </p>
         </div>
@@ -826,10 +899,9 @@
                    Q 0.008,0.75 0.018,0.5 
                    T 0.015,0.015 Z" />
         </clipPath>
-        
         <filter id="svg-crumpled-paper">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="large-creases" />
-          <feDiffuseLighting in="large-creases" lighting-color="#ffffff" surfaceScale="3" result="paper-shadows">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" result="large-creases" />
+          <feDiffuseLighting in="large-creases" lighting-color="#ffffff" surfaceScale="1.5" result="paper-shadows">
             <feDistantLight azimuth="55" elevation="65" />
           </feDiffuseLighting>
           <feBlend mode="multiply" in="SourceGraphic" in2="paper-shadows" />
@@ -887,9 +959,7 @@
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') modalOverlay.classList.remove('active'); });
 
-    // ════════════════════════════════
-    // 画像ダウンロード・ドラッグ保存禁止の二重制御
-    // ════════════════════════════════
+    // 画像右クリック・ドラッグ禁止
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('contextmenu', e => e.preventDefault());
         img.addEventListener('dragstart', e => e.preventDefault());
