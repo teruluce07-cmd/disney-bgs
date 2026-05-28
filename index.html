@@ -71,10 +71,9 @@
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            /* opacityとborder-colorに遷移を絞り、表示時のチラつきを防止 */
             transition: opacity .3s ease, border-color .3s ease, width .2s ease, height .2s ease;
             mix-blend-mode: multiply;
-            opacity: 0; /* 初期非表示。マウス検出時にJSで1にします */
+            opacity: 0;
         }
         #cursor-inner {
             position: fixed;
@@ -85,7 +84,7 @@
             z-index: 99999;
             transform: translate(-50%, -50%);
             transition: opacity .3s ease;
-            opacity: 0; /* 初期非表示 */
+            opacity: 0;
         }
         #cursor-outer.hovering {
             width: 52px; height: 52px;
@@ -110,7 +109,6 @@
             transform: translate(-50%, -50%);
         }
 
-        /* FIX: スマホ・タブレット等のタッチデバイスではカスタムカーソルを強制的に非表示にし、標準のタッチ操作を最速化 */
         @media (hover: none) {
             body { cursor: auto !important; }
             #cursor-outer, #cursor-inner { display: none !important; }
@@ -128,6 +126,13 @@
             transition: opacity .8s ease, visibility .8s ease;
         }
         #intro-curtain.hidden { opacity: 0; visibility: hidden; }
+
+        /* FIX: 二回目移行の訪問時に一瞬カーテンが点滅して表示される「一瞬のチラつき（Flicker）」をCSS側でも防ぐフォールバック指定 */
+        #intro-curtain.instantly-hidden {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
 
         .curtain-seal {
             position: relative;
@@ -484,11 +489,11 @@
             color: var(--sepia); text-align: center;
             margin-bottom: 22px; letter-spacing: .18em;
         }
-        .toc-section { margin-bottom: 18px; }
+        .toc-section { margin-bottom: 15px; }
         .toc-section-title {
             font-family: 'Cinzel', serif;
             font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
-            color: var(--gold); display: block; margin-bottom: 10px; font-weight: 600;
+            color: var(--gold); display: block; margin-bottom: 8px; font-weight: 600;
         }
         .toc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
         .toc-tags a {
@@ -693,7 +698,6 @@
         /* ============================================
            Chronicle Column (Accordion style)
         ============================================ */
-        /* ▼ スマホの縦スクロールを劇的に軽くするため、特別コラム全体をアコーディオン開閉（details）に変更 */
         .chronicle-card {
             background: rgba(255,255,255,.02);
             border: 1px solid var(--border);
@@ -714,7 +718,7 @@
             user-select: none;
         }
         .chronicle-summary::-webkit-details-marker {
-            display: none; /* Safari用の三角マーカー消去 */
+            display: none; 
         }
         .chronicle-card::before {
             content: 'THE MAIHAMA CHRONICLE';
@@ -745,7 +749,6 @@
         .chronicle-card:hover .chronicle-expand-indicator {
             color: var(--gold);
         }
-        /* 開いた時は「しおりを閉じる」合図にインジケータを切り替え */
         .chronicle-card[open] .chronicle-expand-indicator {
             display: none;
         }
@@ -1113,7 +1116,6 @@
             </a>
 
             <a href="bgs-tot.html" class="article-card reveal" id="tot-card" data-category="tds">
-                <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
                     <img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" loading="lazy" draggable="false">
                 </div>
@@ -1141,7 +1143,6 @@
             </a>
 
             <a href="bgs-fs.html" class="article-card reveal" id="fs-card" data-category="tds">
-                <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
                     <img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" loading="lazy" draggable="false">
                 </div>
@@ -1155,7 +1156,6 @@
             </a>
 
             <a href="bgs-soarin.html" class="article-card reveal" id="soarin-card" data-category="tds">
-                <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
                     <img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" loading="lazy" draggable="false">
                 </div>
@@ -1169,7 +1169,6 @@
             </a>
 
             <a href="bgs-sea.html" class="article-card reveal" id="sea-card" data-category="tds">
-                <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper sea-thumbnail-bg" role="img" aria-label="S.E.A.（探検家・冒険家学会）のシンボルマーク">
                     <div class="sea-mini-crest">
                         <span class="sea-mini-letters">S.E.A.</span>
@@ -1186,7 +1185,6 @@
             </a>
 
             <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
-                <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
                     <img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" loading="lazy" draggable="false">
                 </div>
@@ -1200,7 +1198,6 @@
             </a>
 
             <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
-                <div class="spotlight" aria-hidden="true"></div>
                 <div class="img-wrapper">
                     <img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" loading="lazy" draggable="false">
                 </div>
@@ -1235,7 +1232,7 @@
                 <p>ディズニー側が当初提案した「巨大な灯台」というシンボルは、「日本人の感性において哀愁や寂しさを連想させやすい」として見送られました。議論の末に誕生したのが「アクアスフィア」と「プロメテウス火山」です。ホテル・ミラコスタ下の薄暗い通路を歩くことで日常から非日常へと切り替えさせる空間演出も、緻密な計算によるものです。</p>
                 
                 <h4>IV. 経年美化を前提とした空間づくり</h4>
-                <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増す」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
+                <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増し」空間を実現しています。こうした徹底した空間づくりは、海外のディズニーファンからも高い評価を受けています。</p>
                 
                 <h4>V. ファンタジースプリングスへの繋がり</h4>
                 <p>2024年誕生の「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
@@ -1542,6 +1539,6 @@
     </script>
 </body>
 </html>
-これで表示速度もバッチリ！完璧です。
-
-ありがとうございました！また新しく変更したい時やエラーが出た際は助けてもらえると嬉しいです
+このファイルが今のindex.htmlです。これと一回前のsitemap.xml、bgs-spatial-epic.html、bgs-sindbad.html、bgs-tot.html、bgs-sm.htmlこれら全てにおいてホームページに戻ったときの演出カットのシステム代入、不具合チェックおねがい。
+あと、index.htmlに、
+「一部のブラウザでは、過去の訪問履歴（セッション）が残っている場合、最初の重厚な演出（イントロカーテン）をスキップして直接アーカイブ（本編）が表示されます。」っていう注意書きをどこでもいいから追加して。
