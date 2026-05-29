@@ -3,13 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BGS Chronicles | 舞浜アトラクション背景設定資料集</title>
-    <meta name="description" content="東京ディズニーリゾートのアトラクションに付随する背景設定（BGS）やコンセプト、歴史を現地写真とともに記録する個人アーカイブ。">
-    <meta name="keywords" content="ディズニー BGS, ディズニーシー BGS, 舞浜 BGS, バックグラウンドストーリー, 写真, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家・冒険家学会">
+
+    <!-- ═══════════════════════════════════════
+         【SEO①】タイトル・メタ説明（キーワード含む）
+    ═══════════════════════════════════════ -->
+    <title>BGS Chronicles | 東京ディズニーリゾート アトラクション背景設定（BGS）資料集</title>
+    <meta name="description" content="東京ディズニーランド・ディズニーシーのアトラクションに付随する背景設定（BGS）・バックグラウンドストーリーを、現地写真とともに記録した個人アーカイブ。タワー・オブ・テラー、スプラッシュ・マウンテン、S.E.A.など。">
+    <meta name="keywords" content="東京ディズニーリゾート BGS, ディズニー バックグラウンドストーリー, ディズニーシー BGS, ディズニーランド BGS, 舞浜 BGS, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家冒険家学会, ファンタジースプリングス">
+    <meta name="author" content="TERU_LUCE_">
+    <meta name="robots" content="index, follow">
+
+    <!-- ═══════════════════════════════════════
+         【SEO②】canonical URL
+    ═══════════════════════════════════════ -->
     <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/index.html">
 
+    <!-- ═══════════════════════════════════════
+         【SEO③】OGP（Open Graph Protocol）
+         SNS シェア時にリッチプレビューを表示
+    ═══════════════════════════════════════ -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://teruluce07-cmd.github.io/disney-bgs/index.html">
+    <meta property="og:title" content="BGS Chronicles | 東京ディズニーリゾート アトラクション背景設定資料集">
+    <meta property="og:description" content="東京ディズニーランド・ディズニーシーのアトラクションBGS（バックグラウンドストーリー）を現地写真とともに記録した個人アーカイブ。">
+    <meta property="og:image" content="https://teruluce07-cmd.github.io/disney-bgs/tot-exterior.jpg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="343">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:site_name" content="BGS Chronicles">
+
+    <!-- ═══════════════════════════════════════
+         【SEO④】Twitter Card
+    ═══════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BGS Chronicles | 東京ディズニーリゾート アトラクション背景設定資料集">
+    <meta name="twitter:description" content="東京ディズニーランド・ディズニーシーのBGS（バックグラウンドストーリー）を現地写真とともに記録した個人アーカイブ。">
+    <meta name="twitter:image" content="https://teruluce07-cmd.github.io/disney-bgs/tot-exterior.jpg">
+
+    <!-- ═══════════════════════════════════════
+         【SEO⑤】構造化データ（JSON-LD）
+         Google リッチリザルト対応
+    ═══════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "BGS Chronicles",
+      "url": "https://teruluce07-cmd.github.io/disney-bgs/",
+      "description": "東京ディズニーリゾートのアトラクションに付随するバックグラウンドストーリー（BGS）を現地写真とともに記録した個人アーカイブ。",
+      "inLanguage": "ja",
+      "author": {
+        "@type": "Person",
+        "name": "TERU_LUCE_"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "TERU_LUCE_"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://teruluce07-cmd.github.io/disney-bgs/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- ═══════════════════════════════════════
+         【画像高速化①】ヒーロー画像を preload
+         LCP 改善に直結する最重要施策
+    ═══════════════════════════════════════ -->
+    <link rel="preload" as="image" href="tot-exterior.jpg" fetchpriority="high">
+
+    <!-- ═══════════════════════════════════════
+         【画像高速化②】Google Fonts preconnect
+    ═══════════════════════════════════════ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- ═══════════════════════════════════════
+         【画像高速化③】フォント読み込み最適化
+         display=swap で FOUT を防ぎ、text= でサブセット化
+    ═══════════════════════════════════════ -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
 
     <style>
@@ -40,9 +114,7 @@
             position: relative;
         }
 
-        body {
-            font-family: 'Noto Serif JP', serif;
-        }
+        body { font-family: 'Noto Serif JP', serif; }
 
         /* ════════════════════════════════
            背景テクスチャ
@@ -81,7 +153,7 @@
             background: rgba(234, 222, 201, 0.95);
             clip-path: url(#paper-torn-clip);
             -webkit-clip-path: url(#paper-torn-clip);
-            box-shadow: 
+            box-shadow:
                 0 0 1px rgba(80,50,30,0.4) inset,
                 inset 0 0 40px rgba(100, 70, 45, 0.15),
                 0 15px 40px rgba(0,0,0,0.4);
@@ -94,8 +166,8 @@
         }
 
         /* ════════════════════════════════
-           【修正①】reveal アニメーション定義追加
-           （未定義のため要素が非表示になるバグを修正）
+           【バグ修正①】reveal アニメーション
+           未定義だったため要素が非表示になるバグを修正
         ════════════════════════════════ */
         .reveal {
             opacity: 0;
@@ -128,7 +200,7 @@
         }
         .logo-main {
             font-family: 'Alex Brush', cursive; font-size: 3.4rem;
-            font-weight: 400; color: var(--text-light); 
+            font-weight: 400; color: var(--text-light);
             line-height: 0.95;
         }
         .logo-tagline {
@@ -163,7 +235,7 @@
             position: relative; width: 100%; aspect-ratio: 21/9;
             margin: 30px auto; overflow: hidden;
             border: 1px solid var(--border-light);
-            /* 【修正②】outline-offset 負値をサポート外ブラウザ向けに box-shadow で代替 */
+            /* 【バグ修正②】outline-offset 負値の代替として box-shadow を使用 */
             box-shadow: inset 0 0 0 5px rgba(80, 50, 30, 0.15);
             background: #1C1510;
         }
@@ -196,7 +268,7 @@
 
         .intro-message {
             font-family: 'Noto Serif JP', serif;
-            font-size: .82rem; font-weight: 300; line-height: 2.1; 
+            font-size: .82rem; font-weight: 300; line-height: 2.1;
             margin: 30px auto; max-width: 600px;
             color: var(--text-light); text-align: center;
         }
@@ -310,8 +382,10 @@
 
         /* ════════════════════════════════
            記事カード
-           【修正③】content-visibility / contain-intrinsic-size
-           Safari 旧版で非表示になるバグを @supports ガードで防止
+           【バグ修正③】content-visibility を @supports でガード
+           Safari 旧版での非表示バグを防止
+           ※ グリッドアイテムへの適用はレイアウト崩れの原因になるため
+              リストモード時のみ content-visibility を適用する
         ════════════════════════════════ */
         .article-list { display: flex; flex-direction: column; gap: 30px; }
 
@@ -323,9 +397,12 @@
             box-shadow: 0 1px 3px rgba(80, 50, 30, 0.05);
             transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
             position: relative;
+            /* グリッド内で幅が正しく計算されるよう min-width を 0 に */
+            min-width: 0;
         }
         @supports (content-visibility: auto) {
-            .article-card {
+            /* リストモードのみ適用（グリッドモード時は off） */
+            .article-list:not(.grid-mode) .article-card {
                 content-visibility: auto;
                 contain-intrinsic-size: auto 400px;
             }
@@ -338,13 +415,12 @@
 
         /* 画像フレーム */
         .img-wrapper {
-            width: 100%; 
+            width: 100%;
             aspect-ratio: 16/9;
             overflow: hidden;
             margin-bottom: 20px; background: #241D17;
             position: relative;
             border: 1px solid var(--border-light);
-            /* 【修正②と同様】outline-offset 負値 → box-shadow で代替 */
             box-shadow: inset 0 0 0 5px rgba(80, 50, 30, 0.15);
         }
         .img-wrapper img {
@@ -421,21 +497,21 @@
         ════════════════════════════════ */
         .fs-img-align      { object-position: center 15%; }
         .btm-img-align     { object-position: center 90%; }
-        .bb-img-align      { object-position: center 55%; } 
+        .bb-img-align      { object-position: center 55%; }
         .sm-img-align      { object-position: center 45%; }
-        .soarin-img-align  { object-position: center 65%; } 
+        .soarin-img-align  { object-position: center 65%; }
         .tl-img-align      { object-position: center 50%; }
         .indy-img-align    { object-position: center 30%; }
-        .raging-img-align  { object-position: center 10%; } 
-        .haunted-img-align { object-position: center 65%; } 
+        .raging-img-align  { object-position: center 10%; }
+        .haunted-img-align { object-position: center 65%; }
 
         /* ════════════════════════════════
            グリッドモード
         ════════════════════════════════ */
-        .article-list.grid-mode { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 16px; 
+        .article-list.grid-mode {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
         }
         .article-list.grid-mode .article-card { padding: 16px; }
         .article-list.grid-mode .img-wrapper { aspect-ratio: 16/10; margin-bottom: 12px; }
@@ -460,7 +536,7 @@
             text-align: center; user-select: none;
         }
         .chronicle-summary::-webkit-details-marker { display: none; }
-        
+
         .chronicle-card h3 {
             font-family: 'Cinzel', serif; font-size: 1.05rem;
             font-weight: 500; color: var(--text-light);
@@ -476,7 +552,7 @@
             font-family: 'Cormorant Garamond', serif; font-size: .65rem;
             color: var(--text-light); font-weight: 500;
             letter-spacing: 0.15em;
-            padding: 8px 20px; 
+            padding: 8px 20px;
             border: 1px solid var(--border-light);
             transition: all 0.2s ease;
         }
@@ -484,11 +560,10 @@
             border-color: var(--accent-copper);
             color: var(--accent-copper);
         }
-        /* 【修正④】<details>[open] 時に chronicle-expand-indicator を非表示にする
-           元コードは .chronicle-card[open] だったが、<details> 要素なので
-           details[open] に修正 */
+        /* 【バグ修正④】.chronicle-card[open] → details.chronicle-card[open] に修正
+           <details> 要素に対して正しくセレクタが当たるよう修正 */
         details.chronicle-card[open] .chronicle-expand-indicator { display: none; }
-        
+
         .chronicle-content {
             margin-top: 24px; border-top: 1px solid var(--border-light);
             padding-top: 24px;
@@ -501,10 +576,10 @@
             border-left: 2px solid var(--accent-copper);
             padding-left: 10px;
         }
-        .chronicle-card p { 
+        .chronicle-card p {
             font-family: 'Noto Serif JP', serif;
-            font-size: .78rem; color: var(--text-muted); 
-            line-height: 1.9; margin-bottom: 16px; 
+            font-size: .78rem; color: var(--text-muted);
+            line-height: 1.9; margin-bottom: 16px;
             font-weight: 300;
         }
 
@@ -535,11 +610,12 @@
 
         /* ════════════════════════════════
            モーダル
-           【修正⑤】backdrop-filter を @supports でガード
+           【バグ修正⑤】backdrop-filter を @supports でガード
+           未対応ブラウザでも背景を正しく暗くする
         ════════════════════════════════ */
         .modal-overlay {
             position: fixed; inset: 0;
-            background: rgba(18, 12, 8, 0.6); /* 非対応時は不透明度高めで代替 */
+            background: rgba(18, 12, 8, 0.6);
             display: flex; justify-content: center; align-items: center;
             z-index: 10000; opacity: 0; visibility: hidden;
             transition: opacity .3s, visibility .3s;
@@ -556,7 +632,7 @@
         .modal-box {
             background: var(--bg-card);
             border: 1px solid var(--border-copper);
-            padding: 30px; 
+            padding: 30px;
             width: 90%; max-width: 420px;
             position: relative; color: var(--text-light);
         }
@@ -571,9 +647,7 @@
         }
         .modal-close:hover { color: var(--accent-copper); }
 
-        /* ════════════════════════════════
-           【修正⑥】モーダル内インラインスタイルを外部化
-        ════════════════════════════════ */
+        /* 【バグ修正⑥】モーダル内インラインスタイルを外部化 */
         .modal-heading {
             font-family: 'Cormorant Garamond', serif;
             font-size: .9rem; color: var(--accent-copper);
@@ -622,28 +696,64 @@
         ════════════════════════════════ */
         @media (max-width: 768px) {
             .parchment-container {
-                width: calc(100% - 16px);
-                margin: 10px auto 40px;
+                width: 100%;
+                margin: 0 auto 40px;
             }
+            /* コンテナ左右パディングを絞り、グリッドの幅を確保 */
             .parchment-content {
-                padding: 40px 16px 50px;
+                padding: 32px 10px 50px;
             }
+
+            /* ─── 2列グリッド ─── */
             .article-list.grid-mode {
+                display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                gap: 8px;
+                /* グリッド自体が親幅いっぱいに広がるよう */
+                width: 100%;
+                box-sizing: border-box;
             }
             .article-list.grid-mode .article-card {
-                padding: 10px;
+                /* padding を抑えて各セルの内部余白を最小化 */
+                padding: 8px;
+                /* flex/grid 子要素が飛び出さないよう */
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+            .article-list.grid-mode .img-wrapper {
+                aspect-ratio: 4/3;
+                margin-bottom: 8px;
+                /* インセット枠を細く */
+                box-shadow: inset 0 0 0 3px rgba(80, 50, 30, 0.15);
             }
             .article-list.grid-mode .article-card h2 {
-                font-size: 1.6rem;
-                margin-bottom: 2px;
+                font-size: 1.25rem;
+                line-height: 1.1;
+                margin-bottom: 4px;
+                /* 長いタイトルが枠外に出ないよう */
+                word-break: break-word;
+                overflow-wrap: break-word;
             }
             .article-list.grid-mode .article-card p {
-                font-size: .65rem;
-                line-height: 1.5;
-                margin-bottom: 10px;
+                font-size: .62rem;
+                line-height: 1.55;
+                margin-bottom: 8px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
+            .article-list.grid-mode .read-btn {
+                font-size: .6rem;
+            }
+            .article-list.grid-mode .card-tag {
+                font-size: .52rem;
+            }
+            .article-list.grid-mode .card-meta {
+                font-size: .55rem;
+            }
+
             .cinematic-hero-container {
                 aspect-ratio: 16/9;
             }
@@ -652,9 +762,19 @@
             }
         }
 
-        @media (max-width: 360px) {
+        @media (max-width: 400px) {
+            .parchment-content {
+                padding: 28px 8px 40px;
+            }
+            .article-list.grid-mode {
+                gap: 6px;
+            }
             .article-list.grid-mode .article-card h2 {
-                font-size: 1.35rem;
+                font-size: 1.1rem;
+            }
+            .article-list.grid-mode .article-card p {
+                font-size: .58rem;
+                -webkit-line-clamp: 2;
             }
         }
     </style>
@@ -667,6 +787,11 @@
         <div class="parchment-paper-bg"></div>
 
         <div class="parchment-content">
+
+            <!-- ═══════════════════════════════════
+                 【SEO⑥】h1 を header 内に維持
+                 サイト名 = メインキーワードを h1 に含める
+            ═══════════════════════════════════ -->
             <header class="header">
                 <h1>
                     <a href="index.html" class="header-logo">
@@ -678,10 +803,23 @@
                 <a href="profile.html" class="profile-btn">Curator's Profile</a>
             </header>
 
-            <section class="intro-hero">
+            <!-- ═══════════════════════════════════
+                 ヒーローセクション
+                 【画像高速化④】ヒーロー画像は loading="eager" + fetchpriority="high"
+                 （<link rel="preload"> と組み合わせることで LCP を最短化）
+            ═══════════════════════════════════ -->
+            <section class="intro-hero" aria-label="サイト紹介">
                 <div class="cinematic-hero-container">
                     <div class="hero-img-wrapper">
-                        <img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" width="800" height="343" decoding="async" loading="eager" fetchpriority="high">
+                        <img
+                            src="tot-exterior.jpg"
+                            alt="東京ディズニーシー タワー・オブ・テラー（ホテル・ハイタワー外観）"
+                            width="800"
+                            height="343"
+                            decoding="async"
+                            loading="eager"
+                            fetchpriority="high"
+                        >
                     </div>
                     <div class="hero-label">The Archive Entry</div>
                 </div>
@@ -696,7 +834,10 @@
 
             <div class="vintage-divider reveal"><span>✦</span></div>
 
-            <nav class="toc-box reveal">
+            <!-- ═══════════════════════════════════
+                 【SEO⑦】nav に aria-label を追加してセマンティクス強化
+            ═══════════════════════════════════ -->
+            <nav class="toc-box reveal" aria-label="コンテンツ目次">
                 <div class="toc-title">Quick Navigation</div>
                 <div class="toc-section">
                     <span class="toc-section-title">Tokyo Disneyland (TDL)</span>
@@ -727,22 +868,29 @@
             <div class="list-header reveal">
                 <div class="list-header-top">
                     <h2 class="section-title">Archived Records</h2>
-                    <div class="layout-toggle">
-                        <button id="view-list">List</button>
-                        <button id="view-grid" class="active-toggle">Grid</button>
+                    <div class="layout-toggle" role="group" aria-label="表示切替">
+                        <button id="view-list" aria-pressed="false">List</button>
+                        <button id="view-grid" class="active-toggle" aria-pressed="true">Grid</button>
                     </div>
                 </div>
-                <div class="filter-bar">
+                <div class="filter-bar" role="group" aria-label="カテゴリフィルター">
                     <button class="filter-btn active-toggle" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="tdl">Disneyland</button>
                     <button class="filter-btn" data-filter="tds">DisneySea</button>
                 </div>
             </div>
 
+            <!-- ═══════════════════════════════════
+                 記事カード一覧
+                 【画像高速化⑤】全カード画像は loading="lazy" + decoding="async"
+                 スクロール前は読み込まず、初期表示を高速化
+            ═══════════════════════════════════ -->
             <div class="article-list grid-mode" id="article-list">
 
                 <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
-                    <div class="img-wrapper"><img src="sm-day.jpeg" alt="スプラッシュ・マウンテン外観" class="sm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="sm-day.jpeg" alt="東京ディズニーランド スプラッシュ・マウンテン外観" class="sm-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>Splash Mountain</h2>
                     <p>小動物たちの暮らす泥地を襲った大洪水と、ブレア・ラビットにまつわる数々の伝承と旅の物語。</p>
@@ -750,7 +898,9 @@
                 </a>
 
                 <a href="bgs-btm.html" class="article-card reveal" id="btm-card" data-category="tdl">
-                    <div class="img-wrapper"><img src="btm-exterior.jpeg" alt="ビッグサンダー・マウンテン外観" class="btm-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="btm-exterior.jpeg" alt="東京ディズニーランド ビッグサンダー・マウンテン外観" class="btm-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                     <h2>Big Thunder Mountain</h2>
                     <p>無人鉱山を暴走する鉱山列車と、開拓者たちの歴史。大自然の精霊の警告を無視したゴールドラッシュの末路。</p>
@@ -758,7 +908,9 @@
                 </a>
 
                 <a href="bgs-haunted.html" class="article-card reveal" id="haunted-card" data-category="tdl">
-                    <div class="img-wrapper"><img src="haunted-exterior.jpg" alt="ホーンテッドマンションの外観" class="haunted-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="haunted-exterior.jpg" alt="東京ディズニーランド ホーンテッドマンション外観" class="haunted-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Featured Story</span><span class="card-meta">5 min</span></div>
                     <h2>Haunted Mansion</h2>
                     <p>999人の亡霊が暮らすゴシック様式の館。代々の居住者にまつわるエピソードと、奇妙な仕掛けの数々。</p>
@@ -766,7 +918,9 @@
                 </a>
 
                 <a href="bgs-bb.html" class="article-card reveal" id="bb-card" data-category="tdl">
-                    <div class="img-wrapper"><img src="bb-castle.jpeg" alt="美女と野獣の城" class="bb-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="bb-castle.jpeg" alt="東京ディズニーランド 美女と野獣エリアの城" class="bb-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>Beauty and the Beast</h2>
                     <p>深い森に佇むお城と魔法の薔薇の伝説。フランスの片田舎を再現した美しい造形と建築様式。</p>
@@ -774,7 +928,9 @@
                 </a>
 
                 <a href="bgs-tl.html" class="article-card reveal" id="tl-card" data-category="tdl">
-                    <div class="img-wrapper"><img src="tl-space-day.jpeg" alt="トゥモローランド・スペースマウンテン" class="tl-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="tl-space-day.jpeg" alt="東京ディズニーランド トゥモローランド・スペースマウンテン" class="tl-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                     <h2>Tomorrowland</h2>
                     <p>近未来の都市デザインと宇宙開発への夢。銀河系を結ぶスペースポートに課せられたルールと条例。</p>
@@ -783,7 +939,9 @@
 
                 <a href="bgs-spatial-epic.html" class="article-card reveal" id="spatial-epic-card" data-category="tds">
                     <span class="new-badge">NEW</span>
-                    <div class="img-wrapper"><img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="tds-map.jpg" alt="東京ディズニーシー 全テーマポートマップ" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Chronicle</span><span class="card-meta">5 min</span></div>
                     <h2>TDS Spatial Epic</h2>
                     <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景の考察。</p>
@@ -791,7 +949,9 @@
                 </a>
 
                 <a href="bgs-tot.html" class="article-card reveal" id="tot-card" data-category="tds">
-                    <div class="img-wrapper"><img src="tot-exterior.jpg" alt="Hotel Hightower Exterior" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="tot-exterior.jpg" alt="東京ディズニーシー タワー・オブ・テラー（ホテル・ハイタワー）外観" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">5 min</span></div>
                     <h2>Tower of Terror</h2>
                     <p>1912年のニューヨーク。ホテル・ハイタワーで起きたオーナー失踪事件と、謎の偶像を巡る社会的背景。</p>
@@ -799,7 +959,9 @@
                 </a>
 
                 <a href="bgs-sindbad.html" class="article-card reveal" id="sindbad-card" data-category="tds">
-                    <div class="img-wrapper"><img src="DSC00234_Original.jpeg" alt="シンドバッド・ストーリーブック・ヴォヤッジ" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="DSC00234_Original.jpeg" alt="東京ディズニーシー シンドバッド・ストーリーブック・ヴォヤッジ" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                     <h2>Sindbad's Voyage</h2>
                     <p>船乗りシンドバッドと相棒チャンドゥの航海記。エリアのリニューアルに伴う、演出と音楽の変遷史。</p>
@@ -807,7 +969,9 @@
                 </a>
 
                 <a href="bgs-fs.html" class="article-card reveal" id="fs-card" data-category="tds">
-                    <div class="img-wrapper"><img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" class="fs-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="IMG_1070_Original.jpeg" alt="東京ディズニーシー ファンタジースプリングス エリア景観" class="fs-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>Fantasy Springs</h2>
                     <p>精霊が宿る魔法の泉の伝承と、それらを発見した公爵夫人の別荘にまつわる土地の記録。</p>
@@ -815,7 +979,9 @@
                 </a>
 
                 <a href="bgs-soarin.html" class="article-card reveal" id="soarin-card" data-category="tds">
-                    <div class="img-wrapper"><img src="soarin-exterior.jpeg" alt="ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="soarin-exterior.jpeg" alt="東京ディズニーシー ソアリン：ファンタスティック・フライト外観" class="soarin-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>Soarin'</h2>
                     <p>探検家学会（S.E.A.）初の女性会員カメリアの功績と、飛行への執念を展示するファンタスティック・フライト・ミュージアムの全容。</p>
@@ -823,7 +989,9 @@
                 </a>
 
                 <a href="bgs-raging.html" class="article-card reveal" id="raging-card" data-category="tds">
-                    <div class="img-wrapper"><img src="raging-altar.jpeg" alt="レイジング・スピリッツの祭壇" class="raging-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="raging-altar.jpeg" alt="東京ディズニーシー レイジング・スピリッツの祭壇" class="raging-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">3 min</span></div>
                     <h2>Raging Spirits</h2>
                     <p>中央アメリカの古代遺跡で発見された祭壇。対立する「火」と「水」の神々の偶像と、調査隊の足場の記録。</p>
@@ -831,7 +999,9 @@
                 </a>
 
                 <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
-                    <div class="img-wrapper"><img src="indy-temple.jpeg" alt="インディ・ジョーンズ・アドベンチャーの神殿" class="indy-img-align" width="800" height="450" loading="lazy" decoding="async"></div>
+                    <div class="img-wrapper">
+                        <img src="indy-temple.jpeg" alt="東京ディズニーシー インディ・ジョーンズ・アドベンチャー クリスタルスカルの魔宮" class="indy-img-align" width="800" height="450" loading="lazy" decoding="async">
+                    </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>Indiana Jones</h2>
                     <p>ロストリバーデルタに隠された「失われた若さの泉」。ジョーンズ博士の調査活動とパコによる神殿ツアーの全貌。</p>
@@ -871,10 +1041,10 @@
     </div>
 
     <!-- 注意書きモーダル -->
-    <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
         <div class="modal-box">
-            <button class="modal-close" id="modal-close">✕ Close</button>
-            <h3 class="modal-heading">Site Notes &amp; Contacts</h3>
+            <button class="modal-close" id="modal-close" aria-label="閉じる">✕ Close</button>
+            <h3 class="modal-heading" id="modal-heading">Site Notes &amp; Contacts</h3>
             <p class="modal-body-text">このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、InstagramのDMにてご報告いただけますと幸いです。</p>
             <p class="modal-body-text">掲載している写真の画角や位置に誤りがある場合も、同様にご指摘いただけますと助かります。</p>
             <div class="modal-sns-links">
@@ -886,17 +1056,18 @@
         </div>
     </div>
 
+    <!-- SVG フィルター定義 -->
     <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <clipPath id="paper-torn-clip" clipPathUnits="objectBoundingBox">
-          <path d="M 0.015,0.015 
-                   Q 0.25,0.01 0.5,0.018 
-                   T 0.985,0.015 
-                   Q 0.99,0.25 0.982,0.5 
-                   T 0.985,0.985 
-                   Q 0.75,0.99 0.5,0.982 
-                   T 0.015,0.985 
-                   Q 0.008,0.75 0.018,0.5 
+          <path d="M 0.015,0.015
+                   Q 0.25,0.01 0.5,0.018
+                   T 0.985,0.015
+                   Q 0.99,0.25 0.982,0.5
+                   T 0.985,0.985
+                   Q 0.75,0.99 0.5,0.982
+                   T 0.015,0.985
+                   Q 0.008,0.75 0.018,0.5
                    T 0.015,0.015 Z" />
         </clipPath>
         <filter id="svg-crumpled-paper">
@@ -918,12 +1089,16 @@
     btnList.addEventListener('click', () => {
         listEl.classList.remove('grid-mode');
         btnList.classList.add('active-toggle');
+        btnList.setAttribute('aria-pressed', 'true');
         btnGrid.classList.remove('active-toggle');
+        btnGrid.setAttribute('aria-pressed', 'false');
     });
     btnGrid.addEventListener('click', () => {
         listEl.classList.add('grid-mode');
         btnGrid.classList.add('active-toggle');
+        btnGrid.setAttribute('aria-pressed', 'true');
         btnList.classList.remove('active-toggle');
+        btnList.setAttribute('aria-pressed', 'false');
     });
 
     // --- カテゴリフィルタ ---
@@ -954,15 +1129,24 @@
 
     // --- モーダル ---
     const modalOverlay = document.getElementById('modal-overlay');
-    document.getElementById('notice-trigger').addEventListener('click', () => modalOverlay.classList.add('active'));
-    document.getElementById('modal-close').addEventListener('click',   () => modalOverlay.classList.remove('active'));
-    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') modalOverlay.classList.remove('active'); });
+
+    function openModal() {
+        modalOverlay.classList.add('active');
+        document.getElementById('modal-close').focus();
+    }
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+    }
+
+    document.getElementById('notice-trigger').addEventListener('click', openModal);
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     // 画像右クリック・ドラッグ禁止
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('contextmenu', e => e.preventDefault());
-        img.addEventListener('dragstart', e => e.preventDefault());
+        img.addEventListener('dragstart',   e => e.preventDefault());
     });
     </script>
 </body>
