@@ -54,8 +54,6 @@
     <link rel="preload" as="image" href="tot-exterior.jpg" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- フォント最適化: Montserrat削除、ウェイトを実使用分のみに絞り込み -->
-    <!-- Cormorant Garamond: 300/400/500(italic含む) のみ / Noto Serif JP: 300/500 のみ / Cinzel: 500/600/700 のみ -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+JP:wght@300;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+JP:wght@300;500&display=swap"></noscript>
 
@@ -72,10 +70,7 @@
             --text-muted:     #6E5A4E;
             --border-light:   rgba(80, 50, 30, 0.12);
             --border-copper:  rgba(124, 78, 45, 0.35);
-            /* ★軽量化: sepia+saturate+brightnessの多重filterをsepia単体に削減
-               色味はimg-wrapperの::afterオーバーレイで補完するため視覚差は最小 */
             --img-filter: sepia(40%) brightness(0.88);
-            /* レイアウト幅 */
             --content-max: 900px;
             --content-pad: clamp(16px, 4vw, 60px);
         }
@@ -90,7 +85,6 @@
         body {
             overflow-x: hidden;
             width: 100%;
-            /* ★修正: 黒帯をなくすため背景をパーチメント色に統一 */
             background-color: var(--parchment);
             color: var(--text-light);
             line-height: 1.9;
@@ -99,11 +93,6 @@
             font-family: 'Noto Serif JP', serif;
         }
 
-        /* ════════════════════════════════
-           全幅の羊皮紙テクスチャ背景
-           ★軽量化: SVGフィルター(feTurbulence+feDiffuseLighting)を全画面fixed要素から除去
-             GPU常時消費ゼロ。CSSグラデーション重ねで羊皮紙感を維持。
-        ════════════════════════════════ */
         .paper-wrinkle-bg {
             position: fixed;
             inset: 0;
@@ -127,7 +116,6 @@
                 radial-gradient(ellipse 110% 65% at 85% 75%, rgba(200, 168, 125, 0.38) 0%, transparent 52%),
                 radial-gradient(ellipse 80% 90% at 50% 50%, rgba(226, 213, 186, 0.3) 0%, transparent 70%),
                 var(--bg-dark);
-            /* will-change・transform3d削除: 不要なGPUレイヤーを解放 */
         }
 
         .ambient-vignette {
@@ -136,20 +124,14 @@
             pointer-events: none;
         }
 
-        /* ════════════════════════════════
-           ★修正: コンテナ戦略を全面見直し
-           外枠: 全幅 / 内側コンテンツ: 最大幅制限
-        ════════════════════════════════ */
         .page-wrapper {
             position: relative;
             z-index: 1;
             width: 100%;
-            /* サイドに羊皮紙の境界線感を出す */
             border-left: 1px solid rgba(80, 50, 30, 0.08);
             border-right: 1px solid rgba(80, 50, 30, 0.08);
         }
 
-        /* PC幅でのサイドシャドウ演出（黒帯の代わり） */
         .page-wrapper::before,
         .page-wrapper::after {
             content: '';
@@ -174,9 +156,6 @@
             box-sizing: border-box;
         }
 
-        /* ════════════════════════════════
-           reveal アニメーション
-        ════════════════════════════════ */
         .reveal {
             opacity: 0;
             transform: translateY(16px);
@@ -187,9 +166,6 @@
             transform: translateY(0);
         }
 
-        /* ════════════════════════════════
-           ヘッダー
-        ════════════════════════════════ */
         .header {
             display: flex; flex-direction: column; align-items: center;
             gap: 12px; padding: 10px 0 30px; margin-bottom: 35px;
@@ -235,9 +211,6 @@
             background: var(--accent-copper-muted);
         }
 
-        /* ════════════════════════════════
-           ヒーロー
-        ════════════════════════════════ */
         .cinematic-hero-container {
             position: relative; width: 100%; aspect-ratio: 21/9;
             margin: 30px auto; overflow: hidden;
@@ -292,9 +265,6 @@
             letter-spacing: .6em; padding: 0 20px; opacity: .7;
         }
 
-        /* ════════════════════════════════
-           インデックス
-        ════════════════════════════════ */
         .toc-box {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
@@ -330,9 +300,6 @@
             background: var(--accent-copper-muted);
         }
 
-        /* ════════════════════════════════
-           コントロール
-        ════════════════════════════════ */
         .list-header {
             display: flex; flex-direction: column; gap: 15px;
             margin: 40px 0 25px;
@@ -387,9 +354,6 @@
             border-color: var(--text-muted);
         }
 
-        /* ════════════════════════════════
-           記事カード
-        ════════════════════════════════ */
         .article-list { display: flex; flex-direction: column; gap: 30px; }
 
         .article-card {
@@ -401,7 +365,6 @@
             transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
             position: relative;
             min-width: 0;
-            /* ★軽量化: 画面外カードのレンダリングをスキップ */
             content-visibility: auto;
             contain-intrinsic-size: auto 380px;
         }
@@ -411,7 +374,6 @@
             box-shadow: 0 4px 10px rgba(80, 50, 30, 0.08);
         }
 
-        /* 画像フレーム */
         .img-wrapper {
             width: 100%;
             aspect-ratio: 16/9;
@@ -438,7 +400,6 @@
         }
         .article-card:hover .img-wrapper img { transform: scale(1.03); }
 
-        /* S.E.A. ロゴ */
         .sea-crest {
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
@@ -532,12 +493,8 @@
         .indy-img-align    { object-position: center 30%; }
         .raging-img-align  { object-position: center 10%; }
         .haunted-img-align { object-position: center 65%; }
-        .smallworld-img-align { object-position: center 35%; } /* ★修正: スモワ画像用の微調整スタイル */
+        .smallworld-img-align { object-position: center 35%; }
 
-        /* ════════════════════════════════
-           グリッドモード
-           ★修正: 3列→画面幅に応じてリキッドに
-        ════════════════════════════════ */
         .article-list.grid-mode {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -552,9 +509,6 @@
             -webkit-box-orient: vertical; overflow: hidden;
         }
 
-        /* ════════════════════════════════
-           アコーディオン
-        ════════════════════════════════ */
         .chronicle-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
@@ -611,9 +565,6 @@
             font-weight: 300;
         }
 
-        /* ════════════════════════════════
-           フッター
-        ════════════════════════════════ */
         footer {
             text-align: center; font-family: 'Cormorant Garamond', serif;
             font-size: .65rem; letter-spacing: .15em;
@@ -636,9 +587,6 @@
             color: var(--accent-copper);
         }
 
-        /* ════════════════════════════════
-           モーダル
-        ════════════════════════════════ */
         .modal-overlay {
             position: fixed; inset: 0;
             background: rgba(18, 12, 8, 0.6);
@@ -714,9 +662,6 @@
             font-family: 'Noto Serif JP', serif;
         }
 
-        /* ════════════════════════════════
-           レスポンシブ
-        ════════════════════════════════ */
         @media (max-width: 768px) {
             .parchment-content { padding: 32px 14px 50px; }
             .article-list.grid-mode {
@@ -741,7 +686,6 @@
             .article-list.grid-mode .article-card p { font-size: .58rem; -webkit-line-clamp: 2; }
         }
 
-        /* ★PC幅広い場合の追加余白調整 */
         @media (min-width: 1200px) {
             .article-list.grid-mode {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -754,7 +698,6 @@
     <div class="paper-wrinkle-bg"></div>
     <div class="ambient-vignette"></div>
 
-    <!-- ★修正: parchment-containerを廃止してpage-wrapperに統合 -->
     <div class="page-wrapper">
         <div class="parchment-content">
 
@@ -899,7 +842,7 @@
                     </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>It's a Small World</h2>
-                    <p>世界を繋ぐ平和のメッセージ。メアリー・ブレアの色彩革命、アリス・デイヴィスの衣裳考証、すべて同じ「顔」を持つ子供の人形たちに込められた、深い調和への祈り。</p>
+                    <p>世界を繋ぐ平和のメッセージ。メアリー・ブレアの色彩設計、アリス・デイヴィスの衣裳デザイン、すべて同じ「顔」を持つ子供の人形たちに込められた、調和への祈り。</p>
                     <div class="read-btn">Explore Story →</div>
                 </a>
 
@@ -910,7 +853,7 @@
                     </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Chronicle</span><span class="card-meta">5 min</span></div>
                     <h2>TDS Spatial Epic</h2>
-                    <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景の考察。</p>
+                    <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景 of 考察。</p>
                     <div class="read-btn">Explore Chronicle →</div>
                 </a>
 
@@ -1001,7 +944,7 @@
                     <span class="chronicle-expand-indicator">Read Chronicle</span>
                 </summary>
                 <div class="chronicle-content">
-                    <p>私たちが何気なく歩いている舞浜の美しい小道や、潮風がそよぐ港町。その一歩一歩には、この地に「夢の国」を築き上げようとした先人たちと、海を越えてやってきたディズニーのクリエイター（イマジニア）たちによる、温かく真摯な対話の歴史が刻まれています。</p>
+                    <p>私たちが何気なく歩いている舞浜の美しい小道や、潮風がそよぐ港町。その一歩一歩には、この地に「夢の国」を築き上げようとした先人たちと、海を越えてやってきたディズニーのクリエイターたちが紡ぎ上げた、温かく真摯な対話の歴史が刻まれています。</p>
 
                     <h4>I. 空から見つめた、はじまりの海</h4>
                     <p>1983年の穏やかな春の日、東京ディズニーランドは開園しました。<br>
@@ -1051,7 +994,6 @@
     </div>
 
     <script>
-    // ★軽量化: DOMContentLoaded待ちで初期レンダリングをブロックしない
     const listEl  = document.getElementById('article-list');
     const btnList = document.getElementById('view-list');
     const btnGrid = document.getElementById('view-grid');
@@ -1088,7 +1030,6 @@
         });
     });
 
-    // ★軽量化: rootMargin '200px'でスクロール前に先読み発火、passive:trueでスクロール負荷低減
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1105,10 +1046,8 @@
     document.getElementById('notice-trigger').addEventListener('click', openModal);
     document.getElementById('modal-close').addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-    // ★軽量化: passive指定でキーボードイベントのスクロール阻害を防ぐ
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); }, { passive: true });
 
-    // ★軽量化: 画像右クリック禁止をpassiveで登録
     document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
     document.addEventListener('dragstart',   e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
     </script>
