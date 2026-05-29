@@ -3,292 +3,1001 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BGS Archives: S.E.A. | teru_luce_</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <title>BGS Archives: S.E.A. | Society of Explorers and Adventurers</title>
+    <meta name="description" content="世界のディズニーパークを舞台に繰り広げられる、架空の探検家・冒険家学会『S.E.A.』の歴史、理念、著名メンバー、そして世界に散らばる関連施設のアンティーク・アーカイブ資料室。">
+    <meta property="og:title" content="BGS Archives: S.E.A. | Society of Explorers and Adventurers">
+    <meta property="og:description" content="世界のディズニーパークを舞台に繰り広げられる、架空の探検家・冒険家学会『S.E.A.』の歴史、理念、著名メンバー、そして世界に散らばる関連施設のアンティーク・アーカイブ資料室。">
+    <meta property="og:image" content="tds-map.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Preload Hero Image -->
+    <link rel="preload" href="tds-map.jpg" as="image" fetchpriority="high">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "BGS Archives: S.E.A. | Society of Explorers and Adventurers",
+      "url": "https://teruluce07-cmd.github.io/bgs-sea.html",
+      "description": "探検家・冒険家学会『S.E.A.』の歴史、理念、著名メンバー、関連施設の詳細なアーカイブ。"
+    }
+    </script>
+
     <style>
-        /* --- 昼夜（学会の古紙・秘密会議の闇）カラー設定 --- */
+        /* --- カラーパレット定義 --- */
         :root {
-            /* デフォルト：大航海時代の古い書簡。深いネオンネイビーとブラスゴールド */
-            --bg-color: #E2D7C5; 
-            --text-main: #1C2D42; /* 学会のオフィシャル・ネイビー */
-            --accent-gold: #A88E5E; /* 真鍮（ブラス）ゴールド */
-            --border-light: rgba(28, 45, 66, 0.15);
-            --img-filter: brightness(0.9) contrast(1.1) sepia(20%);
-            --glow-color: rgba(168, 142, 94, 0.25);
+            --bg-outside: #130E0A; /* 深い墨色 */
+            --bg-content: rgba(234, 222, 201, 0.95); /* 羊皮紙色 */
+            --accent: #7C4E2D; /* 銅・テラコッタ */
+            --text-main: #2B1E16; /* 濃いセピア */
+            --text-sub: #6E5A4E; /* くすんだ茶 */
+            --border-color: rgba(80, 50, 30, 0.12); /* 薄い銅線 */
+            --paper-glow: rgba(124, 78, 45, 0.15);
+            --grad-start: rgba(234, 222, 201, 1);
             
-            /* 学会の古い地図を表現した、超くしゃくしゃ紙の3Dフィルター */
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='strong-paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='6' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f9ede0' surfaceScale='5.5'%3E%3CfeDistantLight azimuth='50' elevation='45'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23strong-paper)'/%3E%3C/svg%3E");
+            /* イメージフィルタ（暖かみのある古写真調） */
+            --img-filter: brightness(0.85) contrast(1.05) sepia(50%) saturate(0.75);
         }
 
+        /* 呪いの夜（深海と幽玄のキャンドル）モード */
         body.curse-mode {
-            /* スイッチON：秘密会合室「S.E.A.ルーム」（漆黒の闇×ランプの灯り）モード */
-            --bg-color: #070B14; 
-            --text-main: #E2E8F0; 
-            --accent-gold: #F39C12; /* 暖かいキャンドルゴールド */
-            --border-light: rgba(243, 156, 18, 0.25);
-            --img-filter: brightness(0.8) contrast(1.2) saturate(1.2);
-            --glow-color: rgba(243, 156, 18, 0.45);
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%2310182b' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
+            --bg-outside: #070B14;
+            --bg-content: rgba(20, 26, 37, 0.95);
+            --accent: #F39C12;
+            --text-main: #E2E8F0;
+            --text-sub: #A0AEC0;
+            --border-color: rgba(243, 156, 18, 0.25);
+            --paper-glow: rgba(243, 156, 18, 0.15);
+            --grad-start: rgba(20, 26, 37, 1);
+            --img-filter: brightness(0.8) contrast(1.1) saturate(1.1);
         }
 
-        html { scroll-behavior: smooth; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
+            background-color: var(--bg-outside);
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
             font-family: 'Noto Serif JP', serif;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
-            background-size: cover; background-attachment: fixed;
-            color: var(--text-main); line-height: 2.2; overflow-x: hidden;
-            transition: background-color 0.8s ease, color 0.8s ease; -webkit-font-smoothing: antialiased;
+            line-height: 2.1;
+            overflow-x: hidden;
+            transition: background-color 0.8s ease, color 0.8s ease;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        /* 羊皮紙シワ背景レイヤー */
+        .paper-wrinkle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(circle at center, var(--grad-start) 0%, var(--grad-start) 60%, var(--bg-outside) 100%);
+            filter: url(#paper-wrinkle);
+            transition: background 0.8s ease;
         }
 
-        /* 背景固定レイヤー（軽量化仕様） */
-        .paper-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%), var(--paper-texture);
-            background-size: cover; transform: translate3d(0, 0, 0); will-change: transform; pointer-events: none;
+        /* コンテナ（中央配置の羊皮紙カード） */
+        .container-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            padding: 60px 20px 120px;
         }
 
-        .container { 
-            position: relative; z-index: 10;
-            max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; 
-            background: rgba(245, 240, 230, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease;
+        .container {
+            width: 100%;
+            max-width: 860px;
+            background: var(--bg-content);
+            padding: 80px 60px;
+            box-sizing: border-box;
+            position: relative;
+            clip-path: url(#paper-clip);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.05);
+            transition: background 0.8s ease;
         }
-        body.curse-mode .container { background: rgba(10, 15, 25, 0.45); box-shadow: inset 0 0 40px rgba(243,156,18,0.02); }
 
+        @media (max-width: 600px) {
+            .container-wrapper {
+                padding: 10px 8px 60px; /* カラムが潰れないよう余白を制限 */
+            }
+            .container {
+                padding: 45px 12px;
+            }
+        }
+
+        /* アニメーション */
         .reveal {
-            opacity: 0; transform: translate3d(0, 30px, 0); will-change: transform, opacity;
-            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .reveal.active { opacity: 1; transform: translate3d(0, 0, 0); }
-
-        .back-btn {
-            display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em;
-            color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px;
-            border-bottom: 1px solid transparent; transition: color 0.3s;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .back-btn:hover { border-color: var(--accent-gold); }
 
-        .theme-switch {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        /* ヘッダー・タグライン */
+        .archive-header {
+            text-align: center;
+            margin-bottom: 60px;
         }
-        .theme-switch:hover { transform: scale(1.1); }
+        .site-title {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3.8rem;
+            color: var(--accent);
+            line-height: 1.1;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+        }
+        .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            letter-spacing: 0.15em;
+        }
+        .subtitle-jp {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 300;
+            font-size: 1.05rem;
+            letter-spacing: 0.12em;
+            margin-top: 15px;
+            color: var(--text-main);
+            opacity: 0.85;
+        }
 
-        /* --- 【完全自作】純CSS（コードのみ）で描画するお洒落なS.E.A.の紋章ロゴ --- */
+        /* 門の紋章 */
         .sea-crest-wrapper {
-            display: flex; justify-content: center; margin: 30px 0 40px;
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 45px;
         }
         .sea-crest {
-            width: 140px; height: 140px; border-radius: 50%;
-            border: 2px dashed var(--accent-gold);
-            display: flex; justify-content: center; align-items: center;
-            position: relative; box-shadow: 0 0 20px var(--glow-color);
-            background: rgba(28, 45, 66, 0.05); transition: all 0.8s ease;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 1px dashed var(--accent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: rgba(124, 78, 45, 0.03);
+            box-shadow: 0 0 15px var(--paper-glow);
+            transition: all 0.8s ease;
         }
-        body.curse-mode .sea-crest { background: rgba(255, 255, 255, 0.02); }
-        
         .sea-crest::before {
             content: "EXPLORERS & ADVENTURERS";
-            position: absolute; font-family: 'Montserrat', sans-serif; font-size: 0.35rem;
-            letter-spacing: 0.15em; color: var(--accent-gold); text-align: center;
-            width: 90%; top: 18px;
+            position: absolute;
+            font-family: 'Cinzel', serif;
+            font-size: 0.4rem;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            width: 90%;
+            top: 22px;
+            text-align: center;
         }
         .sea-crest::after {
-            content: "SINCE 1538";
-            position: absolute; font-family: 'Montserrat', sans-serif; font-size: 0.35rem;
-            letter-spacing: 0.2em; color: var(--accent-gold); text-align: center;
-            width: 90%; bottom: 18px;
+            content: "EST. 1538";
+            position: absolute;
+            font-family: 'Cinzel', serif;
+            font-size: 0.45rem;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            width: 90%;
+            bottom: 22px;
+            text-align: center;
         }
-        .sea-crest-inner { text-align: center; margin-top: 5px; }
+        .sea-crest-inner {
+            text-align: center;
+        }
         .crest-letters {
-            font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700;
-            letter-spacing: 0.05em; color: var(--text-main); display: block; line-height: 1;
-            margin-bottom: 3px; transition: color 0.8s ease;
+            font-family: 'Cinzel', serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 0.05em;
+            line-height: 1;
+            margin-bottom: 2px;
+            display: block;
         }
-        .crest-four-values {
-            font-family: 'Montserrat', sans-serif; font-size: 0.35rem; letter-spacing: 0.05em;
-            color: var(--accent-gold); line-height: 1.3; font-weight: 400;
+        .crest-motto {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.45rem;
+            letter-spacing: 0.05em;
+            color: var(--text-sub);
+            line-height: 1.2;
         }
 
-        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
-        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
-        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
-
-        /* 目次 */
-        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
-        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
-        .toc-list { list-style: none; padding: 0; }
-        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
-        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
-        .toc-list a:hover { color: var(--accent-gold); }
+        /* ナビゲーション目次 */
+        .toc-box {
+            background: rgba(0, 0, 0, 0.01);
+            border: 1px solid var(--border-color);
+            padding: 35px;
+            margin-bottom: 70px;
+        }
+        .toc-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 0.15em;
+        }
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .toc-list li {
+            border-bottom: 1px dashed var(--border-color);
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+        }
+        .toc-list a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+            opacity: 0.8;
+        }
+        .toc-list a:hover {
+            color: var(--accent);
+            opacity: 1;
+        }
 
         /* 本文セクション */
-        .article-block { margin-bottom: 70px; text-align: justify; }
-        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
-        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
-        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
+        .article-block {
+            margin-bottom: 80px;
+            text-align: justify;
+        }
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.1em;
+        }
+        h2::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border-color), rgba(80, 50, 30, 0));
+            margin-left: 20px;
+        }
+        h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 35px 0 15px;
+            letter-spacing: 0.05em;
+        }
+        p {
+            font-size: 0.92rem;
+            font-weight: 300;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
 
-        .connection-card { background: rgba(28, 45, 66, 0.03); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
-        body.curse-mode .connection-card { background: rgba(243, 156, 18, 0.03); }
-        .connection-card h4 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
-        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
+        /* 特集カード・理念 */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        @media (max-width: 600px) {
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .philosophy-card {
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: box-shadow 0.3s;
+        }
+        .philosophy-card h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            letter-spacing: 0.1em;
+        }
+        .philosophy-card p {
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.8;
+        }
 
-        .footer-link { text-align: center; margin-top: 80px; }
-        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
+        /* メンバー・アーカイブグリッド */
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .archive-item {
+            min-width: 0;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            padding: 24px 15px;
+            background: rgba(255, 255, 255, 0.02);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .archive-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px var(--paper-glow);
+            transform: translateY(-2px);
+        }
+        .member-title-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .member-title-ja {
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+        .member-role {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            letter-spacing: 0.05em;
+        }
+        @media (max-width: 768px) {
+            .archive-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+
+        /* 施設アコーディオン */
+        .archive-details {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            transition: all 0.3s ease;
+        }
+        .archive-summary {
+            padding: 18px 25px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            color: var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            user-select: none;
+        }
+        .archive-summary::-webkit-details-marker {
+            display: none;
+        }
+        .summary-indicator {
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+        details[open] .summary-indicator {
+            display: none; /* 開閉時はインジケーターを消す */
+        }
+        .details-content {
+            padding: 30px 25px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            line-height: 1.9;
+        }
+
+        /* ビジュアル・画像枠 */
+        .media-container {
+            margin: 25px 0 35px;
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .archive-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: var(--img-filter);
+            transition: filter 0.6s ease;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-select: none;
+        }
+        .archive-image:hover {
+            filter: brightness(0.9) contrast(1.0) sepia(25%) saturate(0.85);
+        }
+
+        /* 区切り線（フェードイングラデーション） */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 35px 0;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(124, 78, 45, 0), var(--accent) 50%, rgba(124, 78, 45, 0));
+            opacity: 0.4;
+        }
+        .divider-symbol {
+            margin: 0 15px;
+            color: var(--accent);
+            font-size: 11px;
+            letter-spacing: 3px;
+        }
+
+        /* ボタン */
+        .btn-archive {
+            display: inline-block;
+            padding: 10px 24px;
+            border: 1px solid var(--accent);
+            border-radius: 0;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn-archive:hover {
+            background: var(--accent);
+            color: var(--bg-content);
+        }
+
+        /* トップへの戻り/ポータル戻りボタン */
+        .back-btn-wrapper {
+            margin-bottom: 40px;
+        }
+        .back-btn {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            text-decoration: none;
+            text-transform: uppercase;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* テーマスイッチ */
+        .theme-switch {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: var(--accent);
+            color: var(--bg-content);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s, background-color 0.8s;
+            font-size: 1.2rem;
+        }
+        .theme-switch:hover {
+            transform: scale(1.08);
+        }
+
+        /* モーダル */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(19, 14, 10, 0.95); /* 非対応ブラウザ用の高不透明度フォールバック */
+        }
+        @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+            .modal {
+                background: rgba(19, 14, 10, 0.75);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+        }
+        .modal-content {
+            background: var(--bg-content);
+            border: 1px solid var(--accent);
+            padding: 45px 35px;
+            max-width: 550px;
+            width: 90%;
+            box-sizing: border-box;
+            position: relative;
+            color: var(--text-main);
+            clip-path: url(#paper-clip);
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--accent);
+            line-height: 1;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .modal-close:hover {
+            color: var(--text-main);
+        }
+        .modal-title-en {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .modal-title-ja {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .modal-desc {
+            font-size: 0.88rem;
+            line-height: 1.9;
+        }
+
+        /* フッター */
+        .archive-footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 45px;
+            border-top: 1px solid var(--border-color);
+        }
+        .copyright {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            color: var(--text-sub);
+            letter-spacing: 0.12em;
+        }
     </style>
 </head>
 <body>
 
-    <div class="noise-overlay"></div>
-    <div class="paper-bg"></div>
-    <!-- 昼はインクの羽根ペン、夜はキャンドルをイメージしたスイッチ -->
-    <div class="theme-switch" id="theme-switch">✒️</div>
+    <!-- 羊皮紙のシワ・古紙のカットを制御するSVGアセット -->
+    <svg width="0" height="0" style="position: absolute;">
+        <filter id="paper-wrinkle">
+            <!-- 羊皮紙の自然な繊維・凹凸を表現するノイズとライティング -->
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
+            <feDiffuseLighting in="noise" lighting-color="#fefaf2" surfaceScale="2.5" result="light">
+                <feDistantLight azimuth="60" elevation="55" />
+            </feDiffuseLighting>
+            <feBlend mode="multiply" in="SourceGraphic" in2="light" />
+        </filter>
+        
+        <!-- コンテナ不規則カットクリップパス（objectBoundingBoxによりレスポンシブ対応） -->
+        <clipPath id="paper-clip" clipPathUnits="objectBoundingBox">
+            <path d="M 0.02,0.015 
+                     Q 0.25,0.005 0.5,0.012 
+                     Q 0.75,0.005 0.98,0.015 
+                     Q 0.995,0.25 0.99,0.5 
+                     Q 0.995,0.75 0.98,0.985 
+                     Q 0.75,0.995 0.5,0.988 
+                     Q 0.25,0.995 0.02,0.985 
+                     Q 0.005,0.75 0.01,0.5 
+                     Q 0.005,0.25 0.02,0.015 Z" />
+        </clipPath>
+    </svg>
 
-    <div class="container">
-        <a href="index.html" class="back-btn">← Back to Portal</a>
+    <!-- 全体テクスチャ -->
+    <div class="paper-wrinkle-bg"></div>
 
-        <!-- 【純CSS製】お洒落なS.E.A.紋章ロゴが最上部を飾ります！ -->
-        <div class="sea-crest-wrapper reveal">
-            <div class="sea-crest">
-                <div class="sea-crest-inner">
-                    <span class="crest-letters">S.E.A.</span>
-                    <div class="crest-four-values">
-                        <span>ADVENTURE</span><br>
-                        <span>ROMANCE</span><br>
-                        <span>DISCOVERY</span><br>
-                        <span>INVENTION</span>
+    <!-- 昼夜スイッチ（✒️=通常 / ☀️=夜・呪いの黄金） -->
+    <div class="theme-switch" id="theme-switch" title="Toggle Archive Atmosphere">✒️</div>
+
+    <div class="container-wrapper">
+        <main class="container">
+            
+            <div class="back-btn-wrapper">
+                <a href="index.html" class="back-btn">← Portal Document</a>
+            </div>
+
+            <!-- 純CSS S.E.A. 紋章 -->
+            <div class="sea-crest-wrapper reveal">
+                <div class="sea-crest">
+                    <div class="sea-crest-inner">
+                        <span class="crest-letters">S.E.A.</span>
+                        <div class="crest-motto">
+                            <span>ADVENTURE &bull; ROMANCE</span><br>
+                            <span>DISCOVERY &bull; INVENTION</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <header class="header-section reveal">
-            <div class="bgs-tag">The Secret Society</div>
-            <h1>S.E.A.</h1>
-            <div class="subtitle-jp">探検家・冒険家学会に秘められた大河神話</div>
-        </header>
+            <!-- ヘッダー -->
+            <header class="archive-header reveal">
+                <h1 class="site-title">Society of Explorers and Adventurers</h1>
+                <div class="tagline">Chronicles of Lost Expeditions & Mythical Discoveries</div>
+                <div class="subtitle-jp">探検家・冒険家学会に眠る歴史の断片</div>
+            </header>
 
-        <!-- 目次 -->
-        <nav class="toc-box reveal">
-            <div class="toc-title">Index</div>
-            <ul class="toc-list">
-                <li><span>I. 秘密結社S.E.A.とは（4つの理念）</span><a href="#prologue">Read →</a></li>
-                <li><span>II. 歴史：大航海時代の「創設」と1899年の「再興」</span><a href="#history">Read →</a></li>
-                <li><span>III. 異国の地を繋ぐ主要メンバーたち</span><a href="#members">Read →</a></li>
-                <li><span>IV. 世界のディズニーパークに散りばめられた関連施設</span><a href="#installations">Read →</a></li>
-            </ul>
-        </nav>
+            <!-- 目次 -->
+            <nav class="toc-box reveal">
+                <div class="toc-title">Archives Index</div>
+                <ul class="toc-list">
+                    <li><span>I. 学会の精神（4つの崇高なる理念）</span><a href="#philosophy">Go to Section I &rarr;</a></li>
+                    <li><span>II. 大いなる歴史：1538年の創設から1899年の再興へ</span><a href="#history">Go to Section II &rarr;</a></li>
+                    <li><span>III. 記録に刻まれし探検家・冒険家たち（肖像一覧）</span><a href="#members">Go to Section III &rarr;</a></li>
+                    <li><span>IV. 世界各地に遺された活動拠点・関連遺構</span><a href="#installations">Go to Section IV &rarr;</a></li>
+                </ul>
+            </nav>
 
-        <!-- I. 理念 -->
-        <section class="article-block reveal" id="prologue">
-            <h2>I. Philosophy</h2>
-            <p>世界のディズニーテーマパークを横断し、アトラクションやレストランをひとつの巨大な架空の歴史で繋ぎ合わせている秘密結社、それが**「S.E.A.（Society of Explorers and Adventurers：探検家・冒険家学会）」**です。</p>
-            <p>メンバーである探検家、冒険家、科学者、芸術家たちは、各々の旅路での新たな発見、知識、そして技術を世界中へ広めるために活動をしています。学会が重要視し、今回コードで描いた紋章ロゴにも表現されている「4つの理念」は、彼らの活動のすべてを表しています。</p>
-            
-            <div class="connection-card">
-                <h4>S.E.A.が掲げる「4つの理念」</h4>
-                <p>・**ADVENTURE（冒険）：** 危険を顧みない不屈の精神（象徴：ガリオン船）<br>
-                   ・**ROMANCE（ロマンス）：** 未知への純粋な情熱と憧れ（象徴：アーミラリー天球儀）<br>
-                   ・**DISCOVERY（発見）：** 新たな知識と真実の追求（象徴：羅針盤）<br>
-                   ・**INVENTION（発明）：** 未来を切り拓く技術と創造（象徴：絵筆や彫刻道具）</p>
-            </div>
-        </section>
+            <!-- I. 理念 -->
+            <section class="article-block reveal" id="philosophy">
+                <h2>I. Philosophy</h2>
+                <p>
+                    世界の未知なる領域を切り拓き、アトラクションや遺構を一つの巨大な「生きた歴史」として結びつけている秘密結社、それが**「S.E.A.（Society of Explorers and Adventurers：探検家・冒険家学会）」**です。
+                </p>
+                <p>
+                    学究的な情熱、芸術の探求、そして技術の革新に命を捧げた科学者、芸術家、探検家たちが集い、それぞれの旅路で得た貴重な発見を共有する。学会がその紋章に刻み、永劫不変のモットーとする「4つの理念」は、彼らの不屈の精神の道標となっています。
+                </p>
+                
+                <div class="philosophy-grid">
+                    <div class="philosophy-card">
+                        <h4>ADVENTURE（冒険）</h4>
+                        <p>過酷な自然や未知の暗闇を恐れず、一歩を踏み出す不屈の精神。紋章には、荒波を越える「ガリオン船」として描かれています。</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4>ROMANCE（ロマン）</h4>
+                        <p>未だ見ぬ世界への、何物にも代えがたい憧れと純粋な熱情。天体を見据える「アーミラリー天球儀」がその象徴です。</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4>DISCOVERY（発見）</h4>
+                        <p>知を拓き、真実を明らかにすること。世界のすべてを指し示す「羅針盤」がその歩みを導きます。</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4>INVENTION（発明）</h4>
+                        <p>新しい未来と、人々に夢を与える技術を紡ぎ出すこと。思考を具現化する「絵筆や彫刻道具」に誓いが込められています。</p>
+                    </div>
+                </div>
+            </section>
 
-        <!-- II. 歴史 -->
-        <section class="article-block reveal" id="history">
-            <h2>II. History & Eras</h2>
-            <p>S.E.A.の長い歴史は、大きく分けて2つの時代、16世紀の「創設期（大航海時代）」と、19世紀の「再興期（近代）」に分けることができます。</p>
+            <div class="divider"><span class="divider-symbol">✦ ✦ ✦</span></div>
 
-            <p><strong>1. 1538年8月12日：要塞に集いし創設メンバー</strong><br>
-            新しい知識と世界の解明に尽力するため、1538年の大航海時代に学会はひっそりと設立されました。その創設の地こそが、東京ディズニーシーにそびえ立つ要塞**「フォートレス・エクスプロレーション」**です。そこには、以下の歴史的な天才たちが創設メンバーとして肖像画と共に名を連ねています。</p>
-            <p style="font-size: 0.8rem; font-style: italic; opacity: 0.8; text-align: center; margin-bottom: 20px;">
-                フェルディナンド・マゼラン / レオナルド・ダ・ヴィンチ / クリストファー・コロンブス / マルコ・ポーロ / ヴァスコ・ダ・ガマ / ティコ・ブラーエ / エンリケ航海王子 / プトレマイオス / フランシス・ドレーク / イブン・バットゥータ / レイフ・エリクソン / ピュテアス
-            </p>
+            <!-- II. 歴史 -->
+            <section class="article-block reveal" id="history">
+                <h2>II. Chronology & History</h2>
+                <p>
+                    S.E.A.の軌跡は、大きく分けて2つのエポック、16世紀の「創設期（大航海時代）」と、19世紀末の「再興期（近代）」に紡ぎ出されています。
+                </p>
 
-            <p><strong>2. 1899年：ミスティック・マナーの会合（近代の再興期）</strong><br>
-            時は流れ1899年。香港ディズニーランドにあるヘンリー・ミスティック卿の豪華邸宅「ミスティック・マナー」にて、近代を代表するメンバーたちが集まり秘密の会合が開かれました。<br>
-            この会合の集合絵画（シリキ・ウトゥンドゥを抱えて不敵に微笑むハイタワー三世の姿など）は、世界中のアトラクションのいたる所で確認することができ、1500年代の古い歴史が近代のディズニーパークに地続きに引き継がれている証拠となっています。</p>
-        </section>
+                <h3>1538年8月12日 — 創設の夜会</h3>
+                <p>
+                    暗黒の時代を抜け、知識と世界の地図が劇的に塗り替えられた大航海時代。1538年のこの日、地中海の風薫るメディテレーニアンハーバーの要塞「フォートレス・エクスプロレーション」に、時の天才たちが集結しました。これが学会の起源です。
+                    レオナルド・ダ・ヴィンチ、マゼラン、コロンブスといった歴史を揺るがした先駆者たちは、自らの知識を国境や権力から解放し、未来のために分かち合う誓いを立てました。
+                </p>
 
-        <!-- III. メンバー -->
-        <section class="article-block reveal" id="members">
-            <h2>III. Major Members</h2>
-            <p>世界中のディズニーアトラクションを語る上で、名が挙がる代表的な主要メンバーたちです。</p>
+                <h3>1899年 — ミスティック・マナーの会合（再興期）</h3>
+                <p>
+                    時を経て、産業革命の波が世界を包む19世紀。学会は「ヘンリー・ミスティック卿」をはじめとする、新たな世代の探検家たちによって再興されます。
+                    1899年、香港にそびえる彼の美しき邸宅「ミスティック・マナー」に主要メンバーが集い、互いの発見やコレクションを祝福し合いました。この近代の再興期メンバーの集合絵画は、現在も各国の重要拠点に保管されており、彼らの絆が不滅であることを示しています。
+                </p>
+            </section>
 
-            <div class="connection-card">
-                <h4>・ハリソン・ハイタワー三世（TDS：タワー・オブ・テラー）</h4>
-                <p>ホテル・ハイタワーの創設者であり略奪王。1899年12月31日、シリキ・ウトゥンドゥの掟を破り謎の失踪。S.E.A.の特権を利用して収集活動を行っていた「影」の象徴です。</p>
-            </div>
+            <div class="divider"><span class="divider-symbol">✦ ✦ ✦</span></div>
 
-            <div class="connection-card">
-                <h4>・カメリア・ファルコ（TDS：ソアリン）</h4>
-                <p>初の女性メンバーであり、ファンタスティック・フライト・ミュージアムの2代目館長。空を飛ぶ夢を共有することに私財を投じた、ハイタワーと真逆の「光」の象徴です。</p>
-            </div>
+            <!-- III. 著名メンバー -->
+            <section class="article-block reveal" id="members">
+                <h2>III. Distinguished Members</h2>
+                <p>
+                    学会の歴史をより深く知るため、再興期（1890年代以降）にその名を残した代表的なメンバーの記録を開示します。名前を選択すると、彼らの秘められた逸話が展開されます。
+                </p>
 
-            <div class="connection-card">
-                <h4>・ヘンリー・ミスティック卿（香港：ミスティック・マナー）</h4>
-                <p>ハイタワー三世の友人であり、世界中から集めた美術品を自宅博物館で一般公開している、温和で純粋なコレクター。相棒は子猿のアルバート。</p>
-            </div>
+                <!-- 3列/2列グリッド。min-width:0 / box-sizing:border-box を完全に適用 -->
+                <div class="archive-grid">
+                    <div class="archive-item member-card" data-member="mystic">
+                        <div class="member-title-en">Lord Henry Mystic</div>
+                        <div class="member-title-ja">ヘンリー・ミスティック卿</div>
+                        <div class="member-role">美術収集家 / 屋敷主</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="hightower">
+                        <div class="member-title-en">Harrison Hightower III</div>
+                        <div class="member-title-ja">ハリソン・ハイタワー三世</div>
+                        <div class="member-role">ホテル・ハイタワー創設者</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="falco">
+                        <div class="member-title-en">Camellia Falco</div>
+                        <div class="member-title-ja">カメリア・ファルコ</div>
+                        <div class="member-role">初の女性会員 / 飛行開発者</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="bullion">
+                        <div class="member-title-en">Barnabas T. Bullion</div>
+                        <div class="member-title-ja">バーナバス・T・ブリオン</div>
+                        <div class="member-role">鉱山会社社長</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="oceaneer">
+                        <div class="member-title-en">Captain Mary Oceaneer</div>
+                        <div class="member-title-ja">メアリー・オーシャニア船長</div>
+                        <div class="member-role">海洋探検家 / 船長</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="chandler">
+                        <div class="member-title-en">Jason Chandler</div>
+                        <div class="member-title-ja">ジェイソン・チャンドラー</div>
+                        <div class="member-role">未来都市の設計者</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="falls">
+                        <div class="member-title-en">Dr. Albert Falls</div>
+                        <div class="member-title-ja">アルバート・フォールズ博士</div>
+                        <div class="member-role">ジャングル運送会社設立者</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="chunosuke">
+                        <div class="member-title-en">Dr. Kon Chunosuke</div>
+                        <div class="member-title-ja">コン・チュウノスケ博士</div>
+                        <div class="member-role">昆虫学者</div>
+                    </div>
+                    <div class="archive-item member-card" data-member="aya">
+                        <div class="member-title-en">Aya Koame-Beausoleil</div>
+                        <div class="member-title-ja">アヤ・コアメ＝ボーシエル</div>
+                        <div class="member-role">新進天文学者</div>
+                    </div>
+                </div>
+            </section>
 
-            <div class="connection-card">
-                <h4>・バーナバス・T・ブリオン（米WDW：ビッグサンダー・マウンテン）</h4>
-                <p>ビッグサンダー・マイニング・カンパニーの社長。金塊を掘るためなら警告や環境破壊をいとわない、もう一人の強欲な白人実業家。</p>
-            </div>
+            <div class="divider"><span class="divider-symbol">✦ ✦ ✦</span></div>
 
-            <div class="connection-card">
-                <h4>・メアリー・オーシャニア船長（米：タイフーン・ラグーン）</h4>
-                <p>海洋調査船オーシャニアの船長。嵐によって座礁し四散した彼女のコレクションを探す調査が、アトラクション「ミスアドベンチャーフォールズ」となっています。</p>
-            </div>
+            <!-- IV. 関連施設 -->
+            <section class="article-block reveal" id="installations">
+                <h2>IV. Global Installations</h2>
+                <p>
+                    S.E.A.の活動の痕跡は、今も世界各地の重要なロケーションとして大切に遺され、歴史を見守っています。
+                </p>
 
-            <div class="connection-card">
-                <h4>・アルバート・フォールズ博士（米：ジャングル・クルーズ）</h4>
-                <p>貨物運送会社「ジャングルナビゲーション」を設立するも衰退し、のちに観光業（ジャングルクルーズ）に転向させた人物。</p>
-            </div>
+                <!-- アコーディオン（details & summary）による実装。開閉時にインジケーターを非表示にする仕様に対応 -->
+                <details class="archive-details">
+                    <summary class="archive-summary">
+                        <span>TOKYO DISNEY SEA (東京)</span>
+                        <span class="summary-indicator">▼</span>
+                    </summary>
+                    <div class="details-content">
+                        <h3>フォートレス・エクスプロレーション</h3>
+                        <p>
+                            メディテレーニアンハーバーに聳える壮麗な要塞。1538年の創設の夜、レオナルド・ダ・ヴィンチやマゼランらが誓いを交わした「始まりの地」です。天体や航海術を研究する部屋、大航海時代のガリオン船「ルネサンス号」が、当時の姿のまま美しく保存されています。
+                        </p>
+                        <div class="media-container">
+                            <img src="tds-map.jpg" alt="Fortress Map" class="archive-image" oncontextmenu="return false;" ondragstart="return false;" loading="lazy" decoding="async">
+                        </div>
 
-            <div class="connection-card" style="border-color: #00FF7F; background: rgba(0, 255, 127, 0.02);">
-                <h4>・コン・チュウノスケ博士（カリフォルニア版ジャングル・クルーズ）</h4>
-                <p>2021年のジャングルクルーズ大幅リニューアル時に新しく追加された、**日本人の昆虫学者**であり、現代を代表するS.E.A.メンバー。彼の登場により、日本と世界のS.E.A.の絆がさらに強まりました。</p>
-            </div>
-        </section>
+                        <h3>タワー・オブ・テラー（ホテル・ハイタワー）</h3>
+                        <p>
+                            かつてハイタワー三世が世界中から略奪した美術品や文化遺産を並べ、自慢を繰り返していた美しきラグジュアリーホテル。1899年12月31日の夜、彼が偶像「シリキ・ウトゥンドゥ」を侮辱したことにより謎の失踪を遂げ、呪われたホテルとして時を止めています。
+                        </p>
+                        <div class="media-container">
+                            <img src="tot-exterior.jpg" alt="Hotel Hightower" class="archive-image" oncontextmenu="return false;" ondragstart="return false;" loading="lazy" decoding="async">
+                        </div>
+                        <p>
+                            彼が最後に犯した過ちと失踪の真相、ホテルの背景に眠る手記のアーカイブは以下より閲覧できます。
+                        </p>
+                        <a href="bgs-tot.html" class="btn-archive">ホテル・ハイタワー記録を読む →</a>
 
-        <!-- IV. 関連施設 -->
-        <section class="article-block reveal" id="installations">
-            <h2>IV. Global Installations</h2>
-            <p>S.E.A.の足跡（本部・支部・会合場所）は、世界のディズニーリゾートのいたる所に実在します。</p>
-            <p><strong>・フォートレス・エクスプロレーション（東京）</strong><br>
-            S.E.A.の創設の地。チェザーレ・ファルコ（カメリアの父）やダ・ヴィンチが実際に天体を観測した部屋や、ガリオン船が当時の姿のまま保存されています。</p>
+                        <div class="divider"><span class="divider-symbol">✦</span></div>
 
-            <p><strong>・スキッパー・キャンティーン（フロリダ）</strong><br>
-            ジャングル・クルーズのバックオフィスに開かれたレストラン。店内には、かつてS.E.A.のメンバーたちが集まり、お揃いの「トルコ帽（フェズ帽）」を被って秘密の作戦会議を行っていた秘密の部屋がそのまま隠されています。</p>
+                        <h3>ソアリン：ファンタスティック・フライト</h3>
+                        <p>
+                            空を飛ぶという人類の夢を称え、カメリア・ファルコの功績を今に伝えるファンタスティック・フライト・ミュージアム。館内にはカメリアの生涯を描いた肖像や、彼女が魂を込めて開発した飛行機械「ドリームフライヤー」のレプリカが遺されています。
+                        </p>
+                        <div class="media-container">
+                            <img src="soarin-exterior.jpeg" alt="Fantastic Flight Museum" class="archive-image" oncontextmenu="return false;" ondragstart="return false;" loading="lazy" decoding="async">
+                        </div>
+                        <a href="bgs-soarin.html" class="btn-archive">飛行博物館の手記を読む →</a>
+                    </div>
+                </details>
 
-            <p><strong>・アドベンチャーランドツリーハウス（カリフォルニア）</strong><br>
-            2023年、アドベンチャーランドに登場したツリーハウス。ここに暮らす天文学者の「娘」は、S.E.A.のメンバーであるアヤ・コアメ＝ボーシエルと手紙で星の研究データをやり取りしています。</p>
-            
-            <p><strong>・ホテル・ミラコスタ（東京）</strong><br>
-            S.E.A.の繁栄により港町（メディテレーニアンハーバー）に訪れる人が激増したため、名物三兄弟「ザンビーニブラザーズ」が所有するワイナリーやオリーブ畑を増築して作られた宿が、現在のミラコスタになったと言われています。実際、S.E.A.のメンバーもかつてこのホテルを多く利用していました。</p>
-        </section>
+                <details class="archive-details">
+                    <summary class="archive-summary">
+                        <span>HONG KONG DISNEYLAND (香港)</span>
+                        <span class="summary-indicator">▼</span>
+                    </summary>
+                    <div class="details-content">
+                        <h3>ミスティック・マナー</h3>
+                        <p>
+                            ヘンリー・ミスティック卿が熱帯雨林の中に建設した、ヴィクトリア朝の気品と異国情緒が融け合う邸宅。彼が世界中で発掘した奇妙で美しいコレクションが、魔法のオルゴール「ミュージック・ボックス」とともに保管されています。
+                        </p>
+                        <p>
+                            この館のウェイティングエリアには、近代S.E.A.メンバーが一同に会した伝説の絵画が誇らしく飾られており、学会の絆を体現する最も象徴的な場所の一つです。
+                        </p>
+                    </div>
+                </details>
 
-        <div class="footer-link reveal">
-            <a href="index.html">← HOMEへ戻る</a>
+                <details class="archive-details">
+                    <summary class="archive-summary">
+                        <span>WALT DISNEY WORLD (フロリダ)</span>
+                        <span class="summary-indicator">▼</span>
+                    </summary>
+                    <div class="details-content">
+                        <h3>スキッパー・キャンティーン</h3>
+                        <p>
+                            アドベンチャーランドのジャングルナビゲーションカンパニー本部に開かれたレストラン。かつてアルバート・フォールズ博士らが極秘裏に情報交換を行っていた「S.E.A.ルーム」がそのまま保存されており、本棚の奥に隠された秘密の入り口や、メンバー愛用の「トルコ帽（フェズ帽）」が今もそこに遺されています。
+                        </p>
+
+                        <h3>ビッグサンダー・マウンテン</h3>
+                        <p>
+                            ゴールドラッシュに沸く荒野にて、バーナバス・T・ブリオンが設立したマイニング・カンパニー。精緻な採掘網とともに、ジェイソン・チャンドラーがブリオンに対し「山の精霊による呪いを警戒し、採掘計画を即刻中止するべき」と促した歴史的な手紙が、今もひっそりと掲示されています。
+                        </p>
+                        <div class="media-container">
+                            <img src="btm-exterior.jpeg" alt="Big Thunder Mountain" class="archive-image" oncontextmenu="return false;" ondragstart="return false;" loading="lazy" decoding="async">
+                        </div>
+                        <a href="bgs-btm.html" class="btn-archive">大金山の探検記録を読む →</a>
+                    </div>
+                </details>
+
+                <details class="archive-details">
+                    <summary class="archive-summary">
+                        <span>DISNEYLAND RESORT (カリフォルニア)</span>
+                        <span class="summary-indicator">▼</span>
+                    </summary>
+                    <div class="details-content">
+                        <h3>アドベンチャーランドツリーハウス</h3>
+                        <p>
+                            探検家の一家が建て、自然と科学が美しく調和した大樹の上の家。天文学を学ぶ聡明な娘が、S.E.A.メンバーであるアヤ・コアメ＝ボーシエルと交わした貴重な手紙や星の観測チャートが静かに机の上に置かれています。
+                        </p>
+                        <h3>トロピカル・ハイダウェイ</h3>
+                        <p>
+                            ジャングルクルーズの船着き場近くにある、密林のオアシス。ここにはカメリア・ファルコやその他の高名な探検家たちの名前と、彼らが走破した川の名が彫り込まれたオールが美しく整列しており、冒険者たちが愛した場所としての名残を留めています。
+                        </p>
+                    </div>
+                </details>
+            </section>
+
+            <!-- フッター -->
+            <footer class="archive-footer">
+                <p class="copyright">&copy; 1538-2026 Society of Explorers and Adventurers. All Archives Reserved.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- モーダルウィンドウ -->
+    <div class="modal" id="archive-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <div class="modal-title-en" id="modal-title">Member Name</div>
+            <div class="modal-title-ja" id="modal-name">氏名</div>
+            <div class="divider"><span class="divider-symbol">✦</span></div>
+            <p class="modal-desc" id="modal-desc">詳細プロフィールがここに展開されます。</p>
         </div>
     </div>
 
+    <!-- スクリプト部 -->
     <script>
+        // テーマ切り替え機能（通常アーカイブ / 呪いの夜・黄金）
         const themeSwitch = document.getElementById('theme-switch');
         themeSwitch.addEventListener('click', () => {
             document.body.classList.toggle('curse-mode');
             themeSwitch.textContent = document.body.classList.contains('curse-mode') ? '☀️' : '✒️';
         });
 
+        // メンバー詳細データベース
+        const memberData = {
+            mystic: {
+                title: "Lord Henry Mystic",
+                name: "ヘンリー・ミスティック卿 & アルバート",
+                desc: "香港の『ミスティック・マナー』の主人にして、世界にその名を知られた心優しきコレクター。未知の美術品を集めて私設博物館として一般公開しています。ある時彼が救い、友情で結ばれた愛嬌たっぷりの子猿『アルバート』が引き起こす不思議な騒動が、彼の邸宅を幻想的な博物館へと変貌させます。近代S.E.A.の再興において極めて重要な役割を果たした中心人物です。"
+            },
+            hightower: {
+                title: "Harrison Hightower III",
+                name: "ハリソン・ハイタワー三世",
+                desc: "ニューヨークにそびえる『ホテル・ハイタワー』の創設者であり、恐れ知らずの実業家。世界中の貴重な文化遺産を手段を選ばず強引に収集する『略奪王』の一面を持っていました。1899年12月31日の夜、アフリカの部族から強奪した偶像『シリキ・ウトゥンドゥ』の警告を無視した結果、自らの手で築いたホテル内で不可解な失踪を遂げました。学会の光と影を象徴する重要な人物です。"
+            },
+            falco: {
+                title: "Camellia Falco",
+                name: "カメリア・ファルコ",
+                desc: "S.E.A.初の女性会員であり、メディテレーニアンハーバーに建つ飛行博物館の2代目館長。空を飛ぶという人類の壮大な夢に、自らの技術と財産を注ぎ込みました。彼女が生涯をかけて構想した飛行機械『ドリームフライヤー』は、現在も博物館を訪れる人々に無限のロマンと風の旅をもたらしています。ハイタワー三世とは対照的に、純粋な情熱と夢を追い求めた美しい存在です。"
+            },
+            bullion: {
+                title: "Barnabas T. Bullion",
+                name: "バーナバス・T・ブリオン",
+                desc: "黄金で満ち溢れたビッグサンダー・マウンテンを採掘する、ビッグサンダー・マイニング・カンパニーの富豪社長。金塊の掘削に対する異常な執念を持ち、自然の崩壊や現地の警告を無視して事業を拡大しました。近代S.E.A.のメンバーであり、ゴールドラッシュにおける不屈にして強欲な開拓者の姿を今日に伝えています。"
+            },
+            oceaneer: {
+                title: "Captain Mary Oceaneer",
+                name: "メアリー・オーシャニア船長",
+                desc: "調査船オーシャニア号を指揮し、大洋を駆け巡った恐れ知らずの女性船長。かつて猛烈な嵐によって座礁し四散した彼女の膨大な秘宝コレクションを探すため、人々が彼女の足跡を追い求めたことが、タイフーンラグーンの調査の始まりとされています。ディズニー・クルーズラインの研究室にも彼女の記録が色濃く残されています。"
+            },
+            chandler: {
+                title: "Jason Chandler",
+                name: "ジェイソン・チャンドラー",
+                desc: "探検家にして、革新的なアイデアを持つ天才的な発明家。ビッグサンダー・マウンテンでの掘削に成功して莫大な富を得たのち、その資産を用いて先進的な未来都市を建設したとされています。バーナバス・T・ブリオンに対して、大地の怒りを買う前に金鉱堀りをやめるよう警告の手紙を送るなど、学会の中でも理性と先見の明を備えた人物でした。"
+            },
+            falls: {
+                title: "Dr. Albert Falls",
+                name: "アルバート・フォールズ博士",
+                desc: "世界の川を繋ぐ航路運送会社『ジャングルナビゲーション』を立ち上げ、後に観光業である『ジャングルクルーズ』へと事業転換した高名な博士。彼の事務所の裏手に位置するレストランには、彼を含むS.E.A.の仲間が特製のトルコ帽（フェズ帽）を被って極秘裏に情報を交換し合っていた秘密の会議室が隠されています。"
+            },
+            chunosuke: {
+                title: "Dr. Kon Chunosuke",
+                name: "コン・チュウノスケ博士",
+                desc: "2021年のジャングルクルーズ再編の際、新たに学会の名簿にその名が加わった日本出身の著名な昆虫学者。ジャングルの深奥に潜む未知の生命や昆虫の生態を研究し、多大な学術的功績を残したことからS.E.A.に推薦されました。極東と世界各地の自然科学の架け橋となった学者です。"
+            },
+            aya: {
+                title: "Aya Koame-Beausoleil",
+                name: "アヤ・コアメ＝ボーシエル",
+                desc: "カリフォルニアのツリーハウスに住む若い探検家一家に、天体観測のアドバイスや手紙を送っている若き天文学者。その高度な天文学の知見と功績は学会でも認められており、トロピカル・ハイダウェイにあるオールにも彼女の名前が誇らしく刻まれています。次の世代の冒険を支える静かな守護者です。"
+            }
+        };
+
+        // モーダル表示イベント
+        const modal = document.getElementById('archive-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalName = document.getElementById('modal-name');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalClose = document.getElementById('modal-close');
+
+        document.querySelectorAll('.member-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.getAttribute('data-member');
+                const data = memberData[id];
+                if (data) {
+                    modalTitle.textContent = data.title;
+                    modalName.textContent = data.name;
+                    modalDesc.textContent = data.desc;
+                    modal.style.display = 'flex';
+                }
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // スクロール時のふわっと現れるアニメーション（IntersectionObserver）
         const reveals = document.querySelectorAll('.reveal');
         const revealOnScroll = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -297,8 +1006,15 @@
                 observer.unobserve(entry.target);
             });
         }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
         reveals.forEach(reveal => revealOnScroll.observe(reveal));
-        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
+        
+        // 初回ロード時のアニメーション立ち上げ
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if(reveals.length > 0) reveals[0].classList.add('active');
+            }, 150);
+        });
     </script>
 </body>
 </html>
