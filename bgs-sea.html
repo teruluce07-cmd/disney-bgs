@@ -93,9 +93,10 @@
         ════════════════════════════ */
         .parchment-container {
             position: relative; z-index: 1;
-            width: 100%; max-width: 860px;
+            width: 92%; max-width: 860px;
             margin: 30px auto 80px;
             box-sizing: border-box;
+            transition: max-width 0.3s ease, width 0.3s ease;
         }
         .parchment-paper-bg {
             position: absolute; inset: 0; z-index: -1;
@@ -111,6 +112,7 @@
             width: 100%;
             padding: 80px 45px 100px;
             box-sizing: border-box;
+            transition: padding 0.3s ease;
         }
 
         /* ════════════════════════════
@@ -302,6 +304,7 @@
         .philosophy-grid {
             display: grid; grid-template-columns: repeat(2, 1fr);
             gap: 16px; margin: 28px 0;
+            transition: grid-template-columns 0.3s ease;
         }
         .philosophy-card {
             border: 1px solid var(--border-light);
@@ -323,6 +326,7 @@
         .archive-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
             gap: 14px; margin: 28px 0;
+            transition: grid-template-columns 0.3s ease;
         }
         .archive-item {
             min-width: 0; box-sizing: border-box;
@@ -526,8 +530,49 @@
         }
 
         /* ════════════════════════════
-           レスポンシブ
+           レスポンシブ & PC大画面の全画面有効活用
         ════════════════════════════ */
+        @media (min-width: 1024px) {
+            .parchment-container {
+                width: 94%;
+                max-width: 1280px; /* PCでの表示幅を1280pxまで拡張 */
+                margin: 50px auto 100px;
+            }
+            .parchment-content {
+                padding: 90px 60px 110px; /* 余白をゆったりと広げて高級感を演出 */
+            }
+            .philosophy-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4つの理念を横一列にすっきりと並べる */
+                gap: 20px;
+            }
+            .archive-grid {
+                grid-template-columns: repeat(4, 1fr); /* メンバーを4列に並べて空間を有効活用 */
+                gap: 16px;
+            }
+            /* 読みやすさ向上のため、長文テキストと目次などの文章エリアの視線移動幅を最適化 */
+            .article-section p,
+            .toc-box,
+            .page-header,
+            .back-btn,
+            .vintage-divider,
+            .details-content p {
+                max-width: 960px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .img-wrapper {
+                max-width: 960px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .parchment-container {
+                max-width: 1380px; /* 超大画面PC向けに最大1380pxまで拡張 */
+            }
+        }
+
         @media (max-width: 768px) {
             .parchment-container { width: 100%; margin: 0 auto 40px; }
             .parchment-content { padding: 40px 14px 60px; }
@@ -604,10 +649,10 @@
                     私たちがディズニーのパークを歩いていると、ふと見かける「ガリオン船」や「天球儀」が美しく描かれた紋章。それこそが、世界中のアトラクションやエリアを繋ぐ秘密のネットワーク、<strong>「S.E.A.（Society of Explorers and Adventurers：探検家・冒険家学会）」</strong>の印です。
                 </p>
                 <p>
-                    S.E.A.は、それぞれのエリアやアトラクションを個別の独立した物語として終わらせるのではなく、世界中のパークを一つの広大な「生きた歴史」として美しく繋ぎ合わせるための素晴らしい架け橋となっています。かつて1989年からフロリダのプレジャー・アイランドに実在した伝説の社交場『アドベンチャーズ・クラブ』のロマンを引き継ぎ、2001年の東京ディズニーシー開園とともに、あの美しい要塞『フォートレス・エクスプロレーション』から公式にその歴史が始まりました。
+                    S.E.A.は、それぞれのエリアやアトラクションを個別の独立した物語として終わらせるのではなく、世界中のパークを一つの広大な「生きた歴史」として美しく繋ぎ合わせるための素晴らしい架け橋となっています。かつて 1989 年からフロリダのプレジャー・アイランドに実在した伝説の社交場『アドベンチャーズ・クラブ』のロマンを引き継ぎ、2001年の東京ディズニーシー開園とともに、あの美しい要塞『フォートレス・エクスプロレーション』から公式にその歴史が始まりました。
                 </p>
                 <p>
-                    今日では、映画や小説、さらには新しいアトラクションにまでその世界が広がっており、まるで本当に実在する歴史であるかのように、私たちをロマンあふれる冒険の旅へと誘ってくれます。
+                    今日では、映画や小説、さらには新しいアトラクションにまでその世界が広がっており、まるで本当に実在する歴史であるかのように、私たちをロマンあふれる冒険 of 旅へと誘ってくれます。
                 </p>
 
                 <div class="philosophy-grid">
@@ -787,7 +832,7 @@
                                 <td>1901年</td>
                                 <td>年内</td>
                                 <td>カメリア、オーシャニア</td>
-                                <td>博物館でカメリア特別展を開催。オーシャニア船長が、キャスタウェイ・ケイの砂浜から伝説の黄金の剣を発見します。</td>
+                                <td>博物館でカメリア特別展を開催。オーシャニア船長が、キャスタウェイ・ケイ of 砂浜から伝説の黄金の剣を発見します。</td>
                             </tr>
                             <tr>
                                 <td>1903年</td>
@@ -1063,7 +1108,7 @@
                         <p>プロメテウス山のカルデラ内部にひっそりと広がる「ミステリアスアイランド」は、1870年代のスチームパンクの世界と、ネモ船長の驚異的な科学技術を目の当たりにできる場所です。錆びついた銅板や巨大なリベット、絶え間なく湧き上がる硫黄の煙が、まるで現実世界から隔離された秘密基地のような緊張感を生み出しています。</p>
                         <p>ネモ船長の設計したプラントやエネルギー循環システムは、以下のように緻密な流れで島全体を支えているのです。</p>
                         
-                        <p style="font-family:'Courier New', monospace; font-size:.65rem; background:rgba(0,0,0,0.05); padding:15px; border-left:3px solid var(--accent-copper); line-height:1.4;">
+                        <p style="font-family:'Courier New', monospace; font-size:.65rem; background:rgba(0,0,0,0.05); padding:15px; border-left:3px solid var(--accent-copper); line-height:1.4; max-width:960px; margin: 0 auto 16px;">
 [プロメテウス山・地熱抽出コア]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+---------------+---------------+<br>
@@ -1214,7 +1259,7 @@
         },
         bullion: {
             en: "Barnabas T. Bullion",
-            ja: "バーナバス_T_ブリオン",
+            ja: "バーナバス・T・ブリオン",
             desc: "ビッグサンダー・マウンテンを暴走するマインプレインを所有する、ビッグサンダー・マイニング・カンパニーの強欲な社長です。コロラド川遠征でもその名を馳せましたが、山に眠る黄金に取り憑かれ、自然を壊す採掘を強行したために、山に宿る精霊の呪いを受けてしまいました。"
         },
         oceaneer: {
@@ -1240,7 +1285,7 @@
         aya: {
             en: "Aya Koame-Beausoleil",
             ja: "アヤ・コアメ＝ボーシエル",
-            desc: "カリフォルニアのツリーハウスで星を見つめる一家の娘と、星空の観測データを手紙でやり取りしている気鋭の女性天文学者です。夜空の果てに無限のロマンを見出し、その名前はアドベンチャーランドの『記念オール』にも誇らしく刻まれています。"
+            desc: "カリフォルニアのツリーハウスで星を見つめる一家の娘と、星空の観測データを手紙でやり取りしている気鋭の女性天文学者です。夜空の果てに無限 of ロマンを見出し、その名前はアドベンチャーランドの『記念オール』にも誇らしく刻まれています。"
         },
         pleasure: {
             en: "Meriweather Adam Pleasure",
