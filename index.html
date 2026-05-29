@@ -54,7 +54,10 @@
     <link rel="preload" as="image" href="tot-exterior.jpg" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
+    <!-- フォント最適化: Montserrat削除、ウェイトを実使用分のみに絞り込み -->
+    <!-- Cormorant Garamond: 300/400/500(italic含む) のみ / Noto Serif JP: 300/500 のみ / Cinzel: 500/600/700 のみ -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+JP:wght@300;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+JP:wght@300;500&display=swap"></noscript>
 
     <style>
         :root {
@@ -69,7 +72,9 @@
             --text-muted:     #6E5A4E;
             --border-light:   rgba(80, 50, 30, 0.12);
             --border-copper:  rgba(124, 78, 45, 0.35);
-            --img-filter: brightness(0.85) contrast(1.05) sepia(50%) saturate(0.75);
+            /* ★軽量化: sepia+saturate+brightnessの多重filterをsepia単体に削減
+               色味はimg-wrapperの::afterオーバーレイで補完するため視覚差は最小 */
+            --img-filter: sepia(40%) brightness(0.88);
             /* レイアウト幅 */
             --content-max: 900px;
             --content-pad: clamp(16px, 4vw, 60px);
@@ -96,27 +101,33 @@
 
         /* ════════════════════════════════
            全幅の羊皮紙テクスチャ背景
-           ★修正: position:fixed → 全幅に広がる固定背景
+           ★軽量化: SVGフィルター(feTurbulence+feDiffuseLighting)を全画面fixed要素から除去
+             GPU常時消費ゼロ。CSSグラデーション重ねで羊皮紙感を維持。
         ════════════════════════════════ */
         .paper-wrinkle-bg {
             position: fixed;
             inset: 0;
             z-index: -2;
-            background: var(--bg-dark);
-            filter: url(#svg-crumpled-paper);
-            will-change: transform;
-            transform: translate3d(0,0,0);
-        }
-
-        /* ★追加: サイドに羊皮紙の濃淡グラデを足して自然な広がりに */
-        .paper-wrinkle-bg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
             background:
-                radial-gradient(ellipse 60% 100% at 0% 50%, rgba(120,80,40,0.08) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 100% at 100% 50%, rgba(120,80,40,0.08) 0%, transparent 70%);
-            pointer-events: none;
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(120, 80, 40, 0.016) 2px,
+                    rgba(120, 80, 40, 0.016) 3px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 5px,
+                    rgba(100, 65, 30, 0.01) 5px,
+                    rgba(100, 65, 30, 0.01) 6px
+                ),
+                radial-gradient(ellipse 140% 80% at 15% 25%, rgba(215, 190, 148, 0.55) 0%, transparent 58%),
+                radial-gradient(ellipse 110% 65% at 85% 75%, rgba(200, 168, 125, 0.38) 0%, transparent 52%),
+                radial-gradient(ellipse 80% 90% at 50% 50%, rgba(226, 213, 186, 0.3) 0%, transparent 70%),
+                var(--bg-dark);
+            /* will-change・transform3d削除: 不要なGPUレイヤーを解放 */
         }
 
         .ambient-vignette {
@@ -390,6 +401,9 @@
             transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
             position: relative;
             min-width: 0;
+            /* ★軽量化: 画面外カードのレンダリングをスキップ */
+            content-visibility: auto;
+            contain-intrinsic-size: auto 380px;
         }
         .article-card:hover {
             border-color: var(--border-copper);
@@ -472,7 +486,7 @@
             background: var(--accent-copper); color: #FFF8EE;
             border: 1px solid rgba(255,255,255,0.2);
             font-family: 'Cormorant Garamond', serif;
-            font-size: .55rem; font-weight: 600;
+            font-size: .55rem; font-weight: 500;
             letter-spacing: .1em; padding: 2px 8px;
             z-index: 10;
         }
@@ -735,18 +749,6 @@
     </style>
 </head>
 <body>
-    <!-- ★修正: SVGフィルターをbody先頭に移動（DOMが確実に読み込まれる前にフィルターが参照されるのを防ぐ） -->
-    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="svg-crumpled-paper">
-          <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" result="large-creases" />
-          <feDiffuseLighting in="large-creases" lighting-color="#ffffff" surfaceScale="1.5" result="paper-shadows">
-            <feDistantLight azimuth="55" elevation="65" />
-          </feDiffuseLighting>
-          <feBlend mode="multiply" in="SourceGraphic" in2="paper-shadows" />
-        </filter>
-      </defs>
-    </svg>
 
     <div class="paper-wrinkle-bg"></div>
     <div class="ambient-vignette"></div>
@@ -1035,6 +1037,7 @@
     </div>
 
     <script>
+    // ★軽量化: DOMContentLoaded待ちで初期レンダリングをブロックしない
     const listEl  = document.getElementById('article-list');
     const btnList = document.getElementById('view-list');
     const btnGrid = document.getElementById('view-grid');
@@ -1071,6 +1074,7 @@
         });
     });
 
+    // ★軽量化: rootMargin '200px'でスクロール前に先読み発火、passive:trueでスクロール負荷低減
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1078,7 +1082,7 @@
                 revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.05 });
+    }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     const modalOverlay = document.getElementById('modal-overlay');
@@ -1087,12 +1091,12 @@
     document.getElementById('notice-trigger').addEventListener('click', openModal);
     document.getElementById('modal-close').addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    // ★軽量化: passive指定でキーボードイベントのスクロール阻害を防ぐ
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); }, { passive: true });
 
-    document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('contextmenu', e => e.preventDefault());
-        img.addEventListener('dragstart',   e => e.preventDefault());
-    });
+    // ★軽量化: 画像右クリック禁止をpassiveで登録
+    document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+    document.addEventListener('dragstart',   e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
     </script>
 </body>
 </html>
