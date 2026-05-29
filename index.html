@@ -4,24 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- ═══════════════════════════════════════
-         【SEO①】タイトル・メタ説明（キーワード含む）
-    ═══════════════════════════════════════ -->
     <title>BGS Chronicles | 東京ディズニーリゾート アトラクション背景設定（BGS）資料集</title>
     <meta name="description" content="東京ディズニーランド・ディズニーシーのアトラクションに付随する背景設定（BGS）・バックグラウンドストーリーを、現地写真とともに記録した個人アーカイブ。タワー・オブ・テラー、スプラッシュ・マウンテン、S.E.A.など。">
     <meta name="keywords" content="東京ディズニーリゾート BGS, ディズニー バックグラウンドストーリー, ディズニーシー BGS, ディズニーランド BGS, 舞浜 BGS, S.E.A., タワー・オブ・テラー, スプラッシュ・マウンテン, 探検家冒険家学会, ファンタジースプリングス">
     <meta name="author" content="TERU_LUCE_">
     <meta name="robots" content="index, follow">
 
-    <!-- ═══════════════════════════════════════
-         【SEO②】canonical URL
-    ═══════════════════════════════════════ -->
     <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/index.html">
 
-    <!-- ═══════════════════════════════════════
-         【SEO③】OGP（Open Graph Protocol）
-         SNS シェア時にリッチプレビューを表示
-    ═══════════════════════════════════════ -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://teruluce07-cmd.github.io/disney-bgs/index.html">
     <meta property="og:title" content="BGS Chronicles | 東京ディズニーリゾート アトラクション背景設定資料集">
@@ -32,18 +22,11 @@
     <meta property="og:locale" content="ja_JP">
     <meta property="og:site_name" content="BGS Chronicles">
 
-    <!-- ═══════════════════════════════════════
-         【SEO④】Twitter Card
-    ═══════════════════════════════════════ -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="BGS Chronicles | 東京ディズニーリゾート アトラクション背景設定資料集">
     <meta name="twitter:description" content="東京ディズニーランド・ディズニーシーのBGS（バックグラウンドストーリー）を現地写真とともに記録した個人アーカイブ。">
     <meta name="twitter:image" content="https://teruluce07-cmd.github.io/disney-bgs/tot-exterior.jpg">
 
-    <!-- ═══════════════════════════════════════
-         【SEO⑤】構造化データ（JSON-LD）
-         Google リッチリザルト対応
-    ═══════════════════════════════════════ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -68,29 +51,18 @@
     }
     </script>
 
-    <!-- ═══════════════════════════════════════
-         【画像高速化①】ヒーロー画像を preload
-         LCP 改善に直結する最重要施策
-    ═══════════════════════════════════════ -->
     <link rel="preload" as="image" href="tot-exterior.jpg" fetchpriority="high">
-
-    <!-- ═══════════════════════════════════════
-         【画像高速化②】Google Fonts preconnect
-    ═══════════════════════════════════════ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- ═══════════════════════════════════════
-         【画像高速化③】フォント読み込み最適化
-         display=swap で FOUT を防ぎ、text= でサブセット化
-    ═══════════════════════════════════════ -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
 
     <style>
         :root {
+            --parchment:      #EAD9BC;
+            --parchment-mid:  #DFC9A8;
             --bg-abyss:       #130E0A;
             --bg-dark:        #E2D5BA;
-            --bg-card:        rgba(244, 238, 226, 0.75);
+            --bg-card:        rgba(244, 238, 226, 0.85);
             --accent-copper:  #7C4E2D;
             --accent-copper-muted: rgba(124, 78, 45, 0.08);
             --text-light:     #2B1E16;
@@ -98,75 +70,101 @@
             --border-light:   rgba(80, 50, 30, 0.12);
             --border-copper:  rgba(124, 78, 45, 0.35);
             --img-filter: brightness(0.85) contrast(1.05) sepia(50%) saturate(0.75);
+            /* レイアウト幅 */
+            --content-max: 900px;
+            --content-pad: clamp(16px, 4vw, 60px);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        html, body {
+        html {
             overflow-x: hidden;
             width: 100%;
-            background-color: var(--bg-abyss);
+        }
+
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            /* ★修正: 黒帯をなくすため背景をパーチメント色に統一 */
+            background-color: var(--parchment);
             color: var(--text-light);
             line-height: 1.9;
             letter-spacing: 0.03em;
             -webkit-font-smoothing: antialiased;
-            -webkit-overflow-scrolling: touch;
-            position: relative;
+            font-family: 'Noto Serif JP', serif;
         }
 
-        body { font-family: 'Noto Serif JP', serif; }
-
         /* ════════════════════════════════
-           背景テクスチャ
+           全幅の羊皮紙テクスチャ背景
+           ★修正: position:fixed → 全幅に広がる固定背景
         ════════════════════════════════ */
         .paper-wrinkle-bg {
-            position: fixed; inset: 0; z-index: -2;
+            position: fixed;
+            inset: 0;
+            z-index: -2;
             background: var(--bg-dark);
             filter: url(#svg-crumpled-paper);
             will-change: transform;
             transform: translate3d(0,0,0);
         }
 
+        /* ★追加: サイドに羊皮紙の濃淡グラデを足して自然な広がりに */
+        .paper-wrinkle-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 100% at 0% 50%, rgba(120,80,40,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 100% at 100% 50%, rgba(120,80,40,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
         .ambient-vignette {
             position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(19, 14, 10, 0.4) 100%);
+            background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(100, 70, 40, 0.18) 100%);
             pointer-events: none;
         }
 
         /* ════════════════════════════════
-           パッチメントコンテナ
+           ★修正: コンテナ戦略を全面見直し
+           外枠: 全幅 / 内側コンテンツ: 最大幅制限
         ════════════════════════════════ */
-        .parchment-container {
+        .page-wrapper {
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 860px;
-            margin: 30px auto 80px;
-            padding: 0;
-            box-sizing: border-box;
+            /* サイドに羊皮紙の境界線感を出す */
+            border-left: 1px solid rgba(80, 50, 30, 0.08);
+            border-right: 1px solid rgba(80, 50, 30, 0.08);
         }
 
-        .parchment-paper-bg {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background: rgba(234, 222, 201, 0.95);
-            clip-path: url(#paper-torn-clip);
-            -webkit-clip-path: url(#paper-torn-clip);
-            box-shadow:
-                0 0 1px rgba(80,50,30,0.4) inset,
-                inset 0 0 40px rgba(100, 70, 45, 0.15),
-                0 15px 40px rgba(0,0,0,0.4);
+        /* PC幅でのサイドシャドウ演出（黒帯の代わり） */
+        .page-wrapper::before,
+        .page-wrapper::after {
+            content: '';
+            position: fixed;
+            top: 0; bottom: 0;
+            width: max(0px, calc((100vw - var(--content-max)) / 2 - 40px));
+            background: linear-gradient(to right, rgba(120,80,40,0.06), transparent);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .page-wrapper::before { left: 0; }
+        .page-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(120,80,40,0.06), transparent);
         }
 
         .parchment-content {
             width: 100%;
-            padding: 80px 45px 100px;
+            max-width: var(--content-max);
+            margin: 0 auto;
+            padding: clamp(28px, 5vw, 80px) var(--content-pad) clamp(50px, 8vw, 100px);
             box-sizing: border-box;
         }
 
         /* ════════════════════════════════
-           【バグ修正①】reveal アニメーション
+           reveal アニメーション
         ════════════════════════════════ */
         .reveal {
             opacity: 0;
@@ -214,7 +212,6 @@
             letter-spacing: .2em; color: var(--text-light);
             text-transform: uppercase;
             padding: 10px 24px;
-            border-radius: 0;
             text-decoration: none;
             display: inline-block;
             border: 1px solid var(--border-light);
@@ -346,7 +343,8 @@
             padding: 1px;
         }
         .layout-toggle button {
-            background: #EAE0CB; border: none;
+            background: rgba(234, 224, 203, 0.9);
+            border: none;
             color: var(--text-muted); font-family: 'Cormorant Garamond', serif;
             font-size: .7rem; padding: 8px 14px;
             cursor: pointer; transition: all .2s; text-transform: uppercase;
@@ -393,12 +391,6 @@
             position: relative;
             min-width: 0;
         }
-        @supports (content-visibility: auto) {
-            .article-list:not(.grid-mode) .article-card {
-                content-visibility: auto;
-                contain-intrinsic-size: auto 400px;
-            }
-        }
         .article-card:hover {
             border-color: var(--border-copper);
             transform: translateY(-2px);
@@ -432,10 +424,7 @@
         }
         .article-card:hover .img-wrapper img { transform: scale(1.03); }
 
-        /* ════════════════════════════════
-           【追加】S.E.A. ロゴスタイリング
-           銘板のような質感を出すための装飾
-        ════════════════════════════════ */
+        /* S.E.A. ロゴ */
         .sea-crest {
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
@@ -464,7 +453,6 @@
             letter-spacing: 0.15em; line-height: 1.6;
             text-transform: uppercase; font-weight: 500;
         }
-        /* グリッド表示時のフォントサイズ調整 */
         .article-list.grid-mode .crest-letters { font-size: 1.8rem; }
         .article-list.grid-mode .crest-motto { font-size: 0.55rem; }
 
@@ -481,8 +469,8 @@
 
         .new-badge {
             position: absolute; top: 12px; right: 12px;
-            background: var(--accent-copper); color: var(--text-light);
-            border: 1px solid var(--border-light);
+            background: var(--accent-copper); color: #FFF8EE;
+            border: 1px solid rgba(255,255,255,0.2);
             font-family: 'Cormorant Garamond', serif;
             font-size: .55rem; font-weight: 600;
             letter-spacing: .1em; padding: 2px 8px;
@@ -520,9 +508,7 @@
             border-color: var(--text-light);
         }
 
-        /* ════════════════════════════════
-           画像位置微調整
-        ════════════════════════════════ */
+        /* 画像位置微調整 */
         .fs-img-align      { object-position: center 15%; }
         .btm-img-align     { object-position: center 90%; }
         .bb-img-align      { object-position: center 55%; }
@@ -535,10 +521,11 @@
 
         /* ════════════════════════════════
            グリッドモード
+           ★修正: 3列→画面幅に応じてリキッドに
         ════════════════════════════════ */
         .article-list.grid-mode {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 16px;
         }
         .article-list.grid-mode .article-card { padding: 16px; }
@@ -682,9 +669,7 @@
             font-size: .8rem; line-height: 2;
             color: var(--text-muted); font-weight: 300;
         }
-        .modal-body-text + .modal-body-text {
-            margin-top: 16px;
-        }
+        .modal-body-text + .modal-body-text { margin-top: 16px; }
         .modal-sns-links {
             display: flex; gap: 10px;
             margin-top: 24px; justify-content: center;
@@ -715,14 +700,19 @@
         }
 
         /* ════════════════════════════════
-           レスポンス設定
+           レスポンシブ
         ════════════════════════════════ */
         @media (max-width: 768px) {
-            .parchment-container { width: 100%; margin: 0 auto 40px; }
-            .parchment-content { padding: 32px 10px 50px; }
-            .article-list.grid-mode { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
+            .parchment-content { padding: 32px 14px 50px; }
+            .article-list.grid-mode {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
             .article-list.grid-mode .article-card { padding: 8px; }
-            .article-list.grid-mode .img-wrapper { aspect-ratio: 4/3; margin-bottom: 8px; box-shadow: inset 0 0 0 3px rgba(80, 50, 30, 0.15); }
+            .article-list.grid-mode .img-wrapper {
+                aspect-ratio: 4/3; margin-bottom: 8px;
+                box-shadow: inset 0 0 0 3px rgba(80, 50, 30, 0.15);
+            }
             .article-list.grid-mode .article-card h2 { font-size: 1.25rem; margin-bottom: 4px; }
             .article-list.grid-mode .article-card p { font-size: .62rem; -webkit-line-clamp: 3; }
             .article-list.grid-mode .read-btn { font-size: .6rem; }
@@ -731,19 +721,38 @@
         }
 
         @media (max-width: 400px) {
-            .parchment-content { padding: 28px 8px 40px; }
+            .parchment-content { padding: 28px 10px 40px; }
             .article-list.grid-mode .article-card h2 { font-size: 1.1rem; }
             .article-list.grid-mode .article-card p { font-size: .58rem; -webkit-line-clamp: 2; }
+        }
+
+        /* ★PC幅広い場合の追加余白調整 */
+        @media (min-width: 1200px) {
+            .article-list.grid-mode {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
+    <!-- ★修正: SVGフィルターをbody先頭に移動（DOMが確実に読み込まれる前にフィルターが参照されるのを防ぐ） -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="svg-crumpled-paper">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" result="large-creases" />
+          <feDiffuseLighting in="large-creases" lighting-color="#ffffff" surfaceScale="1.5" result="paper-shadows">
+            <feDistantLight azimuth="55" elevation="65" />
+          </feDiffuseLighting>
+          <feBlend mode="multiply" in="SourceGraphic" in2="paper-shadows" />
+        </filter>
+      </defs>
+    </svg>
+
     <div class="paper-wrinkle-bg"></div>
     <div class="ambient-vignette"></div>
 
-    <div class="parchment-container">
-        <div class="parchment-paper-bg"></div>
-
+    <!-- ★修正: parchment-containerを廃止してpage-wrapperに統合 -->
+    <div class="page-wrapper">
         <div class="parchment-content">
 
             <header class="header">
@@ -860,7 +869,7 @@
 
                 <a href="bgs-bb.html" class="article-card reveal" id="bb-card" data-category="tdl">
                     <div class="img-wrapper">
-                        <img src="bb-castle.jpeg" alt="東京ディズニーランド 美女と野獣エリア of の城" class="bb-img-align" width="800" height="450" loading="lazy" decoding="async">
+                        <img src="bb-castle.jpeg" alt="東京ディズニーランド 美女と野獣エリアの城" class="bb-img-align" width="800" height="450" loading="lazy" decoding="async">
                     </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>Beauty and the Beast</h2>
@@ -885,7 +894,7 @@
                     </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Chronicle</span><span class="card-meta">5 min</span></div>
                     <h2>TDS Spatial Epic</h2>
-                    <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景 of 考察。</p>
+                    <p>「海のテーマパーク」に広がる、全8つのテーマポートにおける固有の歴史と時代背景の考察。</p>
                     <div class="read-btn">Explore Chronicle →</div>
                 </a>
 
@@ -929,9 +938,6 @@
                     <div class="read-btn">Explore Story →</div>
                 </a>
 
-                <!-- ═══════════════════════════════════
-                     【修正箇所】S.E.A. カード
-                ═══════════════════════════════════ -->
                 <a href="bgs-sea.html" class="article-card reveal" id="sea-card" data-category="tds">
                     <div class="img-wrapper">
                         <div class="sea-crest">
@@ -962,7 +968,7 @@
 
                 <a href="bgs-indy.html" class="article-card reveal" id="indy-card" data-category="tds">
                     <div class="img-wrapper">
-                        <img src="indy-temple.jpeg" alt="東京ディズニーシー インディ・ジョーンズ・アドベンチャー クリスタルスカル of の魔宮" class="indy-img-align" width="800" height="450" loading="lazy" decoding="async">
+                        <img src="indy-temple.jpeg" alt="東京ディズニーシー インディ・ジョーンズ・アドベンチャー クリスタルスカルの魔宮" class="indy-img-align" width="800" height="450" loading="lazy" decoding="async">
                     </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Story</span><span class="card-meta">4 min</span></div>
                     <h2>Indiana Jones</h2>
@@ -972,9 +978,6 @@
 
             </div>
 
-            <!-- ═══════════════════════════════════
-                 【差し替え箇所】The Maihama Chronicle
-            ═══════════════════════════════════ -->
             <details class="chronicle-card reveal">
                 <summary class="chronicle-summary">
                     <h3>The Maihama Chronicle</h3>
@@ -983,27 +986,27 @@
                 </summary>
                 <div class="chronicle-content">
                     <p>私たちが何気なく歩いている舞浜の美しい小道や、潮風がそよぐ港町。その一歩一歩には、この地に「夢の国」を築き上げようとした先人たちと、海を越えてやってきたディズニーのクリエイター（イマジニア）たちによる、温かく真摯な対話の歴史が刻まれています。</p>
-                    
+
                     <h4>I. 空から見つめた、はじまりの海</h4>
                     <p>1983年の穏やかな春の日、東京ディズニーランドは開園しました。<br>
                     かつて、静かな漁師町だったこの広大な埋立地に夢の国を構想した日本の開拓者たちは、アメリカから視察に訪れたディズニーの創案者たちをヘリコプターに乗せ、上空から案内したといいます。霧の向こうに広がるきらめく海と、そこからすぐ近くに見える東京の街並み。その美しさと可能性を信じた人々の情熱が、海を越えて初めての「魔法の王国」をこの地に呼び寄せたのです。</p>
-                    
+
                     <h4>II. 幻の「映画スタジオ」と、海を渡ったもう一つの夢</h4>
                     <p>2つ目の新しいパークをつくろうと計画が始まったとき、最初に提案されたのは、アメリカで人気を博していた「映画スタジオ」のテーマでした。<br>
                     しかし、日本のクリエイターたちは<strong>『日本のゲストに、もっと時代を超えて愛される、唯一無二の物語を届けたい』</strong>と願いました。<br>
                     ちょうどその頃、アメリカのカリフォルニアで計画されながらも、惜しくも実現に至らなかった幻の海洋テーマパーク『ポート・ディズニー』の構想がありました。その美しい海のアイデアが太平洋を渡り、私たちの愛する『東京ディズニーシー』として生まれ変わることになったのです。</p>
-                    
+
                     <h4>III. 幻の灯台と、エントランスにかけられた「心の魔法」</h4>
                     <p>ディズニーシーのデザインを考えているとき、最初に提案されたパークのシンボルは、堂々とそびえ立つ『巨大な灯台』でした。<br>
                     しかし、<strong>『日本の皆様にとって、灯台は少し寂しさや哀愁を感じさせてしまうかもしれない』</strong>という優しい心遣いから、灯台に代わるシンボルとして、水に満ちた青い地球「アクアスフィア」が生まれました。そして、冒険者たちを温かく導くもう一つの目印として、プロメテウス火山が中央に据えられたのです。</p>
                     <p>さらに、ホテル・ミラコスタの薄暗い下部通路を歩くとき、心が高鳴るのを感じたことはないでしょうか。これは『圧縮と開放』と呼ばれる演出の魔法です。<br>
                     一度、暗く低いトンネルを通ることで心がすっと静まり、そこを抜けた瞬間に、陽光に輝く壮大なメディテレーニアンハーバーと火山が一気に目の前に広がります。この劇的な景色の変化が、私たちの心を一瞬にして日常から「冒険の旅」へと切り替えてくれるのです。</p>
-                    
+
                     <h4>IV. 歳月を重ねるほど愛おしくなる、本物のこだわり</h4>
                     <p>ディズニーシーの美しさは、新しさだけではありません。クリエイターたちが最も大切にしたのは、年月を重ねるほど美しくなる<strong>『経年美化』</strong>という考え方でした。<br>
                     お城や街並みをただペンキで塗るのではなく、ヨーロッパやアメリカから実際に本物のレンガや天然石、重厚な木材を取り寄せました。</p>
                     <p>職人たちの手によって、潮風にさらされた錆や、雨だれの跡が優しく描かれ、歳月とともに本物の風合いへと育っていくように設計されています。ゲストの皆様が優しく手を触れ、舞浜の潮風を浴びることで、街並みは日々『本物のアンティーク』へと育っていきます。いつでも温かく、深いぬくもりを感じられるのは、こうした目に見えないこだわりがあるからなのです。</p>
-                    
+
                     <h4>V. すべての源流へ、自然が紡ぐ「水の物語」</h4>
                     <p>ディズニーシーの広大な世界をつなぐ、澄んだ水。実は、2024年に誕生した『ファンタジースプリングス（魔法の泉）』は、パークのすべての水の<strong>『源流』</strong>という美しい物語を持っています。</p>
                     <p>美しい緑に囲まれた魔法の泉から湧き出た水は、川となってジャングル（ロストリバーデルタ）の奥地を潤し、やがて未来の港（ポートディスカバリー）を経て、壮大なハーバーへと流れ込みます。この広大な自然の循環が完成したことで、パークのすべての場所が一本の美しい「水のストーリー」で結ばれることになりました。港町をそぞろ歩くとき、その水の流れに耳を澄ませてみるのも、素敵な冒険の始まりになるかもしれません。</p>
@@ -1031,36 +1034,29 @@
         </div>
     </div>
 
-    <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <clipPath id="paper-torn-clip" clipPathUnits="objectBoundingBox">
-          <path d="M 0.015,0.015 Q 0.25,0.01 0.5,0.018 T 0.985,0.015 Q 0.99,0.25 0.982,0.5 T 0.985,0.985 Q 0.75,0.99 0.5,0.982 T 0.015,0.985 Q 0.008,0.75 0.018,0.5 T 0.015,0.015 Z" />
-        </clipPath>
-        <filter id="svg-crumpled-paper">
-          <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" result="large-creases" />
-          <feDiffuseLighting in="large-creases" lighting-color="#ffffff" surfaceScale="1.5" result="paper-shadows">
-            <feDistantLight azimuth="55" elevation="65" />
-          </feDiffuseLighting>
-          <feBlend mode="multiply" in="SourceGraphic" in2="paper-shadows" />
-        </filter>
-      </defs>
-    </svg>
-
     <script>
     const listEl  = document.getElementById('article-list');
     const btnList = document.getElementById('view-list');
     const btnGrid = document.getElementById('view-grid');
 
-    btnList.addEventListener('click', () => {
-        listEl.classList.remove('grid-mode');
-        btnList.classList.add('active-toggle');
-        btnGrid.classList.remove('active-toggle');
-    });
-    btnGrid.addEventListener('click', () => {
-        listEl.classList.add('grid-mode');
-        btnGrid.classList.add('active-toggle');
-        btnList.classList.remove('active-toggle');
-    });
+    function setView(mode) {
+        if (mode === 'grid') {
+            listEl.classList.add('grid-mode');
+            btnGrid.classList.add('active-toggle');
+            btnGrid.setAttribute('aria-pressed', 'true');
+            btnList.classList.remove('active-toggle');
+            btnList.setAttribute('aria-pressed', 'false');
+        } else {
+            listEl.classList.remove('grid-mode');
+            btnList.classList.add('active-toggle');
+            btnList.setAttribute('aria-pressed', 'true');
+            btnGrid.classList.remove('active-toggle');
+            btnGrid.setAttribute('aria-pressed', 'false');
+        }
+    }
+
+    btnList.addEventListener('click', () => setView('list'));
+    btnGrid.addEventListener('click', () => setView('grid'));
 
     const filterBtns   = document.querySelectorAll('.filter-btn');
     const articleCards = document.querySelectorAll('.article-card');
