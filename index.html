@@ -167,7 +167,6 @@
 
         /* ════════════════════════════════
            【バグ修正①】reveal アニメーション
-           未定義だったため要素が非表示になるバグを修正
         ════════════════════════════════ */
         .reveal {
             opacity: 0;
@@ -235,7 +234,6 @@
             position: relative; width: 100%; aspect-ratio: 21/9;
             margin: 30px auto; overflow: hidden;
             border: 1px solid var(--border-light);
-            /* 【バグ修正②】outline-offset 負値の代替として box-shadow を使用 */
             box-shadow: inset 0 0 0 5px rgba(80, 50, 30, 0.15);
             background: #1C1510;
         }
@@ -382,10 +380,6 @@
 
         /* ════════════════════════════════
            記事カード
-           【バグ修正③】content-visibility を @supports でガード
-           Safari 旧版での非表示バグを防止
-           ※ グリッドアイテムへの適用はレイアウト崩れの原因になるため
-              リストモード時のみ content-visibility を適用する
         ════════════════════════════════ */
         .article-list { display: flex; flex-direction: column; gap: 30px; }
 
@@ -397,11 +391,9 @@
             box-shadow: 0 1px 3px rgba(80, 50, 30, 0.05);
             transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
             position: relative;
-            /* グリッド内で幅が正しく計算されるよう min-width を 0 に */
             min-width: 0;
         }
         @supports (content-visibility: auto) {
-            /* リストモードのみ適用（グリッドモード時は off） */
             .article-list:not(.grid-mode) .article-card {
                 content-visibility: auto;
                 contain-intrinsic-size: auto 400px;
@@ -439,6 +431,42 @@
             z-index: 1;
         }
         .article-card:hover .img-wrapper img { transform: scale(1.03); }
+
+        /* ════════════════════════════════
+           【追加】S.E.A. ロゴスタイリング
+           銘板のような質感を出すための装飾
+        ════════════════════════════════ */
+        .sea-crest {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle, #2a2018 0%, #1c1510 100%);
+            text-align: center; position: relative;
+        }
+        .crest-inner {
+            border: 1px solid var(--border-copper);
+            padding: 15px 20px; position: relative; z-index: 2;
+        }
+        .crest-inner::before {
+            content: ''; position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border: 1px solid var(--border-light); pointer-events: none;
+        }
+        .crest-letters {
+            display: block; font-family: 'Cinzel', serif;
+            font-size: 2.2rem; color: var(--accent-copper);
+            line-height: 1; letter-spacing: 0.2em;
+            margin-bottom: 10px; font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .crest-motto {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.65rem; color: var(--text-muted);
+            letter-spacing: 0.15em; line-height: 1.6;
+            text-transform: uppercase; font-weight: 500;
+        }
+        /* グリッド表示時のフォントサイズ調整 */
+        .article-list.grid-mode .crest-letters { font-size: 1.8rem; }
+        .article-list.grid-mode .crest-motto { font-size: 0.55rem; }
 
         .card-tag-wrapper {
             display: flex; justify-content: space-between;
@@ -504,7 +532,6 @@
         .indy-img-align    { object-position: center 30%; }
         .raging-img-align  { object-position: center 10%; }
         .haunted-img-align { object-position: center 65%; }
-        .sea-img-align     { object-position: center 40%; }
 
         /* ════════════════════════════════
            グリッドモード
@@ -561,8 +588,6 @@
             border-color: var(--accent-copper);
             color: var(--accent-copper);
         }
-        /* 【バグ修正④】.chronicle-card[open] → details.chronicle-card[open] に修正
-           <details> 要素に対して正しくセレクタが当たるよう修正 */
         details.chronicle-card[open] .chronicle-expand-indicator { display: none; }
 
         .chronicle-content {
@@ -611,8 +636,6 @@
 
         /* ════════════════════════════════
            モーダル
-           【バグ修正⑤】backdrop-filter を @supports でガード
-           未対応ブラウザでも背景を正しく暗くする
         ════════════════════════════════ */
         .modal-overlay {
             position: fixed; inset: 0;
@@ -648,14 +671,6 @@
         }
         .modal-close:hover { color: var(--accent-copper); }
 
-        /* 【バグ修正⑥】モーダル内インラインスタイルを外部化 */
-        .modal-heading {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: .9rem; color: var(--accent-copper);
-            margin-bottom: 20px; font-weight: 500;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 12px; letter-spacing: 0.1em;
-        }
         .modal-heading {
             font-family: 'Cormorant Garamond', serif;
             font-size: .9rem; color: var(--accent-copper);
@@ -700,90 +715,25 @@
         }
 
         /* ════════════════════════════════
-           レスポンシブ
+           レスポンス設定
         ════════════════════════════════ */
         @media (max-width: 768px) {
-            .parchment-container {
-                width: 100%;
-                margin: 0 auto 40px;
-            }
-            /* コンテナ左右パディングを絞り、グリッドの幅を確保 */
-            .parchment-content {
-                padding: 32px 10px 50px;
-            }
-
-            /* ─── 2列グリッド ─── */
-            .article-list.grid-mode {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-                /* グリッド自体が親幅いっぱいに広がるよう */
-                width: 100%;
-                box-sizing: border-box;
-            }
-            .article-list.grid-mode .article-card {
-                /* padding を抑えて各セルの内部余白を最小化 */
-                padding: 8px;
-                /* flex/grid 子要素が飛び出さないよう */
-                width: 100%;
-                box-sizing: border-box;
-                overflow: hidden;
-            }
-            .article-list.grid-mode .img-wrapper {
-                aspect-ratio: 4/3;
-                margin-bottom: 8px;
-                /* インセット枠を細く */
-                box-shadow: inset 0 0 0 3px rgba(80, 50, 30, 0.15);
-            }
-            .article-list.grid-mode .article-card h2 {
-                font-size: 1.25rem;
-                line-height: 1.1;
-                margin-bottom: 4px;
-                /* 長いタイトルが枠外に出ないよう */
-                word-break: break-word;
-                overflow-wrap: break-word;
-            }
-            .article-list.grid-mode .article-card p {
-                font-size: .62rem;
-                line-height: 1.55;
-                margin-bottom: 8px;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-            .article-list.grid-mode .read-btn {
-                font-size: .6rem;
-            }
-            .article-list.grid-mode .card-tag {
-                font-size: .52rem;
-            }
-            .article-list.grid-mode .card-meta {
-                font-size: .55rem;
-            }
-
-            .cinematic-hero-container {
-                aspect-ratio: 16/9;
-            }
-            .logo-main {
-                font-size: 2.8rem;
-            }
+            .parchment-container { width: 100%; margin: 0 auto 40px; }
+            .parchment-content { padding: 32px 10px 50px; }
+            .article-list.grid-mode { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
+            .article-list.grid-mode .article-card { padding: 8px; }
+            .article-list.grid-mode .img-wrapper { aspect-ratio: 4/3; margin-bottom: 8px; box-shadow: inset 0 0 0 3px rgba(80, 50, 30, 0.15); }
+            .article-list.grid-mode .article-card h2 { font-size: 1.25rem; margin-bottom: 4px; }
+            .article-list.grid-mode .article-card p { font-size: .62rem; -webkit-line-clamp: 3; }
+            .article-list.grid-mode .read-btn { font-size: .6rem; }
+            .cinematic-hero-container { aspect-ratio: 16/9; }
+            .logo-main { font-size: 2.8rem; }
         }
 
         @media (max-width: 400px) {
-            .parchment-content {
-                padding: 28px 8px 40px;
-            }
-            .article-list.grid-mode {
-                gap: 6px;
-            }
-            .article-list.grid-mode .article-card h2 {
-                font-size: 1.1rem;
-            }
-            .article-list.grid-mode .article-card p {
-                font-size: .58rem;
-                -webkit-line-clamp: 2;
-            }
+            .parchment-content { padding: 28px 8px 40px; }
+            .article-list.grid-mode .article-card h2 { font-size: 1.1rem; }
+            .article-list.grid-mode .article-card p { font-size: .58rem; -webkit-line-clamp: 2; }
         }
     </style>
 </head>
@@ -796,10 +746,6 @@
 
         <div class="parchment-content">
 
-            <!-- ═══════════════════════════════════
-                 【SEO⑥】h1 を header 内に維持
-                 サイト名 = メインキーワードを h1 に含める
-            ═══════════════════════════════════ -->
             <header class="header">
                 <h1>
                     <a href="index.html" class="header-logo">
@@ -811,11 +757,6 @@
                 <a href="profile.html" class="profile-btn">Curator's Profile</a>
             </header>
 
-            <!-- ═══════════════════════════════════
-                 ヒーローセクション
-                 【画像高速化④】ヒーロー画像は loading="eager" + fetchpriority="high"
-                 （<link rel="preload"> と組み合わせることで LCP を最短化）
-            ═══════════════════════════════════ -->
             <section class="intro-hero" aria-label="サイト紹介">
                 <div class="cinematic-hero-container">
                     <div class="hero-img-wrapper">
@@ -831,7 +772,6 @@
                     </div>
                     <div class="hero-label">The Archive Entry</div>
                 </div>
-
                 <div class="intro-content">
                     <p class="intro-message">
                         東京ディズニーリゾートのアトラクションに付随する背景設定（BGS）や歴史を客観的にまとめた、個人の資料集です。<br>
@@ -842,9 +782,6 @@
 
             <div class="vintage-divider reveal"><span>✦</span></div>
 
-            <!-- ═══════════════════════════════════
-                 【SEO⑦】nav に aria-label を追加してセマンティクス強化
-            ═══════════════════════════════════ -->
             <nav class="toc-box reveal" aria-label="コンテンツ目次">
                 <div class="toc-title">Quick Navigation</div>
                 <div class="toc-section">
@@ -889,11 +826,6 @@
                 </div>
             </div>
 
-            <!-- ═══════════════════════════════════
-                 記事カード一覧
-                 【画像高速化⑤】全カード画像は loading="lazy" + decoding="async"
-                 スクロール前は読み込まず、初期表示を高速化
-            ═══════════════════════════════════ -->
             <div class="article-list grid-mode" id="article-list">
 
                 <a href="bgs-sm.html" class="article-card reveal" id="sm-card" data-category="tdl">
@@ -997,9 +929,20 @@
                     <div class="read-btn">Explore Story →</div>
                 </a>
 
+                <!-- ═══════════════════════════════════
+                     【修正箇所】S.E.A. カード
+                ═══════════════════════════════════ -->
                 <a href="bgs-sea.html" class="article-card reveal" id="sea-card" data-category="tds">
                     <div class="img-wrapper">
-                        <img src="tds-map.jpg" alt="東京ディズニーシー 探検家・冒険家学会" class="sea-img-align" width="800" height="450" loading="lazy" decoding="async">
+                        <div class="sea-crest">
+                            <div class="crest-inner">
+                                <span class="crest-letters">S.E.A.</span>
+                                <div class="crest-motto">
+                                    ADVENTURE &bull; ROMANCE<br>
+                                    DISCOVERY &bull; INVENTION
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-tag-wrapper"><span class="card-tag">Special Story</span><span class="card-meta">4 min</span></div>
                     <h2>S.E.A. Archives</h2>
@@ -1038,15 +981,9 @@
                 <div class="chronicle-content">
                     <p>私たちが訪れる東京ディズニーリゾート（TDR）の背景には、オリエンタルランド（OLC）とウォルト・ディズニー・カンパニーの度重なる対話と、テーマパークづくりへの真摯な取り組みが存在します。</p>
                     <h4>I. アメリカ国外初のディズニーパーク</h4>
-                    <p>1983年4月15日、東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、OLCがライセンス契約を結ぶ形で建設されました。開園初年度から1000万人を超えるゲストが訪れ、大きな成功を収めることになりました。</p>
+                    <p>1983年4月15日、東京ディズニーランド（TDL）はアメリカ国外で初のディズニーテーマパークとして開園しました。当時、ディズニー本社は海外展開におけるリスクを考慮し、OLCがライセンス契約を結ぶ形で建設されました。</p>
                     <h4>II. 映画スタジオ計画から「海」への方針転換</h4>
-                    <p>TDLの成功を受け、当初ディズニー側から提案されていたのは映画スタジオをテーマにしたパークでした。しかしOLC側はこれを見直し、1992年に「海」をテーマにした世界で唯一のパーク『東京ディズニーシー』の開発へと転換することになります。</p>
-                    <h4>III. 幻のシンボルと、エントランスに隠された演出</h4>
-                    <p>ディズニー側が当初提案した「巨大な灯台」というシンボルは、「日本人の感性において哀愁や寂しさを連想させやすい」として見送られました。議論の末に誕生したのが「アクアスフィア」と「プロメテウス火山」です。ホテル・ミラコスタ下の薄暗い通路を歩くことで日常から非日常へと切り替えさせる空間演出も、緻密な計算によるものです。</p>
-                    <h4>IV. 経年美化を前提とした空間づくり</h4>
-                    <p>2001年に開業したTDSは、総工費約3350億円という大規模なプロジェクトとなりました。OLCとイマジニアたちは、長期的な運用を見据えてデザインや建築素材に強くこだわりました。本物のレンガや石、木材を使用し、エイジング技術を緻密に施すことで「年々味わいが増す」空間を実現しています。</p>
-                    <h4>V. ファンタジースプリングスへの繋がり</h4>
-                    <p>2024年誕生の「ファンタジースプリングス」には過去最大級の約2500億円が投じられました。海、川、そして全ての源流である「泉（スプリングス）」へと繋がる空間構成は、東京ディズニーシーのコンセプトをさらに深化させています。</p>
+                    <p>TDLの成功を受け、当初提案されていたのは映画スタジオパークでした。しかしOLC側はこれを見直し、1992年に「海」をテーマにした世界で唯一のパーク『東京ディズニーシー』の開発へと転換することになります。</p>
                 </div>
             </details>
 
@@ -1059,35 +996,22 @@
         </div>
     </div>
 
-    <!-- 注意書きモーダル -->
     <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
         <div class="modal-box">
             <button class="modal-close" id="modal-close" aria-label="閉じる">✕ Close</button>
             <h3 class="modal-heading" id="modal-heading">Site Notes &amp; Contacts</h3>
-            <p class="modal-body-text">このサイトで紹介しているバックグラウンドストーリー（BGS）は、できる限り正確な情報を集めてまとめておりますが、時に誤りや相違が生じる場合がございます。もし記述に誤りを発見された場合は、InstagramのDMにてご報告いただけますと幸いです。</p>
-            <p class="modal-body-text">掲載している写真の画角や位置に誤りがある場合も、同様にご指摘いただけますと助かります。</p>
+            <p class="modal-body-text">このサイトで紹介しているバックグラウンドストーリー（BGS）は正確な情報を集めておりますが、時に誤りや相違が生じる場合がございます。誤りを発見された場合は、InstagramのDMにてご報告いただけますと幸いです。</p>
             <div class="modal-sns-links">
                 <a href="https://www.instagram.com/teru_luce_" target="_blank" rel="noopener noreferrer" class="sns-btn">Instagram (DM)</a>
             </div>
-            <p class="modal-copyright">
-                ＊ 掲載写真データの著作権は管理者に帰属します。無断転載・複製はご遠慮ください。
-            </p>
+            <p class="modal-copyright">＊ 掲載写真データの著作権は管理者に帰属します。</p>
         </div>
     </div>
 
-    <!-- SVG フィルター定義 -->
     <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <clipPath id="paper-torn-clip" clipPathUnits="objectBoundingBox">
-          <path d="M 0.015,0.015
-                   Q 0.25,0.01 0.5,0.018
-                   T 0.985,0.015
-                   Q 0.99,0.25 0.982,0.5
-                   T 0.985,0.985
-                   Q 0.75,0.99 0.5,0.982
-                   T 0.015,0.985
-                   Q 0.008,0.75 0.018,0.5
-                   T 0.015,0.015 Z" />
+          <path d="M 0.015,0.015 Q 0.25,0.01 0.5,0.018 T 0.985,0.015 Q 0.99,0.25 0.982,0.5 T 0.985,0.985 Q 0.75,0.99 0.5,0.982 T 0.015,0.985 Q 0.008,0.75 0.018,0.5 T 0.015,0.015 Z" />
         </clipPath>
         <filter id="svg-crumpled-paper">
           <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2" result="large-creases" />
@@ -1100,7 +1024,6 @@
     </svg>
 
     <script>
-    // --- レイアウト切替 ---
     const listEl  = document.getElementById('article-list');
     const btnList = document.getElementById('view-list');
     const btnGrid = document.getElementById('view-grid');
@@ -1108,22 +1031,16 @@
     btnList.addEventListener('click', () => {
         listEl.classList.remove('grid-mode');
         btnList.classList.add('active-toggle');
-        btnList.setAttribute('aria-pressed', 'true');
         btnGrid.classList.remove('active-toggle');
-        btnGrid.setAttribute('aria-pressed', 'false');
     });
     btnGrid.addEventListener('click', () => {
         listEl.classList.add('grid-mode');
         btnGrid.classList.add('active-toggle');
-        btnGrid.setAttribute('aria-pressed', 'true');
         btnList.classList.remove('active-toggle');
-        btnList.setAttribute('aria-pressed', 'false');
     });
 
-    // --- カテゴリフィルタ ---
     const filterBtns   = document.querySelectorAll('.filter-btn');
     const articleCards = document.querySelectorAll('.article-card');
-
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active-toggle'));
@@ -1135,7 +1052,6 @@
         });
     });
 
-    // --- スクロール Reveal ---
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1146,23 +1062,14 @@
     }, { threshold: 0.05 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // --- モーダル ---
     const modalOverlay = document.getElementById('modal-overlay');
-
-    function openModal() {
-        modalOverlay.classList.add('active');
-        document.getElementById('modal-close').focus();
-    }
-    function closeModal() {
-        modalOverlay.classList.remove('active');
-    }
-
+    function openModal() { modalOverlay.classList.add('active'); }
+    function closeModal() { modalOverlay.classList.remove('active'); }
     document.getElementById('notice-trigger').addEventListener('click', openModal);
     document.getElementById('modal-close').addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // 画像右クリック・ドラッグ禁止
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('contextmenu', e => e.preventDefault());
         img.addEventListener('dragstart',   e => e.preventDefault());
