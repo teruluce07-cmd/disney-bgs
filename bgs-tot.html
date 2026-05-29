@@ -1,370 +1,944 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BGS Deep Report: Tower of Terror | teru_luce_</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Noto+Serif+JP:wght@200;300;400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #E2D7C5; --text-main: #2D231E; --accent-gold: #8C6239; --border-light: rgba(45, 35, 30, 0.2);
-            --img-filter: brightness(0.9) contrast(1.1) sepia(30%); --glow-color: rgba(140, 98, 57, 0.2);
-            
-            /* FIX: 昼用の、アンティークな和紙風マスキングテープ（付箋）のカラー */
-            --tape-color: rgba(210, 185, 145, 0.65);
-            /* FIX: 写真用紙のフチの色 */
-            --photo-border-bg: #FAF6ED;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>It's a Small World | 世界をつなぐ船旅の記録 — BGS Chronicles</title>
+<meta name="description" content="1964年ニューヨーク世界博覧会から続く、世界をつなぐ平和のメッセージ。メアリー・ブレアの色彩設計、アリス・デイヴィスの衣裳デザイン、シャーマン兄弟が紡いだメロディの記録。">
+<meta name="keywords" content="イッツ・ア・スモールワールド BGS, スモールワールド 背景設定, メアリー・ブレア, シャーマン兄弟, アリス・デイヴィス, 東京ディズニーランド BGS">
+<meta name="author" content="TERU_LUCE_">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/bgs-smallworld.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teruluce07-cmd.github.io/disney-bgs/bgs-smallworld.html">
+<meta property="og:title" content="It's a Small World | 世界をつなぐ船旅の記録">
+<meta property="og:description" content="1964年のニューヨーク万博から始まる平和のメッセージ。創作者たちの細やかなこだわりを紐解くアーカイブ。">
+<meta property="og:image" content="https://teruluce07-cmd.github.io/disney-bgs/smallworld-exterior-day.jpeg">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="BGS Chronicles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="It's a Small World | 世界をつなぐ船旅の記録">
+<meta name="twitter:description" content="1964年のニューヨーク万博から始まる平和のメッセージ。創作者たちの細やかなこだわりを紐解くアーカイブ。">
+<meta name="twitter:image" content="https://teruluce07-cmd.github.io/disney-bgs/smallworld-exterior-day.jpeg">
 
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fbf8f3' surfaceScale='3.5'%3E%3CfeDistantLight azimuth='60' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
-        }
-        /* FIX: ダークモード変数を body ではなく html.curse-mode に適用することで、
-           body兄弟要素である背景（.paper-bg）でも変数が正しく継承されるように変更 */
-        html.curse-mode {
-            --bg-color: #070911; --text-main: #E2E8F0; --accent-gold: #00FF7F; --border-light: rgba(0, 255, 127, 0.2);
-            --img-filter: brightness(0.7) contrast(1.25) hue-rotate(90deg); --glow-color: rgba(0, 255, 127, 0.4);
-            
-            /* FIX: 呪い夜用の、魔術を帯びた蛍光グリーンの光る付箋テープのカラー */
-            --tape-color: rgba(0, 255, 127, 0.45);
-            /* FIX: 写真用紙のフチの色を夜用に暗く沈ませる */
-            --photo-border-bg: #111625;
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "It's a Small World — 世界をつなぐ船旅の記録",
+  "description": "1964年ニューヨーク世界博覧会から始まる「小さな世界」の平和のメッセージと、それを紡いだイマジニアたちの足跡。",
+  "inLanguage": "ja",
+  "author": { "@type": "Person", "name": "TERU_LUCE_" },
+  "publisher": { "@type": "Person", "name": "TERU_LUCE_" },
+  "url": "https://teruluce07-cmd.github.io/disney-bgs/bgs-smallworld.html"
+}
+</script>
 
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='burnt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23141b2e' surfaceScale='2.5'%3E%3CfeDistantLight azimuth='45' elevation='40'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23burnt)'/%3E%3C/svg%3E");
-        }
-        img { max-width: 100% !important; height: auto; }
-        html { scroll-behavior: smooth; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        /* FIX: background-attachment: fixed は iOS Safari でスクロール時に表示崩れを起こすため削除し、
-           代わりに position: fixed を持つ .paper-bg でスクロールに影響されない背景を担保 */
-        body { 
-            font-family: 'Noto Serif JP', serif; 
-            background-color: var(--bg-color); 
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%), var(--paper-texture); 
-            background-size: cover; 
-            color: var(--text-main); 
-            line-height: 2.2; 
-            overflow-x: hidden; 
-            transition: background-color 0.8s ease, color 0.8s ease; 
-            -webkit-font-smoothing: antialiased; 
-        }
-        
-        /* 背景を固定して軽くする仕様 */
-        .paper-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background-image: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.22) 100%), var(--paper-texture);
-            background-size: cover; transform: translate3d(0, 0, 0); pointer-events: none;
-        }
+<link rel="preload" href="smallworld-exterior-day.jpeg" as="image" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        .noise-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
-        .container { max-width: 600px; margin: 0 auto; padding: 60px 25px 120px; background: rgba(244, 237, 226, 0.45); border-radius: 8px; box-shadow: inset 0 0 40px rgba(0,0,0,0.03); transition: background 0.8s ease; position: relative; z-index: 10; }
-        html.curse-mode .container { background: rgba(10, 15, 29, 0.45); box-shadow: inset 0 0 40px rgba(0,255,127,0.03); }
-        
-        /* FIX: transition: all を個別のプロパティ指定へ変更 */
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        /* FIX: transition: all を個別のプロパティ指定へ変更 */
-        .back-btn { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--accent-gold); text-decoration: none; text-transform: uppercase; margin-bottom: 40px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
-        .back-btn:hover { border-color: var(--accent-gold); }
-        
-        /* FIX: ディブ要素から、キーボード操作やスクリーンリーダー等に対応した適切なbutton要素へ変更。
-           テーマスイッチボタンのデフォルト枠線をリセットするスタイルを実装 */
-        .theme-switch { 
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; 
-            background-color: var(--accent-gold); color: var(--bg-color); display: flex; justify-content: center; align-items: center; 
-            font-size: 1.5rem; cursor: pointer; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
-            border: none; transition: transform 0.3s ease, background-color 0.8s ease; 
-        }
-        .theme-switch:hover { transform: scale(1.1); }
-        .theme-switch:focus-visible { outline: 2px solid var(--text-main); outline-offset: 3px; }
+<style>
+/* ─── CSS カスタムプロパティ（スクロール連動でJSが書き換える） ─── */
+:root {
+  /* ベースカラー（ニュートラル） */
+  --c-bg:       #EDF3F9;
+  --c-surface:  #FAFCFF;
+  --c-border:   rgba(60, 90, 120, 0.14);
+  --c-border2:  rgba(60, 90, 120, 0.32);
+  --c-text:     #1E2830;
+  --c-muted:    #52606D;
 
-        .header-section { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 40px; }
-        .logo-wrapper { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto 20px; border: 2px solid var(--accent-gold); box-shadow: 0 0 20px var(--glow-color); display: flex; justify-content: center; align-items: center; background: #111; transition: border-color 0.8s ease, box-shadow 0.8s ease; }
-        
-        /* FIX: ロゴ画像自体の長押し保存、ドラッグ、右クリック等による保存行為を防ぐCSSを追加 */
-        .logo-img { 
-            height: 110%; 
-            width: auto; 
-            object-fit: cover; 
-            transition: filter 0.8s ease; 
-            filter: var(--img-filter); 
-            
-            /* 保存防止策のコアCSS */
-            pointer-events: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
+  /* セクションごとに滑らかに変化するアクセント */
+  --accent-h:   210;          /* 色相 (Hue) */
+  --accent-s:   48%;          /* 彩度 */
+  --accent-l:   44%;          /* 明度 */
+  --accent-pale-l: 92%;       /* 淡い背景用明度 */
+  --accent-mid-l:  75%;       /* ミッドトーン */
 
-        .bgs-tag { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--accent-gold); text-transform: uppercase; }
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 400; margin: 10px 0 20px; letter-spacing: 0.05em; }
-        .subtitle-jp { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.1em; opacity: 0.9; }
-        
-        .toc-box { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-light); padding: 30px; border-radius: 4px; margin-bottom: 60px; }
-        .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--accent-gold); text-align: center; margin-bottom: 20px; letter-spacing: 0.1em; }
-        .toc-list { list-style: none; padding: 0; }
-        .toc-list li { border-bottom: 1px dashed var(--border-light); padding: 10px 0; display: flex; justify-content: space-between; font-size: 0.8rem; }
-        
-        /* FIX: transition: all を個別のプロパティ指定へ変更 */
-        .toc-list a { color: var(--text-main); text-decoration: none; transition: color 0.3s; opacity: 0.8; }
-        .toc-list a:hover { color: var(--accent-gold); }
-        
-        .timeline-table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.8rem; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
-        .timeline-table th, .timeline-table td { padding: 10px 12px; text-align: left; border-bottom: 1px dashed var(--border-light); }
-        .timeline-table th { font-family: 'Montserrat', sans-serif; color: var(--accent-gold); letter-spacing: 0.1em; font-size: 0.75rem; }
-        .article-block { margin-bottom: 70px; text-align: justify; }
-        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; font-style: italic; color: var(--accent-gold); margin-bottom: 25px; display: flex; align-items: center; }
-        h2::after { content: ""; flex: 1; height: 1px; background: var(--border-light); margin-left: 15px; }
-        p { font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; opacity: 0.9; }
-        
-        /* FIX: 写真が「古いノートに付箋（テープ）で貼られているような立体感」にするためのスクラップ調デザイン */
-        .hero-img-container { 
-            position: relative; 
-            margin: 55px auto 45px; /* 上部にはみ出す付箋テープの余白を考慮 */
-            padding: 12px 12px 18px 12px; /* 写真の白い紙枠（ポラロイド・印画紙風） */
-            background: var(--photo-border-bg); 
-            border-radius: 2px; /* 四角くシャープな印画紙カット */
-            max-width: 95%;
-            
-            /* 紙の上に置かれているような、柔らかな浮き上がりのドロップシャドウ */
-            box-shadow: 2px 10px 24px rgba(0, 0, 0, 0.14); 
-            
-            /* 手作り感を演出するため、少し（-1.5度）斜めに傾けて配置 */
-            transform: rotate(-1.5deg); 
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.8s, box-shadow 0.8s;
-        }
+  /* 算出色（var同士の演算はCSS hsl()で） */
+  --accent:       hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+  --accent-pale:  hsl(var(--accent-h), 40%, var(--accent-pale-l));
+  --accent-mid:   hsl(var(--accent-h), 44%, var(--accent-mid-l));
+  --accent-dark:  hsl(var(--accent-h), 50%, 30%);
 
-        /* FIX: 写真の上部に斜めにペタッと貼られた、半透明の付箋（マスキングテープ）を擬似要素で表現 */
-        .hero-img-container::before {
-            content: "";
-            position: absolute;
-            top: -15px; /* 写真用紙からはみ出すように配置 */
-            left: 50%;
-            transform: translateX(-50%) rotate(2.5deg); /* テープを少し傾けてさらに手作り感を高める */
-            width: 105px;
-            height: 28px;
-            background-color: var(--tape-color);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            
-            /* すりガラス効果で、写真と背後の古紙がうっすら透けてボケるリアルな粘着感を表現 */
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            
-            /* 左右のちぎれた質感を表現するため、グラデーションによるギザギザ透過を施す */
-            mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, #fff 8%, #fff 92%, transparent 100%);
-            
-            pointer-events: none; /* テープ自体の操作は行わせない */
-            z-index: 20;
-            opacity: 0.9;
-            transition: background-color 0.8s ease;
-        }
+  --gold:   #C9922A;
+  --gold-pale: #FBF2E2;
 
-        /* 夜モード時は紙の影を深くして、怪しげな光をほんのりまとう */
-        html.curse-mode .hero-img-container {
-            box-shadow: 2px 10px 25px rgba(0, 0, 0, 0.45), 0 0 12px rgba(0, 255, 127, 0.1);
-        }
+  --content-max: 900px;
+  --pad: clamp(16px, 4vw, 56px);
+}
 
-        /* FIX: ホバーした際、写真がフワッとまっすぐに戻りつつ、手前に軽く浮き上がるクラフト的な挙動を追加 */
-        .hero-img-container:hover { 
-            transform: rotate(0deg) scale(1.02); 
-            box-shadow: 4px 15px 30px rgba(0, 0, 0, 0.18); 
-        }
-        html.curse-mode .hero-img-container:hover {
-            box-shadow: 4px 15px 30px rgba(0, 0, 0, 0.55), 0 0 15px rgba(0, 255, 127, 0.15);
-        }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+html, body {
+  overflow-x: hidden;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 14px;
+  line-height: 1.95;
+  letter-spacing: 0.03em;
+  -webkit-font-smoothing: antialiased;
+}
 
-        /* FIX: 写真が「貼ってある実物」に見えるよう、透過ブレンド(multiply)は廃止。
-           長押し保存、ドラッグ、右クリック等からの保護は極めて強固に維持 */
-        .hero-img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            filter: var(--img-filter); 
-            mix-blend-mode: normal; /* 背景との透過は行わず、写真プリント自体のトーンとして処理 */
-            transition: filter 0.8s ease; 
-            
-            /* 保存防止策のコアCSS */
-            pointer-events: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
+/* ─── 背景：静的テクスチャ ─── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -2;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(80,110,140,.01) 2px, rgba(80,110,140,.01) 3px),
+    radial-gradient(ellipse 140% 80% at 15% 25%, rgba(210,230,250,.45) 0%, transparent 58%),
+    radial-gradient(ellipse 110% 65% at 85% 75%, rgba(200,220,240,.35) 0%, transparent 52%),
+    #E8F0F8;
+  transition: background 0.8s ease;
+}
 
-        /* 夜モード（curse-mode）時のみ、馴染むように少し不透明度を調整して暗闇に溶け込ませる */
-        html.curse-mode .hero-img {
-            opacity: 0.85;
-        }
-        
-        .connection-card { background: rgba(140, 98, 57, 0.05); border: 1px solid var(--accent-gold); padding: 25px; border-radius: 4px; margin: 30px 0; }
-        
-        /* FIX: 見出し階層（h1 → h2 → h3 → h4）のスキップを避けるため、
-           セクション内の階層構造に適合するよう h4 から h3 に変更（デザインも合わせて継承） */
-        .connection-card h3 { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.15em; margin-bottom: 15px; text-transform: uppercase; }
-        .connection-card p { font-size: 0.85rem; line-height: 2; margin-bottom: 0; }
-        
-        .footer-link { text-align: center; margin-top: 80px; }
-        .footer-link a { color: var(--text-main); text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; border-bottom: 1px solid var(--border-light); padding-bottom: 5px; }
-        
-        /* 相互リンク用の繊細なフォント装飾 */
-        .cross-link-text {
-            font-size: 0.8rem; font-style: italic; margin-top: 15px; color: var(--accent-gold); text-align: right;
-        }
-        /* FIX: transition: all を個別のプロパティ指定へ変更 */
-        .cross-link-text a {
-            color: inherit; text-decoration: underline; transition: color 0.3s;
-        }
-        .cross-link-text a:hover {
-            color: var(--text-main);
-        }
-    </style>
+/* ─── セクション背景オーバーレイ（色相変化を受ける） ─── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: -1;
+  background: radial-gradient(ellipse 120% 60% at 50% 40%, var(--accent-pale) 0%, transparent 65%);
+  opacity: 0.45;
+  transition: background 1.2s ease;
+  pointer-events: none;
+}
+
+/* ─── コンテナ ─── */
+.wrap {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: clamp(28px,5vw,72px) var(--pad) clamp(60px,8vw,120px);
+}
+
+/* ─── リンク ─── */
+a { color: var(--accent-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: .62rem;
+  letter-spacing: .25em;
+  color: var(--c-muted);
+  border: 1px solid var(--c-border);
+  padding: 7px 16px;
+  margin-bottom: 36px;
+  transition: color .2s, border-color .2s, background .2s;
+  background: rgba(255,255,255,.7);
+}
+.back-btn:hover {
+  color: var(--accent-dark);
+  border-color: var(--accent-mid);
+  background: var(--accent-pale);
+  text-decoration: none;
+}
+
+/* ─── サイトロゴ ─── */
+.site-logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.site-logo a { text-decoration: none; }
+.logo-sub {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: .58rem;
+  letter-spacing: .5em;
+  color: var(--accent);
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  transition: color 1.2s ease;
+}
+.logo-main {
+  display: block;
+  font-family: 'Alex Brush', cursive;
+  font-size: 2.2rem;
+  color: var(--c-text);
+  line-height: 1;
+}
+
+/* ─── ページヘッダー ─── */
+.page-header {
+  text-align: center;
+  padding: 16px 0 36px;
+  margin-bottom: 44px;
+  border-bottom: 1px solid var(--c-border);
+  position: relative;
+}
+
+/* エンブレム */
+.emblem {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 78px; height: 78px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  margin-bottom: 20px;
+  background: var(--gold-pale);
+  position: relative;
+}
+.emblem::before {
+  content: '';
+  position: absolute; inset: 4px;
+  border-radius: 50%;
+  border: 1px dashed rgba(201, 146, 42, .4);
+}
+.emblem-word {
+  font-family: 'Cinzel', serif;
+  font-size: .55rem;
+  letter-spacing: .15em;
+  color: var(--gold);
+  font-weight: 600;
+}
+.emblem-sub {
+  font-family: 'Cinzel', serif;
+  font-size: .38rem;
+  letter-spacing: .06em;
+  color: rgba(201,146,42,.7);
+  margin-top: 2px;
+}
+
+.page-eyebrow {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: .58rem;
+  letter-spacing: .45em;
+  color: var(--accent);
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  transition: color 1.2s ease;
+}
+.page-title {
+  font-family: 'Alex Brush', cursive;
+  font-size: 3.2rem;
+  font-weight: 400;
+  color: var(--c-text);
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.page-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--accent-dark);
+  letter-spacing: .07em;
+  transition: color 1.2s ease;
+}
+
+/* ─── 仕切り ─── */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 44px 0;
+  user-select: none;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-mid), transparent);
+  transition: background 1.2s ease;
+}
+.divider .sun {
+  font-size: 1.3rem;
+  color: var(--gold);
+  animation: spin-sun 24s linear infinite;
+  display: inline-block;
+  line-height: 1;
+}
+.divider .star { font-size: .65rem; color: var(--accent-mid); transition: color 1.2s ease; }
+@keyframes spin-sun { to { transform: rotate(360deg); } }
+
+/* ─── 目次 ─── */
+.toc {
+  background: rgba(255,255,255,.88);
+  border: 1px solid var(--accent-mid);
+  border-left: 4px solid var(--accent);
+  padding: 28px 28px 24px;
+  margin-bottom: 52px;
+  transition: border-color 1.2s ease;
+}
+.toc-title {
+  font-family: 'Cinzel', serif;
+  font-size: .72rem;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: .3em;
+  font-weight: 600;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--c-border2);
+  transition: color 1.2s ease;
+}
+.toc-list { list-style: none; }
+.toc-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.toc-list li:last-child { border-bottom: none; }
+.toc-list li span {
+  font-family: 'Noto Serif JP', serif;
+  font-size: .78rem;
+  font-weight: 400;
+  color: var(--c-text);
+  flex: 1;
+}
+.toc-list a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .72rem;
+  color: var(--accent-dark);
+  letter-spacing: .07em;
+  font-weight: 600;
+  border: 1px solid var(--c-border2);
+  padding: 4px 13px;
+  background: var(--accent-pale);
+  white-space: nowrap;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.toc-list a:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+/* ─── セクション ─── */
+.section { margin-bottom: 72px; }
+
+.section-heading {
+  font-family: 'Cinzel', serif;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .13em;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: color 1.2s ease;
+}
+.section-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--accent-mid), transparent);
+  transition: background 1.2s ease;
+}
+
+.section p {
+  font-size: .82rem;
+  font-weight: 300;
+  color: var(--c-text);
+  line-height: 2.1;
+  margin-bottom: 22px;
+  text-align: justify;
+}
+
+.sub-heading {
+  font-family: 'Noto Serif JP', serif;
+  font-size: .83rem;
+  font-weight: 500;
+  padding-left: 11px;
+  margin: 30px 0 12px;
+  border-left: 3px solid var(--accent);
+  color: var(--accent-dark);
+  transition: border-color 1.2s ease, color 1.2s ease;
+}
+
+/* ─── 引用ブロック ─── */
+.blockquote {
+  font-family: 'Noto Serif JP', serif;
+  font-size: .78rem;
+  font-style: italic;
+  background: var(--accent-pale);
+  padding: 20px 22px;
+  border-left: 3px solid var(--gold);
+  line-height: 2.1;
+  margin-bottom: 22px;
+  transition: background 1.2s ease;
+}
+
+/* ─── 強調テキスト ─── */
+.section strong { font-weight: 500; color: var(--c-text); }
+
+/* ─── 画像フレーム ─── */
+.img-wrapper {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  margin: 22px 0 30px;
+  background: #242C35;
+  position: relative;
+  border: 1px solid var(--c-border);
+  box-shadow: inset 0 0 0 4px rgba(60,96,128,.07);
+}
+.img-wrapper img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.95) contrast(1.02) sepia(8%);
+  -webkit-user-select: none; user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+.img-wrapper::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(30,40,50,.18) 100%);
+  z-index: 1;
+}
+.img-wrapper.purple-frame { border-color: rgba(140,110,180,.38); }
+
+/* ─── グリッド（クリエイター） ─── */
+.creator-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+.creator-card {
+  background: rgba(255,255,255,.86);
+  border: 1px solid var(--c-border);
+  padding: 22px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .25s, transform .25s, box-shadow .25s, background .25s;
+}
+.creator-card:hover {
+  border-color: var(--accent-mid);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(60,90,120,.08);
+  background: var(--accent-pale);
+}
+.card-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  line-height: 1.3;
+  margin-bottom: 5px;
+  transition: color 1.2s ease;
+}
+.card-ja {
+  font-family: 'Noto Serif JP', serif;
+  font-size: .72rem;
+  color: var(--c-text);
+  margin-bottom: 5px;
+}
+.card-role {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .65rem;
+  color: var(--c-muted);
+  letter-spacing: .04em;
+}
+
+/* ─── モーダル ─── */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(16,22,30,.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s, visibility .3s;
+  padding: 20px;
+}
+.modal-bg.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+@supports (backdrop-filter: blur(6px)) {
+  .modal-bg { background: rgba(16,22,30,.35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+}
+.modal-box {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border2);
+  max-width: 480px;
+  width: 100%;
+  padding: 36px 32px 28px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(10,15,25,.25);
+}
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--accent), var(--accent-mid));
+  transition: background 1.2s ease;
+}
+.modal-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  font-family: 'Cinzel', serif;
+  font-size: .6rem;
+  letter-spacing: .15em;
+  color: var(--c-muted);
+  background: none;
+  border: 1px solid var(--c-border);
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: color .2s, background .2s, border-color .2s;
+}
+.modal-close:hover {
+  color: var(--accent-dark);
+  background: var(--accent-pale);
+  border-color: var(--accent-mid);
+}
+.modal-name-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  margin-top: 8px;
+  transition: color 1.2s ease;
+}
+.modal-name-ja {
+  font-family: 'Noto Serif JP', serif;
+  font-size: .72rem;
+  color: var(--c-muted);
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--c-border);
+}
+.modal-desc {
+  font-family: 'Noto Serif JP', serif;
+  font-size: .78rem;
+  font-weight: 300;
+  color: var(--c-text);
+  line-height: 2.05;
+}
+
+/* ─── フッター ─── */
+.page-footer {
+  text-align: center;
+  padding-top: 40px;
+  border-top: 1px solid var(--c-border);
+}
+.page-footer p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .72rem;
+  color: var(--c-muted);
+  margin-bottom: 4px;
+}
+
+/* ─── Reveal アニメーション ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* ─── レスポンシブ ─── */
+@media (max-width: 600px) {
+  .wrap { padding: 28px 14px 56px; }
+  .page-title { font-size: 2.4rem; }
+  .creator-grid { grid-template-columns: 1fr; gap: 10px; }
+  .toc { padding: 20px 16px; }
+  .modal-box { padding: 28px 20px 24px; }
+}
+</style>
 </head>
 <body>
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <div class="paper-bg" aria-hidden="true"></div>
-    
-    <!-- FIX: ディブ要素から、キーボード操作やスクリーンリーダー等に対応した適切なbutton要素へ修正 -->
-    <button class="theme-switch" id="theme-switch" aria-label="ダークモードに切り替え" aria-pressed="false">🌙</button>
-    
-    <div class="container">
-        <a href="index.html" class="back-btn">← Back to Portal</a>
-        
-        <header class="header-section reveal">
-            <!-- FIX: ロゴ画像にもドラッグ保存を禁止する draggable="false" を付与 -->
-            <div class="logo-wrapper"><img src="tot-logo.png" alt="Hotel Hightower Crest" class="logo-img" draggable="false" loading="eager"></div>
-            <div class="bgs-tag">Background Story</div>
-            <h1>Hotel Hightower</h1>
-            <div class="subtitle-jp">傲慢なる略奪の果てと、影 of 忠臣</div>
-        </header>
-        
-        <nav class="toc-box reveal" aria-label="セクション目次">
-            <div class="toc-title">Index</div>
-            <ul class="toc-list">
-                <li><span>I. 1899年の失踪劇（歴史年表）</span><a href="#prologue">Read →</a></li>
-                <li><span>II. 呪いの偶像「シリキ・ウトゥンドゥ」と8つの掟</span><a href="#taboos">Read →</a></li>
-                <li><span>III. 秘密結社「S.E.A.」と執事スメルディングの狂信</span><a href="#sea">Read →</a></li>
-                <li><span>IV. S.S.コロンビア号に眠る「親子二代の確執」</span><a href="#conflict">Read →</a></li>
-                <li><span>V. 独自の神話学（アメリカ版との差異）</span><a href="#genesis">Read →</a></li>
-            </ul>
-        </nav>
-        
-        <!-- FIX: ドラッグでの保存行為を完全に防ぐため draggable="false" を画像に付与 -->
-        <div class="hero-img-container reveal"><img src="tot-exterior.jpg" alt="Tower of Terror Exterior" class="hero-img" id="hero-img" draggable="false" loading="eager"></div>
-        
-        <section class="article-block reveal" id="prologue">
-            <h2>I. 1899年の失踪劇</h2>
-            <p>1912年のアメリカ・ニューヨーク。人々が「恐怖のホテル（タワー・オブ・テラー）」と呼び畏怖する壮麗な廃墟「ホテル・ハイタワー」。現在、この建物はニューヨーク市保存協会による見学ツアーが催され、一般に公開されていますが、その静寂の裏には、1899年12月31日の大晦日に起きたオーナー失踪事件が眠っています。</p>
-            <p>創設者のハリソン・ハイタワー三世は、富と名声、誠実さとは無縁のあくなき収集欲の象徴でした。彼は世界中を巡って美術品や文化遺産を半ば「略奪」に近い形で集め、それを誇示するためにこの巨大なホテルを建設したのです。その歪んだ自己顕示欲は、ネオ・ゴシック、ムガル（イスラム風）、ビザンティンといった世界の多様な建築様式を無理やり一つの塔に融合させた、美しくも奇怪なホテルの外観そのものに現れています。</p>
-            <table class="timeline-table">
-                <thead><tr><th>Year</th><th>Event</th></tr></thead>
-                <tbody>
-                    <tr><td>1835年</td><td>ハリソン・ハイタワー三世 誕生。</td></tr>
-                    <tr><td>1886年</td><td>父の大邸宅を継承。世界規模の略奪探検と収集を本格化。</td></tr>
-                    <tr><td>1892年</td><td>自らの富の象徴である「ホテル・ハイタワー」を開業。</td></tr>
-                    <tr><td>1899年</td><td>コンゴ川流域のムトゥンドゥ族から「シリキ・ウトゥンドゥ」を強奪。</td></tr>
-                    <tr><td>1899年12月31日</td><td>ホテル内での記者会見直後、エレベーター落下事故により謎の失踪。</td></tr>
-                    <tr><td>1912年</td><td>ニューヨーク市保存協会により、ホテル内の見学ツアーが開始される.</td></tr>
-                </tbody>
-            </table>
-        </section>
-        
-        <section class="article-block reveal" id="taboos">
-            <h2>II. 呪いの偶像と8つの掟</h2>
-            <p>この悲劇を紐解く最大のカギが、アフリカのムトゥンドゥ族が崇拝していた精霊の偶像「シリキ・ウトゥンドゥ」です。これは単なる木彫りの置物ではなく、内部には「古代の呪術師の実際の遺骨」が仕込まれ、全身に無数の金属片が打ち込まれた恐るべき呪物でした。偶像には、扱う者が絶対に破ってはならない「8つの掟」が存在しました。</p>
-            <div class="connection-card">
-                <!-- FIX: 見出し階層（h2の内部）に合わせるためh4からh3へタグを変更 -->
-                <h3>シリキ・ウトゥンドゥ：8つの掟</h3>
-                <p>1. 崇拝すること。<br>2. 燃やさないこと。<br>3. 閉ざされた場所にしまわないこと。<br>4. おろそかにしないこと。<br>5. 馬鹿にしないこと。<br>6. 他人に渡さないこと。<br>7. 放置しないこと。<br>8. 恐れること。</p>
-            </div>
-            <p>傲慢の極みにあったハイタワー三世は、木箱に閉じ込め、公の記者会見で呪いを嘲笑し、エレベーター内では吸っていた葉巻 of 火をその頭に押し付けるなど、あらゆる掟を徹底的に踏みにじりました。実は、ハイタワーの探検隊がムトゥンドゥ族を襲撃した際、原住民たちは突然戦闘をやめ、あっさりと偶像を明け渡したと言われています。それは降伏ではなく、「掟を破ったハイタワーが、精霊の手によって確実に破滅する」ことを彼らが確信していたからでした。</p>
-            <p>深夜0時、エレベーターを襲った不気味な緑色の雷撃。生存者の証言によれば、ハイタワー三世はただ落下したのではなく、「シリキ・ウトゥンドゥの放つ緑の光に引きずり込まれるようにして消えた」とも、「自室から大広間（ボールルーム）へ吹き飛ばされた」とも言われています。残されていたのは、彼の被っていたトルコ風の帽子だけでした。</p>
-            <div class="connection-card">
-                <!-- FIX: 見出し階層（h2の内部）に合わせるためh4からh3へタグを変更 -->
-                <h3>👁️ 不吉なる数秘術「13」の連鎖</h3>
-                <p>このホテルには、不吉な数字「13」の奇妙な連鎖が刻まれています。<br>・事件からツアー開始までの空白期間：**13年**（1899年〜1912年）<br>・ハイタワー失踪の総人数および関係者の数：**13人**<br>・秘密の書斎へ続く階段の段数：**13段**<br>・部屋に遺された呪術道具や重要書類の数：**13個**<br>これらは、偶然ではなくすべて呪いの仕掛けの一部なのです。</p>
-            </div>
-        </section>
-        
-        <section class="article-block reveal" id="sea">
-            <h2>III. 秘密結社「S.E.A.」と影の忠臣</h2>
-            <p>ホテル・ハイタワーの物語は、単体のオカルト事件に留まりません。ハイタワー三世は、ディズニーシー全体の海洋探検史を繋ぐ、世界規模の探検家＆冒険家協会「S.E.A. (Society of Explorers and Adventurers)」のメンバーでした。1538年の大航海時代にコロンブスやダ・ヴィンチらによって創設されたこの歴史ある学会において、ハイタワー三世は19世紀の「再興期」を支えた主要メンバーの一人として名を連ねています。彼のあくなき強奪行為は、この組織の絶大な特権を利用して行われていました。</p>
-            <p>ソアリンの「カメリア・ファルコ」や、香港の「ヘンリー・ミスティック卿」とも深い繋がりがあり、ミスティック卿の邸宅には、彼とハイタワー三世がシリキ・ウトゥンドゥを抱えて微笑む不気味な絵画が今も飾られています。</p>
-            <div class="connection-card">
-                <!-- FIX: 見出し階層（h2の内部）に合わせるためh4からh3へタグを変更 -->
-                <h3>執事スメルディングの「異常な忠誠心」</h3>
-                <p>ハイタワーに仕えた従順な執事「アーチボルト・スメルディング」。20ヶ国語以上を操る超エリートの彼は、ホテルのいたる所にその姿を残しています。<br><br>・**ロビー正面の巨大壁画：** 右下で熱心に略奪品の目録を記録する姿。<br>・**アフリカ探検の壁画：** 迫り来る原住民を足止めするため、吊り橋を大きなナイフで容赦なく切り落とそうとする冷酷無比な姿。<br>・**ラジャのプール（現メモラビリア）の写真：** プールサイドで、水着を着用しているにも関わらず、黒い帽子（ボーラーハット）を被ったまま直立不動している異常な姿。<br><br>彼は主の失踪後、自らも姿を消したとされていましたが、実は偽名を使ってライバルの娘ベアトリスに接触。ホテルの解体を防ぐために彼女を操り、「見学ツアー（タワー・オブ・テラー）」を裏で仕組んだ真の黒幕なのです。</p>
-            </div>
-        </section>
-        
-        <section class="article-block reveal" id="conflict">
-            <h2>IV. S.S.コロンビア号との確執</h2>
-            <p>ホテルのすぐ隣、アメリカンウォーターフロントの港に港々しく停泊する巨大客船「S.S.コロンビア号」。この船を所有するU.S.スチームシップカンパニーのオーナーである「コーネリアス・エンディコット三世」は、ハイタワー三世の親の代からの終生のライバルでした。</p>
-            <p>海運で近代都市の「光」と「商業的進歩」を象徴するエンディコットと、私的な収集欲と古代への「闇」を体現したホテル・ハイタワー。二つの巨大な富豪文化は、同じ都市の中で常に激しいせめぎ合いを見せていました。ハイタワー三世の失踪後、コーネリアスはホテルを解体し「エンディコット・グランドホテル」を建てようと画策します。しかし、ハイタワーの探検に密かに憧れていた娘「ベアトリス」が、父の開発計画に反発して「保存協会」を設立したことで、ホテルは守られることになりました。</p>
-            <div class="connection-card">
-                <!-- FIX: 見出し階層（h2の内部）に合わせるためh4からh3へタグを変更 -->
-                <h3>📦 ロストリバーデルタ「レイジングスピリッツ」の物証</h3>
-                <p>ハイタワーの魔の手は、はるか南米の発掘現場にも及んでいました。レイジングスピリッツの遺跡発掘現場には、今も積み残された木箱が散乱しています。その側面には、はっきりと**「HOTEL HIGHTOWER」**の文字が刻まれています。これは、1912年のアメリカンウォーターフロントと、南米の古代遺跡の時間が、「ハイタワーの略奪と物資の輸送」という線でリアルに繋がっている決定的な証拠なのです。</p>
-                <p class="cross-link-text">
-                    <a href="bgs-raging.html">➔ 【関連調査資料】水の上で燃え盛る炎。レイジングスピリッツ発掘現場の歴史はこちら</a>
-                </p>
-            </div>
-        </section>
-        
-        <section class="article-block reveal" id="genesis">
-            <h2>V. 独自の神話学（アメリカ版との差異）</h2>
-            <p>世界中のディズニーに存在する「タワー・オブ・テラー」ですが、日本の東京ディズニーシーのものは、世界でも類を見ない完全オリジナルな世界観を誇ります。</p>
-            <p>海外版（フロリダやパリなど）は、アメリカの伝説的なSF番組『トワイライト・ゾーン』をライセンスに持ち、1939年のハリウッドの超常現象ホテルを描いています。しかし、日本への導入にあたり、この古典TV番組が日本の若者層に馴染みが薄いこと、安定したディズニーシー全体のコンセプトを崩さないために、オリエンタルランドとWDI（ウォルト・ディズニー・イマジニアリング）はライセンスを外し、総工費約210億円を投じてこの地に馴染む独自の歴史神話を構築しました。</p>
-            <p>「都市伝説」「ギルド時代の秘密結社」「一族の利権争い」を組み込んだ東京版は、単なるホラーを超えた、極めて完成度の高い「歴史ドキュメンタリー」としての廃墟美を完成させたのです。アトラクション専用に書き下ろされた重厚なオーケストラと不気味なパイプオルガン、聖歌隊のコーラスは、乗る前から私たちを「ハイタワー三世の歪んだ世界」へと引きずり込んでいきます。</p>
-        </section>
-        
-        <div class="footer-link reveal"><a href="index.html">← HOMEへ戻る</a></div>
+
+<div class="wrap">
+
+  <!-- サイトロゴ -->
+  <div class="site-logo reveal">
+    <a href="index.html">
+      <span class="logo-sub">Tokyo Disney Resort</span>
+      <span class="logo-main">BGS Chronicles</span>
+    </a>
+  </div>
+
+  <a href="index.html" class="back-btn reveal">← Back to Archive Portal</a>
+
+  <!-- ページヘッダー -->
+  <header class="page-header reveal">
+    <div class="emblem" aria-hidden="true">
+      <span class="emblem-word">PEACE</span>
+      <span class="emblem-sub">ONE SUN · ONE MOON</span>
     </div>
-    
-    <script>
-        // FIX: プライベートブラウジング等のアクセスエラーを防ぐため localStorage 操作を try-catch でカプセル化
-        function safeGetStorage(key) {
-            try { return localStorage.getItem(key); } catch (e) { return null; }
-        }
-        function safeSetStorage(key, value) {
-            try { localStorage.setItem(key, value); } catch (e) { /* 無視 */ }
-        }
+    <span class="page-eyebrow">Attraction Archive Document</span>
+    <h1 class="page-title">It's a Small World</h1>
+    <p class="page-tagline">世界を繋ぐ平和の賛歌とイマジニアたちの純粋なる情熱</p>
+  </header>
 
-        const themeSwitch = document.getElementById('theme-switch');
+  <div class="divider reveal" aria-hidden="true">
+    <span class="star">✦</span><span class="sun">☼</span><span class="star">✦</span>
+  </div>
 
-        // FIX: ポータルサイトと一貫した昼夜（呪い）テーマ状態の読み込み・適用処理。
-        // bodyではなくhtml要素にクラスを付与するルールを踏襲。
-        function applyTheme(isDark) {
-            document.documentElement.classList.toggle('curse-mode', isDark);
-            themeSwitch.textContent = isDark ? '☀️' : '🌙';
-            themeSwitch.setAttribute('aria-label', isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え');
-            themeSwitch.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-        }
+  <!-- 目次 -->
+  <nav class="toc reveal" aria-label="目次" id="toc">
+    <div class="toc-title">Archives Index</div>
+    <ul class="toc-list">
+      <li><span>I. 平和への祈り ― 本アトラクションの核心と基本理念</span><a href="#philosophy">Explore →</a></li>
+      <li><span>II. メロディの劇的転換 ― 万博での誕生とシャーマン兄弟のドラマ</span><a href="#history">Explore →</a></li>
+      <li><span>III. 具現化された夢 ― 世界を彩色した4人のイマジニア</span><a href="#members">Explore →</a></li>
+      <li><span>IV. 期間限定の記録 ― 銀河の守護者「グルート」の地球バカンス</span><a href="#groot">Explore →</a></li>
+      <li><span>V. 世界に拡がる幸せの航路 ― 各テーマパークにおける外観表現と建築美</span><a href="#installations">Explore →</a></li>
+    </ul>
+  </nav>
 
-        // 初期読み込み時にポータルのテーマ設定を継承する
-        const savedTheme = safeGetStorage('teru-theme');
-        if (savedTheme === 'dark') {
-            applyTheme(true);
-        } else {
-            applyTheme(false);
-        }
+  <div class="divider reveal" aria-hidden="true">
+    <span class="star">✦</span><span class="sun">☼</span><span class="star">✦</span>
+  </div>
 
-        themeSwitch.addEventListener('click', () => {
-            const isDark = !document.documentElement.classList.contains('curse-mode');
-            applyTheme(isDark);
-            safeSetStorage('teru-theme', isDark ? 'dark' : 'light');
-        });
+  <!-- I. 核心と基本理念 -->
+  <section class="section reveal" id="philosophy" data-palette="pink">
+    <h2 class="section-heading">I. Core Philosophy — 平和への願いと3つの基本理念</h2>
 
-        const reveals = document.querySelectorAll('.reveal');
-        const revealOnScroll = new IntersectionObserver((entries, observer) => { 
-            entries.forEach(entry => { 
-                if (!entry.isIntersecting) return; 
-                entry.target.classList.add('active'); 
-                observer.unobserve(entry.target); 
-            }); 
-        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-        
-        reveals.forEach(reveal => revealOnScroll.observe(reveal));
-        setTimeout(() => { reveals[0].classList.add('active'); }, 100);
-    </script>
+    <p>
+      みなさんは「イッツ・ア・スモールワールド」を訪れたとき、どんなことを感じますか？ 単なる子供向けの親しみやすいライドアトラクションのようにも見えますが、その穏やかな水流と愛らしい歌声の根底には、ディズニーが紡ぐ非常に強い平和へのメッセージと、人間への深い賛歌が静かに息づいているのです。
+    </p>
+
+    <h3 class="sub-heading">① 人形たちの「同じ顔」に込められた意味</h3>
+    <p>
+      アトラクションに登場する何百体もの子供の人形たち。よく観察してみると、実はすべて全く同じひとつの顔の造形で作られていることに気づくでしょうか。これは彫刻家ブレイン・ギブソンによる意図的なデザイン。「人種、国籍、生まれた国がどこであっても、子供たちはみな同じ人間であり、等しく尊い存在である」という強い平等性の象徴です。あえて個々の顔の個性を排することで、隔たりのない普遍的な一体感を、物言わぬ表情の中に宿しています。
+    </p>
+
+    <h3 class="sub-heading">② 純粋無垢な視点がつくる「子供たちだけの世界」</h3>
+    <p>
+      気づいた方もいるかもしれませんが、この幸福な世界には、ディズニーキャラクターを除いて「大人の人間」が一切登場しません。登場するのは、子供たちと動物たちだけ。これは、偏見や憎しみのない「純粋無垢な視点」のみで世界を見つめ直してほしいという、イマジニアたちからの静かな語りかけなのかもしれません。未来の平和を築き上げていく主役は、いつだって純真な子供たちであることを私たちに伝えてくれています。
+    </p>
+
+    <div class="img-wrapper">
+      <img src="smallworld-exterior-day.jpeg" alt="東京ディズニーランド イッツ・ア・スモールワールドの外観（昼景）" loading="lazy" decoding="async">
+    </div>
+
+    <h3 class="sub-heading">③ 運河を照らし続ける「太陽」の演出</h3>
+    <p>
+      ボートに乗って世界中を旅していると、ヨーロッパ、アジア、アフリカなど、どのエリアに進んでも、必ずその地域ごとの「太陽」が象徴的に描かれていることに気づきます。「私たちがどこにいても、同じ一つの太陽の下でみんな一緒に生きている（＝世界は一つ）」という事実を、旅の最初から最後まで、絶え間なく温かい光で優しく照らし続けているのです。
+    </p>
+  </section>
+
+  <div class="divider reveal" aria-hidden="true">
+    <span class="star">✦</span><span class="sun">☼</span><span class="star">✦</span>
+  </div>
+
+  <!-- II. メロディの劇的転換 -->
+  <section class="section reveal" id="history" data-palette="blue">
+    <h2 class="section-heading">II. Genesis of the Anthem — 楽譜とメロディに込められた劇的転換</h2>
+
+    <p>
+      アトラクション内を包み込む不朽の名曲。この音楽が誕生するまでの歩みには、時代に抗う強い情熱と、劇的なメロディの転換劇が刻まれていました。
+    </p>
+
+    <h3 class="sub-heading">1964年ニューヨーク世界博覧会での産声</h3>
+    <p>
+      この小さな世界の誕生は、1964年に開催された「ニューヨーク世界博覧会」にまで遡ります。ユニセフ（国連児童基金）パビリオンの主役となる展示として、ペプシコ社の出資のもと、ウォルト・ディズニー自らが制作を手掛けたのが始まりでした。世界の平和を祈念する壮大な歴史の記念碑として、パビリオン全体が設計されたのです。
+    </p>
+
+    <h3 class="sub-heading">厳粛な「賛歌」から軽快な「ポップス」へのテンポアップ</h3>
+    <p>
+      この曲を手掛けたのは、映画『メリー・ポピンズ』の音楽でもおなじみのロバート・B・シャーマンとリチャード・M・シャーマンの兄弟です。ウォルトから直々に「世界を一つにするシンプルな歌を作ってくれ」という使命を受け、彼らは制作に臨みました。
+    </p>
+    <p>
+      当初、シャーマン兄弟が書き上げたメロディは、<strong>テンポが非常に遅く、伴奏もない、まるで厳粛な賛歌（バラード）のような厳かさ</strong>を湛えていました。当時、世界が「キューバ危機」などの冷戦の極度の緊張状態に置かれていたことを反映し、厳粛な「平和への祈り」を表現しようとしていたためです。
+    </p>
+    <p>しかし、試作を聴いたウォルト・ディズニーは、その平和のメッセージを認めつつも、次のように言葉を彼らに返しました。</p>
+
+    <div class="blockquote">
+      「素晴らしい曲だ。だが、私たちが作りたいのは説教のための場所ではない。子供たちが笑顔で口ずみ、楽しく世界を旅できる、もっと明るく軽快なテンポが必要だ」
+    </div>
+
+    <p>
+      このウォルトの先見の明に満ちた一言により、曲は劇的にテンポアップ。現代の誰もが知る、異なるパートの旋律が美しく重なり合って一つの曲へと溶け合う、心躍る<strong>「輪唱（カウンタフォニー：対位法）」</strong>のスタイルへと生まれ変わったのです。
+    </p>
+
+    <div class="img-wrapper">
+      <img src="smallworld-queue.jpeg" alt="ボートが並ぶ乗船エリアの内景" loading="lazy" decoding="async">
+    </div>
+
+    <p>
+      このシンプルで親しみやすい合唱曲は、音楽史において、ラジオ、テレビ、そしてパーク内を含め<strong>「地球上で最も多く演奏（再生）された楽曲」</strong>として米TIME誌などに認定されるほどの功績を残すことになりました。
+    </p>
+  </section>
+
+  <div class="divider reveal" aria-hidden="true">
+    <span class="star">✦</span><span class="sun">☼</span><span class="star">✦</span>
+  </div>
+
+  <!-- III. イマジニアたち -->
+  <section class="section reveal" id="members" data-palette="green">
+    <h2 class="section-heading">III. Masters of Creation — 平和を具現化した4人のイマジニア</h2>
+
+    <p>
+      この世界観を構築するため、ウォルトの元に集ったイマジニアたち。各カードをタップすることで、彼らがそれぞれの分野で発揮した細やかなこだわりと確かな足跡を覗くことができます。
+    </p>
+
+    <div class="creator-grid" role="list">
+      <div class="creator-card" role="listitem" tabindex="0" data-member="mary" aria-label="メアリー・ブレアの詳細を表示">
+        <div class="card-en">Mary Blair</div>
+        <div class="card-ja">メアリー・ブレア</div>
+        <div class="card-role">色彩設計 / 美術デザイン</div>
+      </div>
+      <div class="creator-card" role="listitem" tabindex="0" data-member="alice" aria-label="アリス・デイヴィスの詳細を表示">
+        <div class="card-en">Alice Davis</div>
+        <div class="card-ja">アリス・デイヴィス</div>
+        <div class="card-role">衣裳デザイン / 伝統織物考証</div>
+      </div>
+      <div class="creator-card" role="listitem" tabindex="0" data-member="blaine" aria-label="ブレイン・ギブソンの詳細を表示">
+        <div class="card-en">Blaine Gibson</div>
+        <div class="card-ja">ブレイン・ギブソン</div>
+        <div class="card-role">人形造形 / 彫刻</div>
+      </div>
+      <div class="creator-card" role="listitem" tabindex="0" data-member="sherman" aria-label="シャーマン兄弟の詳細を表示">
+        <div class="card-en">Sherman Brothers</div>
+        <div class="card-ja">シャーマン兄弟</div>
+        <div class="card-role">作詞・作曲 / 音楽</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider reveal" aria-hidden="true">
+    <span class="star">✦</span><span class="sun">☼</span><span class="star">✦</span>
+  </div>
+
+  <!-- IV. グルート -->
+  <section class="section reveal" id="groot" data-palette="purple">
+    <h2 class="section-heading" style="color: hsl(270, 35%, 48%); transition: none;">IV. Cosmic Friendship — 「グルート」のバカンスと地球の絆</h2>
+
+    <p>
+      小さな世界が紡ぐ平和 of メッセージは、地球という国境を越えるだけでなく、ときには銀河の彼方をも結びつけてしまうようです。東京ディズニーランドの運河にて、現在特別な体験プログラムとして開催されている<strong>『イッツ・ア・スモールワールド with グルート』</strong>も、そんな素敵な出会いの一つですね。
+    </p>
+    <p>
+      映画『ガーディアンズ・オブ・ギャラクシー』シリーズに登場する、愛らしくも勇敢な樹木型宇宙人「グルート」。彼は、銀河の仲間たちと共に地球へバカンスを過ごしにやってきました。世界中の子供たちの歌声や、異国情緒あふれる美しい伝統文化に触れながら、世界各地を巡る幸福な旅の記録です。
+    </p>
+
+    <div class="img-wrapper purple-frame">
+      <img src="smallworld-groot.jpeg" alt="アフリカの夜空のもと、キリンと青いハートの光に包まれるグルート" loading="lazy" decoding="async">
+    </div>
+
+    <h3 class="sub-heading" style="border-left-color: hsl(270, 35%, 65%); color: hsl(270, 35%, 36%); transition: none;">メアリー・ブレアのタッチで描かれたスーパーヒーローたち</h3>
+    <p>
+      この特別な体験の中では、グルートの相棒であるロケット、マンティス、ガモーラ、ハルク、さらにはドクター・ストレンジ、ブラックパンサーといったマーベル・スタジオのヒーローたちが、<strong>すべてメアリー・ブレア独自の愛らしいデフォルメ・ドール（人形）</strong>となって、世界の子供たちに囲まれ、共に歌を口ずさんでいます。
+    </p>
+    <p>
+      例えば、アフリカの星空の下で現地のキリンと並び、淡く輝く青いハートの熱帯植物に見惚れているグルートや、南極でキャプテン・アメリカの強固なシールド（盾）に乗って楽しそうにそり遊びをする姿が確認できます。アトラクション本来の「私たちは一つ」というテーマと、異なる星々を越えて響き合う「宇宙的な友情」が幸福に融け合い、時空を超えた文化の架け橋が今日も静かに流れています。
+    </p>
+  </section>
+
+  <div class="divider reveal" aria-hidden="true">
+    <span class="star">✦</span><span class="sun">☼</span><span class="star">✦</span>
+  </div>
+
+  <!-- V. 世界に拡がる航路 -->
+  <section class="section reveal" id="installations" data-palette="gold">
+    <h2 class="section-heading">V. Global Footsteps — 世界に拡がる幸せな航路とファサードの造形美</h2>
+
+    <p>
+      世界中のディズニーパークへと巡らされているこの平和の運河。実は各地のパークを訪れてみると、その気候や建築の美学に基づいて、少しずつ異なる表情を見せてくれるのを知っていますか？ その背景には、イマジニアたちの細やかなデザインへのこだわりが詰め込まれています。
+    </p>
+
+    <h3 class="sub-heading">ファサードを彩るモザイク状のデザイン</h3>
+    <p>
+      アトラクションの外観（ファサード）は、メアリー・ブレアとローリー・クランプによるミッドセンチュリー・モダンの代表作とも言えるデザインです。エッフェル塔、ピサの斜塔、タジ・マハルといった世界的なランドマークが、平面的な幾何学模様（三角形や四角形など）に抽象化され、一つの巨大な「調和されたモザイクの街並み」として美しく組み立てられています。さらに、15分ごとに中央の「からくり時計」が作動すると、時計の顔が左右にスライドし、おもちゃの兵隊たちと世界の子どもたちの人形が音楽に合わせてパレードを行います。これは「世界のすべての国において、時の流れは等しく平等に訪れる」という調和の意味を示す、極めて象徴的な構造物なのです。
+    </p>
+
+    <div class="img-wrapper">
+      <img src="smallworld-exterior-night.jpeg" alt="光り輝くイッツ・ア・スモールワールドの外観（夜景）" loading="lazy" decoding="async">
+    </div>
+
+    <h3 class="sub-heading">ホワイト・ルーム（フィナーレ）に隠された「光の統合」</h3>
+    <p>
+      旅の最後に訪れる、一面が純白の「ホワイト・ルーム」。各テーマの部屋では、緑や青、暖色といった地域ごとの固有の色彩が主役を務めていましたが、最終部屋であるこの空間では、それらがすべて「白と金」の2色へと統合されます。色彩学において、あらゆる色（光）を重ね合わせて混ぜ合わせると「真っ白な光」へと還元されるように、多種多様な文化や国籍が手を取り合い、すべてが一つに融け合う調和の状態を、目の前に広がる純白の光の中で表現しているのです。
+    </p>
+    <p>
+      アナハイムのパステル調のファサードから、フロリダ版の「純白と金」による屋内ファサード（太陽光による退色を防ぎつつ、光の統合を表現する美学）まで、各地の気候に合わせながらも、一貫したメッセージを携えた航路が世界中で巡り続けています。
+    </p>
+  </section>
+
+  <div class="divider reveal" aria-hidden="true">
+    <span class="star">✦</span><span class="sun">☼</span><span class="star">✦</span>
+  </div>
+
+  <footer class="page-footer reveal">
+    <p>&copy; 2026 TERU_LUCE_ — BGS Chronicles</p>
+    <p style="font-size:.6rem; opacity:.6; margin-top:4px;">&copy; 1964–2026 Tokyo Disney Resort. All Archives Reserved.</p>
+    <a href="index.html" class="back-btn" style="margin-top:24px; margin-bottom:0;">← Back to Archive Portal</a>
+  </footer>
+
+</div><!-- /wrap -->
+
+<!-- モーダル -->
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalNameEn">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="閉じる">✕ Close</button>
+    <div class="modal-name-en" id="modalNameEn"></div>
+    <div class="modal-name-ja" id="modalNameJa"></div>
+    <p class="modal-desc" id="modalDesc"></p>
+  </div>
+</div>
+
+<svg style="position:absolute;width:0;height:0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="paper-grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix type="saturate" values="0" in="n" result="g"/>
+      <feBlend in="SourceGraphic" in2="g" mode="multiply" result="b"/>
+      <feComposite in="b" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+
+<script>
+/* ─── クリエイターデータ ─── */
+const members = {
+  mary: {
+    en: "Mary Blair",
+    ja: "メアリー・ブレア",
+    desc: "ウォルト・ディズニーにその色彩感覚を見出され、1960年代のディズニーの美術設計に大きな影響を与えたアーティストです。当時、暗いトーンが主流だったアニメーション背景の世界に、独特の幾何学的パターンと明るいパステルカラーを持ち込み、本作の「優しく幸福な世界観」を構築しました。彼女の色彩設計なくして、この幸福な船旅は存在しませんでした。"
+  },
+  alice: {
+    en: "Alice Davis",
+    ja: "アリス・デイヴィス",
+    desc: "世界各国の伝統衣装をドールのためにデザインした、探求心あふれる衣裳デザイナーです。単なる形だけのデフォルメに留まらず、各国から実際の伝統的な織物や資料を直接取り寄せ、その複雑な刺繍や織柄を極小サイズで忠実に再現しました。彼女の細やかなこだわりのおかげで、人形たちはそれぞれの故郷の誇りと尊厳を纏って、今も運河で歌い続けています。"
+  },
+  blaine: {
+    en: "Blaine Gibson",
+    ja: "ブレイン・ギブソン",
+    desc: "ディズニーの数々のキャラクターや大統領のブロンズ像を手掛けた彫刻家です。アトラクションに登場する何百体もの子供の人形たちは、彼によって「すべて全く同じ造形（同じ顔）」として作られました。これには、「生まれや国籍、人種に関わらず、子どもたちはみな同じ人間であり、等しく尊い存在である」という強い平等へのメッセージが込められています。"
+  },
+  sherman: {
+    en: "Sherman Brothers",
+    ja: "シャーマン兄弟",
+    desc: "映画『メリー・ポピンズ』の楽曲を手掛けたことで知られる、ロバートとリチャードの作曲家コンビです。ウォルトからの「世界を一つにするシンプルな歌を」という命を受け、冷戦下の緊迫した世界情勢の中で、当初は祈りの賛歌（バラード）としてこの曲を書き上げました。後にウォルトの助言によりテンポアップされ、世界で最も奏でられた平和の合唱曲となりました。"
+  }
+};
+
+/* ─── パレット定義（h, s, l の3値） ─── */
+const palettes = {
+  default:  { h: 210, s: 48, l: 44 },   // スレートブルー（初期）
+  pink:     { h: 345, s: 40, l: 50 },   // サクラコーラルピンク
+  blue:     { h: 210, s: 48, l: 44 },   // スレートブルー
+  green:    { h: 150, s: 30, l: 42 },   // セージグリーン
+  purple:   { h: 270, s: 35, l: 48 },   // ラベンダーパープル
+  gold:     { h:  36, s: 50, l: 44 },   // サンシャインゴールド
+};
+
+/* ─── CSS変数補間（raf利用で軽量） ─── */
+const root = document.documentElement;
+let currentPalette = { ...palettes.default };
+let targetPalette  = { ...palettes.default };
+let animFrame = null;
+let lastActivePaletteKey = 'default';
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function applyPalette(p) {
+  root.style.setProperty('--accent-h', p.h);
+  root.style.setProperty('--accent-s', p.s + '%');
+  root.style.setProperty('--accent-l', p.l + '%');
+}
+
+function animatePalette() {
+  const SPEED = 0.04;
+  currentPalette.h = lerp(currentPalette.h, targetPalette.h, SPEED);
+  currentPalette.s = lerp(currentPalette.s, targetPalette.s, SPEED);
+  currentPalette.l = lerp(currentPalette.l, targetPalette.l, SPEED);
+  applyPalette(currentPalette);
+  const diff = Math.abs(currentPalette.h - targetPalette.h) +
+               Math.abs(currentPalette.s - targetPalette.s) +
+               Math.abs(currentPalette.l - targetPalette.l);
+  if (diff > 0.08) {
+    animFrame = requestAnimationFrame(animatePalette);
+  } else {
+    currentPalette = { ...targetPalette };
+    applyPalette(currentPalette);
+    animFrame = null;
+  }
+}
+
+function setPalette(key) {
+  if (key === lastActivePaletteKey) return;
+  lastActivePaletteKey = key;
+  targetPalette = { ...palettes[key] };
+  if (animFrame) cancelAnimationFrame(animFrame);
+  animFrame = requestAnimationFrame(animatePalette);
+}
+
+/* ─── スクロール連動パレット切り替え ─── */
+const sections = document.querySelectorAll('.section[data-palette]');
+const paletteObserver = new IntersectionObserver((entries) => {
+  // 最も表示割合が高いセクションのパレットを選ぶ
+  let best = null, bestRatio = 0;
+  entries.forEach(e => {
+    if (e.isIntersecting && e.intersectionRatio > bestRatio) {
+      bestRatio = e.intersectionRatio;
+      best = e.target.dataset.palette;
+    }
+  });
+  if (best) setPalette(best);
+}, { threshold: [0.1, 0.3, 0.5, 0.7] });
+
+sections.forEach(s => paletteObserver.observe(s));
+
+/* ─── スクロール Reveal ─── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('active');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ─── モーダル ─── */
+const modalBg   = document.getElementById('modalBg');
+const modalClose = document.getElementById('modalClose');
+
+function openModal(id) {
+  const d = members[id];
+  if (!d) return;
+  document.getElementById('modalNameEn').textContent = d.en;
+  document.getElementById('modalNameJa').textContent = d.ja;
+  document.getElementById('modalDesc').textContent = d.desc;
+  modalBg.classList.add('open');
+  modalClose.focus();
+}
+function closeModal() { modalBg.classList.remove('open'); }
+
+document.querySelectorAll('.creator-card').forEach(card => {
+  card.addEventListener('click', () => openModal(card.dataset.member));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openModal(card.dataset.member);
+    }
+  });
+});
+modalClose.addEventListener('click', closeModal);
+modalBg.addEventListener('click', e => { if (e.target === modalBg) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ─── 画像保護 ─── */
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('contextmenu', e => e.preventDefault());
+  img.addEventListener('dragstart', e => e.preventDefault());
+});
+</script>
 </body>
 </html>
