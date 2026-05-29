@@ -44,6 +44,9 @@
 
     <style>
         :root {
+            /* ★修正: INDEXのパーチメント用変数を統合 */
+            --parchment:      #EAD9BC;
+            --parchment-mid:  #DFC9A8;
             --bg-abyss:            #130E0A;
             --bg-dark:             #E2D5BA;
             --bg-card:             rgba(244, 238, 226, 0.75);
@@ -53,7 +56,11 @@
             --text-muted:          #6E5A4E;
             --border-light:        rgba(80, 50, 30, 0.12);
             --border-copper:       rgba(124, 78, 45, 0.35);
-            --img-filter: brightness(0.85) contrast(1.05) sepia(50%) saturate(0.75);
+            /* ★修正: INDEXに合わせ画像フィルター強度を統合し、軽量化を促進 */
+            --img-filter: sepia(40%) brightness(0.88);
+            /* レイアウト幅 */
+            --content-max: 900px;
+            --content-pad: clamp(16px, 4vw, 60px);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,7 +70,8 @@
         html, body {
             overflow-x: hidden;
             width: 100%;
-            background-color: var(--bg-abyss);
+            /* ★修正: PCでの黒帯・隙間を解消するため、全体の背景色をパーチメント色に統一 */
+            background-color: var(--parchment);
             color: var(--text-light);
             line-height: 1.9;
             letter-spacing: 0.03em;
@@ -73,46 +81,77 @@
         body { font-family: 'Noto Serif JP', serif; }
 
         /* ════════════════════════════
-           背景テクスチャ
+           全幅の羊皮紙テクスチャ背景
+           ★修正: INDEXの高性能・軽量背景グラデーションを移植（SVG不使用で滑らかなスクロールに）
         ════════════════════════════ */
         .paper-wrinkle-bg {
             position: fixed; inset: 0; z-index: -2;
-            background: var(--bg-dark);
-            filter: url(#svg-crumpled-paper);
-            will-change: transform;
-            transform: translate3d(0,0,0);
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(120, 80, 40, 0.016) 2px,
+                    rgba(120, 80, 40, 0.016) 3px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 5px,
+                    rgba(100, 65, 30, 0.01) 5px,
+                    rgba(100, 65, 30, 0.01) 6px
+                ),
+                radial-gradient(ellipse 140% 80% at 15% 25%, rgba(215, 190, 148, 0.55) 0%, transparent 58%),
+                radial-gradient(ellipse 110% 65% at 85% 75%, rgba(200, 168, 125, 0.38) 0%, transparent 52%),
+                radial-gradient(ellipse 80% 90% at 50% 50%, rgba(226, 213, 186, 0.3) 0%, transparent 70%),
+                var(--bg-dark);
         }
         .ambient-vignette {
             position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(19,14,10,0.4) 100%);
+            background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(100, 70, 40, 0.18) 100%);
             pointer-events: none;
         }
 
         /* ════════════════════════════
-           パーチメントコンテナ
+           ★修正: コンテナ戦略を全面見直し
+           外枠: 全幅表示 / 内側コンテンツ: 最大幅制限（INDEXと同一手法）
         ════════════════════════════ */
         .parchment-container {
             position: relative; z-index: 1;
-            width: 92%; max-width: 860px;
-            margin: 30px auto 80px;
+            width: 100%;
+            margin: 0;
             box-sizing: border-box;
-            transition: max-width 0.3s ease, width 0.3s ease;
+            border-left: 1px solid rgba(80, 50, 30, 0.08);
+            border-right: 1px solid rgba(80, 50, 30, 0.08);
         }
+
+        /* PC幅でのサイドシャドウ演出（黒帯の代わり） */
+        .parchment-container::before,
+        .parchment-container::after {
+            content: '';
+            position: fixed;
+            top: 0; bottom: 0;
+            width: max(0px, calc((100vw - var(--content-max)) / 2 - 40px));
+            background: linear-gradient(to right, rgba(120,80,40,0.06), transparent);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .parchment-container::before { left: 0; }
+        .parchment-container::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(120,80,40,0.06), transparent);
+        }
+
+        /* 羊皮紙の切れ端風背景を非表示化（全画面がテクスチャになるため） */
         .parchment-paper-bg {
-            position: absolute; inset: 0; z-index: -1;
-            background: rgba(234, 222, 201, 0.95);
-            clip-path: url(#paper-torn-clip);
-            -webkit-clip-path: url(#paper-torn-clip);
-            box-shadow:
-                0 0 1px rgba(80,50,30,0.4) inset,
-                inset 0 0 40px rgba(100,70,45,0.15),
-                0 15px 40px rgba(0,0,0,0.4);
+            display: none;
         }
         .parchment-content {
             width: 100%;
-            padding: 80px 45px 100px;
+            max-width: var(--content-max);
+            margin: 0 auto;
+            padding: clamp(28px, 5vw, 80px) var(--content-pad) clamp(50px, 8vw, 100px);
             box-sizing: border-box;
-            transition: padding 0.3s ease;
         }
 
         /* ════════════════════════════
@@ -530,52 +569,10 @@
         }
 
         /* ════════════════════════════
-           レスポンシブ & PC大画面の全画面有効活用
+           レスポンシブ
         ════════════════════════════ */
-        @media (min-width: 1024px) {
-            .parchment-container {
-                width: 94%;
-                max-width: 1280px; /* PCでの表示幅を1280pxまで拡張 */
-                margin: 50px auto 100px;
-            }
-            .parchment-content {
-                padding: 90px 60px 110px; /* 余白をゆったりと広げて高級感を演出 */
-            }
-            .philosophy-grid {
-                grid-template-columns: repeat(4, 1fr); /* 4つの理念を横一列にすっきりと並べる */
-                gap: 20px;
-            }
-            .archive-grid {
-                grid-template-columns: repeat(4, 1fr); /* メンバーを4列に並べて空間を有効活用 */
-                gap: 16px;
-            }
-            /* 読みやすさ向上のため、長文テキストと目次などの文章エリアの視線移動幅を最適化 */
-            .article-section p,
-            .toc-box,
-            .page-header,
-            .back-btn,
-            .vintage-divider,
-            .details-content p {
-                max-width: 960px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .img-wrapper {
-                max-width: 960px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        @media (min-width: 1400px) {
-            .parchment-container {
-                max-width: 1380px; /* 超大画面PC向けに最大1380pxまで拡張 */
-            }
-        }
-
         @media (max-width: 768px) {
-            .parchment-container { width: 100%; margin: 0 auto 40px; }
-            .parchment-content { padding: 40px 14px 60px; }
+            .parchment-content { padding: 32px 14px 50px; }
             .page-title { font-size: 2.8rem; }
             .philosophy-grid { grid-template-columns: 1fr; }
             .archive-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -583,7 +580,7 @@
             .member-title-en { font-size: .78rem; }
         }
         @media (max-width: 400px) {
-            .parchment-content { padding: 32px 10px 50px; }
+            .parchment-content { padding: 28px 10px 40px; }
             .archive-grid { gap: 8px; }
         }
     </style>
@@ -632,7 +629,7 @@
                 <div class="toc-title">Archives Index</div>
                 <ul class="toc-list">
                     <li><span>I. 学会をつなぐ「見えない糸」と4つの理念</span><a href="#philosophy">Explore →</a></li>
-                    <li><span>II. 歴史の旅路 ― 1538年の創設から紡がれる壮大な年表</span><a href="#history">Explore →</a></li>
+                    <li><span>II. 歴史の歩み ― 創設期マイルストーンと学会の裏設定</span><a href="#history">Explore →</a></li>
                     <li><span>III. 学会に集う探検家・冒険家たち（肖像画データベース）</span><a href="#members">Explore →</a></li>
                     <li><span>IV. 12本の冒険用木製パドル（ハイドアウェイの秘密）</span><a href="#paddles">Explore →</a></li>
                     <li><span>V. パークに遺された冒険者たちの足跡と関連施設</span><a href="#installations">Explore →</a></li>
@@ -652,7 +649,7 @@
                     S.E.A.は、それぞれのエリアやアトラクションを個別の独立した物語として終わらせるのではなく、世界中のパークを一つの広大な「生きた歴史」として美しく繋ぎ合わせるための素晴らしい架け橋となっています。かつて 1989 年からフロリダのプレジャー・アイランドに実在した伝説の社交場『アドベンチャーズ・クラブ』のロマンを引き継ぎ、2001年の東京ディズニーシー開園とともに、あの美しい要塞『フォートレス・エクスプロレーション』から公式にその歴史が始まりました。
                 </p>
                 <p>
-                    今日では、映画や小説、さらには新しいアトラクションにまでその世界が広がっており、まるで本当に実在する歴史であるかのように、私たちをロマンあふれる冒険 of 旅へと誘ってくれます。
+                    今日では、映画や小説、さらには新しいアトラクションにまでその世界が広がっており、まるで本当に実在する歴史であるかのように、私たちをロマンあふれる冒険の旅へと誘ってくれます。
                 </p>
 
                 <div class="philosophy-grid">
@@ -679,10 +676,10 @@
 
             <!-- II. 歴史的タイムラインと年代記 -->
             <section class="article-section reveal" id="history">
-                <h2 class="section-heading">II. Chronology — 創設と再興の歴史年表</h2>
+                <h2 class="section-heading">II. Chronology &amp; Secrets — 創設の歩みと世界の「歴史的真実」</h2>
 
                 <p>
-                    S.E.A.の最大の魅力は、実在する世界の歴史と、パークのファンタジーが魔法のように編み込まれているところです。彼らの歩んできた長い歴史を、年表形式で分かりやすくまとめてみました。これを読めば、アトラクションの裏に隠された意外なつながりに気づくことができるはずです。
+                    S.E.A.の最大の魅力は、実在する世界の歴史と、パークのファンタジーが魔法のように編み込まれているところです。彼らの歩んできた長い歴史を、主要な出来事に絞ったタイムラインで追ってみましょう。
                 </p>
 
                 <div class="archive-table-wrapper">
@@ -690,194 +687,80 @@
                         <thead>
                             <tr>
                                 <th>年代</th>
-                                <th>日付・詳細</th>
                                 <th>主要関連人物</th>
-                                <th>冒険の出来事と隠された秘密</th>
+                                <th>歴史を動かした大事件</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1452年</td>
-                                <td>4月15日</td>
-                                <td>L・ダ・ヴィンチ</td>
-                                <td>後の名誉会員となるレオナルド・ダ・ヴィンチが誕生します。彼の飽くなき探究心は学会の精神的礎となりました。</td>
-                            </tr>
-                            <tr>
-                                <td>1492年</td>
-                                <td>10月12日</td>
-                                <td>C・コロンブス</td>
-                                <td>名誉会員であるクリストファー・コロンブスが、カリブ海へと到達します。</td>
-                            </tr>
-                            <tr>
-                                <td>1506年</td>
-                                <td>5月20日</td>
-                                <td>C・コロンブス</td>
-                                <td>コロンブスがその生涯を閉じます。</td>
-                            </tr>
-                            <tr>
-                                <td>1519年</td>
-                                <td>5月2日 / 同年中</td>
-                                <td>ダ・ヴィンチ、マゼラン</td>
-                                <td>ダ・ヴィンチが逝去。同じ年にマゼランが世界一周を目指す壮大な航海へと出発します。</td>
-                            </tr>
-                            <tr>
-                                <td>1521年</td>
-                                <td>2月3日</td>
-                                <td>F・マゼラン</td>
-                                <td>マゼランが航海の途中（フィリピン）でその熱い生涯を閉じます。</td>
-                            </tr>
-                            <tr>
-                                <td>1524年</td>
-                                <td>12月24日</td>
-                                <td>V・ダ・ガマ</td>
-                                <td>ヴァスコ・ダ・ガマが逝去します。</td>
-                            </tr>
-                            <tr>
                                 <td>1538年</td>
-                                <td>8月12日</td>
-                                <td>学会初期創設メンバー</td>
+                                <td>創設メンバー（ダ・ヴィンチら）</td>
                                 <td>ポルト・パラディーゾの要塞（現在のフォートレス）にて、志を同じくする者たちによってS.E.A.が正式に設立されます。</td>
                             </tr>
                             <tr>
-                                <td>1546年</td>
-                                <td>12月14日</td>
-                                <td>T・ブラーエ</td>
-                                <td>名誉会員となる偉大な天文学者ティコ・ブラーエが誕生します。</td>
-                            </tr>
-                            <tr>
-                                <td>1596年</td>
-                                <td>1月27日</td>
-                                <td>F・ドレイク</td>
-                                <td>名誉会員である私掠船長フランシス・ドレイクがその生涯を閉じます。</td>
-                            </tr>
-                            <tr>
-                                <td>1601年</td>
-                                <td>10月24日</td>
-                                <td>T・ブラーエ</td>
-                                <td>ティコ・ブラーエが天へ召されます。</td>
-                            </tr>
-                            <tr>
-                                <td>1850年</td>
-                                <td>年内</td>
-                                <td>カメリア・ファルコ</td>
-                                <td>カメリアが、父セリーノから後にソアリンの舞台となる「飛行の驚異博物館」の館長職を譲り受けます。</td>
-                            </tr>
-                            <tr>
                                 <td>1851年</td>
-                                <td>年内</td>
-                                <td>カメリア、ロブステッリ</td>
-                                <td>当時の会長ロブステッリの粋な推薦によって、カメリアが学会初の女性会員として迎えられます。</td>
-                            </tr>
-                            <tr>
-                                <td>1872年</td>
-                                <td>年内</td>
-                                <td>ハイタワー三世、ネモ船長</td>
-                                <td>ハイタワー三世が中国の長江を遠征する裏で、ネモ船長はプロメテウス山地下で未知の生命体の卵を発見していました。</td>
-                            </tr>
-                            <tr>
-                                <td>1875年</td>
-                                <td>年内</td>
-                                <td>カメリア・ファルコ</td>
-                                <td>カメリアが75歳で旅立ちます。遺言により、博物館の運営はS.E.A.へと託されました。</td>
-                            </tr>
-                            <tr>
-                                <td>1877年</td>
-                                <td>年内</td>
-                                <td>ジョージ・ハイタワー</td>
-                                <td>ジョージがニューオーリンズに、のちに亡霊たちの館（ホーンテッドマンション）となる美しい邸宅を購入します。</td>
-                            </tr>
-                            <tr>
-                                <td>1880年</td>
-                                <td>年内</td>
-                                <td>ハイタワー、ブリオン、チャンドラー</td>
-                                <td>ハイタワー三世がアフリカを荒らし回る一方、チャンドラーはブリオンに対し、山を壊す強欲な採掘を止めるよう手紙で警告を送っていました。</td>
-                            </tr>
-                            <tr>
-                                <td>1881年</td>
-                                <td>年内</td>
-                                <td>ハイタワー三世</td>
-                                <td>ハイタワー三世がオセアニア遠征へと向かいます。</td>
-                            </tr>
-                            <tr>
-                                <td>1882年</td>
-                                <td>2月15日〜年内</td>
-                                <td>チャンドラー、ハイタワー、ミスティック</td>
-                                <td>炭鉱強盗犯ミロ・ジョーンズが逃走。ミスティック卿がモロッコ旅行へ。チャンドラーはカナダのエラホ川を遠征します。</td>
-                            </tr>
-                            <tr>
-                                <td>1883年</td>
-                                <td>年内</td>
-                                <td>ハイタワー三世</td>
-                                <td>ハイタワー三世がロストリバーデルタの神殿を襲撃し、神聖な『水の神の頭部』を略奪します。同年、あのクラカトア火山が大噴火を起こしました。</td>
-                            </tr>
-                            <tr>
-                                <td>1888年</td>
-                                <td>6月5日</td>
-                                <td>フォールズ博士、テイシェイラ</td>
-                                <td>カンボジアのジャングルの奥深くで、フォールズ博士らが『シャーリー寺院』を発見します。</td>
+                                <td>カメリア・ファルコ, ロブステッリ</td>
+                                <td>カメリアが学会初の女性会員として迎えられ、ソアリンの舞台となる「飛行の驚異博物館」の歴史が動き出します。</td>
                             </tr>
                             <tr>
                                 <td>1899年</td>
-                                <td>12月31日</td>
-                                <td>ハイタワー三世、ミスティック、オーシャニア</td>
-                                <td>ホテル・ハイタワーでの豪華な会合の夜。ハイタワー三世は、呪いの偶像シリキ・ウトゥンドゥの怒りに触れてエレベーターから姿を消してしまいました。</td>
-                            </tr>
-                            <tr>
-                                <td>1900年</td>
-                                <td>年内</td>
-                                <td>プレジャー、ミスティック</td>
-                                <td>ミスティック卿がパリ万博で電気馬車を発表し、自動車の祖ヘンリー・フォードにインスピレーションを与えます。プレジャーはキシミー川を遠征します。</td>
-                            </tr>
-                            <tr>
-                                <td>1901年</td>
-                                <td>年内</td>
-                                <td>カメリア、オーシャニア</td>
-                                <td>博物館でカメリア特別展を開催。オーシャニア船長が、キャスタウェイ・ケイ of 砂浜から伝説の黄金の剣を発見します。</td>
-                            </tr>
-                            <tr>
-                                <td>1903年</td>
-                                <td>年内</td>
-                                <td>フォールズ博士、ミスティック</td>
-                                <td>フォールズ博士がムベイ川を遠征。ミスティック卿はシベリアへと旅立ちます。</td>
-                            </tr>
-                            <tr>
-                                <td>1904年</td>
-                                <td>年内</td>
-                                <td>ブラウアーヒメル教授</td>
-                                <td>ブラウアーヒメル教授がペルーのウカヤリ川を走破します。</td>
-                            </tr>
-                            <tr>
-                                <td>1906年</td>
-                                <td>年内</td>
-                                <td>バテリスタ博士</td>
-                                <td>バテリスタ博士がアフリカのコンゴ川遠征を成功させます。</td>
-                            </tr>
-                            <tr>
-                                <td>1907年</td>
-                                <td>年内</td>
-                                <td>ブリュー船長</td>
-                                <td>ジュール・ヴェルヌの思想に大きな影響を受けた、空前の巨大飛行船「ハイペリオン号」が完成します。</td>
+                                <td>ハイタワー三世, ミスティック, オーシャニア</td>
+                                <td>ホテル・ハイタワーにてS.E.A.メンバーが揃う最後の夜。ハイタワー三世が『シリキ・ウトゥンドゥ』の怒りに触れてエレベーターから失踪します。</td>
                             </tr>
                             <tr>
                                 <td>1908年</td>
-                                <td>年内</td>
-                                <td>ミスティック、アルバート</td>
-                                <td>アルバートがエッフェル塔でいたずら騒動を起こす中、美しい屋敷『ミスティック・マナー』が一般に公開されました。</td>
-                            </tr>
-                            <tr>
-                                <td>1909年</td>
-                                <td>年内</td>
-                                <td>プレジャー、ミスティック</td>
-                                <td>プレジャーがメキシコで不思議な幻視を体験。バリ島に伝わるオルゴールがミスティック卿の手に渡ります。</td>
+                                <td>ヘンリー・ミスティック, アルバート</td>
+                                <td>ヘンリー・ミスティック卿が、収集品を一般公開する『ミスティック・マナー』を一般向けに公開します。</td>
                             </tr>
                             <tr>
                                 <td>1938年</td>
-                                <td>年内</td>
-                                <td>モス博士、コン・チュウノスケ</td>
-                                <td>チュウノスケ博士が、フォールズ博士の孫娘と出会い、スリリングなジャングルナビゲーションのVIPツアーに参加します。</td>
+                                <td>モス博士, コン・チュウノスケ</td>
+                                <td>コン・チュウノスケ博士らが、密林の奥深くで驚異的な学術調査を繰り広げ、近代S.E.A.のネットワークを盤石なものにしました。</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <!-- 面白コラムセクション -->
+                <h3 class="sub-heading" style="margin-top: 40px;">★ Epics of S.E.A. — 世界の港に遺された『6つの歴史的真実と創造の記録』</h3>
+                <div style="background: var(--accent-copper-muted); border: 1px solid var(--border-copper); padding: 28px; margin-top: 20px; box-shadow: inset 0 0 10px rgba(124,78,45,0.05);">
+                    
+                    <h4 style="font-family: 'Noto Serif JP', serif; font-size: .85rem; color: var(--accent-copper); font-weight: 600; margin-bottom: 8px;">1. 港の大地主ザンビーニ家と、ミラコスタへと受け継がれた「拡張の軌跡」</h4>
+                    <p style="font-size: .78rem; color: var(--text-muted); line-height: 2; margin-bottom: 24px; text-align: justify;">
+                        メディテレーニアンハーバーを訪れると、堂々とそびえ立つ「フォートレス・エクスプロレーション」。もともとここはスペイン国王カルロス1世の要塞でしたが、1538年にS.E.A.に譲渡されます。
+                        これに強い感銘を受けたのが、この港の大地主であった「ザンビーニ一族（ザンビーニ・ブラザーズ・リストランテの祖先）」でした。彼らは学者や探検家たちの研究を支援するため近くに別荘を建設し、それを度重なる拡張・改築を繰り返したことで、現在の美しい佇まいとなったのが、歴史あるホテル<strong>『東京ディズニーシー・ホテルミラコスタ』</strong>です。
+                        実際、ミラコスタの外壁はザンビーニ側からパラッツォ・カナル側に向けて、右へ行くほど築年数が新しくなり、装飾がだんだんと豪華になっていく「経年美化」のグラデーションがリアルに施されています。これは、港の発展を支えたザンビーニ家と、要塞に集う探検家たちの確かな交流を今に伝える物理的な証拠です。
+                    </p>
+
+                    <h4 style="font-family: 'Noto Serif JP', serif; font-size: .85rem; color: var(--accent-copper); font-weight: 600; margin-bottom: 8px;">2. ホテル・ハイタワーの倉庫に今も遺された「S.E.A.の極秘荷札」</h4>
+                    <p style="font-size: .78rem; color: var(--text-muted); line-height: 2; margin-bottom: 24px; text-align: justify;">
+                        1899年12月31日のあの夜、忽然と姿を消したハリソン・ハイタワー三世（<a href="bgs-tot.html" style="color: var(--accent-copper); text-decoration: underline;">➔ 関連資料：ホテル・ハイタワーの惨劇</a>）。
+                        彼が世界中から集めてきた美術品や略奪品が眠る「タワー・オブ・テラー」の秘密の倉庫（待機エリア）には、注意深く見るといくつかの荷台や木箱に<strong>「S.E.A.（探検家・冒険家学会）」</strong>の宛先ラベルや、学会のスタンプ、送り主のサインが残されています。ハイタワー三世は学会の強大な権力や公式ルート、輸送ルートを利用して、ロストリバーデルタやアフリカから大量の貴重な美術品をニューヨークへと不正に密輸していました。
+                    </p>
+
+                    <h4 style="font-family: 'Noto Serif JP', serif; font-size: .85rem; color: var(--accent-copper); font-weight: 600; margin-bottom: 8px;">3. 「紳士」と「略奪者」の冷徹な不和 — 肖像画に遺された確執の眼光</h4>
+                    <p style="font-size: .78rem; color: var(--text-muted); line-height: 2; margin-bottom: 24px; text-align: justify;">
+                        香港ディズニーランド『ミスティック・マナー』の待合列にひっそりと飾られている、有名な「1899年のS.E.A.集合肖像画」。この絵の中で、呪いの偶像を自慢げに掲げるハイタワー三世のすぐ隣で、ヘンリー・ミスティック卿は非常に不快そうな、冷ややかな視線を彼に送っています。
+                        文化財をこよなく愛し、現地の人々に敬意を払って物々交換で収集する紳士的なミスティック卿と、武力や権力で略奪を繰り返すハイタワー三世。二人の間には根深い思想の対立（確執）があり、その冷徹な不和の瞬間がそのまま絵画として遺されています。この不穏な記録が残されたわずか数時間後、ハイタワー三世は失踪を遂げることになります。
+                    </p>
+
+                    <h4 style="font-family: 'Noto Serif JP', serif; font-size: .85rem; color: var(--accent-copper); font-weight: 600; margin-bottom: 8px;">4. 鉱山会社をめぐる友情と、暴走の引き金となった「一通の警告書」</h4>
+                    <p style="font-size: .78rem; color: var(--text-muted); line-height: 2; margin-bottom: 24px; text-align: justify;">
+                        東京ディズニーランドの「ビッグサンダー・マウンテン」（<a href="bgs-btm.html" style="color: var(--accent-copper); text-decoration: underline;">➔ 関連資料：ビッグサンダー・マウンテンの全貌</a>）の駅舎は、鉱山会社「ビッグサンダー・マイニング・カンパニー」のものです。この会社を設立した実業家バーナバス・T・ブリオンは、学会の友人である天才発明家ジェイソン・チャンドラーから大型の削岩機を譲り受けて採掘を行っていました。
+                        フロリダの同鉱山に残された、チャンドラーからブリオン宛ての直筆の手紙には、『これ以上山を掘り進めると、精霊が怒り狂い、恐ろしい災いをもたらす。ただちに採掘作業を停止せよ』という強い警告が記されています。しかし、ブリオン社長はその忠告を無視。警告通り、精霊の怒りを買った金鉱山は廃坑となり、無人の列車が今も暴走し続けることになりました。この一通の手紙は、各地の鉱山会社のつながりを示す、極めて重要な歴史資料です。
+                    </p>
+
+                    <h4 style="font-family: 'Noto Serif JP', serif; font-size: .85rem; color: var(--accent-copper); font-weight: 600; margin-bottom: 8px;">5. カメリア・ファルコの遺産と、大空への夢を紡いだハヤブサ「アレッタ」の絆</h4>
+                    <p style="font-size: .78rem; color: var(--text-muted); line-height: 2; margin-bottom: 24px; text-align: justify;">
+                        1851年に女性として初めてS.E.A.正会員に認められたカメリア・ファルコ。彼女の生誕100周年を記念した特別展が開催されている「ファンタスティック・フライト・ミュージアム」（<a href="bgs-soarin.html" style="color: var(--accent-copper); text-decoration: underline;">➔ 関連資料：ファンタスティック・フライト・ミュージアム</a>）の展示ロビーには、彼女の美しい肖像画が飾られています。
+                        彼女の肩に静かに羽を休めているのは、最愛の相棒であり、生涯のミューズであったメスのはやぶさ『アレッタ』です。カメリアはアレッタの「自由に大空を滑空する翼の構造」を科学的に分析したことで、伝説の空飛ぶ乗り物『ドリームフライヤー』を完成させました。カメリア亡き後も、その大空への夢はアレッタの羽ばたきとともに、私たちの元へと受け継がれています。
+                    </p>
+
+                    <h4 style="font-family: 'Noto Serif JP', serif; font-size: .85rem; color: var(--accent-copper); font-weight: 600; margin-bottom: 8px;">6. 「ザ・レオナルドチャレンジ」：要塞に隠された、ダ・ヴィンチの入会試練</h4>
+                    <p style="font-size: .78rem; color: var(--text-muted); line-height: 2; margin-bottom: 0; text-align: justify;">
+                        東京ディズニーシーの要塞「フォートレス・エクスプロレーション」で挑戦できる「ザ・レオナルドチャレンジ」は、単なる知恵比べではありません。
+                        これは、学会の精神的支柱であり、偉大な名誉会員であるレオナルド・ダ・ヴィンチが、後世の探検家たちの知性と勇気を試すために遺した「学会への入会試験」そのものです。要塞に隠された様々な科学の仕掛けを解き明かし、見事にダ・ヴィンチからのミッションを解決すると、特別なスタンプが押され、「S.E.A.の正式なメンバー」として認められます。私たちは単なる「訪問者」ではなく、歴史に名を連ねる学会の一員として冒険を共にする特権を与えられているのです。
+                    </p>
                 </div>
             </section>
 
@@ -973,7 +856,7 @@
             <section class="article-section reveal" id="paddles">
                 <h2 class="section-heading">IV. Ceremonial Paddles — 12本の儀式用パドル</h2>
                 <p>
-                    アナハイム（カリフォルニア）の賑やかなレストラン『ザ・トロピカル・ハイドアウェイ』を訪れた際、壁をよく見ると、美しく飾られた12本の木製パドル（オール）が並んでいます。これは、探検家たちが命がけで世界の河川を走破し、その功績を学会に公式認定させた証です。彼らが駆け抜けた川の名前と、歴史的な遠征の年を覗いてみましょう。
+                    S.E.A.の影響力は、東京のみならず太平洋を越えた地でもはっきりと目で確認することができます。例えば、カリフォルニア（アナハイム）の賑やかな港のレストラン『ザ・トロピカル・ハイドアウェイ』を訪れると、その壁面に美しく飾られた「12本の木製パドル（オール）」が並んでいるのを見ることができます。これは、歴代の探検家たちが命がけで世界の河川を走破し、その偉大な功績を学会に認めさせた揺るぎない証拠です。彼らが駆け抜けた川の名前と、過酷な遠征の年をここに記録します。
                 </p>
                 
                 <div class="archive-table-wrapper">
@@ -1150,7 +1033,7 @@
                         <p>フォールズ博士が設立した『ジャングル・ナビゲーション・カンパニー』のオフィスです。現在は観光船ツアーとなり、陽気なスキッパーたちがジャングルの野生動物や、インディ・ジョーンズの調査チームの残骸をジョークを交えて案内してくれます。</p>
 
                         <h3 class="sub-heading">スキッパー・キャンティーン</h3>
-                        <p>JNCのスキッパーたちが憩うレストランですが、本棚の隠し扉の奥に一歩入ると、かつてS.E.A.の会員たちが秘密の会合に用いた非公式の会議室が現れます。棚には、彼らが密議の際に被っていたネームタグ入りのトルコ帽（フェズ帽）が14個、静かに並んでいます。</p>
+                        <p>JNC of スキッパーたちが憩うレストランですが、本棚の隠し扉の奥に一歩入ると、かつてS.E.A.の会員たちが秘密の会合に用いた非公式の会議室が現れます。棚には、彼らが密議の際に被っていたネームタグ入りのトルコ帽（フェズ帽）が14個、静かに並んでいます。</p>
 
                         <h3 class="sub-heading">フロンティアランド：ビッグサンダー・マウンテン</h3>
                         <p>フロンティアランドにある、呪われた雷山です。強欲なブリオン社長が黄金を掘り進める中、学会員のチャンドラーが『これ以上掘り進めては山の精霊が怒り狂う。ただちに掘削を止めよ』と手紙で警告を送りました。その警告を無視した結果、私たちの乗る列車は暴走することになります。</p>
@@ -1160,7 +1043,7 @@
                         </div>
 
                         <h3 class="sub-heading">タイフーン・ラグーン：ミス・アドベンチャー・フォールズ</h3>
-                        <p>タイフーン・ラグーンにあるウォータースライダー。オーシャニア船長の愛船『M.S.ソルティ』が激しい嵐で丘の上に座礁してしまった姿を見ることができます。四散した彼女のコレクションやサルベージ用プロップの中をスリリングに滑り抜けます。</p>
+                        <p>タイフーン・ラグーンにあるウォータースライダー。オーシャニア船長の愛船『M.S.ソルティ』が激しい嵐で丘の上に座礁してしまった姿を見ることができます。保存された彼女のコレクションやサルベージ用プロップの中をスリリングに滑り抜けます。</p>
 
                         <h3 class="sub-heading">ディズニー・スプリングス：ジョック・リンゼイズ・ハンガーバー</h3>
                         <p>インディ・ジョーンズに登場するパイロット、ジョックの飛行機格納庫です。ジョックは冒険の途中で学会員たちと出会い、手に入れたS.E.A.の旗や、旅のお土産を店内の天井や壁いっぱいに飾っています。</p>
@@ -1184,7 +1067,7 @@
                         <p>探検家たちが過酷な川下り遠征を無事に終えた記念として、自らの氏名と遠征完了年を刻んだ「12本の儀式用パドル」が壁に整然と展示されている。学会認定遠征ルートの物理的証明書としての価値を持つ。</p>
 
                         <h3 class="sub-heading">カリフォルニア：ベンガル・バーベキュー</h3>
-                        <p>アドベンチャーランドのテラス。ブラウアーヒメル教授宛ての消印がついた郵便物や、古いコダックのカメラバッグが置かれており、彼がここを拠点にして、遺跡での調査活動を行っていた息吹が伝わってきます。</p>
+                        <p>アドベンチャーランド of テラス。ブラウアーヒメル教授宛ての消印がついた郵便物や、古いコダックのカメラバッグが置かれており、彼がここを拠点にして、遺跡での調査活動を行っていた息吹が伝わってきます。</p>
 
                         <h3 class="sub-heading">パリ：カフェ・ハイペリオン / ハティのピザ・アウトポスト</h3>
                         <p>ディズニーランド・パリの未来の港に、ブリュー船長が完成させた飛行船『ハイペリオン号』の格納庫。かつてこの船を操縦したクルーたちが胸に着けていた、本物のS.E.A.バッジを見つけることができます。</p>
@@ -1285,7 +1168,7 @@
         aya: {
             en: "Aya Koame-Beausoleil",
             ja: "アヤ・コアメ＝ボーシエル",
-            desc: "カリフォルニアのツリーハウスで星を見つめる一家の娘と、星空の観測データを手紙でやり取りしている気鋭の女性天文学者です。夜空の果てに無限 of ロマンを見出し、その名前はアドベンチャーランドの『記念オール』にも誇らしく刻まれています。"
+            desc: "カリフォルニアのツリーハウスで星を見つめる一家の娘と、星空の観測データを手紙でやり取りしている気鋭の女性天文学者です。夜空の果てに無限のロマンを見出し、その名前はアドベンチャーランドの『記念オール』にも誇らしく刻まれています。"
         },
         pleasure: {
             en: "Meriweather Adam Pleasure",
