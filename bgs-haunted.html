@@ -314,6 +314,8 @@
     .footer-link:hover { color: var(--bordeaux); border-bottom-color: var(--bordeaux); }
 
     :focus-visible { outline: 2px solid var(--bordeaux); outline-offset: 3px; }
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
   </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}
 </style></noscript>
@@ -351,7 +353,7 @@
     </ul>
   </nav>
 
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1350/1800;--maxw:480px">
     <img src="haunted-exterior.jpg" alt="ホーンテッドマンションの外観" width="800" height="450" decoding="sync" loading="eager" fetchpriority="high">
   </div>
 

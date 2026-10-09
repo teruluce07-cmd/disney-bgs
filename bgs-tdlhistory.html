@@ -500,7 +500,9 @@
     ============================================================ */
     :focus-visible { outline: 2px solid var(--bordeaux); outline-offset: 3px; }
   .site-share{max-width:1100px;margin:32px auto 18px;padding:0 20px;text-align:center;position:relative;z-index:1}.site-share-link{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:11px 22px;border:1px solid var(--ink,#1c1209);background:var(--ink,#1c1209);color:var(--paper,#f5edd8);font:inherit;font-size:.9rem;letter-spacing:.04em;text-decoration:none;transition:opacity .2s,transform .2s}.site-share-link:hover{opacity:.82;transform:translateY(-1px)}.site-share-link:focus-visible{outline:2px solid var(--bordeaux,#8a2535);outline-offset:3px}.site-share-note{margin-top:8px;font-size:.72rem;opacity:.72}
-</style>
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
+  </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 </head>
 <body>
@@ -546,7 +548,7 @@
       高橋の交渉術は、冷徹な利害計算などではなく、腹を割った熱い血の通うものでした。彼は浦安の町に深く入り込み、漁民たちと連日連夜にわたって大酒を酌み交わしました。料亭に組合の幹部たちを招き、人としての絶対的な信頼関係を築き上げていったのです。この剛腕かつ温かい膝詰め談判により、交渉の席が徐々に設けられ、その後の約10年にわたるタフな補償交渉を経て、全面妥結へと至る偉大な一歩を踏み出すことになりました。
     </p>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1800/1350">
       <img src="tdl-entrance-sunset.jpg" alt="東京ディズニーランド エントランスから臨むシンデレラ城と夕景" width="480" height="640" decoding="async" loading="lazy">
     </div>
 
@@ -626,7 +628,7 @@
       20世紀初頭のアメリカの温かい木造建築を再現しながらも、なぜ東京だけがその「ストリート」の名称を廃したのでしょうか。そこには、日本の美しき「四季」と、時折訪れる過酷な「雨」に対応するための、イマジニアたちの精緻な設計の工夫がありました。
     </p>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="tdl-castle-ribbon.jpg" alt="ワールドバザールからデコレーション越しに望むシンデレラ城の景観" width="480" height="640" decoding="async" loading="lazy">
     </div>
 
@@ -651,7 +653,7 @@
       1983年の誕生から現在に至るまで、東京ディズニーランドは「永遠に完成しない」というウォルト・ディズニーの約束を忠実に守り続けてきました。そしてその進化が最も華やかに体現されているのが、日々パークの道を塗り変えるエンターテインメント、すなわちパレードの変遷です。
     </p>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="tdl-rainbow-dancer.jpg" alt="レインボーカラーの華やかなパレードダンサー" width="480" height="640" decoding="async" loading="lazy">
     </div>
 
@@ -660,7 +662,7 @@
       近年、パークの昼を彩るパレードとして多くのゲストを魅了している「ディズニー・ハーモニー・イン・カラー」。このパレードは、まさに「色鮮やかな調和（ハーモニー）」をテーマにしています。ダンサーたちの衣装に見られる、一切の隔たりのない「虹色のグラデーション」は、多様な個性が重なり合い、共に新しい未来を描いていくという現代のディズニーが誇る平和のメッセージそのものです。
     </p>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1012/1800;--maxw:360px">
       <img src="tdl-ep-chipdale.jpg" alt="エレクトリカルパレードのフロート上でポーズをとるチップとデール" width="480" height="640" decoding="async" loading="lazy">
     </div>
 
@@ -759,7 +761,8 @@
     document.getElementById('modalNameJa').textContent = d.ja;
     document.getElementById('modalDesc').textContent = d.desc;
     modalBg.classList.add('open');
-    modalClose.focus();
+    /* 表示アニメーション中はまだ非表示扱いのため、少し待ってからフォーカスを移す */
+    setTimeout(() => { if (modalBg.classList.contains('open')) modalClose.focus(); }, 60);
   }
   function closeModal() { modalBg.classList.remove('open'); }
 

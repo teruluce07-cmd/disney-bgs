@@ -597,7 +597,9 @@
     :focus-visible { outline: 2px solid var(--bordeaux); outline-offset: 3px; }
   
   .site-share{max-width:1100px;margin:32px auto 18px;padding:0 20px;text-align:center;position:relative;z-index:1}.site-share-link{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:11px 22px;border:1px solid var(--ink,#1c1209);background:var(--ink,#1c1209);color:var(--paper,#f5edd8);font:inherit;font-size:.9rem;letter-spacing:.04em;text-decoration:none;transition:opacity .2s,transform .2s}.site-share-link:hover{opacity:.82;transform:translateY(-1px)}.site-share-link:focus-visible{outline:2px solid var(--bordeaux,#8a2535);outline-offset:3px}.site-share-note{margin-top:8px;font-size:.72rem;opacity:.72}
-</style>
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
+  </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 </head>
 <body>
@@ -647,7 +649,7 @@
       当時、夜間のパーク演出といえば簡素なイルミネーションや花火が主流であり、自律走行するフロート群がルートを巡る「夜間パレード」自体が極めて革新的なものでした。特に、暗闇を克服すべき障害ではなく、光を引き立たせるための演出上のキャンバスとして積極的に利用するという発想の先進性は、ディズニーエンターテインメント史における偉大な転換点であったと言われています。
     </p>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1012/1800;--maxw:360px">
       <img src="tdl-ep-bluefairy.jpeg" alt="美しく夜空を照らすブルーフェアリーのフロート" width="480" height="640" decoding="async" loading="lazy">
     </div>
 
@@ -721,7 +723,7 @@
       現在のドリームライツでは、LEDや光ファイバーへの移行によって電球の数は100万個を超えましたが、そのひとつひとつが「どの角度から、どの距離で見ても美しく見えるか」を徹底的に検証されて配置されています。技術は進化しても、光で人を幸せにしたいというイマジニアの哲学は、初演の夜からしっかりと受け継がれています。
     </p>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1012/1800;--maxw:360px">
       <img src="tdl-ep-donald.jpeg" alt="楽しげな光に彩られたドナルドたちのフロート" width="480" height="640" decoding="async" loading="lazy">
     </div>
 
@@ -754,7 +756,7 @@
       そして時が流れ、東京ディズニーランドの「ドリームライツ」へと受け継がれる際、この楽しげな電子音の背景に、各ディズニー映画の物語を繊細かつドラマチックに描き出す「フルオーケストラ」の豊かな響きが重ね合わされました。電子音の持つどこか無邪気なワクワク感と、交響楽が織りなす重厚な美しさが美しく溶け合うハイブリッド編曲により、東京独自の高い芸術性を備えたエンターテインメントへと昇華されたのです。
     </p>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="tdl-ep-chipdale.jpeg" alt="チップとデールを乗せてきらめく気球のフロート" width="480" height="640" decoding="async" loading="lazy">
     </div>
   </section>
@@ -830,7 +832,7 @@
       パレードの最後尾にゆっくりと現れるスポンサーフロート。そこに記された「BIPROGY」のロゴマークは、長年にわたりこの夜の夢を支え続けてきた、単独スポンサーの技術と信頼の象徴です。東京ディズニーランドの長い歴史の中で、この最後尾のロゴが見える瞬間は、ゲストにとって「パレードがお開きになる（魔法の余韻に包まれる）」ことを告げる、東京版ならではの温かな風景として親しまれています。
     </div>
 
-    <div class="photo-frame photo-frame-portrait reveal">
+    <div class="photo-frame photo-frame-portrait reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="tdl-ep-train.jpeg" alt="まばゆい光を放ち先頭を走るドリームライツ・トレイン" width="480" height="640" decoding="async" loading="lazy">
     </div>
   </section>
@@ -1101,7 +1103,8 @@
     document.getElementById('modalNameJa').textContent = d.ja;
     document.getElementById('modalDesc').textContent = d.desc;
     modalBg.classList.add('open');
-    modalClose.focus();
+    /* 表示アニメーション中はまだ非表示扱いのため、少し待ってからフォーカスを移す */
+    setTimeout(() => { if (modalBg.classList.contains('open')) modalClose.focus(); }, 60);
   }
   function closeModal() { modalBg.classList.remove('open'); }
 

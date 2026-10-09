@@ -447,7 +447,9 @@
   .site-share-link:hover{opacity:.82;transform:translateY(-1px)}
   .site-share-link:focus-visible{outline:2px solid var(--bordeaux,#8a2535);outline-offset:3px}
   .site-share-note{margin-top:8px;font-size:.72rem;opacity:.72}
-</style>
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
+  </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 </head>
 <body>
@@ -480,7 +482,7 @@
   </nav>
 
   <!-- 1枚目：城の外観 -->
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1440/1800;--maxw:512px">
     <img src="bb-castle.jpeg" alt="Beast's Castle Exterior" width="800" height="450" decoding="sync" loading="eager" fetchpriority="high">
   </div>
 
@@ -492,7 +494,7 @@
   </section>
 
   <!-- 2枚目：不気味な森の入り口 -->
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1350/1800;--maxw:480px">
     <img src="bb-entrance.jpeg" alt="Maurice's Cottage and Forest Path" width="800" height="450" decoding="async" loading="lazy">
   </div>
 
@@ -525,7 +527,7 @@
   </section>
 
   <!-- 3枚目：大階段 -->
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1440/1800;--maxw:512px">
     <img src="bb-staircase.jpeg" alt="Enchanted Castle Grand Staircase" width="800" height="450" decoding="async" loading="lazy">
   </div>
 
@@ -608,7 +610,7 @@
   </section>
 
   <!-- 4枚目：ボールルームのダンス -->
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1350/1800;--maxw:480px">
     <img src="bb-dance.jpeg" alt="Belle and the Beast Dancing" width="800" height="450" decoding="async" loading="lazy">
   </div>
 

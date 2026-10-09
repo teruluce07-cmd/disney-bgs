@@ -416,7 +416,9 @@
     :focus-visible { outline: 2px solid var(--bordeaux); outline-offset: 3px; }
   
   .site-share{max-width:1100px;margin:32px auto 18px;padding:0 20px;text-align:center;position:relative;z-index:1}.site-share-link{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:11px 22px;border:1px solid var(--ink,#1c1209);background:var(--ink,#1c1209);color:var(--paper,#f5edd8);font:inherit;font-size:.9rem;letter-spacing:.04em;text-decoration:none;transition:opacity .2s,transform .2s}.site-share-link:hover{opacity:.82;transform:translateY(-1px)}.site-share-link:focus-visible{outline:2px solid var(--bordeaux,#8a2535);outline-offset:3px}.site-share-note{margin-top:8px;font-size:.72rem;opacity:.72}
-</style>
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
+  </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 </head>
 <body>
@@ -447,7 +449,7 @@
     </ul>
   </nav>
 
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1800/1350">
     <img src="indy-temple.jpeg" alt="Temple of the Crystal Skull Exterior" width="800" height="450" decoding="sync" loading="eager" fetchpriority="high">
   </div>
 
@@ -463,7 +465,7 @@
     <h2 class="article-h2">II. 脱出用水上飛行機と、インディ博士の「足跡」</h2>
     <p class="article-p">ロストリバーに浮かぶ、かつてインディ博士がこの地へやってくる際（そして危険から逃れる際）に使用した1機の水上飛行機。写真にしっかりと捉えられているこの機体には、ジョージ・ルーカスとディズニーの粋な「映画の枠を超えた仕掛け」が隠されています。</p>
     
-    <div class="photo-frame reveal">
+    <div class="photo-frame reveal" style="--ar:1800/1350">
       <img src="indy-plane.jpeg" alt="Dr. Jones Escape Floatplane" width="800" height="450" decoding="async" loading="lazy">
     </div>
 
@@ -473,7 +475,7 @@
          さらに驚くべきことに、映画『レイダース/失われたアーク《聖櫃》』の冒頭で、原住民の襲撃から逃れるためにインディ博士が飛び乗ったあの水上飛行機の登録番号が、実際に「OB-C3PO」だったのです。映画とアトラクション、ふたつの時間軸がこの機体によってひとつに結ばれています。</p>
     </div>
 
-    <div class="photo-frame reveal">
+    <div class="photo-frame reveal" style="--ar:1477/1108">
       <img src="indy-footprint.jpeg" alt="Dr. Indiana Jones Footprint in Mud" width="800" height="450" decoding="async" loading="lazy">
     </div>
 
@@ -485,11 +487,11 @@
     <h2 class="article-h2">III. 魔宮の罠と「生贄の祭壇」</h2>
     <p class="article-p">観光用ジープに乗り込んだ私たちは、ジョーンズ博士の警告「守護神マーラを怒らせるな！」という言葉もむなしく、魔宮の最深部へと迷い込んでしまいます。行く手を阻むのは、何千年も張り巡らされた古代の防衛システムと、クリスタルスカルの呪いです。</p>
 
-    <div class="photo-frame reveal">
+    <div class="photo-frame reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="indy-queue.jpeg" alt="Temple Inner Bridge Queue" width="800" height="450" decoding="async" loading="lazy">
     </div>
 
-    <div class="photo-frame reveal">
+    <div class="photo-frame reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="indy-altar.jpeg" alt="Terrifying Altar of Sacrifice" width="800" height="450" decoding="async" loading="lazy">
     </div>
 
