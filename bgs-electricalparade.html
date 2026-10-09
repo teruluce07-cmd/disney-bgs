@@ -595,6 +595,17 @@
        FOCUS STYLES
     ============================================================ */
     :focus-visible { outline: 2px solid var(--bordeaux); outline-offset: 3px; }
+  
+    /* related stories + SNS (added) */
+    .xrel{max-width:720px;margin:56px auto 0;padding:28px 0 0;border-top:1px solid rgba(128,128,128,.35);text-align:center;font-size:.85rem;line-height:1.8}
+    .xrel-h{margin:0 0 14px;font-size:.7rem;letter-spacing:.18em;opacity:.7}
+    .xrel-list{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:6px;align-items:center}
+    .xrel-list a{display:inline-flex;align-items:center;gap:10px;min-height:40px;color:inherit;text-decoration:none;border-bottom:1px solid rgba(128,128,128,.35);padding-bottom:2px}
+    .xrel-list a:hover{border-bottom-color:var(--gold,#8A6820);color:var(--gold,#8A6820)}
+    .xrel-tag{font-size:.6rem;letter-spacing:.12em;padding:1px 7px;border:1px solid rgba(128,128,128,.5);border-radius:2px;opacity:.8}
+    .xrel-sns{margin:0;font-size:.78rem;opacity:.85}
+    .xrel-sns a{color:inherit;border-bottom:1px solid rgba(128,128,128,.5);text-decoration:none}
+    .xrel-sns a:hover{color:var(--gold,#8A6820);border-bottom-color:var(--gold,#8A6820)}
   </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 </head>
@@ -978,6 +989,16 @@
       </div>
     </div>
   </section>
+
+  <aside class="xrel" aria-label="関連記事">
+    <p class="xrel-h">関連記事 — RELATED STORIES</p>
+    <ul class="xrel-list">
+      <li><a href="bgs-worldbazaar.html"><span class="xrel-tag">TDL</span>ワールドバザール</a></li>
+      <li><a href="bgs-tdlhistory.html"><span class="xrel-tag">TDL</span>東京ディズニーランドの歴史</a></li>
+      <li><a href="cinderella-castle.html"><span class="xrel-tag">TDL</span>シンデレラ城</a></li>
+    </ul>
+    <p class="xrel-sns">Instagram <a href="https://www.instagram.com/teru_luce_" target="_blank" rel="noopener">@teru_luce_</a> もあわせてご覧ください。</p>
+  </aside>
 
   <div class="footer-link-wrap reveal">
     <a href="index.html" class="footer-link">← Back to Portal</a>
