@@ -291,6 +291,12 @@
       filter: grayscale(25%) sepia(20%) contrast(1.05) brightness(0.9);
       display: block;
     }
+    /* Preserve the full park map instead of cropping its edges. */
+    .photo-frame img[src="tds-map.jpg"] {
+      object-fit: contain;
+      background: var(--paper);
+      filter: none;
+    }
 
     /* ============================================================
        ARTICLE BODY
@@ -860,6 +866,7 @@
 
   /* Image protection */
   document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+    document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
 </script>
 </body>
 </html>
