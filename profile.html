@@ -253,6 +253,37 @@
       line-height: 1.8;
     }
 
+    .profile-intro {
+      margin: 26px 0 34px;
+      padding: 22px 18px 24px;
+      border-top: 1px solid var(--border-strong);
+      border-bottom: 1px solid var(--border-strong);
+      text-align: center;
+      background: rgba(255,252,245,0.28);
+    }
+    .profile-intro-kicker {
+      margin-bottom: 12px;
+      color: var(--bordeaux);
+      font-family: var(--f-type);
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      line-height: 1.7;
+    }
+    .profile-intro-text {
+      max-width: 540px;
+      margin: 0 auto;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      line-height: 2.1;
+      text-align: left;
+    }
+    .section-title span[lang="ja"] {
+      font-family: var(--f-jp);
+      font-size: 0.72em;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+    }
+
     .links-area {
       display: flex; flex-direction: column; gap: 12px;
       margin-top: 24px;
@@ -355,27 +386,32 @@
     </div>
   </header>
 
-  <h2 class="section-title reveal">Curator Identity</h2>
+  <section class="profile-intro reveal" aria-label="プロフィール紹介">
+    <p class="profile-intro-kicker">THE PERSON BEHIND THE ARCHIVE</p>
+    <p class="profile-intro-text">東京ディズニーリゾートの世界に広がる、物語や設定、空間づくりの魅力を記録しています。パークで感じた発見を大切にしながら、BGS Chroniclesを通して、背景にあるストーリーをわかりやすく紹介していきます。</p>
+  </section>
+
+  <h2 class="section-title reveal">Profile <span lang="ja">｜プロフィール</span></h2>
   <div class="info-list reveal">
     <div class="info-row">
       <div class="info-label">Born in</div>
-      <div class="info-value">2007 (18yo)</div>
+      <div class="info-value">2007年生まれ</div>
     </div>
     <div class="info-row">
       <div class="info-label">Base &amp; Pace</div>
-      <div class="info-value">関東在住<br>約3ヶ月に1度のペースでイン</div>
+      <div class="info-value">関東在住<br>パーク訪問は約3ヶ月に1度</div>
     </div>
     <div class="info-row">
-      <div class="info-label">Character</div>
+      <div class="info-label">Favorite Character</div>
       <div class="info-value">ドナルドダック</div>
     </div>
     <div class="info-row">
-      <div class="info-label">Favorite Area</div>
-      <div class="info-value">TDL: トゥモローランド<br>TDS: ポートディスカバリー</div>
+      <div class="info-label">Favorite Areas</div>
+      <div class="info-value">東京ディズニーランド：トゥモローランド<br>東京ディズニーシー：ポートディスカバリー</div>
     </div>
   </div>
 
-  <h2 class="section-title reveal">Gears</h2>
+  <h2 class="section-title reveal">Photography <span lang="ja">｜撮影機材</span></h2>
   <div class="info-list reveal">
     <div class="info-row">
       <div class="info-label">Main Camera</div>
@@ -387,7 +423,7 @@
     </div>
   </div>
 
-  <h2 class="section-title reveal">Connections</h2>
+  <h2 class="section-title reveal">Find Me <span lang="ja">｜SNS・リンク</span></h2>
   <div class="links-area reveal">
 
     <!-- Personal accounts -->
