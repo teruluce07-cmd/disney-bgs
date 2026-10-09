@@ -955,7 +955,10 @@
 .site-share-link:focus-visible{outline:2px solid var(--bordeaux,#8a2535);outline-offset:4px}
 .site-share-mark{font-family:Arial,sans-serif;font-weight:700;font-size:1.15rem;line-height:1;letter-spacing:0}
 .site-share-note{margin:10px 0 0;color:var(--muted,#7a6048);font-size:.72rem;letter-spacing:.04em;line-height:1.7}
-  </style>
+  
+    .last-edited { max-width:100%; margin:14px 0 0; padding:10px 0 0; border-top:1px solid var(--border); color:var(--muted); font-family:var(--f-type); font-size:.58rem; line-height:1.8; letter-spacing:.08em; text-align:center; opacity:.86; }
+    .last-edited time { font-family:var(--f-jp); letter-spacing:.04em; }
+</style>
 
   <script type="application/ld+json">
   {
@@ -1378,6 +1381,7 @@
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer reveal">
     <p class="footer-copy">&copy; 2026 TERU_LUCE_ &nbsp;·&nbsp; BGS Chronicles &nbsp;·&nbsp; All Rights Reserved</p>
+    <p class="last-edited">最終編集日：<time datetime="2026-10-09">2026年10月9日</time></p>
     <button class="footer-notice-btn" id="notice-trigger">Notes &amp; Contacts</button>
   </footer>
 
@@ -1491,7 +1495,7 @@
 </script>
 
 <section class="site-share" aria-label="この記事を共有"><a class="site-share-link" data-x-share href="https://x.com/intent/tweet" target="_blank" rel="noopener noreferrer" aria-label="このページをXで共有する"><span class="site-share-mark" aria-hidden="true">𝕏</span><span>この記事をXで共有</span></a><p class="site-share-note">このページをシェアする</p></section>
-<p class="last-edited" style="max-width:1100px;margin:28px auto 12px;padding:10px 20px;text-align:center;font-size:.78rem;letter-spacing:.04em;opacity:.72;">最終編集日：<time datetime="2026-10-09">2026年10月9日</time></p>
+
 <script>(function(){var b=document.querySelector('[data-x-share]');if(!b)return;var c=document.querySelector('link[rel="canonical"]');var u=c?c.href:window.location.href;var t=document.title||'BGS Chronicles';b.href='https://x.com/intent/tweet?text='+encodeURIComponent(t+' #BGSChronicles')+'&url='+encodeURIComponent(u);})();</script>
 </body>
 </html>
