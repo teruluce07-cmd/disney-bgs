@@ -7,10 +7,10 @@
   <meta name="description" content="東京ディズニーランド・ディズニーシーのアトラクションBGS（背景設定）の決定版。スプラッシュ・マウンテンやホーンテッドマンション、イッツ・ア・スモールワールドの都市伝説・歴史。">
   <meta name="author" content="TERU_LUCE_">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/index.html">
+  <link rel="canonical" href="https://teruluce07-cmd.github.io/disney-bgs/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://teruluce07-cmd.github.io/disney-bgs/index.html">
+  <meta property="og:url" content="https://teruluce07-cmd.github.io/disney-bgs/">
   <meta property="og:title" content="BGS Chronicles | 東京ディズニーリゾート バックグラウンドストーリー資料集">
   <meta property="og:description" content="TDL・TDSのBGS（背景設定）アーカイブ。スモワ・ホーンテッド・タワテラの都市伝説・歴史を深掘り。">
   <meta property="og:image" content="https://teruluce07-cmd.github.io/disney-bgs/tot-exterior.jpg">
@@ -136,14 +136,16 @@
     /* ============================================================
        REVEAL
     ============================================================ */
-    .reveal {
+    /* Keep content visible by default; animate only when JavaScript is available. */
+    .reveal { opacity: 1; transform: none; }
+    .js .reveal {
       opacity: 0; transform: translateY(16px);
       transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
     }
-    .reveal.on { opacity: 1; transform: none; }
+    .js .reveal.on { opacity: 1; transform: none; }
 
     @media (prefers-reduced-motion: reduce) {
-      .reveal { transition: none; opacity: 1; transform: none; }
+      .js .reveal { transition: none; opacity: 1; transform: none; }
     }
 
     /* ============================================================
@@ -1406,7 +1408,7 @@
 </div><!-- /site-wrap -->
 
 <!-- ===== MODAL ===== -->
-<div class="modal-wrap" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+<div class="modal-wrap" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true" inert>
   <div class="modal-panel">
     <button class="modal-close-btn" id="modal-close" aria-label="閉じる">✕ Close</button>
     <div class="modal-title" id="modal-title">Site Notes &amp; Contacts</div>
@@ -1419,6 +1421,9 @@
 </div>
 
 <script>
+  /* Mark JS availability so content remains visible if scripts fail. */
+  document.documentElement.classList.add('js');
+
   /* Reveal on scroll */
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -1443,16 +1448,61 @@
     });
   });
 
-  /* Modal */
+  /* Accessible modal */
   const modal = document.getElementById('modal');
-  document.getElementById('notice-trigger').addEventListener('click', () => modal.classList.add('open'));
-  document.getElementById('modal-close').addEventListener('click', () => modal.classList.remove('open'));
-  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.remove('open'); });
+  const modalTrigger = document.getElementById('notice-trigger');
+  const modalClose = document.getElementById('modal-close');
+  const modalPanel = modal.querySelector('.modal-panel');
+  let lastFocusedElement = null;
 
-  /* Image protection */
-  document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
-  document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+  function openModal() {
+    lastFocusedElement = document.activeElement;
+    modal.inert = false;
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    modalClose.focus();
+  }
+
+  function closeModal() {
+    if (!modal.classList.contains('open')) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.inert = true;
+    document.body.style.overflow = '';
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+      lastFocusedElement.focus();
+    }
+  }
+
+  modalTrigger.addEventListener('click', openModal);
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeModal();
+      return;
+    }
+    if (e.key === 'Tab') {
+      const focusable = modalPanel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) {
+        e.preventDefault();
+        modalPanel.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === modal)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
 </script>
 </body>
 </html>
