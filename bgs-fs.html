@@ -204,6 +204,12 @@
       box-shadow: inset 0 0 0 5px var(--paper), inset 0 0 0 6px var(--border-strong);
       margin: 40px 0;
     }
+    .photo-frame-portrait {
+      aspect-ratio: 3/4;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
     .photo-frame img {
       width: 100%; height: 100%;
       object-fit: cover;
@@ -655,8 +661,8 @@
     </ul>
   </nav>
 
-  <div class="photo-frame reveal">
-    <img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" width="800" height="450" decoding="async" loading="eager" fetchpriority="high">
+  <div class="photo-frame photo-frame-portrait reveal">
+    <img src="IMG_1070_Original.jpeg" alt="ファンタジースプリングス" width="1350" height="1800" decoding="async" loading="eager" fetchpriority="high">
   </div>
   <p class="photo-caption reveal">Fantasy Springs — Tokyo DisneySea</p>
 
