@@ -80,7 +80,7 @@
     img {
       -webkit-user-select: none; user-select: none;
       -webkit-touch-callout: none;
-      pointer-events: none;
+      pointer-events: auto;
       -webkit-user-drag: none;
     }
 
@@ -1423,6 +1423,14 @@
 <script>
   /* Mark JS availability so content remains visible if scripts fail. */
   document.documentElement.classList.add('js');
+
+  /* Deter casual image saving (not a security boundary). */
+  document.addEventListener('contextmenu', event => {
+    if (event.target instanceof HTMLImageElement) event.preventDefault();
+  }, true);
+  document.addEventListener('dragstart', event => {
+    if (event.target instanceof HTMLImageElement) event.preventDefault();
+  }, true);
 
   /* Reveal on scroll */
   const io = new IntersectionObserver(entries => {
