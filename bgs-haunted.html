@@ -215,7 +215,7 @@
       box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 5px var(--border-strong);
       margin: 48px 0;
     }
-    .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(25%) sepia(20%) contrast(1.05) brightness(0.9); display: block; }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(6%) sepia(8%) contrast(1.03) brightness(0.98) saturate(1.02); display: block; }
 
     .article-block { margin-bottom: 56px; }
     .article-h2 {
@@ -321,7 +321,12 @@
 .site-share-link:focus-visible{outline:2px solid var(--bordeaux,#8a2535);outline-offset:4px}
 .site-share-mark{font-family:Arial,sans-serif;font-weight:700;font-size:1.15rem;line-height:1;letter-spacing:0}
 .site-share-note{margin:10px 0 0;color:var(--muted,#7a6048);font-size:.72rem;letter-spacing:.04em;line-height:1.7}
-  </style>
+  
+    /* Edit metadata integrated into the page footer */
+    .last-edited { max-width:100%; margin:16px 0 0; padding:12px 0 0; border-top:1px solid var(--border,rgba(60,40,15,.22)); color:var(--muted,#7A6048); font-family:var(--f-type,'Courier New',monospace); font-size:.58rem; line-height:1.8; letter-spacing:.08em; text-align:left; opacity:.86; }
+    .last-edited time { font-family:var(--f-jp,serif); letter-spacing:.04em; }
+    @media(max-width:600px){.last-edited{margin-top:12px;padding-top:10px;font-size:.56rem;}}
+</style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}
   
 </style></noscript>
@@ -438,6 +443,7 @@
   <div class="footer-link-wrap reveal">
     <a href="index.html" class="footer-link">← HOMEへ戻る</a>
   </div>
+  <p class="last-edited">最終編集日：<time datetime="2026-10-09">2026年10月9日</time></p>
 
 </div>
 </div>
@@ -477,6 +483,6 @@
 </script>
 
 <section class="site-share" aria-label="この記事を共有"><a class="site-share-link" href="https://x.com/intent/tweet?text=%E3%83%9B%E3%83%BC%E3%83%B3%E3%83%86%E3%83%83%E3%83%89%E3%83%9E%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AEBGS%EF%BC%88%E8%83%8C%E6%99%AF%E8%A8%AD%E5%AE%9A%EF%BC%89%EF%BD%9C%E6%9D%B1%E4%BA%AC%E3%83%87%E3%82%A3%E3%82%BA%E3%83%8B%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89%20%E2%80%94%20BGS%20Chronicles%20%23BGSChronicles&url=https%3A%2F%2Fteruluce07-cmd.github.io%2Fdisney-bgs%2Fbgs-haunted.html" target="_blank" rel="noopener noreferrer" aria-label="このページをXで共有する"><span class="site-share-mark" aria-hidden="true">𝕏</span><span>この記事をXで共有</span></a><p class="site-share-note">このページをシェアする</p></section>
-<p class="last-edited" style="max-width:1100px;margin:28px auto 12px;padding:10px 20px;text-align:center;font-size:.78rem;letter-spacing:.04em;opacity:.72;">最終編集日：<time datetime="2026-10-09">2026年10月9日</time></p>
+
 </body>
 </html>
