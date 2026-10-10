@@ -83,8 +83,10 @@ def main():
     checked = 0
 
     for path in pages:
+        raw_html = path.read_text(encoding="utf-8")
         parser = inspect_page(path)
-        if parser.redirect or parser.verification:
+        # Google Search Console may use a plain-text HTML verification file with no tags.
+        if parser.redirect or parser.verification or raw_html.strip().startswith("google-site-verification:"):
             continue
         checked += 1
         label = path.name
