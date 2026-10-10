@@ -269,8 +269,8 @@
 
     .hero-photo-frame {
       position: relative;
-      /* Match the portrait 4:3 source so the Tower of Terror can appear large without awkward cropping. */
-      aspect-ratio: 4/3;
+      /* Keep the newspaper-style horizontal lead-photo frame and enlarge the photo within it. */
+      aspect-ratio: 16/9;
       overflow: hidden;
       background: var(--ink-2);
       border: 1px solid var(--border-strong);
@@ -278,16 +278,16 @@
     }
 
     @media (max-width: 768px) {
-      .hero-photo-frame { aspect-ratio: 4/3; box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 5px var(--border-strong); }
+      .hero-photo-frame { aspect-ratio: 16/9; box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 5px var(--border-strong); }
     }
     @media (max-width: 480px) {
-      .hero-photo-frame { aspect-ratio: 4/3; box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--border-strong); }
+      .hero-photo-frame { aspect-ratio: 16/9; box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--border-strong); }
     }
 
     .hero-photo-frame img {
       width: 100%; height: 100%;
-      object-fit: contain;
-      object-position: center;
+      object-fit: cover;
+      object-position: center 45%;
       filter: grayscale(8%) sepia(8%) contrast(1.03) brightness(0.98) saturate(1.02);
       transition: transform 7s var(--ease);
       display: block;
@@ -1101,6 +1101,7 @@
         <a href="#btm-card">Big Thunder</a>
         <a href="#haunted-card">Haunted Mansion</a>
         <a href="#bb-card">Beauty &amp; Beast</a>
+        <a href="#worldbazaar-card">World Bazaar</a>
         <a href="#cinderella-card">Cinderella</a>
         <a href="#tl-card">Tomorrowland</a>
         <a href="#smallworld-card">Small World</a>
