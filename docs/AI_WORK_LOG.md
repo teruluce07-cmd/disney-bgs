@@ -49,6 +49,7 @@
 - **コミット：** [PR ブランチのコミット履歴](https://github.com/teruluce07-cmd/disney-bgs/commits/editorial-worldview-and-team-workflow)
 - **PR：** [#15](https://github.com/teruluce07-cmd/disney-bgs/pull/15)
 - **状態：** レビュー待ち（2026-10-10 時点で open。GitHub API は mergeable=false を返しているため、競合の有無とマージ可否の確認が必要）
+- **追記（Claude／2026-10-10）：** 最新の main（d3aedad）との試験統合では競合なし。`index.html` と `profile.html` で追加CSSが `<noscript>` 内に入り通常表示で効かない問題を発見し、この PR で修正。詳細は下記「Claude：PR #15 の統合前レビューと修正」を参照。
 - **公開状況：** 未マージのため、この PR の変更は main に未反映。公開サイトでの確認も未実施。
 - **残作業／引き継ぎ：** デスクトップ／モバイルの表示を確認し、記事本文・画像配置に意図しない変化がないかレビューする。作業ログ追加後の PR 差分も確認する。
 
@@ -64,3 +65,17 @@
 - **状態：** レビュー待ち
 - **公開状況：** ログファイルの追加はサイトコードの公開・デプロイを意味しない。PR #15 は未マージで、公開サイトへの変更なし。
 - **残作業／次のAIへの引き継ぎ：** Claude はこのログを読み、PR #15 の最新差分を確認してからレビューを続ける。作業中の別ブランチがあれば、同じファイルを編集する前にログへ追記する。マージ後は GitHub Pages のデプロイと公開サイトの表示を個別に確認する。
+
+### 2026-10-10 — Claude：PR #15 の統合前レビューと修正
+
+- **作業AI：** Claude
+- **対象ファイル：** `index.html`、`profile.html`、`docs/AI_WORK_LOG.md`（確認のみ：全記事 HTML）
+- **確認した事実：** 引き継ぎ資料にある「記事4本（`content/expand-short-articles`）」は、すでに PR #10 として main にマージ済み（ブランチ先頭 81818e1）。再マージは不要。main は PR #16（d3aedad）まで反映済み。
+- **変更内容：** PR #15 が追加した「日付・更新情報などの新聞調タイポグラフィ」CSS が、`index.html` と `profile.html` では `<noscript><style>` の内側に入っており、JavaScript 有効の通常閲覧では適用されない状態だった。CSS を通常の `<style>` に移した（記事ページ18本は元から通常の `<style>` 内で問題なし）。
+- **変更理由：** PR #15 の目的（サイト全体の紙面デザイン統一）を、トップページとプロフィールでも実際に有効にするため。
+- **検証結果（ソース）：** 最新 main との試験統合で競合なし。全 HTML で `<style>`／`<script>`／`<noscript>` の開閉が一致。title・description・canonical・OGP・twitter:card の欠落なし（`World bazaar.html` は旧URL用のリダイレクトページのため対象外）。ローカルリンク・画像参照の切れなし、重複 ID なし、ハングル混入なし。共有ボタン ID は Haunted Mansion／Cinderella Castle が `x-share-btn`、Fantasy Springs が `share-btn` のまま。
+- **検証結果（表示）：** 自動ブラウザ（Chromium、ローカルファイル）で index・profile・Raging Spirits・Indiana Jones・Soarin・Haunted Mansion を 1280px と 390px で確認。横方向のはみ出しなし、画像の読み込み失敗なし、JavaScript エラーなし、更新日表示に新しい書体が適用されることを確認。ただし外部の Web フォント（Google Fonts）は取得できない環境のため、本番での実際のフォント見え方は未確認。X 共有ボタンのクリック動作・共有プレビューも未確認。
+- **コミット／PR：** [PR #15](https://github.com/teruluce07-cmd/disney-bgs/pull/15)（マージ後のコミットは下の追記を参照）
+- **状態：** 検証待ち（マージ前）
+- **公開状況：** 未マージのため main・公開サイトには未反映。
+- **残作業／引き継ぎ：** (1) PR #15 のマージ後、GitHub Pages のデプロイ完了と公開サイトでの反映を確認し、このログに結果を追記する（「マージ済み」と「公開確認済み」は別状態）。(2) 実機に近い環境で Web フォント表示、X 共有ボタン、共有時の OGP プレビューを確認する。(3) 記事4本の根拠表現は PR #10／#16 で整理済みだが、Soarin の父親名（`チェザーレ`／`チェッリーノ`）は公式資料での再確認が残っている。
