@@ -33,8 +33,9 @@ BGS Chronicles is an independent Disney Parks fan publication presented as a car
 
 ## Division of work: ChatGPT + Claude
 
-- ChatGPT: routine edits, iterative implementation, copy/CSS/HTML adjustments, small fixes, and preparing change summaries. Work in a branch/PR when practical.
-- Claude: independent review of changes, editorial fact-checking and coherence review, regression review, and larger architectural or multi-page refactors when warranted.
+- There are no fixed roles. Either assistant may edit, research, review, test, merge, and verify the published site, whichever is available and able to finish the work. What matters is avoiding duplicate work and finishing reliably.
+- Before starting, read `docs/AI_WORK_LOG.md` and compare it with the actual state of GitHub (main, branches, PRs). If the log and GitHub disagree, GitHub wins and the log is corrected.
+- Do not overwrite the other assistant's unmerged work. Check existing branches and PRs for the same files before editing, and record what you did, what you verified, and what remains in the work log when you finish.
 - Shared workflow: agree on the intended outcome, make changes in a branch, review the diff, have the other assistant inspect it where useful, merge only after review, and verify the deployed result when possible.
 - Both assistants should read this guide before significant editorial or visual changes. Avoid parallel edits to the same files without coordinating, to reduce conflicts.
 - The user's final direction takes priority over either assistant's stylistic preference.
