@@ -48,7 +48,7 @@
 - **検証結果：** PR 本文に「ソース変更のみ。デスクトップ／モバイルのブラウザ表示とデプロイ後の見た目は未確認」と記録。
 - **コミット：** [PR ブランチのコミット履歴](https://github.com/teruluce07-cmd/disney-bgs/commits/editorial-worldview-and-team-workflow)
 - **PR：** [#15](https://github.com/teruluce07-cmd/disney-bgs/pull/15)
-- **状態：** レビュー待ち（2026-10-10 時点で open。マージしない）
+- **状態：** レビュー待ち（2026-10-10 時点で open。GitHub API は mergeable=false を返しているため、競合の有無とマージ可否の確認が必要）
 - **公開状況：** 未マージのため、この PR の変更は main に未反映。公開サイトでの確認も未実施。
 - **残作業／引き継ぎ：** デスクトップ／モバイルの表示を確認し、記事本文・画像配置に意図しない変化がないかレビューする。作業ログ追加後の PR 差分も確認する。
 
@@ -58,8 +58,8 @@
 - **対象ファイル：** `docs/AI_WORK_LOG.md`
 - **変更内容：** 既存の main ツリーに同等の作業ログがないことを確認し、共通作業ログを新設。GitHub 上で確認できた PR #10、#15、#16 の履歴を、PR 記録に基づいて追記。AI の担当が履歴から判別できない箇所は推測せず「未確認」と記載。
 - **変更理由：** ChatGPT と Claude の変更箇所・検証・マージ・公開状態・引き継ぎを共有し、作業の重複や未確認事項の誤報を防ぐため。
-- **検証結果：** main と作業ブランチに `docs/AI_WORK_LOG.md` が存在しないことを確認。main のツリーにも既存の同等ログは見つからなかった。作成後は GitHub 上のファイル内容・コミット・PR 差分を再確認する。
-- **コミット：** [PR ブランチのコミット履歴](https://github.com/teruluce07-cmd/disney-bgs/commits/editorial-worldview-and-team-workflow)
+- **検証結果：** 作成前に main と作業ブランチを確認し、`docs/AI_WORK_LOG.md` と同等のログが存在しないことを確認。作成後は GitHub 上でファイル内容を再取得し、コミット SHA と PR #15 の変更ファイル一覧に含まれることを確認した。
+- **コミット：** [ログ作成コミット 0479d50ae09bf8d3899344f47f12e7badb13a289](https://github.com/teruluce07-cmd/disney-bgs/commit/0479d50ae09bf8d3899344f47f12e7badb13a289)
 - **PR：** [#15](https://github.com/teruluce07-cmd/disney-bgs/pull/15)（既存の共同作業ルール文書を含む PR に同梱）
 - **状態：** レビュー待ち
 - **公開状況：** ログファイルの追加はサイトコードの公開・デプロイを意味しない。PR #15 は未マージで、公開サイトへの変更なし。
