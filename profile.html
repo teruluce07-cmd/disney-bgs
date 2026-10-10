@@ -376,7 +376,24 @@
     .last-edited time { font-family:var(--f-jp); letter-spacing:.04em; }
     @media(max-width:600px){.last-edited{margin-top:12px;padding-top:10px;font-size:.56rem;}}
 </style>
-  <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
+  <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}
+    /* Editorial finish: dates and operational notes should read like newspaper colophon/type. */
+    .last-edited, .footer-copy, .site-share-note, .modal-copyright, .footer-note, .article-meta, .post-meta, .updated-at {
+      font-family: var(--f-type, 'Courier New', monospace);
+      color: var(--muted, #7A6048);
+      font-size: clamp(.56rem, 1.3vw, .64rem);
+      line-height: 1.85;
+      letter-spacing: .045em;
+    }
+    .last-edited time, .article-meta time, .post-meta time, .updated-at time {
+      font-family: var(--f-jp, serif);
+      color: var(--bordeaux, #6B1E2A);
+      font-size: .96em;
+      letter-spacing: .035em;
+    }
+    .modal-copyright { color: var(--muted, #7A6048); }
+
+  </style></noscript>
 </head>
 <body>
 
