@@ -430,6 +430,25 @@
       border-color: var(--ink);
     }
 
+
+    /* Mobile-first archive navigation: newspaper style, but easier to tap. */
+    @media (max-width: 600px) {
+      .toc-wrap { padding: 14px 12px; }
+      .toc-head { margin-bottom: 12px; }
+      .toc-group { margin-bottom: 18px; }
+      .toc-group-label { font-size: .62rem; margin-bottom: 7px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+      .toc-links { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--border); }
+      .toc-links a {
+        width: 100%; min-height: 44px; box-sizing: border-box;
+        justify-content: space-between; padding: 10px 11px;
+        border: 0; border-bottom: 1px solid var(--border);
+        background: rgba(255,252,245,.58); font-size: .78rem;
+      }
+      .toc-links a::after { content: "↗"; margin-left: 10px; color: var(--bordeaux); font-size: .8rem; flex: 0 0 auto; }
+      .toc-links a:active { background: var(--ink); color: var(--paper); }
+      html { scroll-padding-top: 16px; }
+    }
+
     /* ============================================================
        CONTROLS
     ============================================================ */
@@ -1090,7 +1109,7 @@
   <hr class="double-rule reveal">
 
   <!-- ===== TOC / NAV ===== -->
-  <nav class="toc-wrap reveal" aria-label="クイックナビゲーション">
+  <nav class="toc-wrap reveal" id="toc" aria-label="クイックナビゲーション">
     <div class="toc-head">
       <h2 class="toc-head-title">Table of Contents</h2>
     </div>
