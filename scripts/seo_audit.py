@@ -32,6 +32,7 @@ class PageParser(HTMLParser):
         self._in_jsonld = False
         self._jsonld_buffer = []
         self.redirect = False
+        self.verification = False
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -42,6 +43,8 @@ class PageParser(HTMLParser):
         elif tag == "meta":
             name = attrs.get("name", "").lower()
             prop = attrs.get("property", "").lower()
+            if name == "google-site-verification":
+                self.verification = True
             if name and "content" in attrs:
                 self.meta[("name", name)] = attrs["content"].strip()
             if prop and "content" in attrs:
@@ -81,7 +84,7 @@ def main():
 
     for path in pages:
         parser = inspect_page(path)
-        if parser.redirect:
+        if parser.redirect or parser.verification:
             continue
         checked += 1
         label = path.name
