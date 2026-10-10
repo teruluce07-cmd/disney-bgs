@@ -1,0 +1,40 @@
+# BGS Chronicles — Editorial & Collaboration Guide
+
+Updated: 2026-10-10
+
+## Product identity
+
+BGS Chronicles is an independent Disney Parks fan publication presented as a carefully edited, early-20th-century newspaper/archive. It is an atmospheric editorial experience, not a dry encyclopedia. Preserve the existing masthead, serif headlines, fine rules, warm paper texture, ink-brown text, restrained bordeaux accents, and antique-gold details.
+
+## Editorial voice and uncertainty
+
+- Write with narrative flow, curiosity, and a sense of discovery. Do not interrupt articles with repeated defensive disclaimers such as “公式では確認できませんでした” unless the distinction is essential to avoid misleading readers.
+- Keep official story material, observable park details, and fan interpretation distinct through natural wording. For example: “ファンの間では、こうした意匠から○○を想起する考察もあります。” or “一部のファンの間では、○○という解釈も語られています。”
+- Never present speculation as confirmed canon. Use subtle attribution (“〜と考察するファンもいます”, “〜という見方もあります”) rather than repeated warning boxes.
+- Prefer official sources for hard factual claims. If a point is uncertain, qualify only that point gracefully and continue the story; do not make the whole page read like a reference database.
+- Never invent sources, quotes, production history, dates, or designer intent. Separate verified facts from interpretation by phrasing, not disruptive disclaimers.
+- Keep headlines aligned with the actual story and section content. Avoid generic headings that promise information the section does not deliver.
+
+## Visual typography
+
+- Treat the entire site as a printed publication, including dates, update notices, credits, navigation, copyright, and contact/operational details.
+- Use the existing typewriter/monospace face for small editorial metadata and colophon-like information; use the Japanese serif face for dates and the established display serif for headlines.
+- Metadata should use subdued ink-brown/sepia colors. Use bordeaux sparingly for meaningful accents; avoid modern bright colors, default blue links, oversized labels, or UI elements that look detached from the paper.
+- Prefer thin rules, double rules, small caps/letter spacing, and measured spacing to pills, heavy boxes, or generic modern UI.
+- Keep body text comfortable to read, especially on mobile. Newspaper styling must not compromise contrast, tap targets, or line length.
+
+## Technical working rules
+
+- Preserve existing page structure and the established newspaper design unless a change is explicitly intended.
+- Prefer focused, reviewable changes. For larger refactors, create a branch and pull request rather than making a broad unreviewed edit directly on `main`.
+- Check desktop and mobile layouts, article navigation, canonical/OGP metadata, and JavaScript interactions after relevant changes.
+- Do not claim a visual/live deployment check unless it was actually performed. Distinguish source-level verification from browser-level verification in internal reports.
+- Keep this repository as the shared source of truth. Record substantive editorial/design decisions here so both AI assistants can follow the same standards.
+
+## Division of work: ChatGPT + Claude
+
+- ChatGPT: routine edits, iterative implementation, copy/CSS/HTML adjustments, small fixes, and preparing change summaries. Work in a branch/PR when practical.
+- Claude: independent review of changes, editorial fact-checking and coherence review, regression review, and larger architectural or multi-page refactors when warranted.
+- Shared workflow: agree on the intended outcome, make changes in a branch, review the diff, have the other assistant inspect it where useful, merge only after review, and verify the deployed result when possible.
+- Both assistants should read this guide before significant editorial or visual changes. Avoid parallel edits to the same files without coordinating, to reduce conflicts.
+- The user's final direction takes priority over either assistant's stylistic preference.
