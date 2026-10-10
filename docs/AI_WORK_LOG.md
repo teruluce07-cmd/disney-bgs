@@ -142,3 +142,14 @@
   2. PR #9が記事・トップページを広く変更するため、最新mainとの差分を再レビューし、可視パンくず・Article JSON-LDの一括整備を競合回避して進める。
   3. OGP画像の寸法と実際のXプレビューを確認し、必要な画像のみ無料・権利クリアな方法で改善する。
   4. Search ConsoleとGA4はアカウント所有権・測定IDが必要なため、サイトコードだけで設定完了とは扱わない。
+
+
+### 2026-10-10 — ChatGPT：SEOテスト完了と利用料金画面の確認
+
+- **作業AI：** ChatGPT
+- **対象：** PR #18 のGitHub Actions結果、および利用者が共有したGitHub Billing画面（画面の確認のみ。請求アカウントへの直接アクセスはしていない）。
+- **SEO検証結果：** PR #18 のSEO validation workflow run #4（ID: 38060203832）が成功。20 HTMLページを検査し、重大エラーなし。`bgs-fs.html` と `cinderella-castle.html` にJSON-LDがない旨の警告2件のみ。検査結果は「PASSED」。Run: https://github.com/teruluce07-cmd/disney-bgs/actions/runs/38060203832
+- **料金画面の確認：** 利用者提供スクリーンショットでは GitHub Free と Copilot Free が各 $0.00/月、Copilot usage $0、Additional usage $0。Current metered usage は $0.96、Current included usage も $0.96、Next payment due は「—」と表示されていた。この表示だけでは請求確定・実際の支払額を断定できないため、支払い履歴／Billing詳細での最終確認を案内した。アカウントの請求情報を直接取得したわけではない。
+- **課金に関する注意：** PR #18 では通常のGitHub Actionsによる無料のSEOチェックを追加した。有料サービスの契約・有料ランナー・外部有料APIの導入は行っていない。ただし、個別アカウントの請求確定状況はこの作業ログから断定しない。
+- **PR／状態：** [PR #18](https://github.com/teruluce07-cmd/disney-bgs/pull/18) はレビュー待ち・未マージ。公開サイトはこのPRによって変更されていない。
+- **Claudeへの引き継ぎ：** PR #18 の検証は成功済み。警告2件はJSON-LD未設置ページとして記録し、必要性を検討してから対応する。利用料金については上記のスクリーンショットに見える範囲のみ共有し、請求額が確定したとは扱わない。
