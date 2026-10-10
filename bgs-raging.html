@@ -426,6 +426,8 @@
     .last-edited { max-width:640px; margin:16px auto 22px; padding:12px clamp(16px,5vw,40px) 0; border-top:1px solid var(--border,rgba(60,40,15,.22)); color:var(--muted,#7A6048); font-family:var(--f-type,'Courier New',monospace); font-size:.58rem; line-height:1.8; letter-spacing:.08em; text-align:left; opacity:.86; }
     .last-edited time { font-family:var(--f-jp,serif); letter-spacing:.04em; }
     @media(max-width:600px){.last-edited{margin-top:12px;padding-top:10px;font-size:.56rem;}}
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
 </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 
@@ -459,7 +461,7 @@
     </ul>
   </nav>
 
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1800/1350">
     <img src="raging-camp.jpeg" alt="Raging Spirits Archeological Campsite" width="800" height="450" decoding="sync" loading="eager" fetchpriority="high">
   </div>
 
@@ -475,7 +477,7 @@
     <h2 class="article-h2">II. 水の上に燃え盛る「神々の怒り」</h2>
     <p class="article-p">かつてこの地に暮らした古代の人々は、二体の偉大な神、<strong>水の神「アクアトナ」</strong>と、<strong>火の神「イクリトア」</strong>を祀るための神殿を建設しました。彼らは世界の調和を保つため、この二体の神像を<strong>「背中合わせ」</strong>に配置し、決して互いが出会わないように細心の注意を払っていました。</p>
     
-    <div class="photo-frame reveal">
+    <div class="photo-frame reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="raging-altar.jpeg" alt="Ancient Altar with Fire on Water" width="800" height="450" decoding="async" loading="lazy">
     </div>
 
@@ -488,7 +490,7 @@
     <h2 class="article-h2">III. 捻じ曲げられた仮設足場と360度ループ</h2>
     <p class="article-p">ゲストが乗り込むことになるのは、かつて遺跡の修復や発掘物資を運ぶために、急ごしらえの仮設足場の上に引かれたレールを走る鉱山列車（ホッパーカー）です。しかし、神々の激怒による凄まじい地鳴りとエネルギーは、頑丈なはずの鉄鋼のレールの足場を一瞬にして「グニャリ」と捻じ曲げてしまいました。</p>
     
-    <div class="photo-frame reveal">
+    <div class="photo-frame reveal" style="--ar:1350/1800;--maxw:480px">
       <img src="raging-warning.jpeg" alt="Raging Spirits Loop and Warning Sign" width="800" height="450" decoding="async" loading="lazy">
     </div>
 

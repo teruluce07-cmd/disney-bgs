@@ -706,6 +706,8 @@
     .last-edited { max-width:640px; margin:16px auto 22px; padding:12px clamp(16px,5vw,40px) 0; border-top:1px solid var(--border,rgba(60,40,15,.22)); color:var(--muted,#7A6048); font-family:var(--f-type,'Courier New',monospace); font-size:.58rem; line-height:1.8; letter-spacing:.08em; text-align:left; opacity:.86; }
     .last-edited time { font-family:var(--f-jp,serif); letter-spacing:.04em; }
     @media(max-width:600px){.last-edited{margin-top:12px;padding-top:10px;font-size:.56rem;}}
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
 </style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 
@@ -1052,7 +1054,7 @@
         <h3 class="sub-heading">フォートレス・エクスプロレーション</h3>
         <p class="article-p">メディテレーニアンハーバーに佇む、美しく荘厳な要塞です。ここは学会のグローバル本部でもあり、ダ・ヴィンチの飛行船やマゼランのガリオン船が、かつての姿のまま私たちを迎えてくれます。天動説やガリレオの観測技術など、科学のロマンに満ちています。</p>
         
-        <div class="photo-frame">
+        <div class="photo-frame" style="--ar:800/450">
           <img src="tds-map.jpg" alt="フォートレス・エクスプロレーション全景" width="800" height="450" loading="lazy" decoding="async">
         </div>
 
@@ -1277,7 +1279,12 @@
     document.getElementById('modal-name-ja').textContent = d.ja;
     document.getElementById('modal-desc').textContent = d.desc;
     modalBg.classList.add('open');
-    modalClose.focus();
+    /* 表示アニメーション中はまだ非表示扱いのため、フォーカスが移るまで短い間隔で数回試す */
+    (function tryFocus(n) {
+      if (!modalBg.classList.contains('open')) return;
+      modalClose.focus();
+      if (document.activeElement !== modalClose && n > 0) setTimeout(() => tryFocus(n - 1), 40);
+    })(10);
   }
   function closeModal() { modalBg.classList.remove('open'); }
 

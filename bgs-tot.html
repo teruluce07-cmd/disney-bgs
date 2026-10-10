@@ -498,7 +498,9 @@
 .site-share-link:focus-visible{outline:2px solid var(--bordeaux,#8a2535);outline-offset:4px}
 .site-share-mark{font-family:Arial,sans-serif;font-weight:700;font-size:1.15rem;line-height:1;letter-spacing:0}
 .site-share-note{margin:10px 0 0;color:var(--muted,#7a6048);font-size:.72rem;letter-spacing:.04em;line-height:1.7}
-  </style>
+  /* 写真の枠は各写真の縦横比に合わせる（中途半端な切り抜きを防ぐ）。縦長は幅を抑えて中央に置く */
+  .photo-frame[style*="--ar"],.img-wrapper[style*="--ar"]{aspect-ratio:var(--ar);max-width:min(100%,var(--maxw,100%));margin-left:auto;margin-right:auto}
+</style>
   <noscript><style>.reveal,.reveal *{opacity:1 !important;transform:none !important;}</style></noscript>
 
   
@@ -536,7 +538,7 @@
     </ul>
   </nav>
 
-  <div class="photo-frame reveal">
+  <div class="photo-frame reveal" style="--ar:1800/1350">
     <!-- 修正：decoding="sync" → "async"、loading="eager" を削除 -->
     <img src="tot-exterior.jpg" alt="Tower of Terror Exterior" width="800" height="450" decoding="async" fetchpriority="high">
   </div>
