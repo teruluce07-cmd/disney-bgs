@@ -75,7 +75,7 @@
 - **変更理由：** PR #15 の目的（サイト全体の紙面デザイン統一）を、トップページとプロフィールでも実際に有効にするため。
 - **検証結果（ソース）：** 最新 main との試験統合で競合なし。全 HTML で `<style>`／`<script>`／`<noscript>` の開閉が一致。title・description・canonical・OGP・twitter:card の欠落なし（`World bazaar.html` は旧URL用のリダイレクトページのため対象外）。ローカルリンク・画像参照の切れなし、重複 ID なし、ハングル混入なし。共有ボタン ID は Haunted Mansion／Cinderella Castle が `x-share-btn`、Fantasy Springs が `share-btn` のまま。
 - **検証結果（表示）：** 自動ブラウザ（Chromium、ローカルファイル）で index・profile・Raging Spirits・Indiana Jones・Soarin・Haunted Mansion を 1280px と 390px で確認。横方向のはみ出しなし、画像の読み込み失敗なし、JavaScript エラーなし、更新日表示に新しい書体が適用されることを確認。ただし外部の Web フォント（Google Fonts）は取得できない環境のため、本番での実際のフォント見え方は未確認。X 共有ボタンのクリック動作・共有プレビューも未確認。
-- **コミット／PR：** [PR #15](https://github.com/teruluce07-cmd/disney-bgs/pull/15)（squash マージ）／[マージコミット 583da91f67db1a6c3eda67097565f1ba3269c16d](https://github.com/teruluce07-cmd/disney-bgs/commit/583da91f67db1a6c3eda67097565f1ba3269c16d)
+- **コミット／PR：** [PR #15](https://github.com/teruluce07-cmd/disney-bgs/pull/15)（通常のマージコミット方式）／[マージコミット 583da91f67db1a6c3eda67097565f1ba3269c16d](https://github.com/teruluce07-cmd/disney-bgs/commit/583da91f67db1a6c3eda67097565f1ba3269c16d)
 - **状態：** マージ済み（2026-10-10）。公開確認済みではない。
 - **公開状況：** マージコミット 583da91 で GitHub Actions の「pages build and deployment」が success になったことは確認。公開サイト（profile.html）がタイトル・本文とも正常に読み込めることも確認。一方、追加CSS（新聞調の日付書体）が公開ページで実際に効いているか、Web フォント、X 共有ボタン、共有プレビューは、この環境から公開サイトのHTML・見た目を直接確認できなかったため未確認。
 - **残作業／引き継ぎ：** (1) PR #15 のマージ後、GitHub Pages のデプロイ完了と公開サイトでの反映を確認し、このログに結果を追記する（「マージ済み」と「公開確認済み」は別状態）。(2) 実機に近い環境で Web フォント表示、X 共有ボタン、共有時の OGP プレビューを確認する。(3) 記事4本の根拠表現は PR #10／#16 で整理済みだが、Soarin の父親名（`チェザーレ`／`チェッリーノ`）は公式資料での再確認が残っている。
