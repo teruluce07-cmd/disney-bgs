@@ -119,3 +119,37 @@
 - **検証の限界：** これはGitHubソースと公開トップページの取得結果に基づく監査であり、全ページの実ブラウザ表示・iPhone実機・共有ボタンのクリック・X OGPキャッシュの検証ではない。
 - **状態：** ソース監査・公開トップページのテキスト確認は実施済み。全サイトの公開確認は未完了。
 - **Claudeへの引き継ぎ：** PR #9 を最新mainとの差分で再レビューし、写真の表示比率、モーダルのキーボード操作／フォーカス復帰、sitemapの変更が必要か確認する。公開環境でPC／スマホ表示とX共有をテストし、未確認の項目を実施済みと記録しない。
+
+
+### 2026-10-10 — ChatGPT：SEO基盤の初回実装（PR #18）
+
+- **作業AI：** ChatGPT
+- **対象ファイル：** `profile.html`、`scripts/seo_audit.py`、`.github/workflows/seo-validation.yml`、`docs/SEO_BASELINE.md`、`docs/AI_WORK_LOG.md`
+- **変更内容：**
+  - `profile.html` の既存 ProfilePage / Person JSON-LDに、既存の公開プロフィール画像、公開SNSアカウント、サイトの主題を追加。未確認の資格や専門家肩書きは追加していない。
+  - 外部パッケージ不要のPython標準ライブラリによるSEOスモークテストを追加。title、meta description、canonical、OGP/Xメタデータ、JSON-LDのJSON構文、sitemapの参照先、robots.txtのサイトマップ宣言を検査する。
+  - 関連ファイルの変更時に無料のGitHub Actionsでテストするワークフローを追加。
+  - 現状のSEO実装と未対応事項を `docs/SEO_BASELINE.md` に記録。
+- **変更理由：** 既存のSEO設定を重複追加せず、今後の修正でメタデータやサイトマップが壊れることを早期検知するため。
+- **検証結果（ソース）：** sitemapに列挙された20ページでtitle、description、canonical、OGP、Xカードの存在を確認。調査対象の既存JSON-LDは有効なJSONとして解析できた。JSON-LD未設置のページが2ページあり、サイト全体のArticle/BreadcrumbList統一は後続作業として記録。
+- **自動テスト：** PR作成後のGitHub Actions実行を確認。記録時点では実行中のため、最終結果は未確認。
+- **コミット：** [SEO基盤の実装コミット](https://github.com/teruluce07-cmd/disney-bgs/commit/05522763d849b3bf927d7a9ee88fcc29d7c0442b)
+- **PR：** [#18](https://github.com/teruluce07-cmd/disney-bgs/pull/18)
+- **状態：** レビュー待ち。未マージ。
+- **公開状況：** `main` やGitHub Pagesの公開内容は変更していない。PRのマージと公開反映は未確認。
+- **残作業／次のAIへの引き継ぎ：**
+  1. PR #18 のGitHub Actions結果を確認し、失敗時はテストを修正する。
+  2. PR #9が記事・トップページを広く変更するため、最新mainとの差分を再レビューし、可視パンくず・Article JSON-LDの一括整備を競合回避して進める。
+  3. OGP画像の寸法と実際のXプレビューを確認し、必要な画像のみ無料・権利クリアな方法で改善する。
+  4. Search ConsoleとGA4はアカウント所有権・測定IDが必要なため、サイトコードだけで設定完了とは扱わない。
+
+
+### 2026-10-10 — ChatGPT：SEOテスト完了と利用料金画面の確認
+
+- **作業AI：** ChatGPT
+- **対象：** PR #18 のGitHub Actions結果、および利用者が共有したGitHub Billing画面（画面の確認のみ。請求アカウントへの直接アクセスはしていない）。
+- **SEO検証結果：** PR #18 のSEO validation workflow run #4（ID: 38060203832）が成功。20 HTMLページを検査し、重大エラーなし。`bgs-fs.html` と `cinderella-castle.html` にJSON-LDがない旨の警告2件のみ。検査結果は「PASSED」。Run: https://github.com/teruluce07-cmd/disney-bgs/actions/runs/38060203832
+- **料金画面の確認：** 利用者提供スクリーンショットでは GitHub Free と Copilot Free が各 $0.00/月、Copilot usage $0、Additional usage $0。Current metered usage は $0.96、Current included usage も $0.96、Next payment due は「—」と表示されていた。この表示だけでは請求確定・実際の支払額を断定できないため、支払い履歴／Billing詳細での最終確認を案内した。アカウントの請求情報を直接取得したわけではない。
+- **課金に関する注意：** PR #18 では通常のGitHub Actionsによる無料のSEOチェックを追加した。有料サービスの契約・有料ランナー・外部有料APIの導入は行っていない。ただし、個別アカウントの請求確定状況はこの作業ログから断定しない。
+- **PR／状態：** [PR #18](https://github.com/teruluce07-cmd/disney-bgs/pull/18) はレビュー待ち・未マージ。公開サイトはこのPRによって変更されていない。
+- **Claudeへの引き継ぎ：** PR #18 の検証は成功済み。警告2件はJSON-LD未設置ページとして記録し、必要性を検討してから対応する。利用料金については上記のスクリーンショットに見える範囲のみ共有し、請求額が確定したとは扱わない。
